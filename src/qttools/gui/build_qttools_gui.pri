@@ -36,7 +36,7 @@
 #############################################################################
 
 # Parameters (input variables) :
-#   QTTOOLS_LIBS_PATH
+#   QTTOOLS_LIB_PATH
 #   TARGET_SUFFIX
 
 TEMPLATE = lib

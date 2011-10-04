@@ -5,7 +5,7 @@
 **  contact@fougsys.fr
 **
 ** This software is a computer program whose purpose is to provide utility
-** tools for the C++ language and the Qt toolkit.
+** tools for the C++ language, the Qt and Open Cascade toolkits.
 **
 ** This software is governed by the CeCILL-C license under French law and
 ** abiding by the rules of distribution of free software.  You can  use,
@@ -36,7 +36,7 @@
 ****************************************************************************/
 
 #ifndef OCCTOOLS_H
-# define OCCTOOLS_H
+#define OCCTOOLS_H
 
 # include <QtCore/QtGlobal>
 # ifdef OCCTOOLS_DLL

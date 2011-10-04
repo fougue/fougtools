@@ -142,6 +142,11 @@ void QSqlTableModelEngine::setPrimaryKeyColumn(int col)
   }
 }
 
+QString QSqlTableModelEngine::sqlCode() const
+{
+  return _d->sqlCode;
+}
+
 void QSqlTableModelEngine::sqlInsert(int modelRow)
 {
   const QSqlDriver* driver = _d->database().driver();

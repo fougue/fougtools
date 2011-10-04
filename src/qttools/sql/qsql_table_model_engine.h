@@ -59,6 +59,8 @@ public:
   bool exec();
   QSqlError lastError() const;
 
+  QString sqlCode() const;
+
   void setPrimaryKeyColumn(int col);
 
   void sqlInsert(int modelRow);

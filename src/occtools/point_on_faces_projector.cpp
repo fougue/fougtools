@@ -81,7 +81,7 @@ public:
   {
   }
 
-  virtual Standard_Boolean Reject(const Bnd_Box& bb) const
+  Standard_Boolean Reject(const Bnd_Box& bb) const
   {
     const bool result = bb.IsOpenXmin() == Standard_True ||
         bb.IsOpenXmax() == Standard_True ||
@@ -94,7 +94,7 @@ public:
     return result ? Standard_True : Standard_False;
   }
 
-  virtual Standard_Boolean Accept(const NodeIndexInTriangulation_t& nodeId)
+  Standard_Boolean Accept(const NodeIndexInTriangulation_t& nodeId)
   {
     if (nodeId.second.IsNull())
       return Standard_False;
@@ -102,11 +102,10 @@ public:
     if (!(nodes.Lower() <= nodeId.first && nodeId.first <= nodes.Upper()))
       return Standard_False;
     const gp_Pnt& pnt = nodes(nodeId.first);
-    const double dist = this->_pntToProject.SquareDistance(pnt);
-    if (dist < this->_currMinDist || this->_currMinDistNodeId.first == -1)
-    {
-      this->_currMinDistNodeId = nodeId;
-      this->_currMinDist = dist;
+    const double dist = _pntToProject.SquareDistance(pnt);
+    if (dist < _currMinDist || _currMinDistNodeId.first == -1) {
+      _currMinDistNodeId = nodeId;
+      _currMinDist = dist;
       return Standard_True;
     }
     return Standard_False;
@@ -114,33 +113,28 @@ public:
 
   double minDistance() const
   {
-    return std::sqrt(this->_currMinDist);
+    return std::sqrt(_currMinDist);
   }
 
   const NodeIndexInTriangulation_t& minDistanceNodeIndex() const
   {
-    return this->_currMinDistNodeId;
+    return _currMinDistNodeId;
   }
 
 private:
   const gp_Pnt _pntToProject;
   double _currMinDist;
   NodeIndexInTriangulation_t _currMinDistNodeId;
-}; // class NodeBndBoxSelector
+};
 
 } // Anonymous namespace
 
 namespace occ {
 
-struct PointOnFacesProjector_Impl
+class PointOnFacesProjectorPrivate
 {
-  PointOnFacesProjector_Impl() :
-    faceMap(),
-    ubTree()
-  {
-  }
-
-  ~PointOnFacesProjector_Impl()
+public:
+  ~PointOnFacesProjectorPrivate()
   {
     this->clear();
   }
@@ -153,7 +147,7 @@ struct PointOnFacesProjector_Impl
 
   boost::unordered_map<Poly_Triangulation*, TopoDS_Face> faceMap;
   UBTreeOfNodeIndices_t ubTree;
-}; // struct PointOnFacesProjector_Impl
+};
 
 // --- PointOnFacesProjector::Result implementation
 
@@ -178,36 +172,36 @@ PointOnFacesProjector::Result::Result(const TopoDS_Face& sFace,
 }
 
 PointOnFacesProjector::PointOnFacesProjector() :
-  _d(new PointOnFacesProjector_Impl)
+  _d(new PointOnFacesProjectorPrivate)
 {
 }
 
 /*! \brief Construct a prepared projector (calling prepare(faces))
-   *
-   */
+ *
+ */
 PointOnFacesProjector::PointOnFacesProjector(const TopoDS_Shape& faces) :
-  _d(new PointOnFacesProjector_Impl)
+  _d(new PointOnFacesProjectorPrivate)
 {
   this->prepare(faces);
 }
 
 PointOnFacesProjector::~PointOnFacesProjector()
 {
-  delete this->_d;
+  delete _d;
 }
 
 void PointOnFacesProjector::prepare(const TopoDS_Shape& faces)
 {
-  this->_d->clear();
+  _d->clear();
   // Build the UB tree for binary search of points.
-  UBTreeOfNodeIndicesFiller_t ubTreeFiller(this->_d->ubTree, Standard_False);
+  UBTreeOfNodeIndicesFiller_t ubTreeFiller(_d->ubTree, Standard_False);
   for (TopExp_Explorer exp(faces, TopAbs_FACE); exp.More(); exp.Next()) {
     const TopoDS_Face face = TopoDS::Face(exp.Current());
     if (!face.IsNull()) {
       TopLoc_Location loc;
       const Handle_Poly_Triangulation& triangulation = BRep_Tool::Triangulation(face, loc);
       if (!triangulation.IsNull()) {
-        this->_d->faceMap[triangulation.operator->()] = face;
+        _d->faceMap[triangulation.operator->()] = face;
         const gp_Trsf& trsf = loc.Transformation();
         const TColgp_Array1OfPnt& nodes = triangulation->Nodes();
         for (int i = nodes.Lower(); i <= nodes.Upper(); ++i) {
@@ -226,18 +220,18 @@ const TopoDS_Face* PointOnFacesProjector::faceOfProjection(const gp_Pnt& point) 
 {
   // Find the closest node in the triangulations.
   NodeBndBoxSelector selector(point);
-  if (this->_d->ubTree.Select(selector) <= 0)
+  if (_d->ubTree.Select(selector) <= 0)
     return 0;
   const Handle_Poly_Triangulation& triangulation =
       selector.minDistanceNodeIndex().second;
-  return &(this->_d->faceMap[triangulation.operator->()]);
+  return &(_d->faceMap[triangulation.operator->()]);
 }
 
 PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& point) const
 {
   // Find the closest node in the triangulations.
   NodeBndBoxSelector selector(point);
-  if (this->_d->ubTree.Select(selector) <= 0)
+  if (_d->ubTree.Select(selector) <= 0)
     return PointOnFacesProjector::Result();
 
   const int minNodeId = selector.minDistanceNodeIndex().first;
@@ -267,15 +261,16 @@ PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& poi
   }
   if (minTriangle == 0)
     return PointOnFacesProjector::Result();
-  const TopoDS_Face& face = this->_d->faceMap[triangulation.operator->()];
+  const TopoDS_Face& face = _d->faceMap[triangulation.operator->()];
   return PointOnFacesProjector::Result(face, projectedPnt,
                                        occ::triangleNormal(nodes, *minTriangle, face.Orientation()));
 }
 
 /*! \brief Syntactic sugar around projected()
-   */
+ */
 PointOnFacesProjector::Result PointOnFacesProjector::operator()(const gp_Pnt& point) const
 {
   return this->projected(point);
 }
+
 } // namespace occ

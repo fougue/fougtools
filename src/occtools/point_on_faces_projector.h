@@ -69,7 +69,7 @@ public:
   Result operator()(const gp_Pnt& point) const;
 
 private:
-  struct PointOnFacesProjector_Impl* _d;
+  class PointOnFacesProjectorPrivate* _d;
 };
 
 } // namespace occ

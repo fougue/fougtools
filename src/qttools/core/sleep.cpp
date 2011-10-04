@@ -37,16 +37,18 @@
 
 #include "qttools/core/sleep.h"
 
+#include <QtCore/QEventLoop>
 #include <QtCore/QThread>
+#include <QtCore/QTimer>
 
 namespace {
 
 class SleepTool : public QThread
 {
 public:
-  static void milliSleep(unsigned msecs)
+  static void milliSleep(unsigned msec)
   {
-    QThread::msleep(msecs);
+    QThread::msleep(msec);
   }
 };
 
@@ -58,9 +60,18 @@ namespace qttools {
  *
  *  Internally based on QThread::msleep()
  */
-void milliSleep(unsigned msecs)
+void mSecSleep(unsigned msec)
 {
-  ::SleepTool::milliSleep(msecs);
+  ::SleepTool::milliSleep(msec);
+}
+
+void waitForMSec(unsigned msec)
+{
+  if (msec > 0) {
+    QEventLoop eventLoop;
+    QTimer::singleShot(msec, &eventLoop, SLOT(quit()));
+    eventLoop.exec(QEventLoop::ExcludeUserInputEvents | QEventLoop::ExcludeSocketNotifiers);
+  }
 }
 
 } // namespace qttools

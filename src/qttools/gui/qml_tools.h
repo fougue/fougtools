@@ -36,14 +36,15 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_QML_TOOLS_H
-# define QTTOOLS_QML_TOOLS_H
+#define QTTOOLS_QML_TOOLS_H
 
+#include "qttools/gui/gui.h"
 #include <QObject>
 class QDeclarativeContext;
 
 namespace qttools {
 
-class QmlTools : public QObject
+class QTTOOLS_GUI_EXPORT QmlTools : public QObject
 {
   Q_OBJECT
 

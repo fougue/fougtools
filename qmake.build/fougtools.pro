@@ -7,3 +7,5 @@ SUBDIRS += qttools_core \
            \
            occtools
 
+include(_subdirs.pri)
+

@@ -45,7 +45,7 @@ INCLUDEPATH *= $$PWD/.. $$PWD/../..
 
 TARGET = occtools$$TARGET_SUFFIX
 
-QT -= gui
+QT *= gui
 
 CONFIG(dll) {
   DEFINES *= OCCTOOLS_DLL OCCTOOLS_MAKE_DLL

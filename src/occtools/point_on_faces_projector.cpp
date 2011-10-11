@@ -127,6 +127,8 @@ private:
   NodeIndexInTriangulation_t _currMinDistNodeId;
 };
 
+const TopoDS_Face dummyFace;
+
 } // Anonymous namespace
 
 namespace occ {
@@ -153,7 +155,7 @@ public:
 
 PointOnFacesProjector::Result::Result() :
   isValid(false),
-  face(TopoDS_Face()),
+  face(::dummyFace),
   point(occ::origin3d),
   normal(occ::zDir3d)
 {

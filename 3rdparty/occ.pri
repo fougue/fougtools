@@ -1,4 +1,5 @@
 INCLUDEPATH *= $$(CASROOT)/inc
+win32-*:INCLUDEPATH *= $$(CASROOT)/include/oce
 linux-*:DEFINES *= HAVE_CONFIG_H \
                    HAVE_FSTREAM \
                    HAVE_IOSTREAM \
@@ -9,7 +10,7 @@ linux-*:DEFINES *= LIN LININTEL OCC_CONVERT_SIGNALS
 *-64:DEFINES *= _OCC64
 
 linux-*:LIBS *= -L$$(CASROOT)/lib -L$$(CASROOT)/lib/OCE
-#win32-*:LIBS *= -L$$(CASROOT)/win32/lib
+win32-*:LIBS *= -L$$(CASROOT)/win32/lib
 LIBS *= \
 #                 -lBinLPlugin \
 #                 -lBinPlugin \

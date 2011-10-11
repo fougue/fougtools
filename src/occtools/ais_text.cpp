@@ -54,7 +54,7 @@
 #include <TCollection_AsciiString.hxx>
 
 IMPLEMENT_STANDARD_HANDLE(AIS_Text, AIS_InteractiveObject)
-IMPLEMENT_STANDARD_RTTI(AIS_Text)
+//IMPLEMENT_STANDARD_RTTI(AIS_Text)
 //
 // Foreach ancestors, we add a IMPLEMENT_STANDARD_SUPERTYPE&&
 // a IMPLEMENT_STANDARD_SUPERTYPE_ARRAY_ENTRY macro.

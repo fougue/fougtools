@@ -76,7 +76,7 @@ public:
   AIS_Text(const QString& text, const gp_Pnt& pos);
   virtual ~AIS_Text();
 
-  DEFINE_STANDARD_RTTI(AIS_Text)
+//  DEFINE_STANDARD_RTTI(AIS_Text)
 
   QColor color(unsigned i = 0) const;
   void setColor(const QColor& c, unsigned i = 0);

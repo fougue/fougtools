@@ -36,17 +36,19 @@
 ****************************************************************************/
 
 #ifndef QT_TOOLS_LINE_NUMBERS_BAR_H
-# define QT_TOOLS_LINE_NUMBERS_BAR_H
+#define QT_TOOLS_LINE_NUMBERS_BAR_H
 
-# include "qttools/gui/gui.h"
-# include <QtGui/QWidget>
+#include "qttools/gui/gui.h"
+#include <QtGui/QWidget>
 class QTextEdit;
 
 namespace qttools {
 
+class LineNumbersBarPrivate;
 class QTTOOLS_GUI_EXPORT LineNumbersBar : public QWidget
 {
   Q_OBJECT
+  Q_DECLARE_PRIVATE(LineNumbersBar)
 
 public:
   LineNumbersBar(QWidget* parent = 0);
@@ -60,9 +62,6 @@ public:
 protected:
   void paintEvent(QPaintEvent* event);
   bool event(QEvent *event);
-
-private:
-  class LineNumbersBarPrivate* const _d;
 };
 
 } //namespace qttools

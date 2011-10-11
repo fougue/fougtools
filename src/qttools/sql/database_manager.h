@@ -36,12 +36,12 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_DATABASE_MANAGER_H
-# define QTTOOLS_DATABASE_MANAGER_H
+#define QTTOOLS_DATABASE_MANAGER_H
 
-# include "qttools/sql/sql.h"
-# include <QtCore/QThread>
-# include <QtSql/QSqlDatabase>
-# include <QtSql/QSqlQuery>
+#include "qttools/sql/sql.h"
+#include <QtCore/QThread>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
 
 namespace qttools {
 
@@ -55,16 +55,17 @@ public:
   bool hasDatabase(const QThread* inThread = QThread::currentThread()) const;
 
   const QSqlDatabase& referenceDatabase() const;
-  const QSqlDatabase& database(const QThread* inThread = QThread::currentThread()) const;
-  const QSqlDatabase& createDatabase(const QThread* inThread = QThread::currentThread());
+  QSqlDatabase database(const QThread* inThread = QThread::currentThread()) const;
+  QSqlDatabase createDatabase(const QThread* inThread = QThread::currentThread());
 
-  QSqlQuery execSqlCode(
-      const QString& sqlCode, const QThread* inThread = QThread::currentThread()) const;
-  QSqlQuery execSqlCodeInTransaction(
-      const QString& sqlCode, const QThread* inThread = QThread::currentThread()) const;
+  QSqlQuery execSqlCode(const QString& sqlCode,
+                        const QThread* inThread = QThread::currentThread()) const;
+  QSqlQuery execSqlCodeInTransaction(const QString& sqlCode,
+                                     const QThread* inThread = QThread::currentThread()) const;
 
 private:
-  class DatabaseManagerPrivate* const _d;
+  class DatabaseManagerPrivate* const d_ptr;
+  Q_DECLARE_PRIVATE(DatabaseManager)
 };
 
 } // namespace qttools

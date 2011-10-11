@@ -36,9 +36,9 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_QVARIANT_TOOLS_H
-# define QTTOOLS_QVARIANT_TOOLS_H
+#define QTTOOLS_QVARIANT_TOOLS_H
 
-# include <QtCore/QVariant>
+#include <QtCore/QVariant>
 
 namespace qttools {
 
@@ -55,9 +55,9 @@ _CONTAINER_<QVariant> toContainerOfVariants(const _CONTAINER_<_T_>& typeds);
 // -- Implementation
 // --
 
-# include <algorithm>
-# include <functional>
-# include <iterator>
+#include <algorithm>
+#include <functional>
+#include <iterator>
 
 namespace qttools {
 

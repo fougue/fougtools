@@ -36,10 +36,10 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_SMTP_ACCOUNT_H
-# define QTTOOLS_SMTP_ACCOUNT_H
+#define QTTOOLS_SMTP_ACCOUNT_H
 
-# include "qttools/network/network.h"
-# include <QtCore/QString>
+#include "qttools/network/network.h"
+#include <QtCore/QString>
 
 namespace qttools {
 

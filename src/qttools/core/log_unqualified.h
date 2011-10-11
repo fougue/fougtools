@@ -36,9 +36,9 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_LOG_UNQUALIFIED_H
-# define QTTOOLS_LOG_UNQUALIFIED_H
+#define QTTOOLS_LOG_UNQUALIFIED_H
 
-# include "qttools/core/log.h"
+#include "qttools/core/log.h"
 using qttools::debugLog;
 using qttools::infoLog;
 using qttools::warningLog;

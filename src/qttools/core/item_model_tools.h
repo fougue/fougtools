@@ -36,12 +36,12 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_ITEM_MODEL_TOOLS_H
-# define QTTOOLS_ITEM_MODEL_TOOLS_H
+#define QTTOOLS_ITEM_MODEL_TOOLS_H
 
-# include "qttools/core/core.h"
-# include <QtCore/QModelIndex>
-# include <QtCore/QVector>
-# include <QtCore/Qt>
+#include "qttools/core/core.h"
+#include <QtCore/QModelIndex>
+#include <QtCore/QVector>
+#include <QtCore/Qt>
 class QAbstractItemModel;
 class QAbstractTableModel;
 class QVariant;

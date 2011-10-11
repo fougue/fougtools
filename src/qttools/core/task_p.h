@@ -35,42 +35,28 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_LENGTH_EDITOR_MANAGER_H
-#define QTTOOLS_LENGTH_EDITOR_MANAGER_H
+#ifndef QTTOOLS_TASK_P_H
+#define QTTOOLS_TASK_P_H
 
-#include "qttools/gui/gui.h"
-#include <QtCore/QLocale>
-#include <QtCore/QSet>
+#include <QtCore/private/qobject_p.h>
+#include <QtCore/QMutex>
 
 namespace qttools {
 
-class AbstractLengthEditor;
-
-class QTTOOLS_GUI_EXPORT LengthEditorManager : public QObject
+class TaskPrivate : public QObjectPrivate
 {
-  Q_OBJECT
-
-private:
-  LengthEditorManager();
-
-  void attach(AbstractLengthEditor* editor);
-  void detach(AbstractLengthEditor* editor);
-
 public:
-  static LengthEditorManager* globalInstance();
+  TaskPrivate();
 
-  QLocale::MeasurementSystem measurementSytem() const;
-  void setMeasurementSystem(QLocale::MeasurementSystem sys);
-
-signals:
-  void currentMeasurementSytemChanged(QLocale::MeasurementSystem sys);
-
-private:
-  friend class AbstractLengthEditor;
-  QSet<AbstractLengthEditor*> _lengthEditors;
-  QLocale::MeasurementSystem _measureSys;
+  bool isBoundToThread;
+  bool isRunning;
+  bool isWaitingStop;
+  bool autoDeleteBoundThread;
+  int loopCount;
+  int loopInterval;
+  QMutex mutex;
 };
 
 } // namespace qttools
 
-#endif // QTTOOLS_LENGTH_EDITOR_MANAGER_H
+#endif // QTTOOLS_TASK_P_H

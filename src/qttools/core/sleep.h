@@ -36,9 +36,9 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_SLEEP_H
-# define QTTOOLS_SLEEP_H
+#define QTTOOLS_SLEEP_H
 
-# include "qttools/core/core.h"
+#include "qttools/core/core.h"
 
 namespace qttools {
 

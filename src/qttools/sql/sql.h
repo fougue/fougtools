@@ -36,17 +36,17 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_SQL_H
-# define QTTOOLS_SQL_H
+#define QTTOOLS_SQL_H
 
-# include <QtCore/QtGlobal>
-# ifdef QTTOOLS_SQL_DLL
-#  ifdef QTTOOLS_SQL_MAKE_DLL
-#   define QTTOOLS_SQL_EXPORT Q_DECL_EXPORT
-#  else
-#   define QTTOOLS_SQL_EXPORT Q_DECL_IMPORT
-#  endif // QTTOOLS_SQL_MAKE_DLL
+#include <QtCore/QtGlobal>
+#ifdef QTTOOLS_SQL_DLL
+# ifdef QTTOOLS_SQL_MAKE_DLL
+#  define QTTOOLS_SQL_EXPORT Q_DECL_EXPORT
 # else
-#  define QTTOOLS_SQL_EXPORT
-# endif // QTTOOLS_SQL_DLL
+#  define QTTOOLS_SQL_EXPORT Q_DECL_IMPORT
+# endif // QTTOOLS_SQL_MAKE_DLL
+#else
+# define QTTOOLS_SQL_EXPORT
+#endif // QTTOOLS_SQL_DLL
 
 #endif // QTTOOLS_SQL_H

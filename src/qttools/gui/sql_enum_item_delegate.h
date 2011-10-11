@@ -36,11 +36,11 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_SQL_ENUM_ITEM_DELEGATE_H
-# define QTTOOLS_SQL_ENUM_ITEM_DELEGATE_H
+#define QTTOOLS_SQL_ENUM_ITEM_DELEGATE_H
 
-# include <QtGui/QStyledItemDelegate>
-# include <QtGui/QComboBox>
-# include "qttools/sql/cpp_sql_enum_map.h"
+#include <QtGui/QStyledItemDelegate>
+#include <QtGui/QComboBox>
+#include "qttools/sql/cpp_sql_enum_map.h"
 
 namespace qttools {
 

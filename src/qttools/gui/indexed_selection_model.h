@@ -36,11 +36,11 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_INDEXED_SELECTION_MODEL_H
-# define QTTOOLS_INDEXED_SELECTION_MODEL_H
+#define QTTOOLS_INDEXED_SELECTION_MODEL_H
 
-# include "qttools/gui/gui.h"
-# include <QtCore/QObject>
-# include <QtCore/QSet>
+#include "qttools/gui/gui.h"
+#include <QtCore/QObject>
+#include <QtCore/QSet>
 
 namespace qttools {
 

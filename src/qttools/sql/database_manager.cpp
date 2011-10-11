@@ -54,9 +54,7 @@ class DatabaseManagerPrivate
 {
 public:
   DatabaseManagerPrivate(const QSqlDatabase& refDb) :
-    databases(),
-    refDatabase(refDb),
-    mutex()
+    refDatabase(refDb)
   {
     assert(QThread::currentThread() != 0);
     this->databases[QThread::currentThread()] = refDb;
@@ -73,18 +71,20 @@ public:
  */
 
 DatabaseManager::DatabaseManager(const QSqlDatabase& refDb) :
-  _d(new DatabaseManagerPrivate(refDb))
+  d_ptr(new DatabaseManagerPrivate(refDb))
 {
 }
 
 DatabaseManager::~DatabaseManager()
 {
-  delete _d;
+  Q_D(DatabaseManager);
+  delete d;
 }
 
 const QSqlDatabase& DatabaseManager::referenceDatabase() const
 {
-  return _d->refDatabase;
+  Q_D(const DatabaseManager);
+  return d->refDatabase;
 }
 
 bool DatabaseManager::isDatabaseOpen(const QThread* inThread) const
@@ -94,28 +94,34 @@ bool DatabaseManager::isDatabaseOpen(const QThread* inThread) const
 
 bool DatabaseManager::hasDatabase(const QThread* inThread) const
 {
-  return _d->databases.contains(inThread);
+  Q_D(const DatabaseManager);
+  return d->databases.contains(inThread);
 }
 
-const QSqlDatabase& DatabaseManager::database(const QThread* inThread) const
+QSqlDatabase DatabaseManager::database(const QThread* inThread) const
 {
+  Q_D(const DatabaseManager);
   assert(this->hasDatabase(inThread));
-  return _d->databases[inThread];
+  return d->databases.value(inThread);
 }
 
-const QSqlDatabase& DatabaseManager::createDatabase(const QThread* inThread)
+QSqlDatabase DatabaseManager::createDatabase(const QThread* inThread)
 {
+  Q_D(DatabaseManager);
   if (this->hasDatabase(inThread))
     return this->database(inThread);
-  QMutexLocker locker(&(_d->mutex)); Q_UNUSED(locker);
-  _d->databases[inThread] =
-      QSqlDatabase::cloneDatabase(this->referenceDatabase(),
-                                  QString("thread 0x%1--%2")
-                                  .arg(cpp::scalarAddress(inThread), 0, 16)
-                                  .arg(QUuid::createUuid().toString()));
-  if (_d->databases[inThread].isValid())
-    _d->databases[inThread].open();
-  return this->database(inThread);
+
+  QMutexLocker locker(&(d->mutex));
+  Q_UNUSED(locker);
+
+  QSqlDatabase newDb = QSqlDatabase::cloneDatabase(this->referenceDatabase(),
+                                                   QString("thread 0x%1--%2")
+                                                   .arg(cpp::scalarAddress(inThread), 0, 16)
+                                                   .arg(QUuid::createUuid().toString()));
+  if (newDb.isValid())
+    newDb.open();
+  d->databases.insert(inThread, newDb);
+  return newDb;
 }
 
 QSqlQuery DatabaseManager::execSqlCode(const QString& sqlCode,

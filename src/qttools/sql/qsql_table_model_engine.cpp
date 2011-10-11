@@ -100,75 +100,84 @@ public:
 
 QSqlTableModelEngine::QSqlTableModelEngine(QSqlTableModel* model,
                                            DatabaseManager* dbMgr) :
-  _d(new QSqlTableModelEnginePrivate(model, dbMgr))
+  d_ptr(new QSqlTableModelEnginePrivate(model, dbMgr))
 {
 }
 
 QSqlTableModelEngine::~QSqlTableModelEngine()
 {
-  delete _d;
+  Q_D(QSqlTableModelEngine);
+  delete d;
 }
 
 QSqlTableModel* QSqlTableModelEngine::model() const
 {
-  return _d->model;
+  Q_D(const QSqlTableModelEngine);
+  return d->model;
 }
 
 void QSqlTableModelEngine::clear()
 {
-  _d->sqlCode.clear();
+  Q_D(QSqlTableModelEngine);
+  d->sqlCode.clear();
 }
 
 QSqlError QSqlTableModelEngine::lastError() const
 {
-  return _d->database().lastError();
+  Q_D(const QSqlTableModelEngine);
+  return d->database().lastError();
 }
 
 bool QSqlTableModelEngine::exec()
 {
-  const QSqlQuery resQry = _d->dbMgr->execSqlCode(_d->sqlCode);
+  Q_D(const QSqlTableModelEngine);
+  const QSqlQuery resQry = d->dbMgr->execSqlCode(d->sqlCode);
   this->clear();
   return resQry.lastError().type() == QSqlError::NoError;
 }
 
-void QSqlTableModelEngine::setPrimaryKeyColumn(int col)
-{
-  const QSqlDriver* driver = _d->database().driver();
-  if (driver != 0) {
-    const QSqlRecord rec = driver->record(_d->tableName());
-    QSqlIndex pkey;
-    pkey.append(rec.field(col));
-    _d->pkey = pkey;
-  }
-}
-
 QString QSqlTableModelEngine::sqlCode() const
 {
-  return _d->sqlCode;
+  Q_D(const QSqlTableModelEngine);
+  return d->sqlCode;
+}
+
+void QSqlTableModelEngine::setPrimaryKeyColumn(int col)
+{
+  Q_D(QSqlTableModelEngine);
+  const QSqlDriver* driver = d->database().driver();
+  if (driver != 0) {
+    const QSqlRecord rec = driver->record(d->tableName());
+    QSqlIndex pkey;
+    pkey.append(rec.field(col));
+    d->pkey = pkey;
+  }
 }
 
 void QSqlTableModelEngine::sqlInsert(int modelRow)
 {
-  const QSqlDriver* driver = _d->database().driver();
+  Q_D(QSqlTableModelEngine);
+  const QSqlDriver* driver = d->database().driver();
   if (driver == 0)
     return;
   const QSqlRecord rowRec = this->model()->record(modelRow);
-  _d->sqlCode += driver->sqlStatement(QSqlDriver::InsertStatement,
-                                      _d->tableName(), rowRec, false) + ";\n\n";
+  d->sqlCode += driver->sqlStatement(QSqlDriver::InsertStatement,
+                                      d->tableName(), rowRec, false) + ";\n\n";
 }
 
 void QSqlTableModelEngine::sqlUpdate(int modelRow)
 {
-  const QSqlDriver* driver = _d->database().driver();
-  if (driver == 0 || _d->pkey.isEmpty())
+  Q_D(QSqlTableModelEngine);
+  const QSqlDriver* driver = d->database().driver();
+  if (driver == 0 || d->pkey.isEmpty())
     return;
-  const QSqlRecord rowRec = _d->model->record(modelRow);
-  const QSqlIndex pKeyVal = _d->primaryKeyValue(rowRec);
-  _d->sqlCode +=
+  const QSqlRecord rowRec = d->model->record(modelRow);
+  const QSqlIndex pKeyVal = d->primaryKeyValue(rowRec);
+  d->sqlCode +=
       driver->sqlStatement(QSqlDriver::UpdateStatement,
-                           _d->tableName(), rowRec, false) + "\n    " +
+                           d->tableName(), rowRec, false) + "\n    " +
       driver->sqlStatement(QSqlDriver::WhereStatement,
-                           _d->tableName(), pKeyVal, false) + ";\n\n";
+                           d->tableName(), pKeyVal, false) + ";\n\n";
 }
 
 void QSqlTableModelEngine::sqlUpdateField(int modelRow, int modelColumn,
@@ -182,8 +191,9 @@ void QSqlTableModelEngine::sqlUpdateField(int modelRow, int modelColumn,
 void QSqlTableModelEngine::sqlUpdateFields(
     int modelRow, const QHash<int, QVariant>& fieldValues)
 {
-  const QSqlDriver* driver = _d->database().driver();
-  if (driver == 0 || _d->pkey.isEmpty())
+  Q_D(QSqlTableModelEngine);
+  const QSqlDriver* driver = d->database().driver();
+  if (driver == 0 || d->pkey.isEmpty())
     return;
   const QSqlRecord modelRec = this->model()->record(modelRow);
   QSqlRecord rec;
@@ -195,26 +205,27 @@ void QSqlTableModelEngine::sqlUpdateFields(
     rec.append(modelRec.field(fieldIt.key()));
     rec.setValue(rec.count() - 1, fieldIt.value());
   }
-  const QSqlIndex pKeyVal = _d->primaryKeyValue(modelRec);
-  _d->sqlCode +=
+  const QSqlIndex pKeyVal = d->primaryKeyValue(modelRec);
+  d->sqlCode +=
       driver->sqlStatement(QSqlDriver::UpdateStatement,
-                           _d->tableName(), rec, false) + "\n    " +
+                           d->tableName(), rec, false) + "\n    " +
       driver->sqlStatement(QSqlDriver::WhereStatement,
-                           _d->tableName(), pKeyVal, false) + ";\n\n";
+                           d->tableName(), pKeyVal, false) + ";\n\n";
 }
 
 void QSqlTableModelEngine::sqlDelete(int modelRow)
 {
-  const QSqlDriver* driver = _d->database().driver();
-  if (driver == 0 || _d->pkey.isEmpty())
+  Q_D(QSqlTableModelEngine);
+  const QSqlDriver* driver = d->database().driver();
+  if (driver == 0 || d->pkey.isEmpty())
     return;
   const QSqlRecord rowRec = this->model()->record(modelRow);
-  const QSqlIndex pKeyVal = _d->primaryKeyValue(rowRec);
-  _d->sqlCode +=
+  const QSqlIndex pKeyVal = d->primaryKeyValue(rowRec);
+  d->sqlCode +=
       driver->sqlStatement(QSqlDriver::DeleteStatement,
-                           _d->tableName(), pKeyVal, false) + "\n    " +
+                           d->tableName(), pKeyVal, false) + "\n    " +
       driver->sqlStatement(QSqlDriver::WhereStatement,
-                           _d->tableName(), pKeyVal, false) + ";\n\n";
+                           d->tableName(), pKeyVal, false) + ";\n\n";
 }
 
 /*! \brief Add a user-defined SQL statement to the list of SQL commands that
@@ -223,7 +234,8 @@ void QSqlTableModelEngine::sqlDelete(int modelRow)
  */
 void QSqlTableModelEngine::sqlStatement(const QString& sqlStmt)
 {
-  _d->sqlCode += sqlStmt + ";\n\n";
+  Q_D(QSqlTableModelEngine);
+  d->sqlCode += sqlStmt + ";\n\n";
 }
 
 } // namespace qttools

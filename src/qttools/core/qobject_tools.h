@@ -36,9 +36,9 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_QOBJECT_TOOLS_H
-# define QTTOOLS_QOBJECT_TOOLS_H
+#define QTTOOLS_QOBJECT_TOOLS_H
 
-# include "qttools/core/core.h"
+#include "qttools/core/core.h"
 class QObject;
 
 namespace qttools {

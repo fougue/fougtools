@@ -36,10 +36,10 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_MAIL_SEND_H
-# define QTTOOLS_MAIL_SEND_H
+#define QTTOOLS_MAIL_SEND_H
 
-# include "qttools/network/network.h"
-# include <QtCore/QString>
+#include "qttools/network/network.h"
+#include <QtCore/QString>
 
 namespace qttools {
 
@@ -61,7 +61,8 @@ public:
   QString errorString() const;
 
 private:
-  class MailSendPrivate* const _d;
+  class MailSendPrivate* const d_ptr;
+  Q_DECLARE_PRIVATE(MailSend)
 };
 
 } // namespace qttools

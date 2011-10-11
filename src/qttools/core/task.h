@@ -35,15 +35,16 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_TIMED_TASK_H
-# define QTTOOLS_TIMED_TASK_H
+#ifndef QTTOOLS_TASK_H
+#define QTTOOLS_TASK_H
 
-# include "qttools/core/core.h"
-# include <QtCore/QObject>
+#include "qttools/core/core.h"
+#include <QtCore/QObject>
 class QThread;
 
 namespace qttools {
 
+class TaskPrivate;
 class QTTOOLS_CORE_EXPORT Task : public QObject
 {
   Q_OBJECT
@@ -53,6 +54,7 @@ class QTTOOLS_CORE_EXPORT Task : public QObject
              READ autoDeleteBoundThread WRITE setAutoDeleteBoundThread)
   Q_PROPERTY(bool loopCount READ loopCount WRITE setLoopCount)
   Q_PROPERTY(bool loopInterval READ loopInterval WRITE setLoopInterval)
+  Q_DECLARE_PRIVATE(Task)
 
 public:
   Task(QObject* parent = 0);
@@ -88,8 +90,7 @@ protected:
   virtual void action() = 0;
   void acknowledgeStop();
 
-private:
-  class TaskPrivate* const _d;
+  Task(TaskPrivate& dd, QObject* parent = 0);
 };
 
 
@@ -138,4 +139,4 @@ Task* newFunctorTask(_FUNCTOR_ functor, QObject* parent)
 
 } // namespace qttools
 
-#endif // QTTOOLS_TIMED_TASK_H
+#endif // QTTOOLS_TASK_H

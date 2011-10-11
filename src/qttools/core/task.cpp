@@ -36,12 +36,12 @@
 ****************************************************************************/
 
 #include "qttools/core/task.h"
+#include "qttools/core/task_p.h"
 
 #include "cpptools/functional.h"
 #include <QtCore/QEventLoop>
 #include <QtCore/QThread>
 #include <QtCore/QTime>
-#include <QtCore/QMutex>
 #include <QtCore/QMutexLocker>
 #include <QtCore/QTimer>
 #include <QtCore/QTimerEvent>
@@ -50,6 +50,7 @@
 #include <QtCore/QtDebug>
 
 namespace {
+
 bool infiniteLoopPredicate()
 {
   return true;
@@ -66,6 +67,7 @@ void waitFor(_LOOP_PREDICATE_ loopPredicate, int maxTime = -1)
   while (loopPredicate() && waitForStopTime < maxTime)
     waitForStopTime += time.elapsed() - waitForStopTime;
 }
+
 } // Anonymous namespace
 
 namespace qttools {
@@ -73,28 +75,17 @@ namespace qttools {
 /*! \class TaskPrivate
  *  \brief Internal (pimpl for Task)
  */
-class TaskPrivate
-{
-public:
-  TaskPrivate() :
-    isBoundToThread(false),
-    isRunning(false),
-    isWaitingStop(false),
-    autoDeleteBoundThread(true),
-    loopCount(1),
-    loopInterval(50),
-    mutex(QMutex::Recursive)
-  {
-  }
 
-  bool isBoundToThread;
-  bool isRunning;
-  bool isWaitingStop;
-  bool autoDeleteBoundThread;
-  int loopCount;
-  int loopInterval;
-  QMutex mutex;
-};
+TaskPrivate::TaskPrivate() :
+  isBoundToThread(false),
+  isRunning(false),
+  isWaitingStop(false),
+  autoDeleteBoundThread(true),
+  loopCount(1),
+  loopInterval(50),
+  mutex(QMutex::Recursive)
+{
+}
 
 
 
@@ -103,8 +94,7 @@ public:
  */
 
 Task::Task(QObject* parent) :
-  QObject(parent),
-  _d(new TaskPrivate)
+  QObject(*new TaskPrivate, parent)
 {
 }
 
@@ -113,41 +103,47 @@ Task::~Task()
   if (this->thread() != 0 &&
       this->isBoundToThread() && this->autoDeleteBoundThread())
     delete this->thread();
-  delete _d;
 }
 
 bool Task::isRunning() const
 {
-  return _d->isRunning;
+  Q_D(const Task);
+  return d->isRunning;
 }
 
 bool Task::isWaitingStop() const
 {
-  return _d->isWaitingStop;
+  Q_D(const Task);
+  return d->isWaitingStop;
 }
 
 bool Task::isBoundToThread() const
 {
-  return _d->isBoundToThread;
+  Q_D(const Task);
+  return d->isBoundToThread;
 }
 
 bool Task::autoDeleteBoundThread() const
 {
-  return _d->autoDeleteBoundThread;
+  Q_D(const Task);
+  return d->autoDeleteBoundThread;
 }
 
 int Task::loopCount() const
 {
-  return _d->loopCount;
+  Q_D(const Task);
+  return d->loopCount;
 }
 
 int Task::loopInterval() const
 {
-  return _d->loopInterval;
+  Q_D(const Task);
+  return d->loopInterval;
 }
 
 void Task::bindToThread(QThread* thread)
 {
+  Q_D(Task);
   if (thread == 0)
     return;
   if (this->isBoundToThread()) {
@@ -156,7 +152,7 @@ void Task::bindToThread(QThread* thread)
     disconnect(this, SIGNAL(stopped()), this->thread(), SLOT(quit()));
   }
   this->moveToThread(thread);
-  _d->isBoundToThread = true;
+  d->isBoundToThread = true;
   connect(thread, SIGNAL(started()), this, SLOT(exec()), Qt::UniqueConnection);
   connect(this, SIGNAL(finished()), thread, SLOT(quit()), Qt::UniqueConnection);
   connect(this, SIGNAL(stopped()), thread, SLOT(quit()), Qt::UniqueConnection);
@@ -164,10 +160,11 @@ void Task::bindToThread(QThread* thread)
 
 void Task::exec()
 {
+  Q_D(Task);
   if (this->isWaitingStop())
     return this->acknowledgeStop();
 
-  _d->isRunning = true;
+  d->isRunning = true;
   int currLoop = 0;
   QEventLoop eventLoop;
   connect(this, SIGNAL(aboutToStop()), &eventLoop, SLOT(quit()));
@@ -189,7 +186,7 @@ void Task::exec()
     this->acknowledgeStop();
   else
   {
-    _d->isRunning = false;
+    d->isRunning = false;
     emit finished();
     if (this->isBoundToThread())
       this->thread()->quit();
@@ -198,10 +195,11 @@ void Task::exec()
 
 void Task::asynchronousStop()
 {
-  //QMutexLocker locker(&_d->mutex); Q_UNUSED(locker);
+  Q_D(Task);
+  //QMutexLocker locker(&d->mutex); Q_UNUSED(locker);
   if (this->isWaitingStop() || !this->isRunning())
     return;
-  _d->isWaitingStop = true;
+  d->isWaitingStop = true;
   emit aboutToStop();
 }
 
@@ -232,27 +230,36 @@ void Task::stop(int maxTime)
 
 void Task::setAutoDeleteBoundThread(bool v)
 {
-  _d->autoDeleteBoundThread = v;
+  Q_D(Task);
+  d->autoDeleteBoundThread = v;
 }
 
 void Task::setLoopCount(int v)
 {
-  _d->loopCount = v;
+  Q_D(Task);
+  d->loopCount = v;
 }
 
 void Task::setLoopInterval(int msecs)
 {
-  _d->loopInterval = msecs;
+  Q_D(Task);
+  d->loopInterval = msecs;
 }
 
 void Task::acknowledgeStop()
 {
-  //QMutexLocker locker(&_d->mutex); Q_UNUSED(locker);
-  _d->isWaitingStop = false;
-  _d->isRunning = false;
+  Q_D(Task);
+  //QMutexLocker locker(&d->mutex); Q_UNUSED(locker);
+  d->isWaitingStop = false;
+  d->isRunning = false;
   emit stopped();
   if (this->isBoundToThread())
     this->thread()->quit();
+}
+
+Task::Task(TaskPrivate& dd, QObject* parent) :
+  QObject(dd, parent)
+{
 }
 
 } // namespace qttools

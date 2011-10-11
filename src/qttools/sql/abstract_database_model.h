@@ -36,10 +36,10 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_ABSTRACT_DATABASE_MODEL_H
-# define QTTOOLS_ABSTRACT_DATABASE_MODEL_H
+#define QTTOOLS_ABSTRACT_DATABASE_MODEL_H
 
-# include "qttools/sql/sql.h"
-# include <QtSql/QSqlError>
+#include "qttools/sql/sql.h"
+#include <QtSql/QSqlError>
 
 namespace qttools {
 

@@ -36,10 +36,10 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_SQL_DATA_MODEL_H
-# define QTTOOLS_SQL_DATA_MODEL_H
+#define QTTOOLS_SQL_DATA_MODEL_H
 
-# include "qttools/sql/sql.h"
-# include <QtSql/QSqlTableModel>
+#include "qttools/sql/sql.h"
+#include <QtSql/QSqlTableModel>
 
 namespace qttools {
 class DatabaseManager;

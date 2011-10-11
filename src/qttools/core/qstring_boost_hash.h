@@ -36,9 +36,9 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_QSTRING_BOOST_HASH_H
-# define QTTOOLS_QSTRING_BOOST_HASH_H
+#define QTTOOLS_QSTRING_BOOST_HASH_H
 
-# include <QtCore/QString>
+#include <QtCore/QString>
 
 std::size_t hash_value(QString const& str);
 

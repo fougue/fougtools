@@ -36,13 +36,13 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_QSQL_QUERY_TOOLS_H
-# define QTTOOLS_QSQL_QUERY_TOOLS_H
+#define QTTOOLS_QSQL_QUERY_TOOLS_H
 
-# include "qttools/sql/sql.h"
-# include <stdexcept>
-# include <QtSql/QSqlDatabase>
-# include <QtSql/QSqlError>
-# include <QtSql/QSqlQuery>
+#include "qttools/sql/sql.h"
+#include <stdexcept>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlError>
+#include <QtSql/QSqlQuery>
 
 namespace qttools {
 

@@ -36,17 +36,17 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_GUI_H
-# define QTTOOLS_GUI_H
+#define QTTOOLS_GUI_H
 
-# include <QtCore/QtGlobal>
-# ifdef QTTOOLS_GUI_DLL
-#  ifdef QTTOOLS_GUI_MAKE_DLL
-#   define QTTOOLS_GUI_EXPORT Q_DECL_EXPORT
-#  else
-#   define QTTOOLS_GUI_EXPORT Q_DECL_IMPORT
-#  endif // QTTOOLS_GUI_MAKE_DLL
+#include <QtCore/QtGlobal>
+#ifdef QTTOOLS_GUI_DLL
+# ifdef QTTOOLS_GUI_MAKE_DLL
+#  define QTTOOLS_GUI_EXPORT Q_DECL_EXPORT
 # else
-#  define QTTOOLS_GUI_EXPORT
-# endif // QTTOOLS_GUI_DLL
+#  define QTTOOLS_GUI_EXPORT Q_DECL_IMPORT
+# endif // QTTOOLS_GUI_MAKE_DLL
+#else
+# define QTTOOLS_GUI_EXPORT
+#endif // QTTOOLS_GUI_DLL
 
 #endif // QTTOOLS_GUI_H

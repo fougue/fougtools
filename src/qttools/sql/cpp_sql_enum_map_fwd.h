@@ -36,7 +36,7 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_CPP_SQL_ENUM_MAP_FWD_H
-# define QTTOOLS_CPP_SQL_ENUM_MAP_FWD_H
+#define QTTOOLS_CPP_SQL_ENUM_MAP_FWD_H
 
 namespace qttools {
 

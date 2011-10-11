@@ -36,10 +36,10 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_ITEM_VIEW_TOOLS_H
-# define QTTOOLS_ITEM_VIEW_TOOLS_H
+#define QTTOOLS_ITEM_VIEW_TOOLS_H
 
-# include "qttools/gui/gui.h"
-# include <QtCore/QVector>
+#include "qttools/gui/gui.h"
+#include <QtCore/QVector>
 class QAbstractItemView;
 class QSortFilterProxyModel;
 

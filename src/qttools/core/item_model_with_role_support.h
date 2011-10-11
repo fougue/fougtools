@@ -36,9 +36,9 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_ITEM_MODEL_WITH_ROLE_SUPPORT_H
-# define QTTOOLS_ITEM_MODEL_WITH_ROLE_SUPPORT_H
+#define QTTOOLS_ITEM_MODEL_WITH_ROLE_SUPPORT_H
 
-# include <QtCore/QAbstractItemModel>
+#include <QtCore/QAbstractItemModel>
 
 namespace qttools {
 

@@ -36,10 +36,10 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_SINGLETON_H
-# define QTTOOLS_SINGLETON_H
+#define QTTOOLS_SINGLETON_H
 
-# include <QtCore/QAtomicPointer>
-# include <QtCore/QMutex>
+#include <QtCore/QAtomicPointer>
+#include <QtCore/QMutex>
 
 namespace qttools {
 

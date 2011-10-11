@@ -36,11 +36,11 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_IDENTIFIER_MODEL_ROW_MAPPING_H
-# define QTTOOLS_IDENTIFIER_MODEL_ROW_MAPPING_H
+#define QTTOOLS_IDENTIFIER_MODEL_ROW_MAPPING_H
 
-# include "qttools/core/core.h"
-# include <QtCore/QHash>
-# include <QtCore/QAbstractItemModel>
+#include "qttools/core/core.h"
+#include <QtCore/QHash>
+#include <QtCore/QAbstractItemModel>
 
 namespace qttools {
 
@@ -117,12 +117,10 @@ void IdentifierModelRowMapping<_IDENTIFIER_>::remap()
 {
   const QAbstractItemModel* m = this->_model;
   this->_mapping.clear();
-  for (int iRow = 0; iRow < this->_model->rowCount(); ++iRow)
-  {
-    const QVariant identVar =
-        m->data(m->index(iRow, this->_identCol));
+  for (int row = 0; row < this->_model->rowCount(); ++row) {
+    const QVariant identVar = m->data(m->index(row, this->_identCol));
     const _IDENTIFIER_ ident = identVar.value<_IDENTIFIER_>();
-    this->_mapping[ident] = iRow;
+    this->_mapping[ident] = row;
   }
 }
 

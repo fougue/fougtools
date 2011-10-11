@@ -36,14 +36,16 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_ITEM_DELEGATE_EDIT_MODE_H
-# define QTTOOLS_ITEM_DELEGATE_EDIT_MODE_H
+#define QTTOOLS_ITEM_DELEGATE_EDIT_MODE_H
 
 namespace qttools {
-  enum ItemDelegateEditMode
-  {
-    ItemDelegateReadOnly,
-    ItemDelegateReadWrite
-  };
+
+enum ItemDelegateEditMode
+{
+  ItemDelegateReadOnly,
+  ItemDelegateReadWrite
+};
+
 } // namespace qttools
 
 #endif // ITEM_DELEGATE_EDIT_MODE_H

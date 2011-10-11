@@ -36,17 +36,17 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_NETWORK_H
-# define QTTOOLS_NETWORK_H
+#define QTTOOLS_NETWORK_H
 
-# include <QtCore/QtGlobal>
-# ifdef QTTOOLS_NETWORK_DLL
-#  ifdef QTTOOLS_NETWORK_MAKE_DLL
-#   define QTTOOLS_NETWORK_EXPORT Q_DECL_EXPORT
-#  else
-#   define QTTOOLS_NETWORK_EXPORT Q_DECL_IMPORT
-#  endif // QTTOOLS_NETWORK_MAKE_DLL
+#include <QtCore/QtGlobal>
+#ifdef QTTOOLS_NETWORK_DLL
+# ifdef QTTOOLS_NETWORK_MAKE_DLL
+#  define QTTOOLS_NETWORK_EXPORT Q_DECL_EXPORT
 # else
-#  define QTTOOLS_NETWORK_EXPORT
-# endif // QTTOOLS_NETWORK_DLL
+#  define QTTOOLS_NETWORK_EXPORT Q_DECL_IMPORT
+# endif // QTTOOLS_NETWORK_MAKE_DLL
+#else
+# define QTTOOLS_NETWORK_EXPORT
+#endif // QTTOOLS_NETWORK_DLL
 
 #endif // QTTOOLS_NETWORK_H

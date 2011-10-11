@@ -36,11 +36,11 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_ABSTRACT_PLUGIN_LOADER_H
-# define QTTOOLS_ABSTRACT_PLUGIN_LOADER_H
+#define QTTOOLS_ABSTRACT_PLUGIN_LOADER_H
 
-# include "qttools/core/core.h"
-# include <QtCore/QString>
-# include <QtCore/QVector>
+#include "qttools/core/core.h"
+#include <QtCore/QString>
+#include <QtCore/QVector>
 class QObject;
 class QRegExp;
 
@@ -69,7 +69,8 @@ protected:
   virtual bool isPluginCompatible(const QObject* plugin) const = 0;
 
 private:
-  class AbstractPluginLoaderPrivate* const _d;
+  class AbstractPluginLoaderPrivate* const d_ptr;
+  Q_DECLARE_PRIVATE(AbstractPluginLoader)
 };
 
 } // namespace qttools

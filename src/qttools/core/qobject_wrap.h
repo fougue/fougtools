@@ -36,9 +36,9 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_QOBJECT_WRAP_H
-# define QTTOOLS_QOBJECT_WRAP_H
+#define QTTOOLS_QOBJECT_WRAP_H
 
-# include <QtCore/QObject>
+#include <QtCore/QObject>
 
 namespace qttools {
 

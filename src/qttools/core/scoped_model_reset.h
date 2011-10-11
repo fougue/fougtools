@@ -36,7 +36,7 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_SCOPED_MODEL_RESET_H
-# define QTTOOLS_SCOPED_MODEL_RESET_H
+#define QTTOOLS_SCOPED_MODEL_RESET_H
 
 namespace qttools {
 

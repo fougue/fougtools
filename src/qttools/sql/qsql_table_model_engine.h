@@ -36,12 +36,12 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_QSQL_TABLE_MODEL_ENGINE_H
-# define QTTOOLS_QSQL_TABLE_MODEL_ENGINE_H
+#define QTTOOLS_QSQL_TABLE_MODEL_ENGINE_H
 
-# include "qttools/sql/sql.h"
-# include <QtCore/QHash>
-# include <QtSql/QSqlError>
-# include <QtSql/QSqlIndex>
+#include "qttools/sql/sql.h"
+#include <QtCore/QHash>
+#include <QtSql/QSqlError>
+#include <QtSql/QSqlIndex>
 class QSqlTableModel;
 
 namespace qttools {
@@ -71,7 +71,8 @@ public:
   void sqlStatement(const QString& sqlStmt);
 
 private:
-  class QSqlTableModelEnginePrivate* const _d;
+  class QSqlTableModelEnginePrivate* const d_ptr;
+  Q_DECLARE_PRIVATE(QSqlTableModelEngine)
 };
 
 } // namespace qttools

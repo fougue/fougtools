@@ -36,10 +36,10 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_WIDGET_TOOLS_H
-# define QTTOOLS_WIDGET_TOOLS_H
+#define QTTOOLS_WIDGET_TOOLS_H
 
-# include "qttools/gui/gui.h"
-# include <QtCore/QPair>
+#include "qttools/gui/gui.h"
+#include <QtCore/QPair>
 class QAbstractScrollArea;
 class QWidget;
 
@@ -72,7 +72,7 @@ void setHorizAndVertScrollValue(QAbstractScrollArea* area,
 // -- Implementation
 // --
 
-# include <QWidget>
+#include <QtGui/QWidget>
 
 namespace qttools {
 

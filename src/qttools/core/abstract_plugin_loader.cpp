@@ -90,62 +90,71 @@ public:
  */
 
 AbstractPluginLoader::AbstractPluginLoader() :
-  _d(new AbstractPluginLoaderPrivate)
+  d_ptr(new AbstractPluginLoaderPrivate)
 {
 }
 
 AbstractPluginLoader::~AbstractPluginLoader()
 {
-  foreach (QPluginLoader* pluginLoader, _d->pluginLoaders) {
+  Q_D(AbstractPluginLoader);
+  foreach (QPluginLoader* pluginLoader, d->pluginLoaders) {
     if (pluginLoader != 0) {
       if (this->autoDeletePlugins())
         pluginLoader->unload();
       delete pluginLoader;
     }
   }
-  delete _d;
+  delete d;
 }
 
 bool AbstractPluginLoader::autoDeletePlugins() const
 {
-  return _d->autoDeletePlugins;
+  Q_D(const AbstractPluginLoader);
+  return d->autoDeletePlugins;
 }
 
 QString AbstractPluginLoader::loadingFolder() const
 {
-  return _d->loadingFolder;
+  Q_D(const AbstractPluginLoader);
+  return d->loadingFolder;
 }
 
 QString AbstractPluginLoader::filename(const QObject* plugin) const
 {
-  if (_d->pluginFilenames.contains(plugin))
-    return _d->pluginFilenames[plugin];
+  Q_D(const AbstractPluginLoader);
+  if (d->pluginFilenames.contains(plugin))
+    return d->pluginFilenames.value(plugin);
   return QString();
 }
 
 QVector<QObject*> AbstractPluginLoader::plugins()
 {
-  return _d->plugins;
+  Q_D(AbstractPluginLoader);
+  return d->plugins;
 }
 
 const QVector<QObject*>& AbstractPluginLoader::plugins() const
 {
-  return _d->plugins;
+  Q_D(const AbstractPluginLoader);
+  return d->plugins;
 }
 
 void AbstractPluginLoader::setAutoDeletePlugins(bool v)
 {
-  _d->autoDeletePlugins = v;
+  Q_D(AbstractPluginLoader);
+  d->autoDeletePlugins = v;
 }
 
 void AbstractPluginLoader::setLoadingFolder(const QString& folder)
 {
-  _d->loadingFolder = folder;
+  Q_D(AbstractPluginLoader);
+  d->loadingFolder = folder;
 }
 
 void AbstractPluginLoader::loadPlugins(const QRegExp& fileRx,
                                        QVector<QString>* errors)
 {
+  Q_D(AbstractPluginLoader);
   const QDir pluginsFolder(this->loadingFolder());
   QStringList entries(pluginsFolder.entryList(QDir::Files));
   foreach (const QString& entry, entries) {
@@ -158,9 +167,9 @@ void AbstractPluginLoader::loadPlugins(const QRegExp& fileRx,
       QObject* plugin = pluginLoader->instance();
       // Is the plugin compatible ?
       if (this->isPluginCompatible(plugin)) {
-        _d->plugins.append(plugin);
-        _d->pluginLoaders.append(pluginLoader);
-        _d->pluginFilenames.insert(plugin, entry);
+        d->plugins.append(plugin);
+        d->pluginLoaders.append(pluginLoader);
+        d->pluginFilenames.insert(plugin, entry);
       }
       else {
 #ifdef DEBUG_ABSTRACT_PLUGIN_LOADER
@@ -182,16 +191,17 @@ void AbstractPluginLoader::loadPlugins(const QRegExp& fileRx,
 
 void AbstractPluginLoader::discardPlugin(QObject* plugin)
 {
-  for (int i = 0; i < _d->plugins.size(); ++i) {
-    if (plugin == _d->plugins.at(i)) {
-      _d->plugins.remove(i);
+  Q_D(AbstractPluginLoader);
+  for (int i = 0; i < d->plugins.size(); ++i) {
+    if (plugin == d->plugins.at(i)) {
+      d->plugins.remove(i);
       if (this->autoDeletePlugins())
-        _d->pluginLoaders.at(i)->unload();
-      delete _d->pluginLoaders.at(i);
-      _d->pluginLoaders.remove(i);
+        d->pluginLoaders.at(i)->unload();
+      delete d->pluginLoaders.at(i);
+      d->pluginLoaders.remove(i);
     }
   }
-  _d->pluginFilenames.remove(plugin);
+  d->pluginFilenames.remove(plugin);
 }
 
 } // namespace qttools

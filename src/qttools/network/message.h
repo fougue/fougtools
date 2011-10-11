@@ -36,11 +36,11 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_MESSAGE_H
-# define QTTOOLS_MESSAGE_H
+#define QTTOOLS_MESSAGE_H
 
-# include "qttools/network/network.h"
-# include <QtCore/QDateTime>
-# include <QtCore/QStringList>
+#include "qttools/network/network.h"
+#include <QtCore/QDateTime>
+#include <QtCore/QStringList>
 
 namespace qttools {
 

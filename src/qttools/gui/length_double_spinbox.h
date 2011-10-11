@@ -36,11 +36,11 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_LENGTH_DOUBLE_SPINBOX_H
-# define QTTOOLS_LENGTH_DOUBLE_SPINBOX_H
+#define QTTOOLS_LENGTH_DOUBLE_SPINBOX_H
 
-# include "qttools/gui/gui.h"
-# include "qttools/gui/abstract_length_editor.h"
-# include <QtGui/QDoubleSpinBox>
+#include "qttools/gui/gui.h"
+#include "qttools/gui/abstract_length_editor.h"
+#include <QtGui/QDoubleSpinBox>
 
 namespace qttools {
 

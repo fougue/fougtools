@@ -36,11 +36,11 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_MESSAGE_DIALOG_H
-# define QTTOOLS_MESSAGE_DIALOG_H
+#define QTTOOLS_MESSAGE_DIALOG_H
 
-# include "qttools/gui/gui.h"
-# include <QtGui/QDialog>
-# include <QtGui/QDialogButtonBox>
+#include "qttools/gui/gui.h"
+#include <QtGui/QDialog>
+#include <QtGui/QDialogButtonBox>
 class QLabel;
 
 namespace qttools {

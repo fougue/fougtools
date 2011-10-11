@@ -53,6 +53,7 @@ HEADERS += \
     $$PWD/singleton.h \
     $$PWD/sleep.h \
     $$PWD/task.h \
+    $$PWD/task_p.h \
     $$PWD/core.h \
     $$PWD/item_model_tools.h \
     $$PWD/grid_numbering.h \

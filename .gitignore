@@ -1,3 +1,7 @@
 *~
 _*
-qmake.build
+Makefile*
+debug
+release
+*.pro.user
+bin

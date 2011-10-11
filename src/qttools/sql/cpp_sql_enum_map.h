@@ -38,6 +38,7 @@
 #ifndef QTTOOLS_CPP_SQL_ENUM_MAP_H
 # define QTTOOLS_CPP_SQL_ENUM_MAP_H
 
+# include <cassert>
 # include <map>
 # include <QtCore/QHash>
 # include <QtCore/QPair>
@@ -84,19 +85,12 @@ private:
 namespace qttools {
 
 template<typename _CPP_ENUM_>
-SqlCppEnumMap<_CPP_ENUM_>::SqlCppEnumMap() :
-  _cppSqlMap(),
-  _sqlCppMap(),
-  _intMap()
+SqlCppEnumMap<_CPP_ENUM_>::SqlCppEnumMap()
 {
 }
 
 template<typename _CPP_ENUM_>
-SqlCppEnumMap<_CPP_ENUM_>::SqlCppEnumMap(
-    const std::map<_CPP_ENUM_, const char*>& enumMap) :
-  _cppSqlMap(),
-  _sqlCppMap(),
-  _intMap()
+SqlCppEnumMap<_CPP_ENUM_>::SqlCppEnumMap(const std::map<_CPP_ENUM_, const char*>& enumMap)
 {
   typename std::map<_CPP_ENUM_, const char*>::const_iterator iEnum;
   for (iEnum = enumMap.begin(); iEnum != enumMap.end(); ++iEnum)
@@ -104,57 +98,54 @@ SqlCppEnumMap<_CPP_ENUM_>::SqlCppEnumMap(
 }
 
 template<typename _CPP_ENUM_>
-void SqlCppEnumMap<_CPP_ENUM_>::addMapping(_CPP_ENUM_ cppVal,
-                                           const QString& sqlVal)
+void SqlCppEnumMap<_CPP_ENUM_>::addMapping(_CPP_ENUM_ cppVal, const QString& sqlVal)
 {
-  this->_cppSqlMap[cppVal] = sqlVal;
-  this->_sqlCppMap[sqlVal] = cppVal;
-  this->_intMap.append(cppVal);
+  _cppSqlMap[cppVal] = sqlVal;
+  _sqlCppMap[sqlVal] = cppVal;
+  _intMap.append(cppVal);
 }
 
 template<typename _CPP_ENUM_>
 int SqlCppEnumMap<_CPP_ENUM_>::size() const
 {
-  return this->_intMap.size();
+  return _intMap.size();
 }
 
 template<typename _CPP_ENUM_>
 int SqlCppEnumMap<_CPP_ENUM_>::index(_CPP_ENUM_ cppVal) const
 {
-  return
-      std::find(this->_intMap.begin(), this->_intMap.end(), cppVal) -
-      this->_intMap.begin();
+  return std::find(_intMap.begin(), _intMap.end(), cppVal) - _intMap.begin();
 }
 
 template<typename _CPP_ENUM_>
 _CPP_ENUM_ SqlCppEnumMap<_CPP_ENUM_>::cppValue(int i) const
 {
-  assert(i < this->_intMap.size());
-  return this->_intMap[i];
+  assert(i < _intMap.size());
+  return _intMap[i];
 }
 
 template<typename _CPP_ENUM_>
 _CPP_ENUM_ SqlCppEnumMap<_CPP_ENUM_>::cppValue(const QString& sqlVal) const
 {
-  assert(this->_sqlCppMap.contains(sqlVal));
-  return this->_sqlCppMap.find(sqlVal).value();
+  assert(_sqlCppMap.contains(sqlVal));
+  return _sqlCppMap.find(sqlVal).value();
 }
 
 template<typename _CPP_ENUM_>
 QString SqlCppEnumMap<_CPP_ENUM_>::sqlValue(_CPP_ENUM_ cppVal) const
 {
-  assert(this->_cppSqlMap.contains(cppVal));
-  return this->_cppSqlMap[cppVal];
+  assert(_cppSqlMap.contains(cppVal));
+  return _cppSqlMap[cppVal];
 }
 
 template<typename _CPP_ENUM_>
 SqlCppEnumMap<_CPP_ENUM_>& SqlCppEnumMap<_CPP_ENUM_>::operator=(
     const std::map<_CPP_ENUM_, const char*>& enumMap)
 {
-  this->_cppSqlMap.clear();
-  this->_sqlCppMap.clear();
-  this->_intMap.clear();
-  this->_intMap.resize(0);
+  _cppSqlMap.clear();
+  _sqlCppMap.clear();
+  _intMap.clear();
+  _intMap.resize(0);
   typename std::map<_CPP_ENUM_, const char*>::const_iterator iEnum;
   for (iEnum = enumMap.begin(); iEnum != enumMap.end(); ++iEnum)
     this->addMapping(iEnum->first, iEnum->second);

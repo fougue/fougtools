@@ -36,10 +36,10 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_WAIT_DIALOG_H
-# define QTTOOLS_WAIT_DIALOG_H
+#define QTTOOLS_WAIT_DIALOG_H
 
-# include "qttools/gui/gui.h"
-# include <QtGui/QDialog>
+#include "qttools/gui/gui.h"
+#include <QtGui/QDialog>
 
 namespace qttools {
 class Task;

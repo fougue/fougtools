@@ -69,20 +69,17 @@ public:
   #ifdef QTTOOLS_MAILSEND_TRACE
     qDebug() << "C :" << cmd;
   #endif // QTTOOLS_MAILSEND_TRACE
-    if (this->socket->write(cmd + "\r\n") == -1)
-    {
+    if (this->socket->write(cmd + "\r\n") == -1) {
       //: %1: SMTP client command
       this->error = tr("Failed to write command '%1'").arg(QString(cmd));
       return false;
     }
-    if (!this->socket->waitForBytesWritten(this->timeout))
-    {
+    if (!this->socket->waitForBytesWritten(this->timeout)) {
       //: %1: SMTP client command
       this->error = tr("Failed to write command '%1' (timeout)").arg(QString(cmd));
       return false;
     }
-    if (!this->socket->waitForReadyRead(this->timeout))
-    {
+    if (!this->socket->waitForReadyRead(this->timeout)) {
       //: %1: SMTP client command
       this->error = tr("Failed to read response for command '%1' (timeout)").arg(QString(cmd));
       return false;
@@ -129,14 +126,15 @@ private slots:
  */
 
 MailSend::MailSend() :
-  _d(new MailSendPrivate)
+  d_ptr(new MailSendPrivate)
 {
 }
 
 MailSend::~MailSend()
 {
-  _d->socket->disconnectFromHost();
-  delete _d;
+  Q_D(MailSend);
+  d->socket->disconnectFromHost();
+  delete d;
 }
 
 /*! \brief Maximum waiting delay when operating with the SMTP server
@@ -147,12 +145,14 @@ MailSend::~MailSend()
  */
 int MailSend::timeout() const
 {
-  return _d->timeout;
+  Q_D(const MailSend);
+  return d->timeout;
 }
 
 void MailSend::setTimeout(int msecs)
 {
-  _d->timeout = msecs;
+  Q_D(MailSend);
+  d->timeout = msecs;
 }
 
 /*! \brief Try to connect to SMTP server using \p account
@@ -163,83 +163,76 @@ void MailSend::setTimeout(int msecs)
  */
 bool MailSend::connectToSmtpServer(const SmtpAccount& account)
 {
-  _d->error.clear();
-  _d->smtpAccount = account;
+  Q_D(MailSend);
+  d->error.clear();
+  d->smtpAccount = account;
 
   // Connect to SMTP server
-  _d->socket->connectToHost(account.host(), account.port());
-  if (!_d->socket->waitForConnected(this->timeout()))
-  {
+  d->socket->connectToHost(account.host(), account.port());
+  if (!d->socket->waitForConnected(this->timeout())) {
     //: %1: Error description
-    _d->error = MailSendPrivate::tr("Connection failed (timeout)\n%1").arg(_d->socket->errorString());
+    d->error = MailSendPrivate::tr("Connection failed (timeout)\n%1").arg(d->socket->errorString());
     return false;
   }
 
   // Start client-side encryption if SSL required
-  if (account.connectionSecurity() == SmtpAccount::SslTlsSecurity)
-  {
-    this->_d->socket->setProtocol(QSsl::AnyProtocol);
-    this->_d->socket->startClientEncryption();
+  if (account.connectionSecurity() == SmtpAccount::SslTlsSecurity) {
+    d->socket->setProtocol(QSsl::AnyProtocol);
+    d->socket->startClientEncryption();
   }
 
   // Read initial server response
-  if (!_d->socket->waitForReadyRead(this->timeout()))
-  {
+  if (!d->socket->waitForReadyRead(this->timeout())) {
     //: %1: Error description
-    _d->error = MailSendPrivate::tr("Failed to read server response after "
-                                    "connection\n%1").arg(_d->socket->errorString());
+    d->error = MailSendPrivate::tr("Failed to read server response after "
+                                    "connection\n%1").arg(d->socket->errorString());
     return false;
   }
 #ifdef QTTOOLS_MAILSEND_TRACE
-  qDebug() << "S:" << _d->socket->readAll();
+  qDebug() << "S:" << d->socket->readAll();
 #endif // QTTOOLS_MAILSEND_TRACE
 
   // Hello to the SMTP server
-  if (!_d->sendSmtpCommand("EHLO qttools::MailSend", 250))
-  {
-    if (!_d->sendSmtpCommand("HELO qttools::MailSend", 250))
+  if (!d->sendSmtpCommand("EHLO qttools::MailSend", 250)) {
+    if (!d->sendSmtpCommand("HELO qttools::MailSend", 250))
       return false;
   }
 
   // Initiate TLS if required
-  if (account.connectionSecurity() == SmtpAccount::StartTlsSecurity)
-  {
-    this->_d->socket->setProtocol(QSsl::TlsV1);
-    if (!_d->sendSmtpCommand("STARTTLS", 220))
+  if (account.connectionSecurity() == SmtpAccount::StartTlsSecurity) {
+    d->socket->setProtocol(QSsl::TlsV1);
+    if (!d->sendSmtpCommand("STARTTLS", 220))
       return false;
-    this->_d->socket->startClientEncryption();
+    d->socket->startClientEncryption();
   }
 
   // User authentication
-  switch (account.authenticationMethod())
-  {
-  case SmtpAccount::NoAuthentication : break;
-  case SmtpAccount::LoginAuthentication :
-  {
-    if (!_d->sendSmtpCommand("AUTH LOGIN", 334))
+  switch (account.authenticationMethod()) {
+  case SmtpAccount::NoAuthentication:
+    break;
+  case SmtpAccount::LoginAuthentication: {
+    if (!d->sendSmtpCommand("AUTH LOGIN", 334))
       return false;
-    if (!_d->sendSmtpCommand(account.userName().toUtf8().toBase64(), 334))
+    if (!d->sendSmtpCommand(account.userName().toUtf8().toBase64(), 334))
       return false;
-    if (!_d->sendSmtpCommand(account.password().toUtf8().toBase64(), 235))
+    if (!d->sendSmtpCommand(account.password().toUtf8().toBase64(), 235))
       return false;
     break;
   }
-  case SmtpAccount::PlainAuthentication :
-  {
-    if (!_d->sendSmtpCommand("AUTH PLAIN", 334))
+  case SmtpAccount::PlainAuthentication: {
+    if (!d->sendSmtpCommand("AUTH PLAIN", 334))
       return false;
     QByteArray auth;
     auth.append(char(0));
     auth.append(account.userName().toUtf8());
     auth.append(char(0));
     auth.append(account.password().toUtf8());
-    if (!_d->sendSmtpCommand(auth.toBase64(), 235))
+    if (!d->sendSmtpCommand(auth.toBase64(), 235))
       return false;
     break;
   }
-  case SmtpAccount::CramMd5Authentication :
-  {
-    if (!_d->sendSmtpCommand("AUTH CRAM-MD5", 334))
+  case SmtpAccount::CramMd5Authentication: {
+    if (!d->sendSmtpCommand("AUTH CRAM-MD5", 334))
       return false;
     break;
   }
@@ -255,14 +248,15 @@ bool MailSend::connectToSmtpServer(const SmtpAccount& account)
  */
 bool MailSend::sendMessage(const Message& msg)
 {
-  _d->error.clear();
-  if (!_d->sendSmtpCommand(QString("MAIL FROM:<%1>").arg(msg.from()).toUtf8(), 250))
+  Q_D(MailSend);
+  d->error.clear();
+  if (!d->sendSmtpCommand(QString("MAIL FROM:<%1>").arg(msg.from()).toUtf8(), 250))
     return false;
   foreach (const QString& recipient, msg.to()) {
-    if (!_d->sendSmtpCommand(QString("RCPT TO:<%2>").arg(recipient).toUtf8(), 250))
+    if (!d->sendSmtpCommand(QString("RCPT TO:<%2>").arg(recipient).toUtf8(), 250))
       return false;
   }
-  if (!_d->sendSmtpCommand("DATA", 354))
+  if (!d->sendSmtpCommand("DATA", 354))
     return false;
   QString data;
   data.append(QString("Content-type: text/plain; charset=utf-8\r\n"));
@@ -271,9 +265,9 @@ bool MailSend::sendMessage(const Message& msg)
   data.append(QString("Date: %1\r\n").arg(msg.dateTime().toString()));
   data.append(QString("Subject: %1\r\n\r\n").arg(msg.subject()));
   data.append(msg.body() + "\r\n");
-  if (!_d->sendSmtpCommand(data.toUtf8() + ".", 250))
+  if (!d->sendSmtpCommand(data.toUtf8() + ".", 250))
     return false;
-  if (!_d->sendSmtpCommand("QUIT", 221))
+  if (!d->sendSmtpCommand("QUIT", 221))
     return false;
   return true;
 }
@@ -283,7 +277,8 @@ bool MailSend::sendMessage(const Message& msg)
  */
 QString MailSend::errorString() const
 {
-  return _d->error;
+  Q_D(const MailSend);
+  return d->error;
 }
 } // namespace qttools
 

@@ -36,17 +36,17 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_CORE_H
-# define QTTOOLS_CORE_H
+#define QTTOOLS_CORE_H
 
-# include <QtCore/QtGlobal>
-# ifdef QTTOOLS_CORE_DLL
-#  ifdef QTTOOLS_CORE_MAKE_DLL
-#   define QTTOOLS_CORE_EXPORT Q_DECL_EXPORT
-#  else
-#   define QTTOOLS_CORE_EXPORT Q_DECL_IMPORT
-#  endif // QTTOOLS_CORE_MAKE_DLL
+#include <QtCore/QtGlobal>
+#ifdef QTTOOLS_CORE_DLL
+# ifdef QTTOOLS_CORE_MAKE_DLL
+#  define QTTOOLS_CORE_EXPORT Q_DECL_EXPORT
 # else
-#  define QTTOOLS_CORE_EXPORT
-# endif // QTTOOLS_CORE_DLL
+#  define QTTOOLS_CORE_EXPORT Q_DECL_IMPORT
+# endif // QTTOOLS_CORE_MAKE_DLL
+#else
+# define QTTOOLS_CORE_EXPORT
+#endif // QTTOOLS_CORE_DLL
 
 #endif // QTTOOLS_CORE_H

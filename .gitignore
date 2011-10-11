@@ -5,3 +5,4 @@ debug
 release
 *.pro.user
 bin
+*.pdb

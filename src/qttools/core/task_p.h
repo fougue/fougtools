@@ -38,12 +38,13 @@
 #ifndef QTTOOLS_TASK_P_H
 #define QTTOOLS_TASK_P_H
 
+#include "qttools/core/core.h"
 #include <QtCore/private/qobject_p.h>
 #include <QtCore/QMutex>
 
 namespace qttools {
 
-class TaskPrivate : public QObjectPrivate
+class QTTOOLS_CORE_EXPORT TaskPrivate : public QObjectPrivate
 {
 public:
   TaskPrivate();

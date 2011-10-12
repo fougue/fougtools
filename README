@@ -47,7 +47,7 @@ Note that :
     C:\\path\\to\\boost
 
 Then inside sub-folder qmake.build, type :
-  qmake -r "CONFIG*=build_all" 
+  qmake -r
   make (or nmake with Visual C++)
 
 

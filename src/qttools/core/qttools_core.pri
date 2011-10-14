@@ -53,7 +53,6 @@ HEADERS += \
     $$PWD/singleton.h \
     $$PWD/sleep.h \
     $$PWD/task.h \
-    $$PWD/task_p.h \
     $$PWD/core.h \
     $$PWD/item_model_tools.h \
     $$PWD/grid_numbering.h \
@@ -77,3 +76,4 @@ SOURCES += \
     $$PWD/item_model_tools.cpp \
     $$PWD/grid_numbering.cpp \
     $$PWD/grid_struct.cpp
+

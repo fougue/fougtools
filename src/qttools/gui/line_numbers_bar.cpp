@@ -46,27 +46,20 @@
 #include <QtGui/QTextDocument>
 #include <QtGui/QTextEdit>
 #include <QtGui/QToolTip>
-#include <QtGui/private/qwidget_p.h>
 
 namespace qttools {
 
 /*! \class LineNumbersBarPrivate
  *  \brief Internal (pimpl of LineNumbersBar)
  */
-class LineNumbersBarPrivate : public QWidgetPrivate
+class LineNumbersBarPrivate
 {
 public:
   LineNumbersBarPrivate() :
     edit(0),
-    stopRect(),
-    currentRect(),
-    bugRect(),
     stopLine(-1),
     currentLine(-1),
-    bugLine(-1),
-    stopMarker(),
-    currentMarker(),
-    bugMarker()
+    bugLine(-1)
   {
   }
 
@@ -88,8 +81,9 @@ public:
  *  \brief Provides numbering of the lines of a QTextEdit as a vertical bar
  */
 
-LineNumbersBar::LineNumbersBar(QWidget *parent) :
-  QWidget(*new LineNumbersBarPrivate, parent, 0)
+LineNumbersBar::LineNumbersBar(QWidget *parent)
+  : QWidget(parent),
+    d_ptr(new LineNumbersBarPrivate)
 {
   // Make room for 4 digits and the breakpoint icon
   this->setFixedWidth(this->fontMetrics().width(QString("000") + 10 + 32));
@@ -100,6 +94,8 @@ LineNumbersBar::LineNumbersBar(QWidget *parent) :
 
 LineNumbersBar::~LineNumbersBar()
 {
+  Q_D(LineNumbersBar);
+  delete d;
 }
 
 void LineNumbersBar::setCurrentLine(int lineno)

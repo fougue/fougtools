@@ -36,10 +36,10 @@
 ****************************************************************************/
 
 #include "qttools/core/task.h"
-#include "qttools/core/task_p.h"
 
 #include "cpptools/functional.h"
 #include <QtCore/QEventLoop>
+#include <QtCore/QMutex>
 #include <QtCore/QThread>
 #include <QtCore/QTime>
 #include <QtCore/QMutexLocker>
@@ -76,6 +76,20 @@ namespace qttools {
  *  \brief Internal (pimpl for Task)
  */
 
+class TaskPrivate
+{
+public:
+  TaskPrivate();
+
+  bool isBoundToThread;
+  bool isRunning;
+  bool isWaitingStop;
+  bool autoDeleteBoundThread;
+  int loopCount;
+  int loopInterval;
+  QMutex mutex;
+};
+
 TaskPrivate::TaskPrivate() :
   isBoundToThread(false),
   isRunning(false),
@@ -93,16 +107,19 @@ TaskPrivate::TaskPrivate() :
  *  \brief Abstract base class for all objects that perform an operation
  */
 
-Task::Task(QObject* parent) :
-  QObject(*new TaskPrivate, parent)
+Task::Task(QObject* parent)
+  : QObject(parent),
+    d_ptr(new TaskPrivate)
 {
 }
 
 Task::~Task()
 {
+  Q_D(Task);
   if (this->thread() != 0 &&
       this->isBoundToThread() && this->autoDeleteBoundThread())
     delete this->thread();
+  delete d;
 }
 
 bool Task::isRunning() const
@@ -255,11 +272,6 @@ void Task::acknowledgeStop()
   emit stopped();
   if (this->isBoundToThread())
     this->thread()->quit();
-}
-
-Task::Task(TaskPrivate& dd, QObject* parent) :
-  QObject(dd, parent)
-{
 }
 
 } // namespace qttools

@@ -44,11 +44,9 @@ class QTextEdit;
 
 namespace qttools {
 
-class LineNumbersBarPrivate;
 class QTTOOLS_GUI_EXPORT LineNumbersBar : public QWidget
 {
   Q_OBJECT
-  Q_DECLARE_PRIVATE(LineNumbersBar)
 
 public:
   LineNumbersBar(QWidget* parent = 0);
@@ -62,6 +60,10 @@ public:
 protected:
   void paintEvent(QPaintEvent* event);
   bool event(QEvent *event);
+
+private:
+  class LineNumbersBarPrivate* const d_ptr;
+  Q_DECLARE_PRIVATE(LineNumbersBar)
 };
 
 } //namespace qttools

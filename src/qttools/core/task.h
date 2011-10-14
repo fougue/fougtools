@@ -44,7 +44,6 @@ class QThread;
 
 namespace qttools {
 
-class TaskPrivate;
 class QTTOOLS_CORE_EXPORT Task : public QObject
 {
   Q_OBJECT
@@ -54,7 +53,6 @@ class QTTOOLS_CORE_EXPORT Task : public QObject
              READ autoDeleteBoundThread WRITE setAutoDeleteBoundThread)
   Q_PROPERTY(bool loopCount READ loopCount WRITE setLoopCount)
   Q_PROPERTY(bool loopInterval READ loopInterval WRITE setLoopInterval)
-  Q_DECLARE_PRIVATE(Task)
 
 public:
   Task(QObject* parent = 0);
@@ -90,7 +88,9 @@ protected:
   virtual void action() = 0;
   void acknowledgeStop();
 
-  Task(TaskPrivate& dd, QObject* parent = 0);
+private:
+  class TaskPrivate* const d_ptr;
+  Q_DECLARE_PRIVATE(Task)
 };
 
 

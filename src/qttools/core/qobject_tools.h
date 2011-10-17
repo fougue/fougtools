@@ -47,6 +47,39 @@ QTTOOLS_CORE_EXPORT void forwardSignal(const QObject* sender,
                                        const QObject* resender,
                                        const char* signal);
 
+template<typename _PARENT_TYPE_>
+const _PARENT_TYPE_* constFindParent(const QObject* object);
+
+template<typename _PARENT_TYPE_>
+_PARENT_TYPE_* findParent(QObject* object);
+
+} // namespace qttools
+
+
+
+// --
+// -- Implementation
+// --
+
+#include <QtCore/QObject>
+
+namespace qttools {
+
+template<typename _PARENT_TYPE_>
+const _PARENT_TYPE_* constFindParent(const QObject* object)
+{
+  return findParent<_PARENT_TYPE_>(const_cast<QObject*>(object));
+}
+
+template<typename _PARENT_TYPE_>
+_PARENT_TYPE_* findParent(QObject* object)
+{
+  QObject* it = object;
+  while (it != 0 && qobject_cast<_PARENT_TYPE_*>(it) == 0)
+    it = it->parent();
+  return qobject_cast<_PARENT_TYPE_*>(it);
+}
+
 } // namespace qttools
 
 #endif // QTTOOLS_QOBJECT_TOOLS_H

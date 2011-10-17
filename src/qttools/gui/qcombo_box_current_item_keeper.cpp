@@ -49,11 +49,11 @@ namespace qttools {
  *
  */
 
-QComboBoxCurrentItemKeeper::QComboBoxCurrentItemKeeper(QComboBox* comboBox) :
-  QObject(comboBox),
-  _oldCurrentIndex(-1),
-  _oldIdentifierValue(),
-  _columnForModelRowIdentifier(0)
+QComboBoxCurrentItemKeeper::QComboBoxCurrentItemKeeper(QComboBox* comboBox)
+  : QObject(comboBox),
+    _oldCurrentIndex(-1),
+    _oldIdentifierValue(),
+    _columnForModelRowIdentifier(0)
 {
   if (comboBox == 0)
     return;

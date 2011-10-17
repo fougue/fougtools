@@ -43,16 +43,16 @@
 
 namespace occ {
 
-GCPnts_UniformAbscissaConstIterator::GCPnts_UniformAbscissaConstIterator() :
-  _ua(0),
-  _index(1)
+GCPnts_UniformAbscissaConstIterator::GCPnts_UniformAbscissaConstIterator()
+  : _ua(0),
+    _index(1)
 {
 }
 
 GCPnts_UniformAbscissaConstIterator::
-GCPnts_UniformAbscissaConstIterator(const GCPnts_UniformAbscissa& ua, int index) :
-  _ua(&ua),
-  _index(index)
+GCPnts_UniformAbscissaConstIterator(const GCPnts_UniformAbscissa& ua, int index)
+  : _ua(&ua),
+    _index(index)
 {
   this->limitInternalIndex();
 }

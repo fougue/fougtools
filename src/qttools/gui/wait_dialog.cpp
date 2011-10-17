@@ -51,12 +51,12 @@ namespace qttools {
 class WaitDialogPrivate
 {
 public:
-  WaitDialogPrivate(WaitDialog* parent) :
-    waitLabel(0),
-    progressBar(0),
-    btnBox(0),
-    updateTimer(new QTimer(parent)),
-    minDuration(1000)
+  WaitDialogPrivate(WaitDialog* parent)
+    : waitLabel(0),
+      progressBar(0),
+      btnBox(0),
+      updateTimer(new QTimer(parent)),
+      minDuration(1000)
   {
   }
 
@@ -68,9 +68,9 @@ public:
 };
 
 
-WaitDialog::WaitDialog(QWidget* parent) :
-  QDialog(parent),
-  _d(new WaitDialogPrivate(this))
+WaitDialog::WaitDialog(QWidget* parent)
+  : QDialog(parent),
+    _d(new WaitDialogPrivate(this))
 {
   // Create the UI
   this->setObjectName("qttools__WaitDialog");

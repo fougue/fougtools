@@ -43,10 +43,10 @@
 
 namespace qttools {
 
-SqlDataModel::SqlDataModel(DatabaseManager* dbMgr, QObject* parent) :
-  QSqlTableModel(parent, dbMgr->database()),
-  _creationThread(QThread::currentThread()),
-  _dbMgr(dbMgr)
+SqlDataModel::SqlDataModel(DatabaseManager* dbMgr, QObject* parent)
+  : QSqlTableModel(parent, dbMgr->database()),
+    _creationThread(QThread::currentThread()),
+    _dbMgr(dbMgr)
 {
 }
 

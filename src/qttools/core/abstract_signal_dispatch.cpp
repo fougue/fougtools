@@ -39,10 +39,10 @@
 
 namespace qttools {
 
-AbstractSignalDispatch::AbstractSignalDispatch(QObject* parent) :
-  QObject(parent),
-  _sender(0),
-  _signal(0)
+AbstractSignalDispatch::AbstractSignalDispatch(QObject* parent)
+  : QObject(parent),
+    _sender(0),
+    _signal(0)
 {
 }
 

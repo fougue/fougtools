@@ -88,11 +88,11 @@ namespace qttools {
  *
  */
 
-LengthDoubleSpinBox::LengthDoubleSpinBox(QWidget* parent) :
-  QDoubleSpinBox(parent),
-  _orgLengthMm(0.),
-  _valueHasChanged(false),
-  _isInternalUpdateContext(false)
+LengthDoubleSpinBox::LengthDoubleSpinBox(QWidget* parent)
+  : QDoubleSpinBox(parent),
+    _orgLengthMm(0.),
+    _valueHasChanged(false),
+    _isInternalUpdateContext(false)
 {
   this->updateEditor(::currMeasurementSys());
   connect(this, SIGNAL(valueChanged(double)), this, SLOT(onValueChanged(double)));

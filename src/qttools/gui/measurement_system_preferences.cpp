@@ -43,17 +43,16 @@ namespace qttools {
  *  \brief
  */
 
-MeasurementSystemPreferences::MeasurementSystemPreferences() :
-  _metricUnit(AbstractLengthEditor::MillimeterUnit),
-  _imperialUnit(AbstractLengthEditor::InchUnit)
+MeasurementSystemPreferences::MeasurementSystemPreferences()
+  : _metricUnit(AbstractLengthEditor::MillimeterUnit),
+    _imperialUnit(AbstractLengthEditor::InchUnit)
 {
 }
 
-MeasurementSystemPreferences::MeasurementSystemPreferences(
-    AbstractLengthEditor::MetricUnit metUnit,
-    AbstractLengthEditor::ImperialUnit impUnit) :
-  _metricUnit(metUnit),
-  _imperialUnit(impUnit)
+MeasurementSystemPreferences::MeasurementSystemPreferences(AbstractLengthEditor::MetricUnit metUnit,
+                                                           AbstractLengthEditor::ImperialUnit impUnit)
+  : _metricUnit(metUnit),
+    _imperialUnit(impUnit)
 {
 }
 

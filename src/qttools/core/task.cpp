@@ -90,14 +90,14 @@ public:
   QMutex mutex;
 };
 
-TaskPrivate::TaskPrivate() :
-  isBoundToThread(false),
-  isRunning(false),
-  isWaitingStop(false),
-  autoDeleteBoundThread(true),
-  loopCount(1),
-  loopInterval(50),
-  mutex(QMutex::Recursive)
+TaskPrivate::TaskPrivate()
+  : isBoundToThread(false),
+    isRunning(false),
+    isWaitingStop(false),
+    autoDeleteBoundThread(true),
+    loopCount(1),
+    loopInterval(50),
+    mutex(QMutex::Recursive)
 {
 }
 

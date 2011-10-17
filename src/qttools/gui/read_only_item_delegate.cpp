@@ -45,8 +45,8 @@ namespace qttools {
  *
  */
 
-ReadOnlyItemDelegate::ReadOnlyItemDelegate(QObject* parent) :
-  QStyledItemDelegate(parent)
+ReadOnlyItemDelegate::ReadOnlyItemDelegate(QObject* parent)
+  : QStyledItemDelegate(parent)
 {
 }
 

@@ -56,8 +56,7 @@ QVector<int> selectedRows(const QAbstractItemView* view, int col)
   QVector<int> result;
   result.reserve(selIndexes.size());
   QSet<int> alreadyAddedRows;
-  foreach (const QModelIndex& modId, selIndexes)
-  {
+  foreach (const QModelIndex& modId, selIndexes) {
     if (!alreadyAddedRows.contains(modId.row()) &&
         (col == -1 || modId.column() == col))
     {
@@ -85,8 +84,7 @@ void selectRows(QAbstractItemView* view, const QVector<int>& rows)
  */
 int mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow)
 {
-  return proxyModel->mapFromSource(
-        proxyModel->sourceModel()->index(srcRow, 0)).row();
+  return proxyModel->mapFromSource(proxyModel->sourceModel()->index(srcRow, 0)).row();
 }
 
 /*! \brief Same as QSortFilterProxyModel::mapToSource() but more concise

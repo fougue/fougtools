@@ -58,17 +58,17 @@ class MailSendPrivate : public QObject
   Q_OBJECT
 
 public:
-  MailSendPrivate() :
-    socket(new QSslSocket(this)),
-    timeout(30000)
+  MailSendPrivate()
+    : socket(new QSslSocket(this)),
+      timeout(30000)
   {
   }
 
   bool sendSmtpCommand(const QByteArray& cmd, int expectedCode)
   {
-  #ifdef QTTOOLS_MAILSEND_TRACE
+#ifdef QTTOOLS_MAILSEND_TRACE
     qDebug() << "C :" << cmd;
-  #endif // QTTOOLS_MAILSEND_TRACE
+#endif // QTTOOLS_MAILSEND_TRACE
     if (this->socket->write(cmd + "\r\n") == -1) {
       //: %1: SMTP client command
       this->error = tr("Failed to write command '%1'").arg(QString(cmd));
@@ -86,9 +86,9 @@ public:
     }
 
     const QByteArray response(this->socket->readAll());
-  #ifdef QTTOOLS_MAILSEND_TRACE
+#ifdef QTTOOLS_MAILSEND_TRACE
     qDebug() << "S:" << response;
-  #endif // QTTOOLS_MAILSEND_TRACE
+#endif // QTTOOLS_MAILSEND_TRACE
     QRegExp codeRx("^\\s*([0-9]+)");
     const int responseCode = codeRx.indexIn(response) != -1 ? codeRx.cap(1).toInt() : -1;
     if (responseCode == -1)
@@ -97,7 +97,7 @@ public:
     else if (responseCode != expectedCode)
       //: %1 and %2: SMTP server response codes   %3: whole SMTP server response
       this->error = tr("Unexpected response code, got %1 instead of %2\n%3")
-          .arg(responseCode).arg(expectedCode).arg(QString(response));
+        .arg(responseCode).arg(expectedCode).arg(QString(response));
     return responseCode == expectedCode && responseCode != -1;
   }
 
@@ -125,8 +125,8 @@ private slots:
  *  \brief Provides service to send messages through SMTP
  */
 
-MailSend::MailSend() :
-  d_ptr(new MailSendPrivate)
+MailSend::MailSend()
+  : d_ptr(new MailSendPrivate)
 {
 }
 
@@ -185,7 +185,7 @@ bool MailSend::connectToSmtpServer(const SmtpAccount& account)
   if (!d->socket->waitForReadyRead(this->timeout())) {
     //: %1: Error description
     d->error = MailSendPrivate::tr("Failed to read server response after "
-                                    "connection\n%1").arg(d->socket->errorString());
+                                   "connection\n%1").arg(d->socket->errorString());
     return false;
   }
 #ifdef QTTOOLS_MAILSEND_TRACE

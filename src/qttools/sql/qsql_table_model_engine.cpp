@@ -52,12 +52,11 @@ namespace qttools {
 class QSqlTableModelEnginePrivate
 {
 public:
-  QSqlTableModelEnginePrivate(QSqlTableModel* pModel,
-                              DatabaseManager* databaseMgr) :
-    dbMgr(databaseMgr),
-    model(pModel),
-    pkey(),
-    sqlCode()
+  QSqlTableModelEnginePrivate(QSqlTableModel* pModel, DatabaseManager* databaseMgr)
+    : dbMgr(databaseMgr),
+      model(pModel),
+      pkey(),
+      sqlCode()
   {
   }
 
@@ -98,9 +97,8 @@ public:
  *  caching, ...)
  */
 
-QSqlTableModelEngine::QSqlTableModelEngine(QSqlTableModel* model,
-                                           DatabaseManager* dbMgr) :
-  d_ptr(new QSqlTableModelEnginePrivate(model, dbMgr))
+QSqlTableModelEngine::QSqlTableModelEngine(QSqlTableModel* model, DatabaseManager* dbMgr)
+  : d_ptr(new QSqlTableModelEnginePrivate(model, dbMgr))
 {
 }
 
@@ -162,7 +160,7 @@ void QSqlTableModelEngine::sqlInsert(int modelRow)
     return;
   const QSqlRecord rowRec = this->model()->record(modelRow);
   d->sqlCode += driver->sqlStatement(QSqlDriver::InsertStatement,
-                                      d->tableName(), rowRec, false) + ";\n\n";
+                                     d->tableName(), rowRec, false) + ";\n\n";
 }
 
 void QSqlTableModelEngine::sqlUpdate(int modelRow)

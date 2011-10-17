@@ -63,8 +63,8 @@ namespace qttools {
 class AbstractPluginLoaderPrivate
 {
 public:
-  AbstractPluginLoaderPrivate() :
-    autoDeletePlugins(true)
+  AbstractPluginLoaderPrivate()
+    : autoDeletePlugins(true)
   {
     this->plugins.reserve(100);
     this->pluginLoaders.reserve(100);
@@ -89,8 +89,8 @@ public:
  *  be called from within the constructor of the descendant class.
  */
 
-AbstractPluginLoader::AbstractPluginLoader() :
-  d_ptr(new AbstractPluginLoaderPrivate)
+AbstractPluginLoader::AbstractPluginLoader()
+  : d_ptr(new AbstractPluginLoaderPrivate)
 {
 }
 

@@ -41,9 +41,9 @@
 
 namespace qttools {
 
-IndexedSelectionModel::IndexedSelectionModel(QObject* parent) :
-  QObject(parent),
-  _hadSelection(false)
+IndexedSelectionModel::IndexedSelectionModel(QObject* parent)
+  : QObject(parent),
+    _hadSelection(false)
 {
   connect(this, SIGNAL(selectionCleared()), this, SIGNAL(selectionChanged()));
   connect(this, SIGNAL(itemToggled(int,bool)), this, SIGNAL(selectionChanged()));

@@ -55,11 +55,11 @@ namespace qttools {
 class LineNumbersBarPrivate
 {
 public:
-  LineNumbersBarPrivate() :
-    edit(0),
-    stopLine(-1),
-    currentLine(-1),
-    bugLine(-1)
+  LineNumbersBarPrivate()
+    : edit(0),
+      stopLine(-1),
+      currentLine(-1),
+      bugLine(-1)
   {
   }
 
@@ -157,22 +157,22 @@ void LineNumbersBar::paintEvent(QPaintEvent* /*event*/)
     if (d->bugLine == lineCount) {
       p.drawPixmap(1, qRound(position.y() ) - contentsY, d->bugMarker);
       d->bugRect = QRect(1, qRound(position.y()) - contentsY,
-                          d->bugMarker.width(),
-                          d->bugMarker.height());
+                         d->bugMarker.width(),
+                         d->bugMarker.height());
     }
     // Stop marker
     if (d->stopLine == lineCount) {
       p.drawPixmap(19, qRound(position.y()) - contentsY, d->stopMarker);
       d->stopRect = QRect(19, qRound(position.y()) - contentsY,
-                           d->stopMarker.width(),
-                           d->stopMarker.height());
+                          d->stopMarker.width(),
+                          d->stopMarker.height());
     }
     // Current line marker
     if (d->currentLine == lineCount) {
       p.drawPixmap(19, qRound(position.y()) - contentsY, d->currentMarker);
       d->currentRect = QRect(19, qRound(position.y()) - contentsY,
-                              d->currentMarker.width(),
-                              d->currentMarker.height());
+                             d->currentMarker.width(),
+                             d->currentMarker.height());
     }
   }
 }

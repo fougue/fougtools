@@ -66,11 +66,11 @@ namespace qttools {
  *         be quickly copied
  */
 
-Log::Stream::Stream(MessageType mType) :
-  msgType(mType),
-  buffer(),
-  ts(&buffer),
-  refCount(1)
+Log::Stream::Stream(MessageType mType)
+  : msgType(mType),
+    buffer(),
+    ts(&buffer),
+    refCount(1)
 {
 }
 
@@ -103,15 +103,15 @@ Log::Stream::Stream(MessageType mType) :
 
 /*! \brief Construct a Log stream for messages of a special type
  */
-Log::Log(MessageType msgType) :
-  _stream(new Stream(msgType))
+Log::Log(MessageType msgType)
+  : _stream(new Stream(msgType))
 {
 }
 
 /*! \brief Construct a copy of the \p other Log stream
  */
-Log::Log(const Log& other) :
-  _stream(other._stream)
+Log::Log(const Log& other)
+  : _stream(other._stream)
 {
   ++(_stream->refCount);
 }
@@ -121,10 +121,8 @@ Log::Log(const Log& other) :
 Log::~Log()
 {
   --(_stream->refCount);
-  if (_stream->refCount == 0)
-  {
-    ::handleLogMessage(_stream->msgType,
-                       _stream->buffer.toLocal8Bit().data());
+  if (_stream->refCount == 0) {
+    ::handleLogMessage(_stream->msgType, _stream->buffer.toLocal8Bit().data());
     delete _stream;
   }
 }
@@ -311,8 +309,7 @@ void AbstractLogHandler::setAutoDetach(bool b)
  */
 void attachGlobalLogHandler(AbstractLogHandler* handler)
 {
-  if (handler != 0)
-  {
+  if (handler != 0) {
     if (::globalLogHandlers.isEmpty() && !::globalPendingMessages.isEmpty()) {
       foreach (const PendingLogMessage& iMsg, ::globalPendingMessages)
         handler->handle(iMsg.first, iMsg.second);

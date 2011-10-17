@@ -53,8 +53,8 @@ namespace qttools {
 class DatabaseManagerPrivate
 {
 public:
-  DatabaseManagerPrivate(const QSqlDatabase& refDb) :
-    refDatabase(refDb)
+  DatabaseManagerPrivate(const QSqlDatabase& refDb)
+    : refDatabase(refDb)
   {
     assert(QThread::currentThread() != 0);
     this->databases[QThread::currentThread()] = refDb;
@@ -70,8 +70,8 @@ public:
  *  \brief
  */
 
-DatabaseManager::DatabaseManager(const QSqlDatabase& refDb) :
-  d_ptr(new DatabaseManagerPrivate(refDb))
+DatabaseManager::DatabaseManager(const QSqlDatabase& refDb)
+  : d_ptr(new DatabaseManagerPrivate(refDb))
 {
 }
 
@@ -130,8 +130,8 @@ QSqlQuery DatabaseManager::execSqlCode(const QString& sqlCode,
   return qttools::execSqlCode(sqlCode, this->database(inThread));
 }
 
-QSqlQuery DatabaseManager::execSqlCodeInTransaction(
-    const QString& sqlCode, const QThread* inThread) const
+QSqlQuery DatabaseManager::execSqlCodeInTransaction(const QString& sqlCode,
+                                                    const QThread* inThread) const
 {
   return qttools::execSqlCodeInTransaction(sqlCode, this->database(inThread));
 }

@@ -39,15 +39,15 @@
 
 namespace qttools {
 
-GridStruct::GridStruct() :
-  _rowCount(0),
-  _colCount(0)
+GridStruct::GridStruct()
+  : _rowCount(0),
+    _colCount(0)
 {
 }
 
-GridStruct::GridStruct(int rows, int cols) :
-  _rowCount(rows),
-  _colCount(cols)
+GridStruct::GridStruct(int rows, int cols)
+  : _rowCount(rows),
+    _colCount(cols)
 {
 }
 

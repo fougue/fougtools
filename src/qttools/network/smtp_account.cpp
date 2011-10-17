@@ -44,10 +44,10 @@ namespace qttools {
  *         to a SMTP server
  */
 
-SmtpAccount::SmtpAccount() :
-  _port(25),
-  _authMethod(NoAuthentication),
-  _connSecurity(NoSecurity)
+SmtpAccount::SmtpAccount()
+  : _port(25),
+    _authMethod(NoAuthentication),
+    _connSecurity(NoSecurity)
 {
 }
 

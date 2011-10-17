@@ -43,8 +43,8 @@ namespace qttools {
  *  \brief Provides a convenient interface for working with messages
  */
 
-Message::Message() :
-  _dateTime(QDateTime::currentDateTime())
+Message::Message()
+  : _dateTime(QDateTime::currentDateTime())
 {
 }
 

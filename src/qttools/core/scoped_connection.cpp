@@ -49,22 +49,20 @@ namespace qttools {
  *  when the current scope dissapears
  */
 
-ScopedConnect::ScopedConnect(
-    const QObject* sender, const char* signal,
-    const QObject* receiver, const char* slot,
-    Qt::ConnectionType type) :
-  _sender(sender),
-  _receiver(receiver),
-  _signal(signal),
-  _slot(slot)
+ScopedConnect::ScopedConnect(const QObject* sender, const char* signal,
+                             const QObject* receiver, const char* slot,
+                             Qt::ConnectionType type)
+  : _sender(sender),
+    _receiver(receiver),
+    _signal(signal),
+    _slot(slot)
 {
   QObject::connect(sender, signal, receiver, slot, type);
 }
 
 ScopedConnect::~ScopedConnect()
 {
-  QObject::disconnect(_sender, _signal,
-                      _receiver, _slot);
+  QObject::disconnect(_sender, _signal, _receiver, _slot);
 }
 
 
@@ -77,23 +75,21 @@ ScopedConnect::~ScopedConnect()
  *  when the current scope dissapears
  */
 
-ScopedDisconnect::ScopedDisconnect(
-    const QObject* sender, const char* signal,
-    const QObject* receiver, const char* slot,
-    Qt::ConnectionType type) :
-  _sender(sender),
-  _receiver(receiver),
-  _signal(signal),
-  _slot(slot),
-  _type(type)
+ScopedDisconnect::ScopedDisconnect(const QObject* sender, const char* signal,
+                                   const QObject* receiver, const char* slot,
+                                   Qt::ConnectionType type)
+  : _sender(sender),
+    _receiver(receiver),
+    _signal(signal),
+    _slot(slot),
+    _type(type)
 {
   QObject::disconnect(sender, signal, receiver, slot);
 }
 
 ScopedDisconnect::~ScopedDisconnect()
 {
-  QObject::connect(_sender, _signal,
-                   _receiver, _slot, _type);
+  QObject::connect(_sender, _signal, _receiver, _slot, _type);
 }
 
 } // namespace qttools

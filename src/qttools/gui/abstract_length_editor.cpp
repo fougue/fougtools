@@ -59,9 +59,9 @@ namespace qttools {
 
 // -- Lifecycle
 
-AbstractLengthEditor::AbstractLengthEditor() :
-  _prefMetricUnit(MillimeterUnit),
-  _prefImperialUnit(InchUnit)
+AbstractLengthEditor::AbstractLengthEditor()
+  : _prefMetricUnit(MillimeterUnit),
+    _prefImperialUnit(InchUnit)
 {
   LengthEditorManager::globalInstance()->attach(this);
 }

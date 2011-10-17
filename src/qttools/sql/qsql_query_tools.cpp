@@ -41,15 +41,15 @@
 
 namespace qttools {
 
-SqlQueryError::SqlQueryError(const QSqlQuery& qry) :
-  std::runtime_error(qry.lastError().text().toStdString()),
-  _sqlError(qry.lastError())
+SqlQueryError::SqlQueryError(const QSqlQuery& qry)
+  : std::runtime_error(qry.lastError().text().toStdString()),
+    _sqlError(qry.lastError())
 {
 }
 
-SqlQueryError::SqlQueryError(const QSqlError& err) :
-  std::runtime_error(err.text().toStdString()),
-  _sqlError(err)
+SqlQueryError::SqlQueryError(const QSqlError& err)
+  : std::runtime_error(err.text().toStdString()),
+    _sqlError(err)
 {
 }
 

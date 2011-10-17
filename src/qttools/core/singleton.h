@@ -49,6 +49,7 @@ class Singleton
 public:
   static _T_* instance();
   static void release();
+
 private:
   static QAtomicPointer<_T_> _instance;
   static QMutex _mutex;

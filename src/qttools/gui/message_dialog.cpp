@@ -50,10 +50,10 @@ MessageDialog::MessageDialog(Icon icon,
                              const QString& title,
                              const QString& text,
                              QDialogButtonBox::StandardButtons buttons,
-                             QWidget* parent) :
-  QDialog(parent),
-  _textLabel(new QLabel(text, this)),
-  _detailsWidget(new QWidget(this))
+                             QWidget* parent)
+  : QDialog(parent),
+    _textLabel(new QLabel(text, this)),
+    _detailsWidget(new QWidget(this))
 {
   this->setWindowTitle(title);
   QLabel* pixLabel = new QLabel(this);

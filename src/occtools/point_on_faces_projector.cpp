@@ -74,10 +74,10 @@ UBTreeOfNodeIndicesFiller_t;
 class NodeBndBoxSelector : public UBTreeOfNodeIndices_t::Selector
 {
 public:
-  NodeBndBoxSelector(const gp_Pnt& pntToProject) :
-    _pntToProject(pntToProject),
-    _currMinDist(std::numeric_limits<double>::max()),
-    _currMinDistNodeId(-1, Handle_Poly_Triangulation())
+  NodeBndBoxSelector(const gp_Pnt& pntToProject)
+    : _pntToProject(pntToProject),
+      _currMinDist(std::numeric_limits<double>::max()),
+      _currMinDistNodeId(-1, Handle_Poly_Triangulation())
   {
   }
 
@@ -153,11 +153,11 @@ public:
 
 // --- PointOnFacesProjector::Result implementation
 
-PointOnFacesProjector::Result::Result() :
-  isValid(false),
-  face(::dummyFace),
-  point(occ::origin3d),
-  normal(occ::zDir3d)
+PointOnFacesProjector::Result::Result()
+  : isValid(false),
+    face(::dummyFace),
+    point(occ::origin3d),
+    normal(occ::zDir3d)
 {
 }
 
@@ -165,11 +165,11 @@ PointOnFacesProjector::Result::Result() :
 
 PointOnFacesProjector::Result::Result(const TopoDS_Face& sFace,
                                       const gp_Pnt& sPoint,
-                                      const gp_Vec& sNormal) :
-  isValid(true),
-  face(sFace),
-  point(sPoint),
-  normal(sNormal)
+                                      const gp_Vec& sNormal)
+  : isValid(true),
+    face(sFace),
+    point(sPoint),
+    normal(sNormal)
 {
 }
 

@@ -48,9 +48,9 @@ namespace qttools {
  *
  */
 
-LengthEditorManager::LengthEditorManager() :
-  _lengthEditors(),
-  _measureSys(QLocale::MetricSystem)
+LengthEditorManager::LengthEditorManager()
+  : _lengthEditors(),
+    _measureSys(QLocale::MetricSystem)
 {
 }
 

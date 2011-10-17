@@ -170,14 +170,14 @@ public:
 // --- Lifecycle
 
 //! Construct a default AIS_Text
-AIS_Text::AIS_Text() :
-  _d(new AIS_TextPrivate)
+AIS_Text::AIS_Text()
+  : _d(new AIS_TextPrivate)
 {
 }
 
 //! Construct a fully initialized AIS_Text
-AIS_Text::AIS_Text(const QString& text, const gp_Pnt& pos) :
-  _d(new AIS_TextPrivate)
+AIS_Text::AIS_Text(const QString& text, const gp_Pnt& pos)
+  : _d(new AIS_TextPrivate)
 {
   TextProperties defaultProps;
   _d->textProps.append(defaultProps);

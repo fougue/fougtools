@@ -50,8 +50,8 @@ namespace qttools {
  *
  */
 
-DatabaseConnectionSettings::DatabaseConnectionSettings() :
-  _port(0)
+DatabaseConnectionSettings::DatabaseConnectionSettings()
+  : _port(0)
 {
 }
 

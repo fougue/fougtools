@@ -84,14 +84,14 @@ namespace occ {
    */
 
 //! Construct an uninitialized BRepPointOnFacesProjection
-BRepPointOnFacesProjection::BRepPointOnFacesProjection() :
-  _solProjector(static_cast<Projector_t*>(0), TopoDS_Face())
+BRepPointOnFacesProjection::BRepPointOnFacesProjection()
+  : _solProjector(static_cast<Projector_t*>(0), TopoDS_Face())
 {
 }
 
 //! Construct a BRepPointOnFacesProjection and call prepare() on \p faces
-BRepPointOnFacesProjection::BRepPointOnFacesProjection(const TopoDS_Shape& faces) :
-  _solProjector(static_cast<Projector_t*>(0), TopoDS_Face())
+BRepPointOnFacesProjection::BRepPointOnFacesProjection(const TopoDS_Shape& faces)
+  : _solProjector(static_cast<Projector_t*>(0), TopoDS_Face())
 {
   this->prepare(faces);
 }

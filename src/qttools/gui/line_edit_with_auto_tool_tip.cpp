@@ -45,16 +45,16 @@ namespace qttools {
  *
  */
 
-LineEditWithAutoToolTip::LineEditWithAutoToolTip(QWidget* parent) :
-  QLineEdit(parent)
+LineEditWithAutoToolTip::LineEditWithAutoToolTip(QWidget* parent)
+  : QLineEdit(parent)
 {
   connect(this, SIGNAL(textChanged(QString)),
           this, SLOT(onTextChanged(QString)));
 }
 
 LineEditWithAutoToolTip::LineEditWithAutoToolTip(const QString& contents,
-                                                 QWidget* parent) :
-  QLineEdit(contents, parent)
+                                                 QWidget* parent)
+  : QLineEdit(contents, parent)
 {
   connect(this, SIGNAL(textChanged(QString)),
           this, SLOT(onTextChanged(QString)));

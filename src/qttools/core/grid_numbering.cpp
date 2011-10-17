@@ -40,19 +40,19 @@
 
 namespace qttools {
 
-GridNumbering::GridNumbering() :
-  _startCorner(Qt::TopLeftCorner),
-  _orientation(Qt::Horizontal),
-  _sweepMode(OneWay)
+GridNumbering::GridNumbering()
+  : _startCorner(Qt::TopLeftCorner),
+    _orientation(Qt::Horizontal),
+    _sweepMode(OneWay)
 {
 }
 
 GridNumbering::GridNumbering(Qt::Corner corner,
                              Qt::Orientation orientation,
-                             SweepMode sweep) :
-  _startCorner(corner),
-  _orientation(orientation),
-  _sweepMode(sweep)
+                             SweepMode sweep)
+  : _startCorner(corner),
+    _orientation(orientation),
+    _sweepMode(sweep)
 {
 }
 
@@ -107,8 +107,7 @@ QVector< QVector<int> > GridNumbering::gridIndexes(const GridNumbering& gridNb,
     const int dim2Start = isEvenDim1 && isZigZag ? dim2Count - 1 : 0;
     const int dim2End = isEvenDim1 && isZigZag ? -1 : dim2Count;
     const int dim2Incr = isEvenDim1 && isZigZag ? -1 : 1;
-    for (int dim2 = dim2Start; dim2 != dim2End; dim2 += dim2Incr)
-    {
+    for (int dim2 = dim2Start; dim2 != dim2End; dim2 += dim2Incr) {
       const int row = nbOrientation == Qt::Horizontal ? dim1 : dim2;
       const int col = nbOrientation == Qt::Horizontal ? dim2 : dim1;
       grid[row][col] = index++;

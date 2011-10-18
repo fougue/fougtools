@@ -58,8 +58,7 @@ about it so that we can fix it. The FougTools bug tracking system is
 open to the public at https://github.com/fougsys/fougtools/issues.
 
 Before reporting a bug, please use the bug-tracker's search functions
-and consult http://qt.nokia.com/developer/faqs/ to see if the issue is
-already known.
+to see if the issue is already known.
 
 Always include the following information in your bug report: the name
 and version number of your compiler; the name and version number of

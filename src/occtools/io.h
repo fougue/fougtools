@@ -53,7 +53,7 @@ public:
   {
     IgesFormat,
     StepFormat,
-    OccBRepFormat,
+    OccBrepFormat,
     AsciiStlFormat,
     BinaryStlFormat,
     UnknownFormat
@@ -71,14 +71,14 @@ public:
   static TopoDS_Shape loadStepFile(const QString& fileName,
                                    Handle_Message_ProgressIndicator indicator = 0);
 
-  void writeBrepFile(const TopoDS_Shape& shape, const QString& fileName,
-                     Handle_Message_ProgressIndicator indicator = 0);
-  void writeIgesFile(const TopoDS_Shape& shape, const QString& fileName,
-                     Handle_Message_ProgressIndicator indicator = 0);
-  void writeStepFile(const TopoDS_Shape& shape, const QString& fileName,
-                     Handle_Message_ProgressIndicator indicator = 0);
-  void writeAsciiStlFile(const TopoDS_Shape& shape, const QString& fileName);
-  void writeBinaryStlFile(const TopoDS_Shape& shape, const QString& fileName);
+  static void writeBrepFile(const TopoDS_Shape& shape, const QString& fileName,
+                            Handle_Message_ProgressIndicator indicator = 0);
+  static void writeIgesFile(const TopoDS_Shape& shape, const QString& fileName,
+                            Handle_Message_ProgressIndicator indicator = 0);
+  static void writeStepFile(const TopoDS_Shape& shape, const QString& fileName,
+                            Handle_Message_ProgressIndicator indicator = 0);
+  static void writeAsciiStlFile(const TopoDS_Shape& shape, const QString& fileName);
+  static void writeBinaryStlFile(const TopoDS_Shape& shape, const QString& fileName);
 };
 
 } // namespace occ

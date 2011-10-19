@@ -95,36 +95,22 @@ namespace occ {
 
 IO::Format IO::partFormat(const QString& filename)
 {
-  const QString suffix(QFileInfo(filename).suffix().toLower());
-  if (suffix == "step" || suffix == "stp")
-    return StepFormat;
-  else if (suffix == "iges" || suffix == "igs")
-    return IgesFormat;
-  else if (suffix == "brep" || suffix == "rle")
-    return OccBRepFormat;
-  else if (suffix == "stla")
-    return AsciiStlFormat;
-  else if (suffix == "stlb")
-    return BinaryStlFormat;
-
-  // Failed to deduce the format from the suffix, try by investigating the
-  // contents
   QFile file(filename);
   if (!file.open(QIODevice::ReadOnly))
     return UnknownFormat;
   const QByteArray contentsBegin = file.read(2048);
-  // -- Assume a text-based format
+  // Assume a text-based format
   const QString contentsBeginText(contentsBegin);
   if (contentsBeginText.contains(QRegExp("^.{72}S\\s*[0-9]+\\s*[\\n\\r\\f]")))
     return IgesFormat;
   if (contentsBeginText.contains(QRegExp("^\\s*ISO-10303-21\\s*;\\s*HEADER")))
     return StepFormat;
   if (contentsBeginText.contains(QRegExp("^\\s*DBRep_DrawableShape")))
-    return OccBRepFormat;
+    return OccBrepFormat;
   if (contentsBeginText.contains(QRegExp("^\\s*solid")))
     return AsciiStlFormat;
-  // -- Assume a binary-based format
-  // -- -- Binary STL ?
+  // Assume a binary-based format
+  // -- Binary STL ?
   const int binaryStlHeaderSize = 80 + sizeof(quint32);
   if (contentsBegin.size() >= binaryStlHeaderSize) {
     QBuffer buffer;
@@ -148,7 +134,7 @@ const TopoDS_Shape IO::loadPartFile(const QString& filename)
     return IO::loadStepFile(filename);
   case IgesFormat:
     return IO::loadIgesFile(filename);
-  case OccBRepFormat:
+  case OccBrepFormat:
     return IO::loadBrepFile(filename);
   default:
     return TopoDS_Shape();
@@ -158,7 +144,7 @@ const TopoDS_Shape IO::loadPartFile(const QString& filename)
 
 const Handle_StlMesh_Mesh IO::loadStlFile(const QString& filename)
 {
-  return RWStl::ReadFile(OSD_Path(filename.toAscii().data()));
+  return RWStl::ReadFile(OSD_Path(filename.toAscii().constData()));
 }
 
 /*! \brief Topologic shape read from a file (OCC's internal BREP format)
@@ -171,7 +157,7 @@ TopoDS_Shape IO::loadBrepFile(const QString& fileName,
 {
   TopoDS_Shape result;
   BRep_Builder brepBuilder;
-  BRepTools::Read(result, fileName.toAscii().data(), brepBuilder, indicator);
+  BRepTools::Read(result, fileName.toAscii().constData(), brepBuilder, indicator);
   return result;
 }
 

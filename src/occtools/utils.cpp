@@ -48,58 +48,17 @@
 #include <GeomAdaptor_Curve.hxx>
 #include <Geom_Curve.hxx>
 #include <Geom_Surface.hxx>
-#include <IFSelect_ReturnStatus.hxx> // For status reading
-#include <IGESControl_Controller.hxx>
-#include <IGESControl_Reader.hxx> // For IGES files reading
-#include <IGESControl_Writer.hxx>
-#include <Interface_Static.hxx>
-#include <Message_ProgressIndicator.hxx>
 #include <Poly_Triangle.hxx>
-#include <STEPControl_Reader.hxx> // For STEP files reading
-#include <STEPControl_Writer.hxx>
 #include <SelectMgr_SelectionManager.hxx>
-#include <StlAPI_Writer.hxx>
 #include <TColgp_Array1OfPnt.hxx>
 #include <TopoDS.hxx>
-#include <Transfer_TransientProcess.hxx>
-#include <XSControl_WorkSession.hxx>
 #include <cassert>
 #include <gp_Trsf.hxx>
-
-#include <Transfer_FinderProcess.hxx>
 
 namespace {
 
 const double kMaxRgbComponent = 255.;
 
-template<typename _READER_>
-TopoDS_Shape shapeFromFile(
-    const QString& fileName, Handle_Message_ProgressIndicator indicator)
-{
-  TopoDS_Shape result;
-
-  if (!indicator.IsNull())
-    indicator->NewScope(30, "Loading file");
-  _READER_ reader;
-  const int status =
-      reader.ReadFile(const_cast<Standard_CString>(qPrintable(fileName)));
-  if (!indicator.IsNull())
-    indicator->EndScope();
-  if (status == IFSelect_RetDone) {
-    if (!indicator.IsNull()) {
-      reader.WS()->MapReader()->SetProgress(indicator);
-      indicator->NewScope(70, "Translating file");
-    }
-    reader.NbRootsForTransfer();
-    reader.TransferRoots();
-    result = reader.OneShape();
-    if (!indicator.IsNull()) {
-      indicator->EndScope();
-      reader.WS()->MapReader()->SetProgress(0);
-    }
-  }
-  return result;
-}
 } // Anonymous namespace
 
 
@@ -202,118 +161,6 @@ Standard_CString toOccCstring(const QString& str)
   return const_cast<char*>(qPrintable(str));
 }
 
-// --- Import / export
-
-/*! \brief Topologic shape read from a file (OCC's internal BREP format)
-   *  \param fileName Path to the file to read
-   *  \param indicator Indicator to notify the loading progress
-   *  \return The part as a whole topologic shape
-   */
-TopoDS_Shape shapeFromBrepFile(
-    const QString& fileName, Handle_Message_ProgressIndicator indicator)
-{
-  TopoDS_Shape result;
-  BRep_Builder brepBuilder;
-  BRepTools::Read(result, fileName.toAscii().data(), brepBuilder, indicator);
-  return result;
-}
-
-/*! \brief Topologic shape read from a file (IGES format)
-   *  \param fileName Path to the file to read
-   *  \param indicator Indicator to notify the loading progress
-   *  \return The part as a whole topologic shape
-   */
-TopoDS_Shape shapeFromIgesFile(
-    const QString& fileName, Handle_Message_ProgressIndicator indicator)
-{
-  return ::shapeFromFile<IGESControl_Reader>(fileName, indicator);
-}
-
-/*! \brief Topologic shape read from a file (STEP format)
-   *  \param fileName Path to the file to read
-   *  \param indicator Indicator to notify the loading progress
-   *  \return The part as a whole topologic shape
-   */
-TopoDS_Shape shapeFromStepFile(
-    const QString& fileName, Handle_Message_ProgressIndicator indicator)
-{
-  return ::shapeFromFile<STEPControl_Reader>(fileName, indicator);
-}
-
-/*! \brief Write a topologic shape to a file (OCC's internal BREP format)
-   *  \param shape Topologic shape to write
-   *  \param fileName Path to the file to write
-   *  \param indicator Indicator to notify the writing progress
-   */
-void writeShapeToBrepFile(const TopoDS_Shape& shape,
-                          const QString& fileName,
-                          Handle_Message_ProgressIndicator indicator)
-{
-  BRepTools::Write(shape, fileName.toAscii().data(), indicator);
-}
-
-/*! \brief Write a topologic shape to a file (IGES format)
-   *  \param shape Topologic shape to write
-   *  \param fileName Path to the file to write
-   *  \param indicator Indicator to notify the writing progress
-   */
-void writeShapeToIgesFile(const TopoDS_Shape& shape,
-                          const QString& fileName,
-                          Handle_Message_ProgressIndicator indicator)
-{
-  IGESControl_Controller::Init();
-  IGESControl_Writer writer(Interface_Static::CVal("XSTEP.iges.unit"),
-                            Interface_Static::IVal("XSTEP.iges.writebrep.mode"));
-  if (!indicator.IsNull())
-    writer.TransferProcess()->SetProgress(indicator);
-  writer.AddShape(shape);
-  writer.ComputeModel();
-  writer.Write(fileName.toAscii().data());
-  writer.TransferProcess()->SetProgress(0);
-}
-
-/*! \brief Write a topologic shape to a file (STEP format)
-   *  \param shape Topologic shape to write
-   *  \param fileName Path to the file to write
-   *  \param indicator Indicator to notify the writing progress
-   */
-void writeShapeToStepFile(const TopoDS_Shape& shape,
-                          const QString& fileName,
-                          Handle_Message_ProgressIndicator indicator)
-{
-  IFSelect_ReturnStatus status;
-  STEPControl_Writer writer;
-  if (!indicator.IsNull())
-    writer.WS()->MapReader()->SetProgress(indicator);
-  status = writer.Transfer(shape, STEPControl_AsIs);
-  status = writer.Write(fileName.toAscii().data());
-  writer.WS()->MapReader()->SetProgress(0);
-}
-
-/*! \brief Write a topologic shape to a file (ASCII STL format)
-   *  \param shape Topologic shape to write
-   *  \param fileName Path to the file to write
-   */
-void writeShapeToAsciiStlFile(const TopoDS_Shape& shape,
-                              const QString& fileName)
-{
-  StlAPI_Writer writer;
-  writer.ASCIIMode() = Standard_True;
-  writer.Write(shape, fileName.toAscii().data());
-}
-
-/*! \brief Write a topologic shape to a file (binary STL format)
-   *  \param shape Topologic shape to write
-   *  \param fileName Path to the file to write
-   */
-void writeShapeToBinaryStlFile(const TopoDS_Shape& shape,
-                               const QString& fileName)
-{
-  StlAPI_Writer writer;
-  writer.ASCIIMode() = Standard_False;
-  writer.Write(shape, fileName.toAscii().data());
-}
-
 // --- Visualization
 
 void eraseObjectFromContext(Handle_AIS_InteractiveObject object,
@@ -361,98 +208,6 @@ gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
       (v3.SquareMagnitude() > 1.e-10))
     return v1.Crossed(v2);
   return v1;
-}
-
-//
-// --- Conversion functors
-//
-
-const TopoDS_Edge& topo_edge_convert::operator()(const TopoDS_Shape& shape) const
-{
-  return TopoDS::Edge(shape);
-}
-
-const TopoDS_Face& topo_face_convert::operator()(const TopoDS_Shape& shape) const
-{
-  return TopoDS::Face(shape);
-}
-
-//
-// --- AIS functors
-//
-
-/*! \struct ais_object_unary_function
-   *  \brief
-   */
-ais_object_unary_function::
-ais_object_unary_function(const Handle_AIS_InteractiveContext& context) :
-  _context(context)
-{ }
-
-/*! \struct ais_object_location_set
-   *  \brief
-   */
-ais_object_location_set::
-ais_object_location_set(const Handle_AIS_InteractiveContext& context,
-                        const gp_Trsf& trsf) :
-  _context(context),
-  _trsf(trsf)
-{ }
-
-void ais_object_location_set::operator()(first_argument_type aisObject,
-                                         second_argument_type objectTrsf) const
-{
-  _context->SetLocation(aisObject, _trsf * objectTrsf);
-}
-
-/*! \struct ais_object_display
-   *  \brief Functor that displays a given interactive object.
-   */
-ais_object_display::
-ais_object_display(const Handle_AIS_InteractiveContext& context,
-                   Standard_Boolean updateViewer) :
-  ais_object_unary_function(context),
-  _updateViewer(updateViewer)
-{ }
-
-void ais_object_display::operator()(argument_type aisObject) const
-{
-  _context->Display(aisObject, _updateViewer);
-}
-
-/*! \struct ais_object_redisplay
-   *  \brief Functor that redisplays a given interactive object.
-   */
-ais_object_redisplay::
-ais_object_redisplay(const Handle_AIS_InteractiveContext& context,
-                     Standard_Boolean updateViewer,
-                     Standard_Boolean allModes) :
-  ais_object_unary_function(context),
-  _updateViewer(updateViewer),
-  _allModes(allModes)
-{ }
-
-void ais_object_redisplay::operator()(argument_type aisObject) const
-{
-  _context->Redisplay(aisObject,
-                            _updateViewer, _allModes);
-}
-
-/*! \struct ais_object_hide
-   *  \brief Functor that hides a given interactive object.
-   */
-ais_object_hide::ais_object_hide(const Handle_AIS_InteractiveContext& context,
-                                 Standard_Boolean updateViewer,
-                                 Standard_Boolean putInCollector) :
-  ais_object_unary_function(context),
-  _updateViewer(updateViewer),
-  _putInCollector(putInCollector)
-{ }
-
-void ais_object_hide::operator()(argument_type aisObject) const
-{
-  _context->Erase(aisObject,
-                        _updateViewer, _putInCollector);
 }
 
 } // namespace occ

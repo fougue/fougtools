@@ -101,28 +101,6 @@ QString toString(const _OCC_PNT_VEC_& pv,
                  const QString& format = "(%x, %y, %z)",
                  char realFormat = 'g', unsigned prec = 6);
 
-// --- Import / export
-OCCTOOLS_EXPORT TopoDS_Shape shapeFromBrepFile(
-    const QString& fileName, Handle_Message_ProgressIndicator indicator = 0);
-OCCTOOLS_EXPORT TopoDS_Shape shapeFromIgesFile(
-    const QString& fileName, Handle_Message_ProgressIndicator indicator = 0);
-OCCTOOLS_EXPORT TopoDS_Shape shapeFromStepFile(
-    const QString& fileName, Handle_Message_ProgressIndicator indicator = 0);
-
-OCCTOOLS_EXPORT void writeShapeToBrepFile(const TopoDS_Shape& shape,
-                                          const QString& fileName,
-                                          Handle_Message_ProgressIndicator indicator = 0);
-OCCTOOLS_EXPORT void writeShapeToIgesFile(const TopoDS_Shape& shape,
-                                          const QString& fileName,
-                                          Handle_Message_ProgressIndicator indicator = 0);
-OCCTOOLS_EXPORT void writeShapeToStepFile(const TopoDS_Shape& shape,
-                                          const QString& fileName,
-                                          Handle_Message_ProgressIndicator indicator = 0);
-OCCTOOLS_EXPORT void writeShapeToAsciiStlFile(const TopoDS_Shape& shape,
-                                              const QString& fileName);
-OCCTOOLS_EXPORT void writeShapeToBinaryStlFile(const TopoDS_Shape& shape,
-                                               const QString& fileName);
-
 // --- Visualization
 OCCTOOLS_EXPORT void eraseObjectFromContext(Handle_AIS_InteractiveObject object,
                                             Handle_AIS_InteractiveContext context);
@@ -144,74 +122,6 @@ public:
 private:
   const TransientHandle_t& _handle;
 }; // class down_cast<>
-
-// --- Conversion functors
-
-struct OCCTOOLS_EXPORT topo_edge_convert :
-    public std::unary_function<const TopoDS_Shape&, const TopoDS_Edge&>
-{
-  const TopoDS_Edge& operator()(const TopoDS_Shape& shape) const;
-}; // struct topo_edge_convert
-
-struct OCCTOOLS_EXPORT topo_face_convert :
-    public std::unary_function<const TopoDS_Shape&, const TopoDS_Face&>
-{
-  const TopoDS_Face& operator()(const TopoDS_Shape& shape) const;
-}; // struct topo_face_convert
-
-// --- AIS functors
-
-struct OCCTOOLS_EXPORT ais_object_unary_function :
-    public std::unary_function<const Handle_AIS_InteractiveObject&, void>
-{
-  ais_object_unary_function(const Handle_AIS_InteractiveContext& context);
-protected:
-  Handle_AIS_InteractiveContext _context;
-}; // struct ais_object_unary_function
-
-struct OCCTOOLS_EXPORT ais_object_location_set :
-    public std::binary_function<const Handle_AIS_InteractiveObject&,
-    const gp_Trsf&, void>
-{
-  ais_object_location_set(const Handle_AIS_InteractiveContext& context,
-                          const gp_Trsf& trsf);
-  void operator()(first_argument_type aisObject,
-                  second_argument_type objectTrsf) const;
-private:
-  Handle_AIS_InteractiveContext _context;
-  const gp_Trsf& _trsf;
-}; // struct ais_object_location_set
-
-struct OCCTOOLS_EXPORT ais_object_display : public ais_object_unary_function
-{
-  ais_object_display(const Handle_AIS_InteractiveContext& context,
-                     Standard_Boolean updateViewer = Standard_False);
-  void operator()(argument_type aisObject) const;
-private:
-  Standard_Boolean _updateViewer;
-}; // struct ais_object_display
-
-struct OCCTOOLS_EXPORT ais_object_redisplay : public ais_object_unary_function
-{
-  ais_object_redisplay(const Handle_AIS_InteractiveContext& context,
-                       Standard_Boolean updateViewer = Standard_False,
-                       Standard_Boolean allModes = Standard_False);
-  void operator()(argument_type aisObject) const;
-private:
-  Standard_Boolean _updateViewer;
-  Standard_Boolean _allModes;
-}; // struct ais_object_redisplay
-
-struct OCCTOOLS_EXPORT ais_object_hide : public ais_object_unary_function
-{
-  ais_object_hide(const Handle_AIS_InteractiveContext& context,
-                  Standard_Boolean updateViewer = Standard_False,
-                  Standard_Boolean putInCollector = Standard_False);
-  void operator()(argument_type aisObject) const;
-private:
-  Standard_Boolean _updateViewer;
-  Standard_Boolean _putInCollector;
-}; // struct ais_object_hide
 
 // --- Constants
 const gp_Pnt2d origin2d(0., 0.);

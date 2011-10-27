@@ -56,6 +56,26 @@ public:
   virtual bool isLastSqlOperationOk() const;
 };
 
+class QTTOOLS_SQL_EXPORT DefaultDatabaseModel : public AbstractDatabaseModel
+{
+public:
+  DefaultDatabaseModel(DatabaseManager* dbMgr);
+
+  void reload();
+  bool submitAll();
+  void revertAll();
+  DatabaseManager* databaseManager() const;
+  QSqlError lastSqlError() const;
+
+protected:
+  void resetLastSqlError();
+  void setLastSqlError(const QSqlError& err);
+
+private:
+  DatabaseManager* m_dbMgr;
+  QSqlError m_lastSqlError;
+};
+
 } // namespace qttools
 
 #endif // QTTOOLS_ABSTRACT_DATABASE_MODEL_H

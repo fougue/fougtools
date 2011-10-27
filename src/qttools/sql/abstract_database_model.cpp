@@ -69,4 +69,44 @@ bool AbstractDatabaseModel::isLastSqlOperationOk() const
   return this->lastSqlError().type() == QSqlError::NoError;
 }
 
+
+
+DefaultDatabaseModel::DefaultDatabaseModel(DatabaseManager* dbMgr) :
+  m_dbMgr(dbMgr)
+{
+}
+
+void DefaultDatabaseModel::reload()
+{
+}
+
+bool DefaultDatabaseModel::submitAll()
+{
+  return false;
+}
+
+void DefaultDatabaseModel::revertAll()
+{
+}
+
+DatabaseManager* DefaultDatabaseModel::databaseManager() const
+{
+  return m_dbMgr;
+}
+
+QSqlError DefaultDatabaseModel::lastSqlError() const
+{
+  return m_lastSqlError;
+}
+
+void DefaultDatabaseModel::resetLastSqlError()
+{
+  this->setLastSqlError(QSqlError());
+}
+
+void DefaultDatabaseModel::setLastSqlError(const QSqlError& err)
+{
+  m_lastSqlError = err;
+}
+
 } // namespace qttools

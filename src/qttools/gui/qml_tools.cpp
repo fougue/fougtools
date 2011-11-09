@@ -78,8 +78,8 @@ Qt::CursorShape toQtCursorShape(int shape)
 
 namespace qttools {
 
-QmlTools::QmlTools(QObject* parent) :
-  QObject(parent)
+QmlTools::QmlTools(QObject* parent)
+  : QObject(parent)
 {
 }
 

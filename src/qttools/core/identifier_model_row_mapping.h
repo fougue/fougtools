@@ -44,25 +44,25 @@
 
 namespace qttools {
 
-template<typename _IDENTIFIER_>
+template<typename IDENTIFIER>
 class IdentifierModelRowMapping
 {
 public:
   IdentifierModelRowMapping(const QAbstractItemModel* model, int identCol = 0);
 
-  int modelRow(_IDENTIFIER_ ident) const;
+  int modelRow(IDENTIFIER ident) const;
 
-  bool isMapped(_IDENTIFIER_ ident) const;
-  void changeMap(_IDENTIFIER_ ident, int modelRow);
-  void removeMap(_IDENTIFIER_ ident);
+  bool isMapped(IDENTIFIER ident) const;
+  void changeMap(IDENTIFIER ident, int modelRow);
+  void removeMap(IDENTIFIER ident);
   void remap();
 
   void setIdentifierColumn(int col);
 
 private:
-  QHash<_IDENTIFIER_, int> _mapping;
-  const QAbstractItemModel* _model;
-  int _identCol;
+  QHash<IDENTIFIER, int> m_mapping;
+  const QAbstractItemModel* m_model;
+  int m_identCol;
 };
 
 
@@ -70,57 +70,55 @@ private:
 // -- Implementation
 // --
 
-template<typename _IDENTIFIER_>
-IdentifierModelRowMapping<_IDENTIFIER_>::IdentifierModelRowMapping(
-    const QAbstractItemModel* model, int identCol) :
-  _mapping(),
-  _model(model),
-  _identCol(identCol)
+template<typename IDENTIFIER>
+IdentifierModelRowMapping<IDENTIFIER>::IdentifierModelRowMapping(const QAbstractItemModel* model,
+                                                                 int identCol)
+  : m_model(model),
+    m_identCol(identCol)
 {
 }
 
-template<typename _IDENTIFIER_>
-int IdentifierModelRowMapping<_IDENTIFIER_>::modelRow(_IDENTIFIER_ ident) const
+template<typename IDENTIFIER>
+int IdentifierModelRowMapping<IDENTIFIER>::modelRow(IDENTIFIER ident) const
 {
-  if (this->_mapping.contains(ident))
-    return this->_mapping[ident];
+  if (m_mapping.contains(ident))
+    return m_mapping[ident];
   return -1;
 }
 
-template<typename _IDENTIFIER_>
-bool IdentifierModelRowMapping<_IDENTIFIER_>::isMapped(_IDENTIFIER_ ident) const
+template<typename IDENTIFIER>
+bool IdentifierModelRowMapping<IDENTIFIER>::isMapped(IDENTIFIER ident) const
 {
-  return this->_mapping.contains(ident);
+  return m_mapping.contains(ident);
 }
 
-template<typename _IDENTIFIER_>
-void IdentifierModelRowMapping<_IDENTIFIER_>::setIdentifierColumn(int col)
+template<typename IDENTIFIER>
+void IdentifierModelRowMapping<IDENTIFIER>::setIdentifierColumn(int col)
 {
-  this->_identCol = col;
+  m_identCol = col;
 }
 
-template<typename _IDENTIFIER_>
-void IdentifierModelRowMapping<_IDENTIFIER_>::changeMap(_IDENTIFIER_ ident,
-                                                        int modelRow)
+template<typename IDENTIFIER>
+void IdentifierModelRowMapping<IDENTIFIER>::changeMap(IDENTIFIER ident, int modelRow)
 {
-  this->_mapping[ident] = modelRow;
+  m_mapping[ident] = modelRow;
 }
 
-template<typename _IDENTIFIER_>
-void IdentifierModelRowMapping<_IDENTIFIER_>::removeMap(_IDENTIFIER_ ident)
+template<typename IDENTIFIER>
+void IdentifierModelRowMapping<IDENTIFIER>::removeMap(IDENTIFIER ident)
 {
-  this->_mapping.remove(ident);
+  m_mapping.remove(ident);
 }
 
-template<typename _IDENTIFIER_>
-void IdentifierModelRowMapping<_IDENTIFIER_>::remap()
+template<typename IDENTIFIER>
+void IdentifierModelRowMapping<IDENTIFIER>::remap()
 {
-  const QAbstractItemModel* m = this->_model;
-  this->_mapping.clear();
-  for (int row = 0; row < this->_model->rowCount(); ++row) {
-    const QVariant identVar = m->data(m->index(row, this->_identCol));
-    const _IDENTIFIER_ ident = identVar.value<_IDENTIFIER_>();
-    this->_mapping[ident] = row;
+  const QAbstractItemModel* m = m_model;
+  m_mapping.clear();
+  for (int row = 0; row < m_model->rowCount(); ++row) {
+    const QVariant identVar = m->data(m->index(row, m_identCol));
+    const IDENTIFIER ident = identVar.value<IDENTIFIER>();
+    m_mapping[ident] = row;
   }
 }
 

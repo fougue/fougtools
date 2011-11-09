@@ -47,11 +47,11 @@ QTTOOLS_CORE_EXPORT void forwardSignal(const QObject* sender,
                                        const QObject* resender,
                                        const char* signal);
 
-template<typename _PARENT_TYPE_>
-const _PARENT_TYPE_* constFindParent(const QObject* object);
+template<typename PARENT_TYPE>
+const PARENT_TYPE* constFindParent(const QObject* object);
 
-template<typename _PARENT_TYPE_>
-_PARENT_TYPE_* findParent(QObject* object);
+template<typename PARENT_TYPE>
+PARENT_TYPE* findParent(QObject* object);
 
 } // namespace qttools
 
@@ -65,19 +65,19 @@ _PARENT_TYPE_* findParent(QObject* object);
 
 namespace qttools {
 
-template<typename _PARENT_TYPE_>
-const _PARENT_TYPE_* constFindParent(const QObject* object)
+template<typename PARENT_TYPE>
+const PARENT_TYPE* constFindParent(const QObject* object)
 {
-  return findParent<_PARENT_TYPE_>(const_cast<QObject*>(object));
+  return findParent<PARENT_TYPE>(const_cast<QObject*>(object));
 }
 
-template<typename _PARENT_TYPE_>
-_PARENT_TYPE_* findParent(QObject* object)
+template<typename PARENT_TYPE>
+PARENT_TYPE* findParent(QObject* object)
 {
   QObject* it = object;
-  while (it != 0 && qobject_cast<_PARENT_TYPE_*>(it) == 0)
+  while (it != 0 && qobject_cast<PARENT_TYPE*>(it) == 0)
     it = it->parent();
-  return qobject_cast<_PARENT_TYPE_*>(it);
+  return qobject_cast<PARENT_TYPE*>(it);
 }
 
 } // namespace qttools

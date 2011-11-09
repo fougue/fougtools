@@ -42,20 +42,22 @@
 
 namespace qttools {
 
-template<typename _T_>
+template<typename T>
 class QObjectWrap : public QObject
 {
 public:
-  QObjectWrap(_T_* object, QObject* parent = 0);
+  QObjectWrap(T* object, QObject* parent = 0);
   ~QObjectWrap();
-  _T_* wrapped();
-  const _T_* wrapped() const;
+
+  T* wrapped();
+  const T* wrapped() const;
+
 private:
-  _T_* _wrapped;
+  T* m_wrapped;
 };
 
-template<typename _T_>
-QObjectWrap<_T_>* wrapAsQObject(_T_* object, QObject* parent = 0);
+template<typename T>
+QObjectWrap<T>* wrapAsQObject(T* object, QObject* parent = 0);
 
 
 
@@ -63,36 +65,36 @@ QObjectWrap<_T_>* wrapAsQObject(_T_* object, QObject* parent = 0);
 // -- Implementation
 // --
 
-template<typename _T_>
-QObjectWrap<_T_>::QObjectWrap(_T_* object, QObject* parent) :
-  QObject(parent),
-  _wrapped(object)
+template<typename T>
+QObjectWrap<T>::QObjectWrap(T* object, QObject* parent)
+  : QObject(parent),
+    m_wrapped(object)
 {
 }
 
-template<typename _T_>
-QObjectWrap<_T_>::~QObjectWrap()
+template<typename T>
+QObjectWrap<T>::~QObjectWrap()
 {
-  delete this->_wrapped;
+  delete m_wrapped;
 }
 
-template<typename _T_>
-_T_* QObjectWrap<_T_>::wrapped()
+template<typename T>
+T* QObjectWrap<T>::wrapped()
 {
-  return this->_wrapped;
+  return m_wrapped;
 }
 
-template<typename _T_>
-const _T_* QObjectWrap<_T_>::wrapped() const
+template<typename T>
+const T* QObjectWrap<T>::wrapped() const
 {
-  return this->_wrapped;
+  return m_wrapped;
 }
 
 
-template<typename _T_>
-QObjectWrap<_T_>* wrapAsQObject(_T_* object, QObject* parent)
+template<typename T>
+QObjectWrap<T>* wrapAsQObject(T* object, QObject* parent)
 {
-  return new QObjectWrap<_T_>(object, parent);
+  return new QObjectWrap<T>(object, parent);
 }
 
 } // namespace qttools

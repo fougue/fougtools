@@ -85,12 +85,12 @@ public:
   static ConnectionSecurity toConnectionSecurity(int id, bool* ok = 0);
 
 private:
-  QString _host;
-  int _port;
-  AuthenticationMethod _authMethod;
-  ConnectionSecurity _connSecurity;
-  QString _userName;
-  QString _password;
+  QString m_host;
+  int m_port;
+  AuthenticationMethod m_authMethod;
+  ConnectionSecurity m_connSecurity;
+  QString m_userName;
+  QString m_password;
 };
 
 } // namespace qttools

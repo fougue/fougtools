@@ -91,7 +91,7 @@ private:
     QTextStream ts;
     int refCount;
   };
-  Stream* _stream;
+  Stream* m_stream;
 };
 
 QTTOOLS_CORE_EXPORT Log debugLog();
@@ -112,7 +112,7 @@ public:
   virtual void handle(Log::MessageType msgType, const QString& msg) = 0;
   void setAutoDetach(bool b);
 private:
-  bool _autoDetach;
+  bool m_autoDetach;
 };
 QTTOOLS_CORE_EXPORT void attachGlobalLogHandler(AbstractLogHandler* handler);
 QTTOOLS_CORE_EXPORT void detachGlobalLogHandler(AbstractLogHandler* handler);

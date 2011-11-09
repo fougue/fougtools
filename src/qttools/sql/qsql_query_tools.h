@@ -56,7 +56,7 @@ public:
   QSqlError sqlError() const;
 
 private:
-  QSqlError _sqlError;
+  QSqlError m_sqlError;
 };
 
 QTTOOLS_SQL_EXPORT

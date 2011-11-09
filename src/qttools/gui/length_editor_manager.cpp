@@ -49,21 +49,21 @@ namespace qttools {
  */
 
 LengthEditorManager::LengthEditorManager()
-  : _lengthEditors(),
-    _measureSys(QLocale::MetricSystem)
+  : m_lengthEditors(),
+    m_measureSys(QLocale::MetricSystem)
 {
 }
 
 void LengthEditorManager::attach(AbstractLengthEditor* editor)
 {
   if (editor != 0)
-    _lengthEditors.insert(editor);
+    m_lengthEditors.insert(editor);
 }
 
 void LengthEditorManager::detach(AbstractLengthEditor* editor)
 {
   if (editor != 0)
-    _lengthEditors.remove(editor);
+    m_lengthEditors.remove(editor);
 }
 
 LengthEditorManager* LengthEditorManager::globalInstance()
@@ -76,16 +76,16 @@ LengthEditorManager* LengthEditorManager::globalInstance()
 
 QLocale::MeasurementSystem LengthEditorManager::measurementSytem() const
 {
-  return _measureSys;
+  return m_measureSys;
 }
 
 void LengthEditorManager::setMeasurementSystem(QLocale::MeasurementSystem sys)
 {
-  if (sys == _measureSys)
+  if (sys == m_measureSys)
     return;
-  foreach (AbstractLengthEditor* iEditor, _lengthEditors)
+  foreach (AbstractLengthEditor* iEditor, m_lengthEditors)
     iEditor->updateEditor(sys);
-  _measureSys = sys;
+  m_measureSys = sys;
   emit currentMeasurementSytemChanged(sys);
 }
 

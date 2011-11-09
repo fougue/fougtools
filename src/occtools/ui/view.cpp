@@ -72,9 +72,9 @@ namespace occ {
 //! having \p parent as its Qt widget parent
 View::View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent) :
   QWidget(parent),
-  _context(context3d),
-  _isInitialized(false),
-  _needsResize(false)
+  m_context(context3d),
+  m_isInitialized(false),
+  m_needsResize(false)
 {
   this->setMouseTracking(true);
   // Avoid Qt background clears to improve resizing speed,
@@ -95,23 +95,23 @@ View::View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent) :
 //! Mutable bound interactive context
 Handle_AIS_InteractiveContext& View::context()
 {
-  return _context;
+  return m_context;
 }
 
 //! Read-only bound interactive context
 const Handle_AIS_InteractiveContext& View::context() const
 {
-  return _context;
+  return m_context;
 }
 
 Handle_V3d_View& View::internalView()
 {
-  return _internalView;
+  return m_internalView;
 }
 
 const Handle_V3d_View& View::internalView() const
 {
-  return _internalView;
+  return m_internalView;
 }
 
 // --- Drawing
@@ -125,34 +125,34 @@ QPaintEngine* View::paintEngine() const
 //! Force a redraw of the view (forcing depends on \p status )
 void View::redraw(RedrawStatus /*status*/)
 {
-  if (!_internalView.IsNull()) {
-    if (_needsResize) {
-      _internalView->MustBeResized();
+  if (!m_internalView.IsNull()) {
+    if (m_needsResize) {
+      m_internalView->MustBeResized();
       //this->viewPrecision( true );
     }
     else
     {
-      _internalView->Redraw();
+      m_internalView->Redraw();
       /*        // Don't repaint if we are already redrawing
         // elsewhere due to a keypress or mouse gesture
         if (status != IsPaintingStatus ||
             (status == IsPaintingStatus &&
              QApplication::mouseButtons() == Qt::NoButton))
         {
-          _internalView->Redraw();
+          m_internalView->Redraw();
         }*/
     }
   }
-  _needsResize = false;
+  m_needsResize = false;
 }
 
 // --- Actions
 
 void View::fitAll()
 {
-  if (!_internalView.IsNull()) {
-    _internalView->ZFitAll();
-    _internalView->FitAll();
+  if (!m_internalView.IsNull()) {
+    m_internalView->ZFitAll();
+    m_internalView->FitAll();
   }
 }
 
@@ -163,7 +163,7 @@ void View::fitAll()
 void View::paintEvent(QPaintEvent* /*e*/)
 {
   this->initialize();
-  if (!_context->CurrentViewer().IsNull())
+  if (!m_context->CurrentViewer().IsNull())
     this->redraw(IsPaintingStatus);
 }
 
@@ -174,7 +174,7 @@ void View::paintEvent(QPaintEvent* /*e*/)
   */
 void View::resizeEvent(QResizeEvent* /*e*/)
 {
-  _needsResize = true;
+  m_needsResize = true;
 }
 
 // --- Implementation
@@ -234,13 +234,13 @@ int paintCallBack(Aspect_Drawable /*drawable*/,
 //! Initialize the internal V3d_View
 void View::initialize()
 {
-  if (!_isInitialized && this->winId() != 0) {
-    _internalView = _context->CurrentViewer()->CreateView();
+  if (!m_isInitialized && this->winId() != 0) {
+    m_internalView = m_context->CurrentViewer()->CreateView();
     int windowHandle = (int)(this->winId());
     short hi = static_cast<short>(windowHandle >> 16);
     short lo = static_cast<short>(windowHandle);
     Handle_Aspect_GraphicDevice device =
-        _context->CurrentViewer()->Device();
+        m_context->CurrentViewer()->Device();
 #ifdef WNT
     Handle_WNT_Window hWnd =
         new WNT_Window(Handle_Graphic3d_WNTGraphicDevice::DownCast(device),
@@ -255,7 +255,7 @@ void View::initialize()
                       Xw_WQ_SAMEQUALITY);
 #endif // WNT
     Aspect_RenderingContext rc = 0;
-    _internalView->SetWindow(hWnd, rc, paintCallBack, this);
+    m_internalView->SetWindow(hWnd, rc, paintCallBack, this);
     //_internalView->SetScale(2);
     if (!hWnd->IsMapped())
       hWnd->Map();
@@ -271,16 +271,16 @@ void View::initialize()
     painter.fillRect(0.0, 0.0, w, h, gradient);
     if (pixmap.save("temp_bkgnd.bmp"))
     {
-      _internalView->SetBackgroundImage("temp_bkgnd.bmp");
-      _internalView->SetBgImageStyle(Aspect_FM_STRETCH);
+      m_internalView->SetBackgroundImage("temp_bkgnd.bmp");
+      m_internalView->SetBgImageStyle(Aspect_FM_STRETCH);
     }
 
-    _internalView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER,
+    m_internalView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER,
                                          Quantity_NOC_BLACK,
                                          0.1, V3d_ZBUFFER);
-    _internalView->MustBeResized();
-    _isInitialized = true;
-    _needsResize = true;
+    m_internalView->MustBeResized();
+    m_isInitialized = true;
+    m_needsResize = true;
   }
 }
 

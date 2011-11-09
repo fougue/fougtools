@@ -39,10 +39,11 @@
 #define OCC_POINT_ON_FACES_PROJECTOR_H
 
 #include "occtools/occtools.h"
-#include <TopoDS_Face.hxx>
 #include <gp_Pnt.hxx>
 #include <gp_Vec.hxx>
 #include <gp_Pnt.hxx>
+class TopoDS_Face;
+class TopoDS_Shape;
 
 namespace occ {
 
@@ -69,7 +70,8 @@ public:
   Result operator()(const gp_Pnt& point) const;
 
 private:
-  class PointOnFacesProjectorPrivate* _d;
+  class PointOnFacesProjectorPrivate* d_ptr;
+  Q_DECLARE_PRIVATE(PointOnFacesProjector)
 };
 
 } // namespace occ

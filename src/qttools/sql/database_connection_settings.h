@@ -78,11 +78,11 @@ public:
              const QString& settingsGroup = QString()) const;
 
 private:
-  QString _host;
-  QString _dbName;
-  int _port;
-  QString _userName;
-  QString _password;
+  QString m_host;
+  QString m_dbName;
+  int m_port;
+  QString m_userName;
+  QString m_password;
 };
 
 } // namespace qttools

@@ -38,7 +38,7 @@
 #ifndef OCCTOOLS_H
 #define OCCTOOLS_H
 
-# include <QtCore/QtGlobal>
+#include <QtCore/QtGlobal>
 # ifdef OCCTOOLS_DLL
 #  ifdef OCCTOOLS_MAKE_DLL
 #   define OCCTOOLS_EXPORT Q_DECL_EXPORT
@@ -47,6 +47,6 @@
 #  endif // OCCTOOLS_MAKE_DLL
 # else
 #  define OCCTOOLS_EXPORT
-# endif // OCCTOOLS_DLL
+#endif // OCCTOOLS_DLL
 
 #endif // OCCTOOLS_H

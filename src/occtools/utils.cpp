@@ -179,14 +179,14 @@ void eraseObjectFromContext(Handle_AIS_InteractiveObject object,
 // --- Triangulation tools
 
 /*! \brief Non-normalized vector to a triangle
-   *  \param nodes
-   *         Vertices of the triangulation that \p triangle belongs to
-   *  \param triangle
-   *         Triangle whose normal has to be computed
-   *  \param ori
-   *         Orientation of the triangle (generally inherited from the
-   *         triangulated face)
-   */
+ *  \param nodes
+ *         Vertices of the triangulation that \p triangle belongs to
+ *  \param triangle
+ *         Triangle whose normal has to be computed
+ *  \param ori
+ *         Orientation of the triangle (generally inherited from the
+ *         triangulated face)
+ */
 gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
                       const Poly_Triangle& triangle,
                       TopAbs_Orientation ori)

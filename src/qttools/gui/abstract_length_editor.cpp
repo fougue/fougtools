@@ -60,8 +60,8 @@ namespace qttools {
 // -- Lifecycle
 
 AbstractLengthEditor::AbstractLengthEditor()
-  : _prefMetricUnit(MillimeterUnit),
-    _prefImperialUnit(InchUnit)
+  : m_prefMetricUnit(MillimeterUnit),
+    m_prefImperialUnit(InchUnit)
 {
   LengthEditorManager::globalInstance()->attach(this);
 }
@@ -82,7 +82,7 @@ AbstractLengthEditor::~AbstractLengthEditor()
  */
 AbstractLengthEditor::MetricUnit AbstractLengthEditor::preferredMetricUnit() const
 {
-  return _prefMetricUnit;
+  return m_prefMetricUnit;
 }
 
 /*! \brief Set the length unit to be used when the metric measurement system
@@ -90,7 +90,7 @@ AbstractLengthEditor::MetricUnit AbstractLengthEditor::preferredMetricUnit() con
  */
 void AbstractLengthEditor::setPreferredMetricUnit(MetricUnit unit)
 {
-  _prefMetricUnit = unit;
+  m_prefMetricUnit = unit;
   this->updateEditor(::currMeasurementSys());
 }
 
@@ -99,7 +99,7 @@ void AbstractLengthEditor::setPreferredMetricUnit(MetricUnit unit)
  */
 AbstractLengthEditor::ImperialUnit AbstractLengthEditor::preferredImperialUnit() const
 {
-  return _prefImperialUnit;
+  return m_prefImperialUnit;
 }
 
 /*! \brief Set the length unit to be used when the imperial measurement system
@@ -107,7 +107,7 @@ AbstractLengthEditor::ImperialUnit AbstractLengthEditor::preferredImperialUnit()
  */
 void AbstractLengthEditor::setPreferredImperialUnit(ImperialUnit unit)
 {
-  _prefImperialUnit = unit;
+  m_prefImperialUnit = unit;
   this->updateEditor(::currMeasurementSys());
 }
 

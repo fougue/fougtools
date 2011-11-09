@@ -171,16 +171,17 @@ public:
 
 //! Construct a default AIS_Text
 AIS_Text::AIS_Text()
-  : _d(new AIS_TextPrivate)
+  : d_ptr(new AIS_TextPrivate)
 {
 }
 
 //! Construct a fully initialized AIS_Text
 AIS_Text::AIS_Text(const QString& text, const gp_Pnt& pos)
-  : _d(new AIS_TextPrivate)
+  : d_ptr(new AIS_TextPrivate)
 {
+  Q_D(AIS_Text);
   TextProperties defaultProps;
-  _d->textProps.append(defaultProps);
+  d->textProps.append(defaultProps);
   this->setText(text);
   this->setPosition(pos);
 }
@@ -188,7 +189,8 @@ AIS_Text::AIS_Text(const QString& text, const gp_Pnt& pos)
 //! Destruct the instance and free any allocated resources
 AIS_Text::~AIS_Text()
 {
-  delete _d;
+  Q_D(AIS_Text);
+  delete d;
 }
 
 // --- Access
@@ -196,9 +198,10 @@ AIS_Text::~AIS_Text()
 //! Color of the \p i -th text displayed
 QColor AIS_Text::color(unsigned i) const
 {
+  Q_D(const AIS_Text);
   assert(this->isValidTextIndex(i) && "valid_text_index");
 
-  Handle_Graphic3d_AspectText3d aspect = _d->graphicAspect(i);
+  Handle_Graphic3d_AspectText3d aspect = d->graphicAspect(i);
   Quantity_Color occColor;
   Standard_CString occFont;
   Standard_Real occExpFactor;
@@ -210,22 +213,25 @@ QColor AIS_Text::color(unsigned i) const
 //! Font of the \p i-th text displayed
 QFont AIS_Text::font(unsigned i) const
 {
+  Q_D(const AIS_Text);
   assert(this->isValidTextIndex(i) && "valid_text_index");
-  return _d->textProps[i].font;
+  return d->textProps[i].font;
 }
 
 //! Position of the \p i-th text displayed
 const gp_Pnt& AIS_Text::position(unsigned i) const
 {
+  Q_D(const AIS_Text);
   assert(this->isValidTextIndex(i) && "valid_text_index");
-  return _d->textProps[i].position;
+  return d->textProps[i].position;
 }
 
 //! \p i-th text displayed
 QString AIS_Text::text(unsigned i) const
 {
+  Q_D(const AIS_Text);
   assert(this->isValidTextIndex(i) && "valid_text_index");
-  return _d->textProps[i].text;
+  return d->textProps[i].text;
 }
 
 // --- Status report
@@ -241,7 +247,8 @@ bool AIS_Text::isValidTextIndex(unsigned i) const
 //! Count of texts displayed
 unsigned AIS_Text::textsCount() const
 {
-  return static_cast<unsigned>(_d->textProps.count());
+  Q_D(const AIS_Text);
+  return static_cast<unsigned>(d->textProps.count());
 }
 
 // --- Element change
@@ -250,50 +257,56 @@ unsigned AIS_Text::textsCount() const
 //!   Other text attributes are defaulted
 void AIS_Text::addText(const QString& text, const gp_Pnt& pos)
 {
+  Q_D(AIS_Text);
+
   TextProperties newProps;
-  _d->textProps.append(newProps);
+  d->textProps.append(newProps);
   const unsigned i = this->textsCount() - 1; // Index of the last text item.
-  this->setColor(_d->defaultColor, i);
-  this->setFont(_d->defaultFont, i);
+  this->setColor(d->defaultColor, i);
+  this->setFont(d->defaultFont, i);
   this->setPosition(pos, i);
   this->setText(text, i);
-  this->setTextDisplayMode(_d->defaultTextDisplayMode, i);
-  this->setTextStyle(_d->defaultTextStyle, i);
-  this->setTextBackgroundColor(_d->defaultTextBackgroundColor, i);
+  this->setTextDisplayMode(d->defaultTextDisplayMode, i);
+  this->setTextStyle(d->defaultTextStyle, i);
+  this->setTextBackgroundColor(d->defaultTextBackgroundColor, i);
 }
 
 //! Set the color of the \p i-th displayed text to \p c
 void AIS_Text::setColor(const QColor& c, unsigned i)
 {
+  Q_D(AIS_Text);
   assert(this->isValidTextIndex(i) && "valid_text_index");
-  _d->textProps[i].aspect->SetColor(occ::toOccColor(c));
+  d->textProps[i].aspect->SetColor(occ::toOccColor(c));
   assert(this->color(i) == c && "color_set");
 }
 
 //! Set the font of the \p i-th displayed text to \p f
 void AIS_Text::setFont(const QFont& f, unsigned i)
 {
+  Q_D(AIS_Text);
   assert(this->isValidTextIndex(i) && "valid_text_index");
   //! \bug Apparently there is no direct nor possible way to translate Qt
   //!      fonts to OpenCascade fonts. OpenCascade expects pre-defined
   //!      fonts listed in the enumerated type Graphic3d_NameOfFont. So
   //!      at the time being this routine as well as font() do not work
-  _d->textProps[i].font = f;
+  d->textProps[i].font = f;
   assert(this->font(i) == f && "font_set");
 }
 
 //! Set the 3d position of the \p i-th displayed text to \p pos
 void AIS_Text::setPosition(const gp_Pnt& pos, unsigned i)
 {
+  Q_D(AIS_Text);
   assert(this->isValidTextIndex(i) && "valid_text_index");
-  _d->textProps[i].position = pos;
+  d->textProps[i].position = pos;
 }
 
 //! Set the \p i-th displayed text to \p v
 void AIS_Text::setText(const QString& v, unsigned i)
 {
+  Q_D(AIS_Text);
   assert(this->isValidTextIndex(i) && "valid_text_index");
-  _d->textProps[i].text = v;
+  d->textProps[i].text = v;
   assert(this->text(i) == v && "text_set");
 }
 
@@ -302,13 +315,15 @@ void AIS_Text::setText(const QString& v, unsigned i)
 //!   BackgroundDisplay
 void AIS_Text::setTextBackgroundColor(const QColor& color, unsigned i)
 {
+  Q_D(AIS_Text);
   assert(this->isValidTextIndex(i) && "valid_text_index");
-  Handle_Graphic3d_AspectText3d aspect = _d->graphicAspect(i);
+  Handle_Graphic3d_AspectText3d aspect = d->graphicAspect(i);
   aspect->SetColorSubTitle(occ::toOccColor(color));
 }
 
 void AIS_Text::setTextDisplayMode(TextDisplayMode mode, unsigned i)
 {
+  Q_D(AIS_Text);
   assert(this->isValidTextIndex(i) && "valid_text_index");
 
   Aspect_TypeOfDisplayText occMode;
@@ -329,11 +344,12 @@ void AIS_Text::setTextDisplayMode(TextDisplayMode mode, unsigned i)
     occMode = Aspect_TODT_NORMAL;
     break;
   }
-  _d->graphicAspect(i)->SetDisplayType(occMode);
+  d->graphicAspect(i)->SetDisplayType(occMode);
 }
 
 void AIS_Text::setTextStyle(TextStyle style, unsigned i)
 {
+  Q_D(AIS_Text);
   assert(this->isValidTextIndex(i) && "valid_text_index");
 
   Aspect_TypeOfStyleText occStyle;
@@ -348,32 +364,37 @@ void AIS_Text::setTextStyle(TextStyle style, unsigned i)
     occStyle = Aspect_TOST_NORMAL;
     break;
   }
-  _d->graphicAspect(i)->SetStyle(occStyle);
+  d->graphicAspect(i)->SetStyle(occStyle);
 }
 
 void AIS_Text::setDefaultColor(const QColor& c)
 {
-  _d->defaultColor = c;
+  Q_D(AIS_Text);
+  d->defaultColor = c;
 }
 
 void AIS_Text::setDefaultFont(const QFont& f)
 {
-  _d->defaultFont = f;
+  Q_D(AIS_Text);
+  d->defaultFont = f;
 }
 
 void AIS_Text::setDefaultTextBackgroundColor(const QColor& c)
 {
-  _d->defaultTextBackgroundColor = c;
+  Q_D(AIS_Text);
+  d->defaultTextBackgroundColor = c;
 }
 
 void AIS_Text::setDefaultTextDisplayMode(TextDisplayMode mode)
 {
-  _d->defaultTextDisplayMode = mode;
+  Q_D(AIS_Text);
+  d->defaultTextDisplayMode = mode;
 }
 
 void AIS_Text::setDefaultTextStyle(TextStyle style)
 {
-  _d->defaultTextStyle = style;
+  Q_D(AIS_Text);
+  d->defaultTextStyle = style;
 }
 
 // --- Implementation
@@ -383,8 +404,9 @@ void AIS_Text::Compute(const Handle_PrsMgr_PresentationManager3d& /*pm*/,
                        const Handle_Prs3d_Presentation& pres,
                        const Standard_Integer /*mode*/)
 {
+  Q_D(const AIS_Text);
   for (unsigned i = 0; i < this->textsCount(); i++)
-    Prs3d_Text::Draw(pres, _d->textProps[i].aspect,
+    Prs3d_Text::Draw(pres, d->textProps[i].aspect,
                      //occ::toOccCstring(this->text(i)),
                      const_cast<char*>(qPrintable(this->text(i))),
                      this->position(i));

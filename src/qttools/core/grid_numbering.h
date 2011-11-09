@@ -68,9 +68,9 @@ public:
                                              int rowCount, int colCount,
                                              int startIndex = 0);
 private:
-  Qt::Corner _startCorner;
-  Qt::Orientation _orientation;
-  SweepMode _sweepMode;
+  Qt::Corner m_startCorner;
+  Qt::Orientation m_orientation;
+  SweepMode m_sweepMode;
 };
 
 } // namespace qttools

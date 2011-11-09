@@ -42,15 +42,17 @@
 
 namespace qttools {
 
-template<typename _ITEM_MODEL_>
-class ItemModelWithRoleSupport : public _ITEM_MODEL_
+template<typename ITEM_MODEL>
+class ItemModelWithRoleSupport : public ITEM_MODEL
 {
 public:
   ItemModelWithRoleSupport(QObject* parent = 0);
+
   QVariant data(const QModelIndex& idx, int role = Qt::DisplayRole) const;
   bool setData(const QModelIndex& idx, const QVariant& value, int role = Qt::EditRole);
+
 private:
-  QHash<QModelIndex, QHash<int, QVariant> > _data;
+  QHash<QModelIndex, QHash<int, QVariant> > m_data;
 };
 } // namespace qttools
 
@@ -61,35 +63,32 @@ private:
 // --
 
 namespace qttools {
-template<typename _ITEM_MODEL_>
-ItemModelWithRoleSupport<_ITEM_MODEL_>::ItemModelWithRoleSupport(
-    QObject* parent) :
-  _ITEM_MODEL_(parent),
-  _data()
+template<typename ITEM_MODEL>
+ItemModelWithRoleSupport<ITEM_MODEL>::ItemModelWithRoleSupport(QObject* parent)
+  : ITEM_MODEL(parent)
 {
 }
 
-template<typename _ITEM_MODEL_>
-QVariant ItemModelWithRoleSupport<_ITEM_MODEL_>::data(
-    const QModelIndex& idx, int role) const
+template<typename ITEM_MODEL>
+QVariant ItemModelWithRoleSupport<ITEM_MODEL>::data(const QModelIndex& idx, int role) const
 {
   if (role != Qt::DisplayRole && role != Qt::EditRole &&
-      this->_data.contains(idx) && this->_data[idx].contains(role))
-    return this->_data[idx][role];
-  return _ITEM_MODEL_::data(idx, role);
+      m_data.contains(idx) && m_data[idx].contains(role))
+    return m_data[idx][role];
+  return ITEM_MODEL::data(idx, role);
 }
 
-template<typename _ITEM_MODEL_>
-bool ItemModelWithRoleSupport<_ITEM_MODEL_>::setData(
-    const QModelIndex& idx, const QVariant& value, int role)
+template<typename ITEM_MODEL>
+bool ItemModelWithRoleSupport<ITEM_MODEL>::setData(const QModelIndex& idx,
+                                                   const QVariant& value, int role)
 {
   if (role != Qt::DisplayRole && role != Qt::EditRole) {
-    this->_data[idx][role] = value;
-    emit _ITEM_MODEL_::dataChanged(idx, idx);
+    m_data[idx][role] = value;
+    emit ITEM_MODEL::dataChanged(idx, idx);
     return true;
   }
   else
-    return _ITEM_MODEL_::setData(idx, value, role);
+    return ITEM_MODEL::setData(idx, value, role);
 }
 
 } // namespace qttools

@@ -51,7 +51,7 @@
 
 namespace {
 
-typedef GeomAPI_ProjectPointOnSurf Projector_t;
+typedef GeomAPI_ProjectPointOnSurf Projector;
 struct projector_compare :
     public std::binary_function<const GeomAPI_ProjectPointOnSurf*,const GeomAPI_ProjectPointOnSurf*, bool>
 {
@@ -73,25 +73,25 @@ struct projector_compare :
 namespace occ {
 
 /*! \class BRepPointOnFacesProjection
-   *  \brief Framework to perform normal point projection on a soup of topologic
-   *         faces
-   *
-   *  Internally, the utility class GeomAPI_ProjectPointOnSurf is heavily used.
-   *  \n The algorithmics are pretty slow : for a point to be projected, the
-   *  projection of that point is performed on each loaded TopoDS_Face with the
-   *  help of GeomAPI_ProjectPointOnSurf.\n The minimal distance amongst all
-   *  the projection candidates is computed to get the final projected point
-   */
+ *  \brief Framework to perform normal point projection on a soup of topologic
+ *         faces
+ *
+ *  Internally, the utility class GeomAPI_ProjectPointOnSurf is heavily used.
+ *  \n The algorithmics are pretty slow : for a point to be projected, the
+ *  projection of that point is performed on each loaded TopoDS_Face with the
+ *  help of GeomAPI_ProjectPointOnSurf.\n The minimal distance amongst all
+ *  the projection candidates is computed to get the final projected point
+ */
 
 //! Construct an uninitialized BRepPointOnFacesProjection
 BRepPointOnFacesProjection::BRepPointOnFacesProjection()
-  : _solProjector(static_cast<Projector_t*>(0), TopoDS_Face())
+  : m_solProjector(static_cast<Projector*>(0), TopoDS_Face())
 {
 }
 
 //! Construct a BRepPointOnFacesProjection and call prepare() on \p faces
 BRepPointOnFacesProjection::BRepPointOnFacesProjection(const TopoDS_Shape& faces)
-  : _solProjector(static_cast<Projector_t*>(0), TopoDS_Face())
+  : m_solProjector(static_cast<Projector*>(0), TopoDS_Face())
 {
   this->prepare(faces);
 }
@@ -102,8 +102,8 @@ BRepPointOnFacesProjection::~BRepPointOnFacesProjection()
 }
 
 /*! \brief Setup the algorithm to project points on \p faces
-   *  \param faces A soup of topologic faces
-   */
+ *  \param faces A soup of topologic faces
+ */
 void BRepPointOnFacesProjection::prepare(const TopoDS_Shape& faces)
 {
   this->releaseMemory();
@@ -111,46 +111,45 @@ void BRepPointOnFacesProjection::prepare(const TopoDS_Shape& faces)
   for (TopExp_Explorer exp(faces, TopAbs_FACE); exp.More(); exp.Next()) {
     TopoDS_Face iFace = TopoDS::Face(exp.Current());
     Handle_Geom_Surface iSurf = BRep_Tool::Surface(iFace);
-    _projectors.push_back(
-          std::make_pair(new Projector_t(occ::origin3d, iSurf), iFace));
+    m_projectors.push_back(ProjectorInfo(new Projector(occ::origin3d, iSurf), iFace));
   }
 }
 
 void BRepPointOnFacesProjection::releaseMemory()
 {
   // Destroy allocated projectors
-  BOOST_FOREACH(const ProjectorInfo_t& projector, _projectors) {
+  BOOST_FOREACH(const ProjectorInfo& projector, m_projectors) {
     if (projector.first != 0)
       delete projector.first;
   }
-  _projectors.clear();
+  m_projectors.clear();
 }
 
 BRepPointOnFacesProjection& BRepPointOnFacesProjection::compute(const gp_Pnt& point)
 {
-  //QtConcurrent::map(_projectors, projection_perform(point));
+  //QtConcurrent::map(m_projectors, projection_perform(point));
   /*        QFutureWatcher<void> futureWatcher;
             futureWatcher.setFuture(
-              QtConcurrent::map(_projectors,
-                          boost::bind(&Projector_t::Perform,
-                                 boost::bind(&ProjectorInfo_t::first, _1), point)));
+              QtConcurrent::map(m_projectors,
+                          boost::bind(&Projector::Perform,
+                                 boost::bind(&ProjectorInfo::first, _1), point)));
             futureWatcher.waitForFinished();*/
-  std::for_each(_projectors.begin(), _projectors.end(),
-                boost::bind(&Projector_t::Perform,
-                            boost::bind(&ProjectorInfo_t::first, _1), point));
-  std::vector<ProjectorInfo_t>::const_iterator iResult =
-      std::min_element(_projectors.begin(), _projectors.end(),
+  std::for_each(m_projectors.begin(), m_projectors.end(),
+                boost::bind(&Projector::Perform,
+                            boost::bind(&ProjectorInfo::first, _1), point));
+  std::vector<ProjectorInfo>::const_iterator iResult =
+      std::min_element(m_projectors.begin(), m_projectors.end(),
                        boost::bind(::projector_compare(),
-                                   boost::bind(&ProjectorInfo_t::first, _1),
-                                   boost::bind(&ProjectorInfo_t::first, _2)));
-  assert(iResult != _projectors.end() && "always_a_minimum");
-  _solProjector = *iResult;
+                                   boost::bind(&ProjectorInfo::first, _1),
+                                   boost::bind(&ProjectorInfo::first, _2)));
+  assert(iResult != m_projectors.end() && "always_a_minimum");
+  m_solProjector = *iResult;
   return *this;
 }
 
 bool BRepPointOnFacesProjection::isDone() const
 {
-  const Projector_t* projector = _solProjector.first;
+  const Projector* projector = m_solProjector.first;
   if (projector != 0)
     return projector->IsDone() && projector->NbPoints() > 0;
   return false;
@@ -160,14 +159,14 @@ const TopoDS_Face& BRepPointOnFacesProjection::solutionFace() const
 {
   static TopoDS_Face emptyFace;
   if (this->isDone())
-    return _solProjector.second;
+    return m_solProjector.second;
   return emptyFace;
 }
 
 gp_Pnt BRepPointOnFacesProjection::solutionPoint() const
 {
   if (this->isDone())
-    return _solProjector.first->NearestPoint();
+    return m_solProjector.first->NearestPoint();
   return occ::origin3d;
 }
 
@@ -175,7 +174,7 @@ std::pair<double, double> BRepPointOnFacesProjection::solutionUV() const
 {
   if (this->isDone()) {
     double u, v;
-    _solProjector.first->LowerDistanceParameters(u, v);
+    m_solProjector.first->LowerDistanceParameters(u, v);
     return std::make_pair(u, v);
   }
   return std::make_pair(0., 0.);
@@ -185,8 +184,8 @@ gp_Vec BRepPointOnFacesProjection::solutionNormal() const
 {
   if (this->isDone()) {
     double u, v;
-    _solProjector.first->LowerDistanceParameters(u, v);
-    return occ::normalToFaceAtUV(_solProjector.second, u, v);
+    m_solProjector.first->LowerDistanceParameters(u, v);
+    return occ::normalToFaceAtUV(m_solProjector.second, u, v);
   }
   return gp_Vec(0., 0., 1.);
 }

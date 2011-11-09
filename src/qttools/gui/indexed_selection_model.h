@@ -71,8 +71,8 @@ protected:
   void endClear();
 
 private:
-  QSet<int> _selectedItems;
-  bool _hadSelection;
+  QSet<int> m_selectedItems;
+  bool m_hadSelection;
 };
 
 } // namespace qttools

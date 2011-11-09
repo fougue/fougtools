@@ -43,50 +43,50 @@
 
 namespace qttools {
 
-template<typename _T_>
+template<typename T>
 class Singleton
 {
 public:
-  static _T_* instance();
+  static T* instance();
   static void release();
 
 private:
-  static QAtomicPointer<_T_> _instance;
-  static QMutex _mutex;
+  static QAtomicPointer<T> m_instance;
+  static QMutex m_mutex;
 };
 
 // --
 // -- Implementation
 // --
 
-template<typename _T_>
-_T_* Singleton<_T_>::instance()
+template<typename T>
+T* Singleton<T>::instance()
 {
-  if (!_instance) {
-    _mutex.lock();
-    if (!_instance)
-      _instance = new _T_;
-    _mutex.unlock();
+  if (!m_instance) {
+    m_mutex.lock();
+    if (!m_instance)
+      m_instance = new T;
+    m_mutex.unlock();
   }
-  return _instance;
+  return m_instance;
 }
 
-template<typename _T_>
-void Singleton<_T_>::release()
+template<typename T>
+void Singleton<T>::release()
 {
-  _mutex.lock();
-  if (_instance)
-    delete _instance;
-  _instance = 0;
-  _mutex.unlock();
+  m_mutex.lock();
+  if (m_instance)
+    delete m_instance;
+  m_instance = 0;
+  m_mutex.unlock();
 }
 
 } // namespace qttools
 
-template<typename _T_>
-QAtomicPointer<_T_> qttools::Singleton<_T_>::_instance;
+template<typename T>
+QAtomicPointer<T> qttools::Singleton<T>::m_instance;
 
-template<typename _T_>
-QMutex qttools::Singleton<_T_>::_mutex;
+template<typename T>
+QMutex qttools::Singleton<T>::m_mutex;
 
 #endif // QTTOOLS_SINGLETON_H

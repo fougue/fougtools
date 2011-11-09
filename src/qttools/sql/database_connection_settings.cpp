@@ -51,7 +51,7 @@ namespace qttools {
  */
 
 DatabaseConnectionSettings::DatabaseConnectionSettings()
-  : _port(0)
+  : m_port(0)
 {
 }
 
@@ -59,70 +59,70 @@ DatabaseConnectionSettings::DatabaseConnectionSettings()
  */
 void DatabaseConnectionSettings::setHost(const QString& host)
 {
-  _host = host;
+  m_host = host;
 }
 
 /*! \sa QSqlDatabase::hostName()
  */
 QString DatabaseConnectionSettings::host() const
 {
-  return _host;
+  return m_host;
 }
 
 /*! \sa QSqlDatabase::setDatabaseName()
  */
 void DatabaseConnectionSettings::setDatabaseName(const QString& dbName)
 {
-  _dbName = dbName;
+  m_dbName = dbName;
 }
 
 /*! \sa QSqlDatabase::databaseName()
  */
 QString DatabaseConnectionSettings::databaseName() const
 {
-  return _dbName;
+  return m_dbName;
 }
 
 /*! \sa QSqlDatabase::setPort()
  */
 void DatabaseConnectionSettings::setPort(int port)
 {
-  _port = port;
+  m_port = port;
 }
 
 /*! \sa QSqlDatabase::port()
  */
 int DatabaseConnectionSettings::port() const
 {
-  return _port;
+  return m_port;
 }
 
 /*! \sa QSqlDatabase::setUserName()
  */
 void DatabaseConnectionSettings::setUserName(const QString& userName)
 {
-  _userName = userName;
+  m_userName = userName;
 }
 
 /*! \sa QSqlDatabase::userName()
  */
 QString DatabaseConnectionSettings::userName() const
 {
-  return _userName;
+  return m_userName;
 }
 
 /*! \sa QSqlDatabase::setPassword()
  */
 void DatabaseConnectionSettings::setPassword(const QString& password)
 {
-  _password = password;
+  m_password = password;
 }
 
 /*! \sa QSqlDatabase::password()
  */
 QString DatabaseConnectionSettings::password() const
 {
-  return _password;
+  return m_password;
 }
 
 /*! \brief Load settings from the persistent storage

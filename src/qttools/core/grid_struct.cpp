@@ -40,14 +40,14 @@
 namespace qttools {
 
 GridStruct::GridStruct()
-  : _rowCount(0),
-    _colCount(0)
+  : m_rowCount(0),
+    m_colCount(0)
 {
 }
 
 GridStruct::GridStruct(int rows, int cols)
-  : _rowCount(rows),
-    _colCount(cols)
+  : m_rowCount(rows),
+    m_colCount(cols)
 {
 }
 
@@ -69,32 +69,32 @@ void GridStruct::setItemCount(int rows, int cols)
 
 int GridStruct::rowCount() const
 {
-  return _rowCount;
+  return m_rowCount;
 }
 
 void GridStruct::setRowCount(int count)
 {
-  _rowCount = count;
+  m_rowCount = count;
 }
 
 int GridStruct::columnCount() const
 {
-  return _colCount;
+  return m_colCount;
 }
 
 void GridStruct::setColumnCount(int count)
 {
-  _colCount = count;
+  m_colCount = count;
 }
 
 const qttools::GridNumbering& GridStruct::itemNumbering() const
 {
-  return _gridNb;
+  return m_gridNb;
 }
 
 void GridStruct::setItemNumbering(const qttools::GridNumbering& gridNb)
 {
-  _gridNb = gridNb;
+  m_gridNb = gridNb;
 }
 
 } // namespace qttools

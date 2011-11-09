@@ -67,10 +67,10 @@ class TColgp_Array1OfPnt;
 namespace occ {
 
 // --- Creation
-template<typename _FWD_ITERATOR_>
-TopoDS_Compound makeCompound(_FWD_ITERATOR_ iBegin, _FWD_ITERATOR_ iEnd);
-template<typename _CONTAINER_>
-TopoDS_Compound makeCompound(_CONTAINER_ cnter);
+template<typename FWD_ITERATOR>
+TopoDS_Compound makeCompound(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
+template<typename CONTAINER>
+TopoDS_Compound makeCompound(CONTAINER cnter);
 
 // --- Geometry
 OCCTOOLS_EXPORT gp_Pnt geomCurveD0(const Handle_Geom_Curve& curve, double u);
@@ -96,9 +96,9 @@ gp_Vec toOccVector3d(const geom::Vector3<_T_>& p);
 OCCTOOLS_EXPORT Standard_CString toOccCstring(const QString& str);
 
 // --- String conversion
-template<typename _OCC_PNT_VEC_>
-QString toString(const _OCC_PNT_VEC_& pv,
-                 const QString& format = "(%x, %y, %z)",
+template<typename OCC_PNT_VEC>
+QString toString(const OCC_PNT_VEC& pv,
+                 const QString& format = QLatin1String("(%x, %y, %z)"),
                  char realFormat = 'g', unsigned prec = 6);
 
 // --- Visualization
@@ -111,16 +111,16 @@ OCCTOOLS_EXPORT gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
                                       TopAbs_Orientation ori = TopAbs_FORWARD);
 
 // --- Classes
-template<typename _TYPE_>
+template<typename TYPE>
 class down_cast
 {
 public:
   typedef Handle_Standard_Transient TransientHandle_t;
-  explicit down_cast<_TYPE_>(const TransientHandle_t& handle);
-  operator _TYPE_() const;
-  const _TYPE_ operator->() const;
+  explicit down_cast<TYPE>(const TransientHandle_t& handle);
+  operator TYPE() const;
+  const TYPE operator->() const;
 private:
-  const TransientHandle_t& _handle;
+  const TransientHandle_t& m_handle;
 }; // class down_cast<>
 
 // --- Constants
@@ -140,12 +140,12 @@ OCCTOOLS_EXPORT gp_Vec operator-(const gp_Pnt& p1, const gp_Pnt& p2);
 OCCTOOLS_EXPORT gp_Pnt operator-(const gp_Pnt& p, const gp_Vec& v);
 OCCTOOLS_EXPORT gp_Pnt operator+(const gp_Pnt& p, const gp_Vec& v);
 
-template<typename _TEXT_STREAM_>
-_TEXT_STREAM_& operator<<(_TEXT_STREAM_& ts, const gp_Pnt& p);
-template<typename _TEXT_STREAM_>
-_TEXT_STREAM_& operator<<(_TEXT_STREAM_& ts, const gp_Vec& v);
-template<typename _TEXT_STREAM_>
-_TEXT_STREAM_& operator<<(_TEXT_STREAM_& ts, const gp_Dir& d);
+template<typename TEXT_STREAM>
+TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Pnt& p);
+template<typename TEXT_STREAM>
+TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Vec& v);
+template<typename TEXT_STREAM>
+TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d);
 
 #include "occtools/utils.impl.h"
 

@@ -64,8 +64,8 @@ public:
   void setDetailsWidget(QWidget* widget);
 
 private:
-  QLabel* _textLabel;
-  QWidget* _detailsWidget;
+  QLabel* m_textLabel;
+  QWidget* m_detailsWidget;
 };
 
 } // namespace qttools

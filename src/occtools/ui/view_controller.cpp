@@ -46,8 +46,8 @@ namespace occ {
 
 ViewController::ViewController(View* view) :
   QObject(view),
-  _view(view),
-  _rubberBand(0)
+  m_view(view),
+  m_rubberBand(0)
 {
 }
 
@@ -56,24 +56,24 @@ ViewController::ViewController(View* view) :
 void ViewController::beginRubberBandDraw(const QPoint& startPos)
 {
   this->createRubberBand();
-  _startRubberBandPos = startPos;
-  _rubberBand->setGeometry(QRect(startPos, QSize()));
-  _rubberBand->show();
+  m_startRubberBandPos = startPos;
+  m_rubberBand->setGeometry(QRect(startPos, QSize()));
+  m_rubberBand->show();
 }
 
 void ViewController::updateRubberBandDraw(const QPoint& currPos)
 {
   this->createRubberBand();
-  _rubberBand->hide();
-  QRect window(_startRubberBandPos, currPos);
-  _rubberBand->setGeometry(window.normalized());
-  _rubberBand->show();
+  m_rubberBand->hide();
+  QRect window(m_startRubberBandPos, currPos);
+  m_rubberBand->setGeometry(window.normalized());
+  m_rubberBand->show();
 }
 
 void ViewController::endRubberBandDraw()
 {
   this->createRubberBand();
-  _rubberBand->hide();
+  m_rubberBand->hide();
 }
 
 // --- Event handling
@@ -97,50 +97,50 @@ void ViewController::notifyEscaped()
 
 const Handle_V3d_View& ViewController::internalOccView() const
 {
-  return _view->internalView();
+  return m_view->internalView();
 }
 
 Handle_V3d_View& ViewController::internalOccView()
 {
-  return _view->internalView();
+  return m_view->internalView();
 }
 
 const Handle_AIS_InteractiveContext& ViewController::context() const
 {
-  return _view->context();
+  return m_view->context();
 }
 
 Handle_AIS_InteractiveContext& ViewController::context()
 {
-  return _view->context();
+  return m_view->context();
 }
 
 const View* ViewController::view() const
 {
-  return _view;
+  return m_view;
 }
 
 View* ViewController::view()
 {
-  return _view;
+  return m_view;
 }
 
 const QRect ViewController::rubberBandGeometry() const
 {
-  if (_rubberBand == 0)
+  if (m_rubberBand == 0)
     return QRect();
-  return _rubberBand->geometry();
+  return m_rubberBand->geometry();
 }
 
 // --- Implementation
 
 void ViewController::createRubberBand()
 {
-  if (_rubberBand == 0) {
-    _rubberBand = new QRubberBand(QRubberBand::Rectangle, this->view());
+  if (m_rubberBand == 0) {
+    m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this->view());
     //_rubberBand->setWindowOpacity(0.7);
     // TODO Is this instruction really needed ?
-    _rubberBand->setStyle(static_cast<QStyle*>(new QPlastiqueStyle()));
+    m_rubberBand->setStyle(static_cast<QStyle*>(new QPlastiqueStyle()));
   }
 }
 

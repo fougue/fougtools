@@ -78,10 +78,10 @@ protected:
 private:
   void initialize();
 
-  Handle_AIS_InteractiveContext _context;
-  Handle_V3d_View _internalView;
-  bool _isInitialized;
-  bool _needsResize;
+  Handle_AIS_InteractiveContext m_context;
+  Handle_V3d_View m_internalView;
+  bool m_isInitialized;
+  bool m_needsResize;
 };
 
 } // namespace occ

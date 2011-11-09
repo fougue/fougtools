@@ -42,11 +42,11 @@
 
 namespace qttools {
 
-template<typename _T_, template <typename> class _CONTAINER_>
-_CONTAINER_<_T_> toTypedContainer(const _CONTAINER_<QVariant>& variants);
+template<typename T, template <typename> class CONTAINER>
+CONTAINER<T> toTypedContainer(const CONTAINER<QVariant>& variants);
 
-template<typename _T_, template <typename> class _CONTAINER_>
-_CONTAINER_<QVariant> toContainerOfVariants(const _CONTAINER_<_T_>& typeds);
+template<typename T, template <typename> class CONTAINER>
+CONTAINER<QVariant> toContainerOfVariants(const CONTAINER<T>& typeds);
 
 } // namespace qttools
 
@@ -61,23 +61,23 @@ _CONTAINER_<QVariant> toContainerOfVariants(const _CONTAINER_<_T_>& typeds);
 
 namespace qttools {
 
-template<typename _T_, template <typename> class _CONTAINER_>
-_CONTAINER_<_T_> toTypedContainer(const _CONTAINER_<QVariant>& variants)
+template<typename T, template <typename> class CONTAINER>
+CONTAINER<T> toTypedContainer(const CONTAINER<QVariant>& variants)
 {
-  _CONTAINER_<_T_> typeds;
+  CONTAINER<T> typeds;
   std::transform(variants.begin(), variants.end(),
                  std::back_inserter(typeds),
-                 std::ptr_fun(&qVariantValue<_T_>));
+                 std::ptr_fun(&qVariantValue<T>));
   return typeds;
 }
 
-template<typename _T_, template <typename> class _CONTAINER_>
-_CONTAINER_<QVariant> toContainerOfVariants(const _CONTAINER_<_T_>& typeds)
+template<typename T, template <typename> class CONTAINER>
+CONTAINER<QVariant> toContainerOfVariants(const CONTAINER<T>& typeds)
 {
-  _CONTAINER_<QVariant> variants;
+  CONTAINER<QVariant> variants;
   std::transform(typeds.begin(), typeds.end(),
                  std::back_inserter(variants),
-                 std::ptr_fun(&QVariant::fromValue<_T_>));
+                 std::ptr_fun(&QVariant::fromValue<T>));
   return variants;
 }
 

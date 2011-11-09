@@ -40,14 +40,15 @@
 
 namespace qttools {
 
-template<typename _MODEL_>
+template<typename MODEL>
 class ScopedModelReset
 {
 public:
-  ScopedModelReset(_MODEL_* model);
+  ScopedModelReset(MODEL* model);
   ~ScopedModelReset();
+
 private:
-  _MODEL_* _model;
+  MODEL* m_model;
 };
 
 
@@ -56,19 +57,19 @@ private:
 // -- Implementation
 // --
 
-template<typename _MODEL_>
-ScopedModelReset<_MODEL_>::ScopedModelReset(_MODEL_* model) :
-  _model(model)
+template<typename MODEL>
+ScopedModelReset<MODEL>::ScopedModelReset(MODEL* model) :
+  m_model(model)
 {
   if (model != 0)
     model->beginResetModel();
 }
 
-template<typename _MODEL_>
-ScopedModelReset<_MODEL_>::~ScopedModelReset()
+template<typename MODEL>
+ScopedModelReset<MODEL>::~ScopedModelReset()
 {
-  if (this->_model != 0)
-    this->_model->endResetModel();
+  if (m_model != 0)
+    m_model->endResetModel();
 }
 
 } // namespace qttools

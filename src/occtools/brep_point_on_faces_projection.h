@@ -66,10 +66,10 @@ public:
   gp_Vec solutionNormal() const;
 
 private:
-  typedef GeomAPI_ProjectPointOnSurf Projector_t;
-  typedef std::pair<Projector_t*, TopoDS_Face> ProjectorInfo_t;
-  std::vector<ProjectorInfo_t> _projectors;
-  ProjectorInfo_t _solProjector;
+  typedef GeomAPI_ProjectPointOnSurf Projector;
+  typedef std::pair<Projector*, TopoDS_Face> ProjectorInfo;
+  std::vector<ProjectorInfo> m_projectors;
+  ProjectorInfo m_solProjector;
 };
 
 } // namespace occ

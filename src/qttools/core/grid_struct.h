@@ -62,10 +62,11 @@ public:
 
   const qttools::GridNumbering& itemNumbering() const;
   void setItemNumbering(const qttools::GridNumbering& gridNb);
+
 private:
-  int _rowCount;
-  int _colCount;
-  qttools::GridNumbering _gridNb;
+  int m_rowCount;
+  int m_colCount;
+  qttools::GridNumbering m_gridNb;
 };
 
 } // namespace qttools

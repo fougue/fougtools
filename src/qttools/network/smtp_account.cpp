@@ -45,70 +45,70 @@ namespace qttools {
  */
 
 SmtpAccount::SmtpAccount()
-  : _port(25),
-    _authMethod(NoAuthentication),
-    _connSecurity(NoSecurity)
+  : m_port(25),
+    m_authMethod(NoAuthentication),
+    m_connSecurity(NoSecurity)
 {
 }
 
 QString SmtpAccount::host() const
 {
-  return _host;
+  return m_host;
 }
 
 void SmtpAccount::setHost(const QString& name)
 {
-  _host = name;
+  m_host = name;
 }
 
 int SmtpAccount::port() const
 {
-  return _port;
+  return m_port;
 }
 
 void SmtpAccount::setPort(int p)
 {
-  _port = p;
+  m_port = p;
 }
 
 SmtpAccount::AuthenticationMethod SmtpAccount::authenticationMethod() const
 {
-  return _authMethod;
+  return m_authMethod;
 }
 
 void SmtpAccount::setAuthenticationMethod(AuthenticationMethod method)
 {
-  _authMethod = method;
+  m_authMethod = method;
 }
 
 SmtpAccount::ConnectionSecurity SmtpAccount::connectionSecurity() const
 {
-  return _connSecurity;
+  return m_connSecurity;
 }
 
 void SmtpAccount::setConnectionSecurity(ConnectionSecurity connSecurity)
 {
-  _connSecurity = connSecurity;
+  m_connSecurity = connSecurity;
 }
 
 QString SmtpAccount::userName() const
 {
-  return _userName;
+  return m_userName;
 }
 
 void SmtpAccount::setUserName(const QString& uname)
 {
-  _userName = uname;
+  m_userName = uname;
 }
 
 QString SmtpAccount::password() const
 {
-  return _password;
+  return m_password;
 }
 
 void SmtpAccount::setPassword(const QString& pwd)
 {
-  _password = pwd;
+  m_password = pwd;
 }
 
 /*! \brief Convert integer \p id to a value of SmtpAccount::AuthenticationMethod

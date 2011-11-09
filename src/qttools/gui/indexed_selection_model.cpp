@@ -43,7 +43,7 @@ namespace qttools {
 
 IndexedSelectionModel::IndexedSelectionModel(QObject* parent)
   : QObject(parent),
-    _hadSelection(false)
+    m_hadSelection(false)
 {
   connect(this, SIGNAL(selectionCleared()), this, SIGNAL(selectionChanged()));
   connect(this, SIGNAL(itemToggled(int,bool)), this, SIGNAL(selectionChanged()));
@@ -51,7 +51,7 @@ IndexedSelectionModel::IndexedSelectionModel(QObject* parent)
 
 const QSet<int>& IndexedSelectionModel::selectedItems() const
 {
-  return _selectedItems;
+  return m_selectedItems;
 }
 
 bool IndexedSelectionModel::hasSelection() const
@@ -77,22 +77,22 @@ void IndexedSelectionModel::toggleItem(int id)
     return;
   const bool isItemSelected = this->selectedItems().contains(id);
   if (isItemSelected)
-    _selectedItems.remove(id);
+    m_selectedItems.remove(id);
   else
-    _selectedItems.insert(id);
+    m_selectedItems.insert(id);
   emit itemToggled(id, !isItemSelected);
 }
 
 void IndexedSelectionModel::beginClear()
 {
-  _hadSelection = this->hasSelection();
+  m_hadSelection = this->hasSelection();
 }
 
 void IndexedSelectionModel::clearItems()
 {
   // Untoggle selected items
   foreach (int id, this->selectedItems()) {
-    _selectedItems.remove(id);
+    m_selectedItems.remove(id);
     emit itemToggled(id, false);
   }
   assert(this->selectedItems().count() == 0);
@@ -100,7 +100,7 @@ void IndexedSelectionModel::clearItems()
 
 void IndexedSelectionModel::endClear()
 {
-  if (_hadSelection)
+  if (m_hadSelection)
     emit selectionCleared();
 }
 

@@ -64,9 +64,9 @@ private slots:
   void onValueChanged(double v);
 
 private:
-  double _orgLengthMm;
-  bool _valueHasChanged;
-  bool _isInternalUpdateContext;
+  double m_orgLengthMm;
+  bool m_valueHasChanged;
+  bool m_isInternalUpdateContext;
 };
 
 } // namespace qttools

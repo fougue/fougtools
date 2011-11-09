@@ -42,16 +42,14 @@
 
 namespace qttools {
 
-bool isValidRow(const QAbstractItemModel* model,
-                int row, const QModelIndex& parent)
+bool isValidRow(const QAbstractItemModel* model, int row, const QModelIndex& parent)
 {
   if (model == 0)
     return false;
   return 0 <= row && row < model->rowCount(parent);
 }
 
-bool isValidColumn(const QAbstractItemModel* model,
-                   int col, const QModelIndex& parent)
+bool isValidColumn(const QAbstractItemModel* model, int col, const QModelIndex& parent)
 {
   if (model == 0)
     return false;
@@ -62,19 +60,17 @@ bool isValidColumn(const QAbstractItemModel* model,
  *  \return Index of the row where the first match of \p value could be found
  *  \retval -1 if \p value could not be found
  */
-int findDataInRow(const QAbstractItemModel* model,
-                  int col, const QVariant& value)
+int findDataInRow(const QAbstractItemModel* model, int col, const QVariant& value)
 {
-  for (int iRow = 0; iRow < model->rowCount(); ++iRow)
-    if (model->data(model->index(iRow, col)) == value)
-      return iRow;
+  for (int row = 0; row < model->rowCount(); ++row)
+    if (model->data(model->index(row, col)) == value)
+      return row;
   return -1;
 }
 
 /*! \brief Same as QAbstractItemModel::data() but more concise
  */
-QVariant tableModelData(const QAbstractItemModel* model,
-                        int row, int col, int role)
+QVariant tableModelData(const QAbstractItemModel* model, int row, int col, int role)
 {
   return model->data(model->index(row, col), role);
 }
@@ -83,9 +79,8 @@ bool isRowScheduledForDeletion(const QAbstractItemModel* model, int row)
 {
   if (model == 0 || row >= model->rowCount())
     return false;
-  const QVariant rowHeaderDisplayData =
-      model->headerData(row, Qt::Vertical, Qt::DisplayRole);
-  const QRegExp remRowRx("\\s*\\!\\s*");
+  const QVariant rowHeaderDisplayData = model->headerData(row, Qt::Vertical, Qt::DisplayRole);
+  const QRegExp remRowRx(QLatin1String("\\s*\\!\\s*"));
   return remRowRx.indexIn(rowHeaderDisplayData.toString().simplified()) != -1;
 }
 

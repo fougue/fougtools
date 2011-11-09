@@ -95,21 +95,21 @@ private:
 
 
 
-template<typename _FUNCTOR_>
+template<typename FUNCTOR>
 class FunctorTask : public Task
 {
 public:
-  FunctorTask(_FUNCTOR_ functor, QObject* parent = 0);
+  FunctorTask(FUNCTOR functor, QObject* parent = 0);
 
 protected:
   void action();
 
 private:
-  _FUNCTOR_ _functor;
+  FUNCTOR m_functor;
 };
 
-template<typename _FUNCTOR_>
-Task* newFunctorTask(_FUNCTOR_ functor, QObject* parent = 0);
+template<typename FUNCTOR>
+Task* newFunctorTask(FUNCTOR functor, QObject* parent = 0);
 
 
 
@@ -117,24 +117,24 @@ Task* newFunctorTask(_FUNCTOR_ functor, QObject* parent = 0);
 // -- Implementation
 // --
 
-template<typename _FUNCTOR_>
-FunctorTask<_FUNCTOR_>::FunctorTask(_FUNCTOR_ functor, QObject* parent) :
-  Task(parent),
-  _functor(functor)
+template<typename FUNCTOR>
+FunctorTask<FUNCTOR>::FunctorTask(FUNCTOR functor, QObject* parent)
+  : Task(parent),
+    m_functor(functor)
 {
 }
 
-template<typename _FUNCTOR_>
-void FunctorTask<_FUNCTOR_>::action()
+template<typename FUNCTOR>
+void FunctorTask<FUNCTOR>::action()
 {
-  this->_functor();
+  m_functor();
   emit finished();
 }
 
-template<typename _FUNCTOR_>
-Task* newFunctorTask(_FUNCTOR_ functor, QObject* parent)
+template<typename FUNCTOR>
+Task* newFunctorTask(FUNCTOR functor, QObject* parent)
 {
-  return new FunctorTask<_FUNCTOR_>(functor, parent);
+  return new FunctorTask<FUNCTOR>(functor, parent);
 }
 
 } // namespace qttools

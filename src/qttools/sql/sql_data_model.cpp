@@ -45,14 +45,14 @@ namespace qttools {
 
 SqlDataModel::SqlDataModel(DatabaseManager* dbMgr, QObject* parent)
   : QSqlTableModel(parent, dbMgr->database()),
-    _creationThread(QThread::currentThread()),
-    _dbMgr(dbMgr)
+    m_creationThread(QThread::currentThread()),
+    m_dbMgr(dbMgr)
 {
 }
 
 DatabaseManager* SqlDataModel::databaseManager() const
 {
-  return _dbMgr;
+  return m_dbMgr;
 }
 
 bool SqlDataModel::select()
@@ -94,7 +94,7 @@ bool SqlDataModel::updateRowInTable(int row, const QSqlRecord& values)
 
 void SqlDataModel::checkThreadContext()
 {
-  assert(QThread::currentThread() == _creationThread);
+  assert(QThread::currentThread() == m_creationThread);
 }
 
 } // namespace qttools

@@ -57,7 +57,7 @@ public:
     : refDatabase(refDb)
   {
     assert(QThread::currentThread() != 0);
-    this->databases[QThread::currentThread()] = refDb;
+    databases.insert(QThread::currentThread(), refDb);
   }
 
   QHash<const QThread*, QSqlDatabase> databases;

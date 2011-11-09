@@ -90,9 +90,9 @@ namespace qttools {
 
 LengthDoubleSpinBox::LengthDoubleSpinBox(QWidget* parent)
   : QDoubleSpinBox(parent),
-    _orgLengthMm(0.),
-    _valueHasChanged(false),
-    _isInternalUpdateContext(false)
+    m_orgLengthMm(0.),
+    m_valueHasChanged(false),
+    m_isInternalUpdateContext(false)
 {
   this->updateEditor(::currMeasurementSys());
   connect(this, SIGNAL(valueChanged(double)), this, SLOT(onValueChanged(double)));
@@ -100,8 +100,8 @@ LengthDoubleSpinBox::LengthDoubleSpinBox(QWidget* parent)
 
 double LengthDoubleSpinBox::length() const
 {
-  if (!_valueHasChanged)
-    return _orgLengthMm;
+  if (!m_valueHasChanged)
+    return m_orgLengthMm;
 
   const double v = this->value();
   switch (::currMeasurementSys()) {
@@ -115,23 +115,23 @@ double LengthDoubleSpinBox::length() const
 
 void LengthDoubleSpinBox::setLength(double v)
 {
-  _orgLengthMm = v;
-  _valueHasChanged = false;
+  m_orgLengthMm = v;
+  m_valueHasChanged = false;
 
-  cpp::ScopedBool sb(_isInternalUpdateContext, true); Q_UNUSED(sb);
+  cpp::ScopedBool sb(m_isInternalUpdateContext, true); Q_UNUSED(sb);
   switch (::currMeasurementSys()) {
-  case QLocale::MetricSystem :
-    this->setValue(AbstractLengthEditor::asMetricLength(
-                     v, this->preferredMetricUnit())); break;
-  case QLocale::ImperialSystem :
-    this->setValue(AbstractLengthEditor::asImperialLength(
-                     v, this->preferredImperialUnit())); break;
+  case QLocale::MetricSystem:
+    this->setValue(AbstractLengthEditor::asMetricLength(v, this->preferredMetricUnit()));
+    break;
+  case QLocale::ImperialSystem:
+    this->setValue(AbstractLengthEditor::asImperialLength(v, this->preferredImperialUnit()));
+    break;
   }
 }
 
 void LengthDoubleSpinBox::updateEditor(QLocale::MeasurementSystem newSys)
 {
-  cpp::ScopedBool sb(_isInternalUpdateContext, true); Q_UNUSED(sb);
+  cpp::ScopedBool sb(m_isInternalUpdateContext, true); Q_UNUSED(sb);
   const double oldLengthMm = this->length();
   double newLengthUnit = 0.;
   QString unitStr;
@@ -156,8 +156,8 @@ void LengthDoubleSpinBox::updateEditor(QLocale::MeasurementSystem newSys)
 void LengthDoubleSpinBox::onValueChanged(double v)
 {
   Q_UNUSED(v);
-  if (!_isInternalUpdateContext)
-    _valueHasChanged = true;
+  if (!m_isInternalUpdateContext)
+    m_valueHasChanged = true;
 }
 
 } // namespace qttools

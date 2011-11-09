@@ -55,8 +55,8 @@ public:
   QString lastResultText() const;
 
 private:
-  QScriptEngine _scriptEngine;
-  QScriptValue _lastResult;
+  QScriptEngine m_scriptEngine;
+  QScriptValue m_lastResult;
 };
 
 } // namespace qttools

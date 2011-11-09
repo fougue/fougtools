@@ -83,8 +83,8 @@ public:
   static double asImperialLength(double len, ImperialUnit unit);
 
 private:
-  MetricUnit _prefMetricUnit;
-  ImperialUnit _prefImperialUnit;
+  MetricUnit m_prefMetricUnit;
+  ImperialUnit m_prefImperialUnit;
 };
 
 } // namespace qttools

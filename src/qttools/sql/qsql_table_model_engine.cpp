@@ -54,9 +54,7 @@ class QSqlTableModelEnginePrivate
 public:
   QSqlTableModelEnginePrivate(QSqlTableModel* pModel, DatabaseManager* databaseMgr)
     : dbMgr(databaseMgr),
-      model(pModel),
-      pkey(),
-      sqlCode()
+      model(pModel)
   {
   }
 
@@ -233,7 +231,7 @@ void QSqlTableModelEngine::sqlDelete(int modelRow)
 void QSqlTableModelEngine::sqlStatement(const QString& sqlStmt)
 {
   Q_D(QSqlTableModelEngine);
-  d->sqlCode += sqlStmt + ";\n\n";
+  d->sqlCode += sqlStmt + QLatin1String(";\n\n");
 }
 
 } // namespace qttools

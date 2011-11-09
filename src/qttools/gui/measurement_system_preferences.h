@@ -57,8 +57,8 @@ public:
   void setImperialUnit(AbstractLengthEditor::ImperialUnit unit);
 
 private:
-  AbstractLengthEditor::MetricUnit _metricUnit;
-  AbstractLengthEditor::ImperialUnit _imperialUnit;
+  AbstractLengthEditor::MetricUnit m_metricUnit;
+  AbstractLengthEditor::ImperialUnit m_imperialUnit;
 };
 
 } // namespace qttools

@@ -41,9 +41,7 @@
 
 namespace qttools {
 
-void forwardSignal(const QObject* sender,
-                   const QObject* resender,
-                   const char* signal)
+void forwardSignal(const QObject* sender, const QObject* resender, const char* signal)
 {
   QObject::connect(sender, signal, resender, signal);
 }

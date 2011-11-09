@@ -98,8 +98,8 @@ public:
 private:
   void limitInternalIndex();
 
-  const GCPnts_UniformAbscissa* _ua;
-  int _index;
+  const GCPnts_UniformAbscissa* m_ua;
+  int m_index;
 };
 
 // --- Related functions

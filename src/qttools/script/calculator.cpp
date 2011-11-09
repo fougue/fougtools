@@ -44,10 +44,10 @@ namespace qttools {
  *
  */
 
-Calculator::Calculator() :
-  _lastResult(0)
+Calculator::Calculator()
+  : m_lastResult(0)
 {
-  _scriptEngine.evaluate(
+  m_scriptEngine.evaluate(
         "var PI = Math.PI\n"
         "var RAD_TO_DEG = 180.0/PI\n"
         "var DEG_TO_RAD = PI/180.0\n"
@@ -83,33 +83,33 @@ Calculator::Calculator() :
 
 void Calculator::evaluate(const QString& program)
 {
-  _lastResult = _scriptEngine.evaluate(program);
+  m_lastResult = m_scriptEngine.evaluate(program);
 }
 
 bool Calculator::hasResult() const
 {
   return
-      !_scriptEngine.hasUncaughtException() &&
-      (_lastResult.isNumber() || _lastResult.isString());
+      !m_scriptEngine.hasUncaughtException() &&
+      (m_lastResult.isNumber() || m_lastResult.isString());
 }
 
 QString Calculator::lastErrorText() const
 {
-  if (_scriptEngine.hasUncaughtException())
-    return _scriptEngine.uncaughtException().toString();
-  else if (!(_lastResult.isNumber() || _lastResult.isString()))
-    return QString("?");
+  if (m_scriptEngine.hasUncaughtException())
+    return m_scriptEngine.uncaughtException().toString();
+  else if (!(m_lastResult.isNumber() || m_lastResult.isString()))
+    return QLatin1String("?");
   return QString();
 }
 
 double Calculator::lastResult() const
 {
-  return _lastResult.toNumber();
+  return m_lastResult.toNumber();
 }
 
 QString Calculator::lastResultText() const
 {
-  return _lastResult.toString();
+  return m_lastResult.toString();
 }
 
 } // namespace qttools

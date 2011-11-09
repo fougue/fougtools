@@ -49,11 +49,11 @@ namespace occ {
 
 ProjectionSelectorActionManager::ProjectionSelectorActionManager(QObject* parent) :
   QObject(parent),
-  _mainAction(0),
-  _currOrientation(V3d_XposYnegZpos),
-  _signalMapper(0)
+  m_mainAction(0),
+  m_currOrientation(V3d_XposYnegZpos),
+  m_signalMapper(0)
 {
-  _signalMapper = new QSignalMapper(this);
+  m_signalMapper = new QSignalMapper(this);
   QMenu* menu = new QMenu(tr("View projection"));
   QHash<V3d_TypeOfOrientation, QAction*> actions;
   actions[V3d_Xpos] = menu->addAction(QIcon(":/images/view_front.png"),
@@ -72,14 +72,14 @@ ProjectionSelectorActionManager::ProjectionSelectorActionManager(QObject* parent
                                               tr("Axonometric"));
   foreach(V3d_TypeOfOrientation proj, actions.keys()) {
     connect(actions[proj], SIGNAL(triggered()),
-            _signalMapper, SLOT(map()));
-    _signalMapper->setMapping(actions[proj], static_cast<int>(proj));
+            m_signalMapper, SLOT(map()));
+    m_signalMapper->setMapping(actions[proj], static_cast<int>(proj));
   }
-  connect(_signalMapper, SIGNAL(mapped(int)),
+  connect(m_signalMapper, SIGNAL(mapped(int)),
           this, SLOT(onViewProjActionTriggered(int)));
-  _mainAction = new QAction(this);
-  _mainAction->setMenu(menu);
-  connect(_mainAction, SIGNAL(triggered(bool)),
+  m_mainAction = new QAction(this);
+  m_mainAction->setMenu(menu);
+  connect(m_mainAction, SIGNAL(triggered(bool)),
           this, SLOT(onMainActionTriggered(bool)));
 }
 
@@ -87,7 +87,7 @@ ProjectionSelectorActionManager::ProjectionSelectorActionManager(QObject* parent
 
 QAction* ProjectionSelectorActionManager::mainAction()
 {
-  return _mainAction;
+  return m_mainAction;
 }
 
 // --- Element change
@@ -95,24 +95,24 @@ QAction* ProjectionSelectorActionManager::mainAction()
 void ProjectionSelectorActionManager::triggerViewProjection(V3d_TypeOfOrientation proj)
 {
   QAction* action = this->mappedAction(static_cast<int>(proj));
-  _mainAction->setIcon(action->icon());
-  _currOrientation = proj;
+  m_mainAction->setIcon(action->icon());
+  m_currOrientation = proj;
 }
 
 // --- Qt slots
 
 void ProjectionSelectorActionManager::onMainActionTriggered(bool /*checked*/)
 {
-  emit viewProjectionTriggered(_currOrientation);
+  emit viewProjectionTriggered(m_currOrientation);
 }
 
 void ProjectionSelectorActionManager::onViewProjActionTriggered(int projId)
 {
   QAction* action = this->mappedAction(projId);
   assert(action != 0 && "sender_is_a_qaction");
-  _mainAction->setIcon(action->icon());
+  m_mainAction->setIcon(action->icon());
   V3d_TypeOfOrientation ori = static_cast<V3d_TypeOfOrientation>(projId);
-  _currOrientation = ori;
+  m_currOrientation = ori;
   emit viewProjectionTriggered(ori);
 }
 
@@ -120,7 +120,7 @@ void ProjectionSelectorActionManager::onViewProjActionTriggered(int projId)
 
 QAction* ProjectionSelectorActionManager::mappedAction(int projId) const
 {
-  return qobject_cast<QAction*>(_signalMapper->mapping(projId));
+  return qobject_cast<QAction*>(m_signalMapper->mapping(projId));
 }
 
 } // namespace occ

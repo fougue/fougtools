@@ -44,40 +44,40 @@
 namespace occ {
 
 GCPnts_UniformAbscissaConstIterator::GCPnts_UniformAbscissaConstIterator()
-  : _ua(0),
-    _index(1)
+  : m_ua(0),
+    m_index(1)
 {
 }
 
 GCPnts_UniformAbscissaConstIterator::
 GCPnts_UniformAbscissaConstIterator(const GCPnts_UniformAbscissa& ua, int index)
-  : _ua(&ua),
-    _index(index)
+  : m_ua(&ua),
+    m_index(index)
 {
   this->limitInternalIndex();
 }
 
 double GCPnts_UniformAbscissaConstIterator::operator[](int n) const
 {
-  const int indexPlusN = _index + n;
-  assert(indexPlusN >= 1 && indexPlusN <= _ua->NbPoints());
-  return _ua->Parameter(indexPlusN);
+  const int indexPlusN = m_index + n;
+  assert(indexPlusN >= 1 && indexPlusN <= m_ua->NbPoints());
+  return m_ua->Parameter(indexPlusN);
 }
 
 const GCPnts_UniformAbscissa& GCPnts_UniformAbscissaConstIterator::operator->() const
 {
-  return *(_ua);
+  return *(m_ua);
 }
 
 int GCPnts_UniformAbscissaConstIterator::index() const
 {
-  return _index;
+  return m_index;
 }
 
 void GCPnts_UniformAbscissaConstIterator::limitInternalIndex()
 {
-  _index = std::max(_index, 1);
-  _index = std::min(_index, _ua->NbPoints() + 1);
+  m_index = std::max(m_index, 1);
+  m_index = std::min(m_index, m_ua->NbPoints() + 1);
 }
 
 // --- Related functions
@@ -87,7 +87,7 @@ void GCPnts_UniformAbscissaConstIterator::limitInternalIndex()
  */
 double operator*(const GCPnts_UniformAbscissaConstIterator& i)
 {
-  return i._ua->Parameter(i._index);
+  return i.m_ua->Parameter(i.m_index);
 }
 
 /*! \brief Prefix ++ operator
@@ -95,7 +95,7 @@ double operator*(const GCPnts_UniformAbscissaConstIterator& i)
  */
 GCPnts_UniformAbscissaConstIterator& operator++(GCPnts_UniformAbscissaConstIterator& i)
 {
-  ++(i._index);
+  ++(i.m_index);
   i.limitInternalIndex();
   return i;
 }
@@ -106,7 +106,7 @@ GCPnts_UniformAbscissaConstIterator& operator++(GCPnts_UniformAbscissaConstItera
 GCPnts_UniformAbscissaConstIterator operator++(GCPnts_UniformAbscissaConstIterator& i, int /*unused*/)
 {
   GCPnts_UniformAbscissaConstIterator old(i);
-  ++(i._index);
+  ++(i.m_index);
   i.limitInternalIndex();
   return old;
 }
@@ -116,7 +116,7 @@ GCPnts_UniformAbscissaConstIterator operator++(GCPnts_UniformAbscissaConstIterat
  */
 GCPnts_UniformAbscissaConstIterator& operator--(GCPnts_UniformAbscissaConstIterator& i)
 {
-  --(i._index);
+  --(i.m_index);
   i.limitInternalIndex();
   return i;
 }
@@ -127,7 +127,7 @@ GCPnts_UniformAbscissaConstIterator& operator--(GCPnts_UniformAbscissaConstItera
 GCPnts_UniformAbscissaConstIterator operator--(GCPnts_UniformAbscissaConstIterator& i, int /*unused*/)
 {
   GCPnts_UniformAbscissaConstIterator old(i);
-  --(i._index);
+  --(i.m_index);
   i.limitInternalIndex();
   return old;
 }
@@ -138,7 +138,7 @@ GCPnts_UniformAbscissaConstIterator operator--(GCPnts_UniformAbscissaConstIterat
 GCPnts_UniformAbscissaConstIterator operator+(const GCPnts_UniformAbscissaConstIterator& i, int n)
 {
   GCPnts_UniformAbscissaConstIterator newI(i);
-  newI._index += n;
+  newI.m_index += n;
   newI.limitInternalIndex();
   return newI;
 }
@@ -164,7 +164,7 @@ GCPnts_UniformAbscissaConstIterator operator-(const GCPnts_UniformAbscissaConstI
  */
 GCPnts_UniformAbscissaConstIterator& operator+=(GCPnts_UniformAbscissaConstIterator& i, int n)
 {
-  i._index += n;
+  i.m_index += n;
   i.limitInternalIndex();
   return i;
 }
@@ -183,7 +183,7 @@ GCPnts_UniformAbscissaConstIterator& operator-=(GCPnts_UniformAbscissaConstItera
 int operator-(const GCPnts_UniformAbscissaConstIterator& i,
               const GCPnts_UniformAbscissaConstIterator& j)
 {
-  return i._index - j._index;
+  return i.m_index - j.m_index;
 }
 
 /*! \brief
@@ -192,7 +192,7 @@ int operator-(const GCPnts_UniformAbscissaConstIterator& i,
 bool operator<(const GCPnts_UniformAbscissaConstIterator& i,
                const GCPnts_UniformAbscissaConstIterator& j)
 {
-  return i._index < j._index;
+  return i.m_index < j.m_index;
 }
 
 /*! \brief
@@ -228,7 +228,7 @@ bool operator>=(const GCPnts_UniformAbscissaConstIterator& i,
 bool operator==(const GCPnts_UniformAbscissaConstIterator& i,
                 const GCPnts_UniformAbscissaConstIterator& j)
 {
-  return i._index == j._index && i._ua == j._ua;
+  return i.m_index == j.m_index && i.m_ua == j.m_ua;
 }
 
 /*! \brief

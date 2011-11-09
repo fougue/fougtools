@@ -67,8 +67,8 @@ signals:
 
 private:
   friend class AbstractLengthEditor;
-  QSet<AbstractLengthEditor*> _lengthEditors;
-  QLocale::MeasurementSystem _measureSys;
+  QSet<AbstractLengthEditor*> m_lengthEditors;
+  QLocale::MeasurementSystem m_measureSys;
 };
 
 } // namespace qttools

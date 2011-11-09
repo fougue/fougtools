@@ -56,8 +56,8 @@ public slots:
   virtual void action() = 0;
 
 private:
-  const QObject* _sender;
-  const char* _signal;
+  const QObject* m_sender;
+  const char* m_signal;
 };
 
 } // namespace qttools

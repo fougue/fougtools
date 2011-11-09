@@ -65,11 +65,11 @@ public:
   void setBody(const QString& text);
 
 private:
-  QString _from;
-  QStringList _to;
-  QDateTime _dateTime;
-  QString _subject;
-  QString _body;
+  QString m_from;
+  QStringList m_to;
+  QDateTime m_dateTime;
+  QString m_subject;
+  QString m_body;
 }; // class Message
 
 } // namespace qttools

@@ -43,13 +43,13 @@ namespace qttools {
 
 SqlQueryError::SqlQueryError(const QSqlQuery& qry)
   : std::runtime_error(qry.lastError().text().toStdString()),
-    _sqlError(qry.lastError())
+    m_sqlError(qry.lastError())
 {
 }
 
 SqlQueryError::SqlQueryError(const QSqlError& err)
   : std::runtime_error(err.text().toStdString()),
-    _sqlError(err)
+    m_sqlError(err)
 {
 }
 
@@ -59,15 +59,14 @@ SqlQueryError::~SqlQueryError() throw()
 
 QSqlError SqlQueryError::sqlError() const
 {
-  return _sqlError;
+  return m_sqlError;
 }
 
 
 QSqlQuery execSqlCode(const QString& sqlCode, const QSqlDatabase& db)
 {
   if (!db.isValid() || !db.isOpen())
-    throw SqlQueryError(QSqlError("db is not valid or not open", "",
-                                  QSqlError::ConnectionError));
+    throw SqlQueryError(QSqlError("db is not valid or not open", "", QSqlError::ConnectionError));
   QSqlQuery qry = db.exec(sqlCode);
   qttools::throwIfError(qry);
   return qry;

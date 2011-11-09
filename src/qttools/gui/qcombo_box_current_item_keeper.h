@@ -66,9 +66,10 @@ private:
   QComboBox* comboBox() const;
   QVariant currentIdentifierValue() const;
   QVariant identifierValue(int row) const;
-  int _oldCurrentIndex;
-  QVariant _oldIdentifierValue;
-  int _columnForModelRowIdentifier;
+
+  int m_oldCurrentIndex;
+  QVariant m_oldIdentifierValue;
+  int m_columnForModelRowIdentifier;
 };
 
 } // namespace qttools

@@ -62,8 +62,9 @@ protected:
 
 private:
   void checkThreadContext();
-  const QThread* _creationThread;
-  DatabaseManager* _dbMgr;
+
+  const QThread* m_creationThread;
+  DatabaseManager* m_dbMgr;
 };
 
 } // namespace qttools

@@ -51,11 +51,12 @@ public:
                 const QObject* receiver, const char* slot,
                 Qt::ConnectionType type = Qt::UniqueConnection);
   ~ScopedConnect();
+
 private:
-  const QObject* _sender;
-  const QObject* _receiver;
-  const char* _signal;
-  const char* _slot;
+  const QObject* m_sender;
+  const QObject* m_receiver;
+  const char* m_signal;
+  const char* m_slot;
 };
 
 class QTTOOLS_CORE_EXPORT ScopedDisconnect
@@ -65,12 +66,13 @@ public:
                    const QObject* receiver, const char* slot,
                    Qt::ConnectionType type = Qt::UniqueConnection);
   ~ScopedDisconnect();
+
 private:
-  const QObject* _sender;
-  const QObject* _receiver;
-  const char* _signal;
-  const char* _slot;
-  const Qt::ConnectionType _type;
+  const QObject* m_sender;
+  const QObject* m_receiver;
+  const char* m_signal;
+  const char* m_slot;
+  const Qt::ConnectionType m_type;
 };
 
 } // namespace qttools

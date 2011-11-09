@@ -56,9 +56,9 @@ QTTOOLS_CORE_EXPORT
 bool isValidColumn(const QAbstractItemModel* model,
                    int col, const QModelIndex& parent = QModelIndex());
 
-template<typename _INT_CONTAINER_>
+template<typename INT_CONTAINER>
 bool validRows(const QAbstractItemModel* model,
-               const _INT_CONTAINER_& rows,
+               const INT_CONTAINER& rows,
                const QModelIndex& parent = QModelIndex());
 
 QTTOOLS_CORE_EXPORT
@@ -78,12 +78,12 @@ bool isRowScheduledForDeletion(const QAbstractItemModel* model, int row);
 // -- Implementation
 // --
 
-template<typename _INT_CONTAINER_>
+template<typename INT_CONTAINER>
 bool validRows(const QAbstractItemModel* model,
-               const _INT_CONTAINER_& rows, const QModelIndex& parent)
+               const INT_CONTAINER& rows, const QModelIndex& parent)
 {
-  foreach (int iRow, rows)
-    if (!qttools::isValidRow(model, iRow, parent))
+  foreach (int row, rows)
+    if (!qttools::isValidRow(model, row, parent))
       return false;
   return !rows.isEmpty();
 }

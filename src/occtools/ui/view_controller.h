@@ -89,13 +89,13 @@ public:
 protected:
   const QRect rubberBandGeometry() const;
 
-  View* _view;
+  View* m_view;
 
 private:
   void createRubberBand();
 
-  QPoint _startRubberBandPos;
-  QRubberBand* _rubberBand;
+  QPoint m_startRubberBandPos;
+  QRubberBand* m_rubberBand;
 };
 
 } // namespace occ

@@ -70,76 +70,86 @@ public:
 
 WaitDialog::WaitDialog(QWidget* parent)
   : QDialog(parent),
-    _d(new WaitDialogPrivate(this))
+    d_ptr(new WaitDialogPrivate(this))
 {
+  Q_D(WaitDialog);
+
   // Create the UI
   this->setObjectName("qttools__WaitDialog");
   this->setWindowTitle(tr("Waiting"));
   this->resize(170, 60);
 
-  _d->waitLabel = new QLabel(this);
-  _d->btnBox = new QDialogButtonBox(this);
-  _d->btnBox->setStandardButtons(QDialogButtonBox::Abort);
-  _d->progressBar = new QProgressBar(this);
-  _d->progressBar->setValue(0);
-  _d->progressBar->setTextVisible(false);
+  d->waitLabel = new QLabel(this);
+  d->btnBox = new QDialogButtonBox(this);
+  d->btnBox->setStandardButtons(QDialogButtonBox::Abort);
+  d->progressBar = new QProgressBar(this);
+  d->progressBar->setValue(0);
+  d->progressBar->setTextVisible(false);
 
   QBoxLayout* layout = new QVBoxLayout(this);
-  layout->addWidget(_d->waitLabel);
-  layout->addWidget(_d->progressBar);
-  layout->addWidget(_d->btnBox);
+  layout->addWidget(d->waitLabel);
+  layout->addWidget(d->progressBar);
+  layout->addWidget(d->btnBox);
   layout->addItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
   // Configure
   this->setWindowModality(Qt::ApplicationModal);
-  connect(_d->updateTimer, SIGNAL(timeout()), this, SLOT(updateProgress()));
-  _d->updateTimer->setInterval(500);
+  connect(d->updateTimer, SIGNAL(timeout()), this, SLOT(updateProgress()));
+  d->updateTimer->setInterval(500);
 }
 
 WaitDialog::~WaitDialog()
 {
+  Q_D(WaitDialog);
   if (this->isWaiting())
     this->stopWait();
-  delete _d;
+  delete d;
 }
 
 bool WaitDialog::isWaiting() const
 {
-  return _d->updateTimer->isActive();
+  Q_D(const WaitDialog);
+  return d->updateTimer->isActive();
 }
 
 void WaitDialog::setWaitLabel(const QString& text)
 {
-  _d->waitLabel->setText(text);
+  Q_D(WaitDialog);
+  d->waitLabel->setText(text);
 }
 
 void WaitDialog::setMinimumDuration(int msecs)
 {
-  _d->minDuration = msecs;
+  Q_D(WaitDialog);
+  d->minDuration = msecs;
 }
 
 void WaitDialog::startWait()
 {
+  Q_D(WaitDialog);
   if (this->isWaiting())
     return;
-  _d->progressBar->setValue(0);
-  _d->updateTimer->start();
+  d->progressBar->setValue(0);
+  d->updateTimer->start();
 }
 
 void WaitDialog::stopWait()
 {
-  _d->updateTimer->stop();
+  Q_D(WaitDialog);
+  d->updateTimer->stop();
   this->close();
 }
 
 void WaitDialog::waitFor(qttools::Task* task, WaitForOption opt)
 {
+  Q_D(WaitDialog);
+
   QThread* taskThread = new QThread;
   task->bindToThread(taskThread);
   QEventLoop eventLoop;
   connect(taskThread, SIGNAL(started()), this, SLOT(startWait()));
   connect(taskThread, SIGNAL(finished()), this, SLOT(stopWait()));
   connect(taskThread, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-  connect(_d->btnBox, SIGNAL(rejected()), task, SLOT(stop()));
+  connect(d->btnBox, SIGNAL(rejected()), task, SLOT(stop()));
   taskThread->start();
   eventLoop.exec();
   if (opt == WaitDialog::DeleteTaskOption)
@@ -148,14 +158,16 @@ void WaitDialog::waitFor(qttools::Task* task, WaitForOption opt)
 
 void WaitDialog::updateProgress()
 {
+  Q_D(WaitDialog);
+
   const int incr = 5;
-  const int currValue = _d->progressBar->value();
+  const int currValue = d->progressBar->value();
   const int newValue =
-      currValue + incr <= _d->progressBar->maximum() ?
-        currValue + incr : _d->progressBar->minimum();
-  _d->progressBar->setValue(newValue);
-  const int timeSinceStart = (newValue / incr) * _d->updateTimer->interval();
-  if (timeSinceStart >= _d->minDuration && !this->isVisible())
+      currValue + incr <= d->progressBar->maximum() ?
+        currValue + incr : d->progressBar->minimum();
+  d->progressBar->setValue(newValue);
+  const int timeSinceStart = (newValue / incr) * d->updateTimer->interval();
+  if (timeSinceStart >= d->minDuration && !this->isVisible())
     this->show();
   QApplication::processEvents();
 }

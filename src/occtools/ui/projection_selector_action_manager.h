@@ -67,9 +67,9 @@ private slots:
 private:
   QAction* mappedAction(int projId) const;
 
-  QAction* _mainAction;
-  V3d_TypeOfOrientation _currOrientation;
-  QSignalMapper* _signalMapper;
+  QAction* m_mainAction;
+  V3d_TypeOfOrientation m_currOrientation;
+  QSignalMapper* m_signalMapper;
 };
 
 } // namespace occ

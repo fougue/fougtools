@@ -104,26 +104,26 @@ Log::Stream::Stream(MessageType mType)
 /*! \brief Construct a Log stream for messages of a special type
  */
 Log::Log(MessageType msgType)
-  : _stream(new Stream(msgType))
+  : m_stream(new Stream(msgType))
 {
 }
 
 /*! \brief Construct a copy of the \p other Log stream
  */
 Log::Log(const Log& other)
-  : _stream(other._stream)
+  : m_stream(other.m_stream)
 {
-  ++(_stream->refCount);
+  ++(m_stream->refCount);
 }
 
 /*! \brief Flush any pending data to be written and destroys the Log stream
  */
 Log::~Log()
 {
-  --(_stream->refCount);
-  if (_stream->refCount == 0) {
-    ::handleLogMessage(_stream->msgType, _stream->buffer.toLocal8Bit().data());
-    delete _stream;
+  --(m_stream->refCount);
+  if (m_stream->refCount == 0) {
+    ::handleLogMessage(m_stream->msgType, m_stream->buffer.toLocal8Bit().data());
+    delete m_stream;
   }
 }
 
@@ -132,7 +132,7 @@ Log::~Log()
  */
 Log& Log::space()
 {
-  _stream->ts << ' ';
+  m_stream->ts << ' ';
   return *this;
 }
 
@@ -141,73 +141,73 @@ Log& Log::space()
  */
 Log& Log::operator<<(bool t)
 {
-  _stream->ts << (t ? "true" : "false");
+  m_stream->ts << (t ? "true" : "false");
   return this->space();
 }
 
 Log& Log::operator<<(char t)
 {
-  _stream->ts << t;
+  m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(short t)
 {
-  _stream->ts << t;
+  m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(unsigned short t)
 {
-  _stream->ts << t;
+  m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(int t)
 {
-  _stream->ts << t;
+  m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(unsigned int t)
 {
-  _stream->ts << t;
+  m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(long t)
 {
-  _stream->ts << t;
+  m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(unsigned long t)
 {
-  _stream->ts << t;
+  m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(float t)
 {
-  _stream->ts << t;
+  m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(double t)
 {
-  _stream->ts << t;
+  m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(const char* str)
 {
-  _stream->ts << str;
+  m_stream->ts << str;
   return this->space();
 }
 
 Log& Log::operator<<(const QString& str)
 {
-  _stream->ts << str;
+  m_stream->ts << str;
   return this->space();
 }
 
@@ -271,13 +271,13 @@ Log fatalLog()
  */
 
 AbstractLogHandler::AbstractLogHandler() :
-  _autoDetach(false)
+  m_autoDetach(false)
 {
 }
 
 AbstractLogHandler::~AbstractLogHandler()
 {
-  if (_autoDetach)
+  if (m_autoDetach)
     qttools::detachGlobalLogHandler(this);
 }
 
@@ -293,7 +293,7 @@ AbstractLogHandler::~AbstractLogHandler()
  */
 void AbstractLogHandler::setAutoDetach(bool b)
 {
-  _autoDetach = b;
+  m_autoDetach = b;
 }
 
 
@@ -311,8 +311,8 @@ void attachGlobalLogHandler(AbstractLogHandler* handler)
 {
   if (handler != 0) {
     if (::globalLogHandlers.isEmpty() && !::globalPendingMessages.isEmpty()) {
-      foreach (const PendingLogMessage& iMsg, ::globalPendingMessages)
-        handler->handle(iMsg.first, iMsg.second);
+      foreach (const PendingLogMessage& msg, ::globalPendingMessages)
+        handler->handle(msg.first, msg.second);
       ::globalPendingMessages.clear();
     }
     ::globalLogHandlers.append(handler);

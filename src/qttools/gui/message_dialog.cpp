@@ -52,8 +52,8 @@ MessageDialog::MessageDialog(Icon icon,
                              QDialogButtonBox::StandardButtons buttons,
                              QWidget* parent)
   : QDialog(parent),
-    _textLabel(new QLabel(text, this)),
-    _detailsWidget(new QWidget(this))
+    m_textLabel(new QLabel(text, this)),
+    m_detailsWidget(new QWidget(this))
 {
   this->setWindowTitle(title);
   QLabel* pixLabel = new QLabel(this);
@@ -78,8 +78,8 @@ MessageDialog::MessageDialog(Icon icon,
 
   QGridLayout* layout = new QGridLayout;
   layout->addWidget(pixLabel, 0, 0);
-  layout->addWidget(_textLabel, 0, 1);
-  layout->addWidget(_detailsWidget, 1, 1);
+  layout->addWidget(m_textLabel, 0, 1);
+  layout->addWidget(m_detailsWidget, 1, 1);
   layout->addWidget(btnBox, 2, 0, 1, 2, Qt::AlignRight);
   this->setLayout(layout);
 
@@ -95,11 +95,11 @@ void MessageDialog::setDetailsWidget(QWidget* widget)
 {
   if (widget == 0)
     return;
-  widget->setParent(_detailsWidget);
+  widget->setParent(m_detailsWidget);
   QBoxLayout* layout = new QVBoxLayout;
   layout->setMargin(0);
   layout->addWidget(widget);
-  _detailsWidget->setLayout(layout);
+  m_detailsWidget->setLayout(layout);
 }
 
 } // namespace qttools

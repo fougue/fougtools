@@ -119,7 +119,8 @@ protected:
                         const Standard_Integer mode);
 
 private:
-  class AIS_TextPrivate* _d;
+  class AIS_TextPrivate* d_ptr;
+  Q_DECLARE_PRIVATE(AIS_Text)
 };
 
 #endif // AIS_TEXT_H

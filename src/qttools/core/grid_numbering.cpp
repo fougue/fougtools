@@ -41,49 +41,49 @@
 namespace qttools {
 
 GridNumbering::GridNumbering()
-  : _startCorner(Qt::TopLeftCorner),
-    _orientation(Qt::Horizontal),
-    _sweepMode(OneWay)
+  : m_startCorner(Qt::TopLeftCorner),
+    m_orientation(Qt::Horizontal),
+    m_sweepMode(OneWay)
 {
 }
 
 GridNumbering::GridNumbering(Qt::Corner corner,
                              Qt::Orientation orientation,
                              SweepMode sweep)
-  : _startCorner(corner),
-    _orientation(orientation),
-    _sweepMode(sweep)
+  : m_startCorner(corner),
+    m_orientation(orientation),
+    m_sweepMode(sweep)
 {
 }
 
 Qt::Corner GridNumbering::startCorner() const
 {
-  return _startCorner;
+  return m_startCorner;
 }
 
 void GridNumbering::setStartCorner(Qt::Corner corner)
 {
-  _startCorner = corner;
+  m_startCorner = corner;
 }
 
 Qt::Orientation GridNumbering::orientation() const
 {
-  return _orientation;
+  return m_orientation;
 }
 
 void GridNumbering::setOrientation(Qt::Orientation orientation)
 {
-  _orientation = orientation;
+  m_orientation = orientation;
 }
 
 GridNumbering::SweepMode GridNumbering::sweepMode() const
 {
-  return _sweepMode;
+  return m_sweepMode;
 }
 
 void GridNumbering::setSweepMode(SweepMode sweepMode)
 {
-  _sweepMode = sweepMode;
+  m_sweepMode = sweepMode;
 }
 
 QVector< QVector<int> > GridNumbering::gridIndexes(const GridNumbering& gridNb,

@@ -42,22 +42,22 @@
 
 namespace cpp {
 
-template <typename _T_, size_t _N_>
-size_t cArraySize(const _T_ (&/*array*/)[_N_])
+template <typename T, size_t N>
+size_t cArraySize(const T (&/*array*/)[N])
 {
-  return _N_;
+  return N;
 }
 
-template <typename _T_, size_t _N_>
-_T_* cArrayEnd(_T_ (&array)[_N_])
+template <typename T, size_t N>
+T* cArrayEnd(T (&array)[N])
 {
-  return array + _N_;
+  return array + N;
 }
 
-template <typename _T_, size_t _N_>
-const _T_* cArrayEnd(const _T_ (&array)[_N_])
+template <typename T, size_t N>
+const T* cArrayEnd(const T (&array)[N])
 {
-  return array + _N_;
+  return array + N;
 }
 
 } // namespace cpp

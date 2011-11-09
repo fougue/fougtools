@@ -40,8 +40,8 @@
 
 namespace cpp {
 
-template<typename _T_>
-struct Null : public _T_
+template<typename T>
+struct Null : public T
 {
 };
 

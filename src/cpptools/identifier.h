@@ -40,16 +40,18 @@
 
 namespace cpp {
 
-template<typename _T_>
+template<typename T>
 class Identifier
 {
 public:
   explicit Identifier();
-  explicit Identifier(_T_ v);
-  _T_ value() const;
-  void setValue(_T_ v);
+  explicit Identifier(T v);
+
+  T value() const;
+  void setValue(T v);
+
 private:
-  _T_ _value;
+  T m_value;
 };
 
 typedef Identifier<int> IntIdentifier;
@@ -61,28 +63,28 @@ typedef Identifier<unsigned long> ULongIdentifier;
 // -- Implementation
 // --
 
-template<typename _T_>
-Identifier<_T_>::Identifier() :
-  _value(static_cast<_T_>(0))
+template<typename T>
+Identifier<T>::Identifier()
+  : m_value(static_cast<T>(0))
 {
 }
 
-template<typename _T_>
-Identifier<_T_>::Identifier(_T_ v) :
-  _value(v)
+template<typename T>
+Identifier<T>::Identifier(T v)
+  : m_value(v)
 {
 }
 
-template<typename _T_>
-_T_ Identifier<_T_>::value() const
+template<typename T>
+T Identifier<T>::value() const
 {
-  return this->_value;
+  return m_value;
 }
 
-template<typename _T_>
-void Identifier<_T_>::setValue(_T_ v)
+template<typename T>
+void Identifier<T>::setValue(T v)
 {
-  this->_value = v;
+  m_value = v;
 }
 
 } // namespace cpp

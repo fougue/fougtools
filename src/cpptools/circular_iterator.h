@@ -45,9 +45,8 @@ namespace cpp {
  *  \retval ++iCurr when \p iCurr \c != \p iEnd
  *  \retval iBegin when \p iCurr \c == \p iEnd
  */
-template<typename _BI_ITERATOR_>
-_BI_ITERATOR_ circularNext(
-    _BI_ITERATOR_ iBegin, _BI_ITERATOR_ iEnd, _BI_ITERATOR_ iCurr)
+template<typename BI_ITERATOR>
+BI_ITERATOR circularNext(BI_ITERATOR iBegin, BI_ITERATOR iEnd, BI_ITERATOR iCurr)
 {
   if (iCurr == --iEnd)
     return iBegin;
@@ -59,9 +58,8 @@ _BI_ITERATOR_ circularNext(
  *  \retval --iCurr when \p iCurr \c != \p iBegin
  *  \retval iEnd when \p iCurr \c == \p iBegin
  */
-template<typename _BI_ITERATOR_>
-_BI_ITERATOR_ circularPrior(
-    _BI_ITERATOR_ iBegin, _BI_ITERATOR_ iEnd, _BI_ITERATOR_ iCurr)
+template<typename BI_ITERATOR>
+BI_ITERATOR circularPrior(BI_ITERATOR iBegin, BI_ITERATOR iEnd, BI_ITERATOR iCurr)
 {
   if (iCurr == iBegin)
     return --iEnd;
@@ -72,15 +70,14 @@ _BI_ITERATOR_ circularPrior(
  *
  *  \todo Improve performance (direct calculation instead of a \c for loop)
  */
-template<typename _BI_ITERATOR_, typename _DISTANCE_>
-_BI_ITERATOR_ circularAdvance(_BI_ITERATOR_ iBegin, _BI_ITERATOR_ iEnd,
-                              _BI_ITERATOR_ iCurr, _DISTANCE_ d)
+template<typename BI_ITERATOR, typename DISTANCE>
+BI_ITERATOR circularAdvance(BI_ITERATOR iBegin, BI_ITERATOR iEnd,
+                            BI_ITERATOR iCurr, DISTANCE d)
 {
-  const _DISTANCE_ absD = d < 0 ? -d : d;
-  for (_DISTANCE_ i = 0; i < absD; ++i)
-    iCurr = d < 0 ?
-          circularPrior(iBegin, iEnd, iCurr) :
-          circularNext(iBegin, iEnd, iCurr);
+  const DISTANCE absD = d < 0 ? -d : d;
+  for (DISTANCE i = 0; i < absD; ++i)
+    iCurr = d < 0 ? circularPrior(iBegin, iEnd, iCurr) :
+                    circularNext(iBegin, iEnd, iCurr);
   return iCurr;
 }
 

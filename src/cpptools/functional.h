@@ -42,24 +42,25 @@
 
 namespace cpp {
 
-template<typename _FUNCTOR1_>
+template<typename FUNCTOR1>
 struct Binder
 {
   // -- STL compatibility
   typedef void argument_type;
-  typedef typename _FUNCTOR1_::result_type result_type;
+  typedef typename FUNCTOR1::result_type result_type;
 
-  typedef typename _FUNCTOR1_::argument_type functor_argument_type;
+  typedef typename FUNCTOR1::argument_type functor_argument_type;
 
-  Binder(_FUNCTOR1_ functor1, functor_argument_type arg);
+  Binder(FUNCTOR1 functor1, functor_argument_type arg);
   result_type operator()();
+
 private:
-  _FUNCTOR1_ _functor1;
-  functor_argument_type _arg;
+  FUNCTOR1 m_functor1;
+  functor_argument_type m_arg;
 };
 
-template<typename _FUNCTOR1_>
-Binder<_FUNCTOR1_> bind(_FUNCTOR1_ functor1, typename _FUNCTOR1_::argument_type arg);
+template<typename FUNCTOR1>
+Binder<FUNCTOR1> bind(FUNCTOR1 functor1, typename FUNCTOR1::argument_type arg);
 
 
 
@@ -67,22 +68,22 @@ Binder<_FUNCTOR1_> bind(_FUNCTOR1_ functor1, typename _FUNCTOR1_::argument_type 
 // -- Implementation
 // --
 
-template<typename _FUNCTOR1_>
-Binder<_FUNCTOR1_>::Binder(_FUNCTOR1_ functor1, functor_argument_type arg) :
-  _functor1(functor1), _arg(arg)
+template<typename FUNCTOR1>
+Binder<FUNCTOR1>::Binder(FUNCTOR1 functor1, functor_argument_type arg)
+  : m_functor1(functor1), m_arg(arg)
 {
 }
 
-template<typename _FUNCTOR1_>
-typename _FUNCTOR1_::result_type Binder<_FUNCTOR1_>::operator()()
+template<typename FUNCTOR1>
+typename FUNCTOR1::result_type Binder<FUNCTOR1>::operator()()
 {
-  return _functor1(_arg);
+  return m_functor1(m_arg);
 }
 
-template<typename _FUNCTOR1_>
-Binder<_FUNCTOR1_> bind(_FUNCTOR1_ functor1, typename _FUNCTOR1_::argument_type arg)
+template<typename FUNCTOR1>
+Binder<FUNCTOR1> bind(FUNCTOR1 functor1, typename FUNCTOR1::argument_type arg)
 {
-  return Binder<_FUNCTOR1_>(functor1, arg);
+  return Binder<FUNCTOR1>(functor1, arg);
 }
 
 } // namespace cpp

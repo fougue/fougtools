@@ -42,14 +42,14 @@
 
 namespace cpp {
 
-template <typename _T_>
-size_t scalarAddress(const _T_* pointer)
+template <typename T>
+size_t scalarAddress(const T* pointer)
 {
   return reinterpret_cast<size_t>(pointer);
 }
 
-template<typename _T_>
-void checkedReset(_T_*& pointer)
+template<typename T>
+void checkedReset(T*& pointer)
 {
   if (pointer != 0) {
     delete pointer;
@@ -57,8 +57,8 @@ void checkedReset(_T_*& pointer)
   }
 }
 
-template<typename _T_>
-void checkedAssign(_T_* pointer, _T_ value)
+template<typename T>
+void checkedAssign(T* pointer, T value)
 {
   if (pointer != 0)
     *pointer = value;

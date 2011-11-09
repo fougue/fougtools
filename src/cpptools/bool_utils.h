@@ -40,14 +40,14 @@
 
 namespace cpp {
 
-template <typename _T_>
-bool boolXor(_T_ lhs, _T_ rhs)
+template <typename T>
+bool boolXor(T lhs, T rhs)
 {
   return (!lhs && rhs) || (lhs && !rhs);
 }
 
-template <typename _T_>
-bool boolImplies(_T_ lhs, _T_ rhs)
+template <typename T>
+bool boolImplies(T lhs, T rhs)
 {
   return lhs ? rhs : true;
 }

@@ -46,27 +46,27 @@ public:
   virtual void execute() = 0;
 };
 
-template<typename _FUNCTOR_>
+template<typename FUNCTOR>
 class WrappedFunctor : public AbstractFunctor
 {
 public:
-  WrappedFunctor(_FUNCTOR_ functor) :
-    _functor(functor)
+  WrappedFunctor(FUNCTOR functor)
+    : m_functor(functor)
   {
   }
 
   void execute()
   {
-    this->_functor();
+    m_functor();
   }
 private:
-  _FUNCTOR_ _functor;
+  FUNCTOR m_functor;
 };
 
-template<typename _FUNCTOR_>
-AbstractFunctor* newWrappedFunctor(_FUNCTOR_ functor)
+template<typename FUNCTOR>
+AbstractFunctor* newWrappedFunctor(FUNCTOR functor)
 {
-  return new WrappedFunctor<_FUNCTOR_>(functor);
+  return new WrappedFunctor<FUNCTOR>(functor);
 }
 
 } // namespace cpp

@@ -78,26 +78,26 @@ void QComboBoxCurrentItemKeeper::onModelAboutToBeReset()
   m_oldCurrentIndex = this->comboBox()->currentIndex();
   m_oldIdentifierValue = this->currentIdentifierValue();
 
-#ifdef m_TRACE_QComboBoxCurrentItemKeeper_
+#ifdef _TRACE_QComboBoxCurrentItemKeeper_
   qDebug() << "QComboBoxCurrentItemKeeper::onModelAboutToBeReset()";
   qDebug() << "   m_oldCurrentIndex :" << m_oldCurrentIndex
            << " m_oldIdentifierValue :" << m_oldIdentifierValue;
-#endif // m_TRACE_QComboBoxCurrentItemKeeper_
+#endif // _TRACE_QComboBoxCurrentItemKeeper_
 }
 
 void QComboBoxCurrentItemKeeper::onModelReset()
 {
-#ifdef m_TRACE_QComboBoxCurrentItemKeeper_
+#ifdef _TRACE_QComboBoxCurrentItemKeeper_
   qDebug() << "QComboBoxCurrentItemKeeper::onModelReset()";
-#endif // m_TRACE_QComboBoxCurrentItemKeeper_
+#endif // _TRACE_QComboBoxCurrentItemKeeper_
 
   int newCurrIndex = -1;
   if (m_oldIdentifierValue == this->identifierValue(m_oldCurrentIndex)) {
     // Special case when the old index matches the (new) current index
     newCurrIndex = m_oldCurrentIndex;
-#ifdef m_TRACE_QComboBoxCurrentItemKeeper_
+#ifdef _TRACE_QComboBoxCurrentItemKeeper_
     qDebug() << "   if() newCurrIndex :" << newCurrIndex;
-#endif // m_TRACE_QComboBoxCurrentItemKeeper_
+#endif // _TRACE_QComboBoxCurrentItemKeeper_
   }
   else  {
     // Case when the old index does not match the (new) current index
@@ -105,14 +105,14 @@ void QComboBoxCurrentItemKeeper::onModelReset()
     for (int iRow = 0; iRow < model->rowCount() && newCurrIndex != -1; ++iRow)
       if (m_oldIdentifierValue == this->identifierValue(iRow))
         newCurrIndex = iRow;
-#ifdef m_TRACE_QComboBoxCurrentItemKeeper_
+#ifdef _TRACE_QComboBoxCurrentItemKeeper_
     qDebug() << "   else() newCurrIndex :" << newCurrIndex;
-#endif // m_TRACE_QComboBoxCurrentItemKeeper_
+#endif // _TRACE_QComboBoxCurrentItemKeeper_
   }
   newCurrIndex = std::max(newCurrIndex, 0);
-#ifdef m_TRACE_QComboBoxCurrentItemKeeper_
+#ifdef _TRACE_QComboBoxCurrentItemKeeper_
   qDebug() << "   setCurrentIndex :" << newCurrIndex;
-#endif // m_TRACE_QComboBoxCurrentItemKeeper_
+#endif // _TRACE_QComboBoxCurrentItemKeeper_
   this->comboBox()->setCurrentIndex(newCurrIndex);
 }
 

@@ -47,16 +47,18 @@ QString CompositeTypeHelper::toRow(const QList<QVariant>& values)
   QStringList valuesStr;
   foreach (const QVariant& value, values) {
     switch (value.type()) {
-    case QVariant::Char :
-    case QVariant::String :
-      valuesStr += QString("\"%1\"").arg(value.toString()); break;
-    case QVariant::ULongLong :
-    case QVariant::UInt :
-    case QVariant::Int :
-    case QVariant::LongLong :
-    case QVariant::Double :
-      valuesStr += QString("%1").arg(value.toString()); break;
-    case QVariant::Bool : {
+    case QVariant::Char:
+    case QVariant::String:
+      valuesStr += QString("\"%1\"").arg(value.toString());
+      break;
+    case QVariant::ULongLong:
+    case QVariant::UInt:
+    case QVariant::Int:
+    case QVariant::LongLong:
+    case QVariant::Double:
+      valuesStr += QString("%1").arg(value.toString());
+      break;
+    case QVariant::Bool: {
       valuesStr += (value.toBool() ? QLatin1String("TRUE") : QLatin1String("FALSE"));
       break;
     }

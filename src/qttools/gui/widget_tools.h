@@ -65,8 +65,6 @@ void setHorizAndVertScrollValue(QAbstractScrollArea* area, const QPair<int, int>
 
 } // namespace qttools
 
-
-
 // --
 // -- Implementation
 // --

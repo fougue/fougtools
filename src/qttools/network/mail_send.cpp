@@ -59,8 +59,8 @@ class MailSendPrivate : public QObject
 
 public:
   MailSendPrivate()
-    : socket(new QSslSocket(this)),
-      timeout(30000)
+    : m_socket(new QSslSocket(this)),
+      m_timeout(30000)
   {
   }
 
@@ -69,35 +69,37 @@ public:
 #ifdef QTTOOLS_MAILSEND_TRACE
     qDebug() << "C :" << cmd;
 #endif // QTTOOLS_MAILSEND_TRACE
-    if (this->socket->write(cmd + "\r\n") == -1) {
+    if (m_socket->write(cmd + "\r\n") == -1) {
       //: %1: SMTP client command
-      this->error = tr("Failed to write command '%1'").arg(QString(cmd));
+      m_error = tr("Failed to write command '%1'").arg(QString(cmd));
       return false;
     }
-    if (!this->socket->waitForBytesWritten(this->timeout)) {
+    if (!m_socket->waitForBytesWritten(m_timeout)) {
       //: %1: SMTP client command
-      this->error = tr("Failed to write command '%1' (timeout)").arg(QString(cmd));
+      m_error = tr("Failed to write command '%1' (timeout)").arg(QString(cmd));
       return false;
     }
-    if (!this->socket->waitForReadyRead(this->timeout)) {
+    if (!m_socket->waitForReadyRead(m_timeout)) {
       //: %1: SMTP client command
-      this->error = tr("Failed to read response for command '%1' (timeout)").arg(QString(cmd));
+      m_error = tr("Failed to read response for command '%1' (timeout)").arg(QString(cmd));
       return false;
     }
 
-    const QByteArray response(this->socket->readAll());
+    const QByteArray response(m_socket->readAll());
 #ifdef QTTOOLS_MAILSEND_TRACE
     qDebug() << "S:" << response;
 #endif // QTTOOLS_MAILSEND_TRACE
-    QRegExp codeRx("^\\s*([0-9]+)");
+    QRegExp codeRx(QLatin1String("^\\s*([0-9]+)"));
     const int responseCode = codeRx.indexIn(response) != -1 ? codeRx.cap(1).toInt() : -1;
-    if (responseCode == -1)
+    if (responseCode == -1) {
       //: %1: SMTP server response
-      this->error = tr("Invalid response format '%1'").arg(QString(response));
-    else if (responseCode != expectedCode)
+      m_error = tr("Invalid response format '%1'").arg(QString(response));
+    }
+    else if (responseCode != expectedCode) {
       //: %1 and %2: SMTP server response codes   %3: whole SMTP server response
-      this->error = tr("Unexpected response code, got %1 instead of %2\n%3")
+      m_error = tr("Unexpected response code, got %1 instead of %2\n%3")
         .arg(responseCode).arg(expectedCode).arg(QString(response));
+    }
     return responseCode == expectedCode && responseCode != -1;
   }
 
@@ -106,10 +108,10 @@ public:
     return this->sendSmtpCommand(QByteArray(cmd), expectedCode);
   }
 
-  QSslSocket* socket;
-  SmtpAccount smtpAccount;
-  int timeout;
-  QString error;
+  QSslSocket* m_socket;
+  SmtpAccount m_smtpAccount;
+  int m_timeout;
+  QString m_error;
 
 private slots:
   void onProxyAuthenticationRequired(const QNetworkProxy& proxy, QAuthenticator* auth)
@@ -118,8 +120,6 @@ private slots:
     Q_UNUSED(auth);
   }
 };
-
-
 
 /*! \class MailSend
  *  \brief Provides service to send messages through SMTP
@@ -133,7 +133,7 @@ MailSend::MailSend()
 MailSend::~MailSend()
 {
   Q_D(MailSend);
-  d->socket->disconnectFromHost();
+  d->m_socket->disconnectFromHost();
   delete d;
 }
 
@@ -146,13 +146,13 @@ MailSend::~MailSend()
 int MailSend::timeout() const
 {
   Q_D(const MailSend);
-  return d->timeout;
+  return d->m_timeout;
 }
 
 void MailSend::setTimeout(int msecs)
 {
   Q_D(MailSend);
-  d->timeout = msecs;
+  d->m_timeout = msecs;
 }
 
 /*! \brief Try to connect to SMTP server using \p account
@@ -164,32 +164,32 @@ void MailSend::setTimeout(int msecs)
 bool MailSend::connectToSmtpServer(const SmtpAccount& account)
 {
   Q_D(MailSend);
-  d->error.clear();
-  d->smtpAccount = account;
+  d->m_error.clear();
+  d->m_smtpAccount = account;
 
   // Connect to SMTP server
-  d->socket->connectToHost(account.host(), account.port());
-  if (!d->socket->waitForConnected(this->timeout())) {
+  d->m_socket->connectToHost(account.host(), account.port());
+  if (!d->m_socket->waitForConnected(this->timeout())) {
     //: %1: Error description
-    d->error = MailSendPrivate::tr("Connection failed (timeout)\n%1").arg(d->socket->errorString());
+    d->m_error = MailSendPrivate::tr("Connection failed (timeout)\n%1").arg(d->m_socket->errorString());
     return false;
   }
 
   // Start client-side encryption if SSL required
   if (account.connectionSecurity() == SmtpAccount::SslTlsSecurity) {
-    d->socket->setProtocol(QSsl::AnyProtocol);
-    d->socket->startClientEncryption();
+    d->m_socket->setProtocol(QSsl::AnyProtocol);
+    d->m_socket->startClientEncryption();
   }
 
   // Read initial server response
-  if (!d->socket->waitForReadyRead(this->timeout())) {
+  if (!d->m_socket->waitForReadyRead(this->timeout())) {
     //: %1: Error description
-    d->error = MailSendPrivate::tr("Failed to read server response after "
-                                   "connection\n%1").arg(d->socket->errorString());
+    d->m_error = MailSendPrivate::tr("Failed to read server response after "
+                                     "connection\n%1").arg(d->m_socket->errorString());
     return false;
   }
 #ifdef QTTOOLS_MAILSEND_TRACE
-  qDebug() << "S:" << d->socket->readAll();
+  qDebug() << "S:" << d->m_socket->readAll();
 #endif // QTTOOLS_MAILSEND_TRACE
 
   // Hello to the SMTP server
@@ -200,10 +200,10 @@ bool MailSend::connectToSmtpServer(const SmtpAccount& account)
 
   // Initiate TLS if required
   if (account.connectionSecurity() == SmtpAccount::StartTlsSecurity) {
-    d->socket->setProtocol(QSsl::TlsV1);
+    d->m_socket->setProtocol(QSsl::TlsV1);
     if (!d->sendSmtpCommand("STARTTLS", 220))
       return false;
-    d->socket->startClientEncryption();
+    d->m_socket->startClientEncryption();
   }
 
   // User authentication
@@ -249,7 +249,7 @@ bool MailSend::connectToSmtpServer(const SmtpAccount& account)
 bool MailSend::sendMessage(const Message& msg)
 {
   Q_D(MailSend);
-  d->error.clear();
+  d->m_error.clear();
   if (!d->sendSmtpCommand(QString("MAIL FROM:<%1>").arg(msg.from()).toUtf8(), 250))
     return false;
   foreach (const QString& recipient, msg.to()) {
@@ -278,7 +278,7 @@ bool MailSend::sendMessage(const Message& msg)
 QString MailSend::errorString() const
 {
   Q_D(const MailSend);
-  return d->error;
+  return d->m_error;
 }
 } // namespace qttools
 

@@ -40,8 +40,7 @@
 namespace qttools {
 
 /*! \class LineEditWithAutoToolTip
- *  \brief Provides a QLineEdit with its tool-tip automatically set to
- *         QLineEdit::text()
+ *  \brief Provides a QLineEdit with its tool-tip automatically set to QLineEdit::text()
  *
  */
 

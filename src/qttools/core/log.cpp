@@ -48,8 +48,7 @@ QList<qttools::AbstractLogHandler*> globalLogHandlers;
 typedef QPair<qttools::Log::MessageType, QString> PendingLogMessage;
 QLinkedList<PendingLogMessage> globalPendingMessages;
 
-void handleLogMessage(qttools::Log::MessageType msgType,
-                      const QString& msg)
+void handleLogMessage(qttools::Log::MessageType msgType, const QString& msg)
 {
   if (globalLogHandlers.isEmpty())
     globalPendingMessages.append(qMakePair(msgType, msg));
@@ -62,8 +61,7 @@ void handleLogMessage(qttools::Log::MessageType msgType,
 namespace qttools {
 
 /*! \class Log::Stream
- *  \brief Encapsulates a reference-counted QTextStream so a Log object can
- *         be quickly copied
+ *  \brief Encapsulates a reference-counted QTextStream so a Log object can be quickly copied
  */
 
 Log::Stream::Stream(MessageType mType)
@@ -78,8 +76,8 @@ Log::Stream::Stream(MessageType mType)
  *  \brief Provides an easy-to-use output stream for logging
  *
  *  This class is almost a clone of QDebug, but it's focused on logging.\n
- *  Also the way messages are handled is different as there can be multiple
- *  logging handlers attached (not just one).
+ *  Also the way messages are handled is different as there can be multiple logging handlers
+ *  attached (not just one).
  */
 
 /*! \enum Log::MessageType
@@ -127,8 +125,7 @@ Log::~Log()
   }
 }
 
-/*! \brief Write a space character to the Log stream and return a reference to
- *         the stream
+/*! \brief Write a space character to the Log stream and return a reference to the stream
  */
 Log& Log::space()
 {
@@ -136,8 +133,7 @@ Log& Log::space()
   return *this;
 }
 
-/*! \brief Write the boolean \p t to the log stream and return a reference to
- *         to the stream
+/*! \brief Write the boolean \p t to the log stream and return a reference to the stream
  */
 Log& Log::operator<<(bool t)
 {
@@ -265,13 +261,12 @@ Log fatalLog()
   return Log(Log::FatalMessage);
 }
 
-
 /*! \class AbstractLogHandler
  *  \brief Abstract base class of all logging message handlers
  */
 
-AbstractLogHandler::AbstractLogHandler() :
-  m_autoDetach(false)
+AbstractLogHandler::AbstractLogHandler()
+  : m_autoDetach(false)
 {
 }
 
@@ -287,8 +282,8 @@ AbstractLogHandler::~AbstractLogHandler()
 
 /*! \brief Set the log handler to auto-detach mode if \p b is true
  *
- *  If auto-detach is enabled then when the log handler is destroyed it gets
- *  automatically detached from the global list of log handlers.\n
+ *  If auto-detach is enabled then when the log handler is destroyed it gets automatically detached
+ *  from the global list of log handlers.\n
  *  Auto-detach is disabled by default
  */
 void AbstractLogHandler::setAutoDetach(bool b)
@@ -296,11 +291,10 @@ void AbstractLogHandler::setAutoDetach(bool b)
   m_autoDetach = b;
 }
 
-
 /*! \brief Append \p handler to the global list of log handlers
  *
- *  If the internal list of log handlers is empty then all pending log
- *  messages are flushed to \p handler.
+ *  If the internal list of log handlers is empty then all pending log messages are flushed to
+ *  \p handler.
  *
  *  Note that log messages are recorded when there is no log handler attached.
  *  In this case a log message is considered as "pending".
@@ -333,8 +327,8 @@ void detachGlobalLogHandler(AbstractLogHandler* handler)
  *
  */
 
-LogDispatcher::LogDispatcher(QObject* parent) :
-  QObject(parent)
+LogDispatcher::LogDispatcher(QObject* parent)
+  : QObject(parent)
 {
 }
 

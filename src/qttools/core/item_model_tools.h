@@ -72,8 +72,6 @@ QVariant tableModelData(const QAbstractItemModel* model,
 QTTOOLS_CORE_EXPORT
 bool isRowScheduledForDeletion(const QAbstractItemModel* model, int row);
 
-
-
 // --
 // -- Implementation
 // --

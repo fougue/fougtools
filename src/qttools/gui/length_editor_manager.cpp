@@ -43,14 +43,13 @@
 namespace qttools {
 
 /*! \class LengthEditorManager
- *  \brief Manages a set of AbstractLengthEditor objects that will get
- *         notified when the current measurement system is changed
+ *  \brief Manages a set of AbstractLengthEditor objects that will get notified when the current
+ *         measurement system is changed
  *
  */
 
 LengthEditorManager::LengthEditorManager()
-  : m_lengthEditors(),
-    m_measureSys(QLocale::MetricSystem)
+  : m_measureSys(QLocale::MetricSystem)
 {
 }
 
@@ -83,8 +82,9 @@ void LengthEditorManager::setMeasurementSystem(QLocale::MeasurementSystem sys)
 {
   if (sys == m_measureSys)
     return;
-  foreach (AbstractLengthEditor* iEditor, m_lengthEditors)
-    iEditor->updateEditor(sys);
+
+  foreach (AbstractLengthEditor* lengthEditor, m_lengthEditors)
+    lengthEditor->updateEditor(sys);
   m_measureSys = sys;
   emit currentMeasurementSytemChanged(sys);
 }

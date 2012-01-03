@@ -61,7 +61,6 @@ private:
   const CPP_SQL_ENUM_MAP& m_enumMap;
 };
 
-
 // -- class ReadOnlySqlEnumItemDelegate
 template<typename CPP_SQL_ENUM_MAP>
 class ReadOnlySqlEnumItemDelegate : public SqlEnumItemDelegate<CPP_SQL_ENUM_MAP>
@@ -82,8 +81,6 @@ template<typename CPP_SQL_ENUM_MAP>
 ReadOnlySqlEnumItemDelegate<CPP_SQL_ENUM_MAP>*
 makeReadOnlySqlEnumItemDelegate(const CPP_SQL_ENUM_MAP& enumMap, QObject* parent = 0);
 
-
-
 // --
 // -- Implementation (SqlEnumItemDelegate)
 // --
@@ -98,16 +95,20 @@ SqlEnumItemDelegate<CPP_SQL_ENUM_MAP>::SqlEnumItemDelegate(const CPP_SQL_ENUM_MA
 
 template<typename CPP_SQL_ENUM_MAP>
 QString SqlEnumItemDelegate<CPP_SQL_ENUM_MAP>::displayText(const QVariant& value,
-                                                           const QLocale& /*locale*/) const
+                                                           const QLocale& locale) const
 {
+  Q_UNUSED(locale);
   return value.toString();
 }
 
 template<typename CPP_SQL_ENUM_MAP>
 QWidget* SqlEnumItemDelegate<CPP_SQL_ENUM_MAP>::createEditor(QWidget* parent,
-                                                             const QStyleOptionViewItem& /*option*/,
-                                                             const QModelIndex& /*index*/) const
+                                                             const QStyleOptionViewItem& option,
+                                                             const QModelIndex& index) const
 {
+  Q_UNUSED(option);
+  Q_UNUSED(index);
+
   QComboBox* editor = new QComboBox(parent);
   for (int i = 0; i < m_enumMap.size(); ++i)
     editor->addItem(m_enumMap.sqlValue(m_enumMap.cppValue(i)));
@@ -143,23 +144,24 @@ SqlEnumItemDelegate<CPP_SQL_ENUM_MAP>* makeSqlEnumItemDelegate(const CPP_SQL_ENU
   return new SqlEnumItemDelegate<CPP_SQL_ENUM_MAP>(enumMap, parent);
 }
 
-
 // --
 // -- Implementation (ReadOnlySqlEnumItemDelegate)
 // --
 
 template<typename CPP_SQL_ENUM_MAP>
-ReadOnlySqlEnumItemDelegate<CPP_SQL_ENUM_MAP>::ReadOnlySqlEnumItemDelegate(const CPP_SQL_ENUM_MAP& enumMap,
-                                                                           QObject* parent)
+ReadOnlySqlEnumItemDelegate<CPP_SQL_ENUM_MAP>::ReadOnlySqlEnumItemDelegate(
+    const CPP_SQL_ENUM_MAP& enumMap, QObject* parent)
   : SqlEnumItemDelegate<CPP_SQL_ENUM_MAP>(enumMap, parent)
 {
 }
 
 template<typename CPP_SQL_ENUM_MAP>
-QWidget* ReadOnlySqlEnumItemDelegate<CPP_SQL_ENUM_MAP>::createEditor(QWidget* /*parent*/,
-                                                                     const QStyleOptionViewItem& /*option*/,
-                                                                     const QModelIndex& /*index*/) const
+QWidget* ReadOnlySqlEnumItemDelegate<CPP_SQL_ENUM_MAP>::createEditor(
+    QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
+  Q_UNUSED(parent);
+  Q_UNUSED(option);
+  Q_UNUSED(index);
   return 0;
 }
 

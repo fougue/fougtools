@@ -51,15 +51,13 @@ private:
   MODEL* m_model;
 };
 
-
-
 // --
 // -- Implementation
 // --
 
 template<typename MODEL>
-ScopedModelReset<MODEL>::ScopedModelReset(MODEL* model) :
-  m_model(model)
+ScopedModelReset<MODEL>::ScopedModelReset(MODEL* model)
+  : m_model(model)
 {
   if (model != 0)
     model->beginResetModel();

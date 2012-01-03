@@ -65,7 +65,6 @@ private:
   int m_identCol;
 };
 
-
 // --
 // -- Implementation
 // --
@@ -81,9 +80,7 @@ IdentifierModelRowMapping<IDENTIFIER>::IdentifierModelRowMapping(const QAbstract
 template<typename IDENTIFIER>
 int IdentifierModelRowMapping<IDENTIFIER>::modelRow(IDENTIFIER ident) const
 {
-  if (m_mapping.contains(ident))
-    return m_mapping[ident];
-  return -1;
+  return m_mapping.value(ident, -1);
 }
 
 template<typename IDENTIFIER>
@@ -101,7 +98,7 @@ void IdentifierModelRowMapping<IDENTIFIER>::setIdentifierColumn(int col)
 template<typename IDENTIFIER>
 void IdentifierModelRowMapping<IDENTIFIER>::changeMap(IDENTIFIER ident, int modelRow)
 {
-  m_mapping[ident] = modelRow;
+  m_mapping.insert(ident, modelRow);
 }
 
 template<typename IDENTIFIER>
@@ -118,7 +115,7 @@ void IdentifierModelRowMapping<IDENTIFIER>::remap()
   for (int row = 0; row < m_model->rowCount(); ++row) {
     const QVariant identVar = m->data(m->index(row, m_identCol));
     const IDENTIFIER ident = identVar.value<IDENTIFIER>();
-    m_mapping[ident] = row;
+    m_mapping.insert(ident, row);
   }
 }
 

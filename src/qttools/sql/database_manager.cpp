@@ -54,17 +54,16 @@ class DatabaseManagerPrivate
 {
 public:
   DatabaseManagerPrivate(const QSqlDatabase& refDb)
-    : refDatabase(refDb)
+    : m_refDatabase(refDb)
   {
     assert(QThread::currentThread() != 0);
-    databases.insert(QThread::currentThread(), refDb);
+    m_databases.insert(QThread::currentThread(), refDb);
   }
 
-  QHash<const QThread*, QSqlDatabase> databases;
-  QSqlDatabase refDatabase;
-  QMutex mutex;
+  QHash<const QThread*, QSqlDatabase> m_databases;
+  QSqlDatabase m_refDatabase;
+  QMutex m_mutex;
 };
-
 
 /*! \class DatabaseManager
  *  \brief
@@ -84,7 +83,7 @@ DatabaseManager::~DatabaseManager()
 const QSqlDatabase& DatabaseManager::referenceDatabase() const
 {
   Q_D(const DatabaseManager);
-  return d->refDatabase;
+  return d->m_refDatabase;
 }
 
 bool DatabaseManager::isDatabaseOpen(const QThread* inThread) const
@@ -95,14 +94,14 @@ bool DatabaseManager::isDatabaseOpen(const QThread* inThread) const
 bool DatabaseManager::hasDatabase(const QThread* inThread) const
 {
   Q_D(const DatabaseManager);
-  return d->databases.contains(inThread);
+  return d->m_databases.contains(inThread);
 }
 
 QSqlDatabase DatabaseManager::database(const QThread* inThread) const
 {
   Q_D(const DatabaseManager);
   assert(this->hasDatabase(inThread));
-  return d->databases.value(inThread);
+  return d->m_databases.value(inThread);
 }
 
 QSqlDatabase DatabaseManager::createDatabase(const QThread* inThread)
@@ -111,7 +110,7 @@ QSqlDatabase DatabaseManager::createDatabase(const QThread* inThread)
   if (this->hasDatabase(inThread))
     return this->database(inThread);
 
-  QMutexLocker locker(&(d->mutex));
+  QMutexLocker locker(&(d->m_mutex));
   Q_UNUSED(locker);
 
   QSqlDatabase newDb = QSqlDatabase::cloneDatabase(this->referenceDatabase(),
@@ -120,7 +119,7 @@ QSqlDatabase DatabaseManager::createDatabase(const QThread* inThread)
                                                    .arg(QUuid::createUuid().toString()));
   if (newDb.isValid())
     newDb.open();
-  d->databases.insert(inThread, newDb);
+  d->m_databases.insert(inThread, newDb);
   return newDb;
 }
 

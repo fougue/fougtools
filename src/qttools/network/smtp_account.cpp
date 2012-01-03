@@ -40,8 +40,7 @@
 namespace qttools {
 
 /*! \class SmtpAccount
- *  \brief Provides a convenient interface to define the user account to connect
- *         to a SMTP server
+ *  \brief Provides a convenient interface to define the user account to connect to a SMTP server
  */
 
 SmtpAccount::SmtpAccount()

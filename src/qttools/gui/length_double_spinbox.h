@@ -52,7 +52,8 @@ class QTTOOLS_GUI_EXPORT LengthDoubleSpinBox :
   Q_PROPERTY(double length READ length WRITE setLength)
 
 public:
-  LengthDoubleSpinBox(QWidget* parent);
+  LengthDoubleSpinBox(QWidget* parent = 0);
+  ~LengthDoubleSpinBox();
 
   double length() const;
   Q_SLOT void setLength(double v);
@@ -60,13 +61,10 @@ public:
 public slots:
   void updateEditor(QLocale::MeasurementSystem newSys);
 
-private slots:
-  void onValueChanged(double v);
-
 private:
-  double m_orgLengthMm;
-  bool m_valueHasChanged;
-  bool m_isInternalUpdateContext;
+  class LengthDoubleSpinBoxPrivate* const d_ptr;
+  Q_DECLARE_PRIVATE(LengthDoubleSpinBox)
+  Q_PRIVATE_SLOT(d_func(), void onValueChanged(double))
 };
 
 } // namespace qttools

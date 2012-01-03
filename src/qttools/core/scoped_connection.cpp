@@ -42,11 +42,11 @@
 namespace qttools {
 
 /*! \class ScopedConnect
- *  \brief Establishes a signal/slot connection between two QObjects and
- *         automatically breaks it upon destruction
+ *  \brief Establishes a signal/slot connection between two QObjects and automatically breaks it
+ *         upon destruction
  *
- *  ScopedConnect guarantees that a signal/slot connection will get broken
- *  when the current scope dissapears
+ *  ScopedConnect guarantees that a signal/slot connection will get broken when the current scope
+ *  dissapears
  */
 
 ScopedConnect::ScopedConnect(const QObject* sender, const char* signal,
@@ -65,14 +65,12 @@ ScopedConnect::~ScopedConnect()
   QObject::disconnect(m_sender, m_signal, m_receiver, m_slot);
 }
 
-
-
 /*! \class ScopedDisonnect
- *  \brief Breaks a signal/slot connection between two QObjects and
- *         automatically re-establishes it upon destruction
+ *  \brief Breaks a signal/slot connection between two QObjects and automatically re-establishes it
+ *         upon destruction
  *
- *  ScopedDisonnect guarantees that a signal/slot connection will get restored
- *  when the current scope dissapears
+ *  ScopedDisonnect guarantees that a signal/slot connection will get restored when the current
+ *  scope dissapears
  */
 
 ScopedDisconnect::ScopedDisconnect(const QObject* sender, const char* signal,

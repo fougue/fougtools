@@ -62,7 +62,6 @@ QSqlError SqlQueryError::sqlError() const
   return m_sqlError;
 }
 
-
 QSqlQuery execSqlCode(const QString& sqlCode, const QSqlDatabase& db)
 {
   if (!db.isValid() || !db.isOpen())
@@ -88,7 +87,6 @@ QSqlQuery execSqlCodeInTransaction(const QString& sqlCode, QSqlDatabase db)
   }
   return sqlQry;
 }
-
 
 void throwIfError(const QSqlQuery& qry)
 {

@@ -56,26 +56,24 @@ class LineNumbersBarPrivate
 {
 public:
   LineNumbersBarPrivate()
-    : edit(0),
-      stopLine(-1),
-      currentLine(-1),
-      bugLine(-1)
+    : m_edit(0),
+      m_stopLine(-1),
+      m_currentLine(-1),
+      m_bugLine(-1)
   {
   }
 
-  QTextEdit* edit;
-  QRect stopRect;
-  QRect currentRect;
-  QRect bugRect;
-  int stopLine;
-  int currentLine;
-  int bugLine;
-  QPixmap stopMarker;
-  QPixmap currentMarker;
-  QPixmap bugMarker;
+  QTextEdit* m_edit;
+  QRect m_stopRect;
+  QRect m_currentRect;
+  QRect m_bugRect;
+  int m_stopLine;
+  int m_currentLine;
+  int m_bugLine;
+  QPixmap m_stopMarker;
+  QPixmap m_currentMarker;
+  QPixmap m_bugMarker;
 };
-
-
 
 /*! \class LineNumbersBar
  *  \brief Provides numbering of the lines of a QTextEdit as a vertical bar
@@ -86,8 +84,8 @@ LineNumbersBar::LineNumbersBar(QWidget *parent)
     d_ptr(new LineNumbersBarPrivate)
 {
   // Make room for 4 digits and the breakpoint icon
-  this->setFixedWidth(this->fontMetrics().width(QString("000") + 10 + 32));
-  //  d->stopMarker = QPixmap( "images/no.png" );
+  this->setFixedWidth(this->fontMetrics().width(QLatin1String("000") + 10 + 32));
+  //  d->m_stopMarker = QPixmap( "images/no.png" );
   //   currentMarker = QPixmap( "images/next.png" );
   //   bugMarker = QPixmap( "images/bug.png" );
 }
@@ -101,78 +99,84 @@ LineNumbersBar::~LineNumbersBar()
 void LineNumbersBar::setCurrentLine(int lineno)
 {
   Q_D(LineNumbersBar);
-  d->currentLine = lineno;
+  d->m_currentLine = lineno;
 }
 
 void LineNumbersBar::setStopLine(int lineno)
 {
   Q_D(LineNumbersBar);
-  d->stopLine = lineno;
+  d->m_stopLine = lineno;
 }
 
 void LineNumbersBar::setBugLine(int lineno)
 {
   Q_D(LineNumbersBar);
-  d->bugLine = lineno;
+  d->m_bugLine = lineno;
 }
 
 void LineNumbersBar::setTextEdit(QTextEdit* edit)
 {
   Q_D(LineNumbersBar);
-  d->edit = edit;
-  connect(edit->document()->documentLayout(), SIGNAL(update(const QRectF&)),
-          this, SLOT(update()));
-  connect(edit->verticalScrollBar(), SIGNAL(valueChanged(int)),
-          this, SLOT(update()));
+  d->m_edit = edit;
+  connect(edit->document()->documentLayout(), SIGNAL(update(const QRectF&)), this, SLOT(update()));
+  connect(edit->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(update()));
 }
 
-void LineNumbersBar::paintEvent(QPaintEvent* /*event*/)
+void LineNumbersBar::paintEvent(QPaintEvent* event)
 {
+  Q_UNUSED(event);
   Q_D(LineNumbersBar);
-  QAbstractTextDocumentLayout* layout = d->edit->document()->documentLayout();
-  int contentsY = d->edit->verticalScrollBar()->value();
-  qreal pageBottom = contentsY + d->edit->viewport()->height();
+
+  QAbstractTextDocumentLayout* layout = d->m_edit->document()->documentLayout();
+  const int contentsY = d->m_edit->verticalScrollBar()->value();
+  const qreal pageBottom = contentsY + d->m_edit->viewport()->height();
   const QFontMetrics fm = this->fontMetrics();
   const int ascent = this->fontMetrics().ascent() + 1; // height = ascent + descent + 1
   int lineCount = 1;
   QPainter p(this);
 
-  d->bugRect = QRect();
-  d->stopRect = QRect();
-  d->currentRect = QRect();
+  d->m_bugRect = QRect();
+  d->m_stopRect = QRect();
+  d->m_currentRect = QRect();
 
-  for (QTextBlock block = d->edit->document()->begin();
+  for (QTextBlock block = d->m_edit->document()->begin();
        block.isValid();
-       block = block.next(), ++lineCount) {
+       block = block.next(), ++lineCount)
+  {
     const QRectF boundingRect(layout->blockBoundingRect(block));
     QPointF position(boundingRect.topLeft());
+
     if (position.y() + boundingRect.height() < contentsY)
       continue;
+
     if (position.y() > pageBottom)
       break;
+
     const QString txt(QString::number(lineCount));
-    p.drawText(this->width() - fm.width(txt),
-               qRound(position.y() ) - contentsY + ascent, txt);
+    p.drawText(this->width() - fm.width(txt), qRound(position.y() ) - contentsY + ascent, txt);
+
     // Bug marker
-    if (d->bugLine == lineCount) {
-      p.drawPixmap(1, qRound(position.y() ) - contentsY, d->bugMarker);
-      d->bugRect = QRect(1, qRound(position.y()) - contentsY,
-                         d->bugMarker.width(),
-                         d->bugMarker.height());
+    if (d->m_bugLine == lineCount) {
+      p.drawPixmap(1, qRound(position.y() ) - contentsY, d->m_bugMarker);
+      d->m_bugRect = QRect(1, qRound(position.y()) - contentsY,
+                           d->m_bugMarker.width(),
+                           d->m_bugMarker.height());
     }
+
     // Stop marker
-    if (d->stopLine == lineCount) {
-      p.drawPixmap(19, qRound(position.y()) - contentsY, d->stopMarker);
-      d->stopRect = QRect(19, qRound(position.y()) - contentsY,
-                          d->stopMarker.width(),
-                          d->stopMarker.height());
+    if (d->m_stopLine == lineCount) {
+      p.drawPixmap(19, qRound(position.y()) - contentsY, d->m_stopMarker);
+      d->m_stopRect = QRect(19, qRound(position.y()) - contentsY,
+                            d->m_stopMarker.width(),
+                            d->m_stopMarker.height());
     }
+
     // Current line marker
-    if (d->currentLine == lineCount) {
-      p.drawPixmap(19, qRound(position.y()) - contentsY, d->currentMarker);
-      d->currentRect = QRect(19, qRound(position.y()) - contentsY,
-                             d->currentMarker.width(),
-                             d->currentMarker.height());
+    if (d->m_currentLine == lineCount) {
+      p.drawPixmap(19, qRound(position.y()) - contentsY, d->m_currentMarker);
+      d->m_currentRect = QRect(19, qRound(position.y()) - contentsY,
+                               d->m_currentMarker.width(),
+                               d->m_currentMarker.height());
     }
   }
 }
@@ -182,11 +186,11 @@ bool LineNumbersBar::event(QEvent* event)
   Q_D(const LineNumbersBar);
   if (event->type() == QEvent::ToolTip) {
     QHelpEvent *helpEvent = static_cast<QHelpEvent *>(event);
-    if (d->stopRect.contains(helpEvent->pos()))
+    if (d->m_stopRect.contains(helpEvent->pos()))
       QToolTip::showText(helpEvent->globalPos(), "Stop Here");
-    else if (d->currentRect.contains(helpEvent->pos()))
+    else if (d->m_currentRect.contains(helpEvent->pos()))
       QToolTip::showText(helpEvent->globalPos(), "Current Line" );
-    else if (d->bugRect.contains(helpEvent->pos()))
+    else if (d->m_bugRect.contains(helpEvent->pos()))
       QToolTip::showText(helpEvent->globalPos(), "Error Line" );
   }
   return QWidget::event(event);

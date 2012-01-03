@@ -93,8 +93,6 @@ private:
   Q_DECLARE_PRIVATE(Task)
 };
 
-
-
 template<typename FUNCTOR>
 class FunctorTask : public Task
 {
@@ -110,8 +108,6 @@ private:
 
 template<typename FUNCTOR>
 Task* newFunctorTask(FUNCTOR functor, QObject* parent = 0);
-
-
 
 // --
 // -- Implementation

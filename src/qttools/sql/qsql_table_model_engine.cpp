@@ -53,14 +53,14 @@ class QSqlTableModelEnginePrivate
 {
 public:
   QSqlTableModelEnginePrivate(QSqlTableModel* pModel, DatabaseManager* databaseMgr)
-    : dbMgr(databaseMgr),
-      model(pModel)
+    : m_dbMgr(databaseMgr),
+      m_model(pModel)
   {
   }
 
   QSqlIndex primaryKeyValue(const QSqlRecord& rec) const
   {
-    QSqlIndex pkeyVal = this->pkey;
+    QSqlIndex pkeyVal = m_pkey;
     for (int i = 0; i < pkeyVal.count(); ++i) {
       const QString fieldName = pkeyVal.fieldName(i);
       pkeyVal.setValue(fieldName, rec.value(fieldName));
@@ -70,29 +70,26 @@ public:
 
   QSqlDatabase database() const
   {
-    return this->dbMgr->database();
+    return m_dbMgr->database();
   }
 
   QString tableName() const
   {
-    return this->model->tableName();
+    return m_model->tableName();
   }
 
-  DatabaseManager* dbMgr;
-  QSqlTableModel* model;
-  QSqlIndex pkey;
-  QString sqlCode;
+  DatabaseManager* m_dbMgr;
+  QSqlTableModel* m_model;
+  QSqlIndex m_pkey;
+  QString m_sqlCode;
 };
 
-
-
 /*! \class QSqlTableModelEngine
- *  \brief Provides an alternative engine for SQL code generation, working as
- *         a team mate with a QSqlTableModel
+ *  \brief Provides an alternative engine for SQL code generation, working as a team mate with a
+ *         QSqlTableModel
  *
- *  QSqlTableModelEngine is a workaround for QSqlTableModel lacks concerning
- *  SQL code generation (bug with \c NULL values, error-prone SQL statements
- *  caching, ...)
+ *  QSqlTableModelEngine is a workaround for QSqlTableModel lacks concerning SQL code generation
+ *  (bug with \c NULL values, error-prone SQL statements caching, ...)
  */
 
 QSqlTableModelEngine::QSqlTableModelEngine(QSqlTableModel* model, DatabaseManager* dbMgr)
@@ -109,13 +106,13 @@ QSqlTableModelEngine::~QSqlTableModelEngine()
 QSqlTableModel* QSqlTableModelEngine::model() const
 {
   Q_D(const QSqlTableModelEngine);
-  return d->model;
+  return d->m_model;
 }
 
 void QSqlTableModelEngine::clear()
 {
   Q_D(QSqlTableModelEngine);
-  d->sqlCode.clear();
+  d->m_sqlCode.clear();
 }
 
 QSqlError QSqlTableModelEngine::lastError() const
@@ -127,7 +124,7 @@ QSqlError QSqlTableModelEngine::lastError() const
 bool QSqlTableModelEngine::exec()
 {
   Q_D(const QSqlTableModelEngine);
-  const QSqlQuery resQry = d->dbMgr->execSqlCode(d->sqlCode);
+  const QSqlQuery resQry = d->m_dbMgr->execSqlCode(d->m_sqlCode);
   this->clear();
   return resQry.lastError().type() == QSqlError::NoError;
 }
@@ -135,7 +132,7 @@ bool QSqlTableModelEngine::exec()
 QString QSqlTableModelEngine::sqlCode() const
 {
   Q_D(const QSqlTableModelEngine);
-  return d->sqlCode;
+  return d->m_sqlCode;
 }
 
 void QSqlTableModelEngine::setPrimaryKeyColumn(int col)
@@ -146,7 +143,7 @@ void QSqlTableModelEngine::setPrimaryKeyColumn(int col)
     const QSqlRecord rec = driver->record(d->tableName());
     QSqlIndex pkey;
     pkey.append(rec.field(col));
-    d->pkey = pkey;
+    d->m_pkey = pkey;
   }
 }
 
@@ -157,30 +154,30 @@ void QSqlTableModelEngine::sqlInsert(int modelRow)
   if (driver == 0)
     return;
   const QSqlRecord rowRec = this->model()->record(modelRow);
-  d->sqlCode += driver->sqlStatement(QSqlDriver::InsertStatement,
-                                     d->tableName(), rowRec, false) + ";\n\n";
+  d->m_sqlCode += driver->sqlStatement(QSqlDriver::InsertStatement,
+                                       d->tableName(), rowRec, false) + QLatin1String(";\n\n");
 }
 
 void QSqlTableModelEngine::sqlUpdate(int modelRow)
 {
   Q_D(QSqlTableModelEngine);
   const QSqlDriver* driver = d->database().driver();
-  if (driver == 0 || d->pkey.isEmpty())
+  if (driver == 0 || d->m_pkey.isEmpty())
     return;
-  const QSqlRecord rowRec = d->model->record(modelRow);
+  const QSqlRecord rowRec = d->m_model->record(modelRow);
   const QSqlIndex pKeyVal = d->primaryKeyValue(rowRec);
-  d->sqlCode +=
+  d->m_sqlCode +=
       driver->sqlStatement(QSqlDriver::UpdateStatement,
-                           d->tableName(), rowRec, false) + "\n    " +
+                           d->tableName(), rowRec, false) + QLatin1String("\n    ") +
       driver->sqlStatement(QSqlDriver::WhereStatement,
-                           d->tableName(), pKeyVal, false) + ";\n\n";
+                           d->tableName(), pKeyVal, false) + QLatin1String(";\n\n");
 }
 
 void QSqlTableModelEngine::sqlUpdateField(int modelRow, int modelColumn,
                                           const QVariant& v)
 {
   QHash<int, QVariant> fieldValues;
-  fieldValues[modelColumn] = v;
+  fieldValues.insert(modelColumn, v);
   this->sqlUpdateFields(modelRow, fieldValues);
 }
 
@@ -189,7 +186,7 @@ void QSqlTableModelEngine::sqlUpdateFields(
 {
   Q_D(QSqlTableModelEngine);
   const QSqlDriver* driver = d->database().driver();
-  if (driver == 0 || d->pkey.isEmpty())
+  if (driver == 0 || d->m_pkey.isEmpty())
     return;
   const QSqlRecord modelRec = this->model()->record(modelRow);
   QSqlRecord rec;
@@ -202,36 +199,35 @@ void QSqlTableModelEngine::sqlUpdateFields(
     rec.setValue(rec.count() - 1, fieldIt.value());
   }
   const QSqlIndex pKeyVal = d->primaryKeyValue(modelRec);
-  d->sqlCode +=
+  d->m_sqlCode +=
       driver->sqlStatement(QSqlDriver::UpdateStatement,
-                           d->tableName(), rec, false) + "\n    " +
+                           d->tableName(), rec, false) + QLatin1String("\n    ") +
       driver->sqlStatement(QSqlDriver::WhereStatement,
-                           d->tableName(), pKeyVal, false) + ";\n\n";
+                           d->tableName(), pKeyVal, false) + QLatin1String(";\n\n");
 }
 
 void QSqlTableModelEngine::sqlDelete(int modelRow)
 {
   Q_D(QSqlTableModelEngine);
   const QSqlDriver* driver = d->database().driver();
-  if (driver == 0 || d->pkey.isEmpty())
+  if (driver == 0 || d->m_pkey.isEmpty())
     return;
   const QSqlRecord rowRec = this->model()->record(modelRow);
   const QSqlIndex pKeyVal = d->primaryKeyValue(rowRec);
-  d->sqlCode +=
+  d->m_sqlCode +=
       driver->sqlStatement(QSqlDriver::DeleteStatement,
-                           d->tableName(), pKeyVal, false) + "\n    " +
+                           d->tableName(), pKeyVal, false) + QLatin1String("\n    ") +
       driver->sqlStatement(QSqlDriver::WhereStatement,
-                           d->tableName(), pKeyVal, false) + ";\n\n";
+                           d->tableName(), pKeyVal, false) + QLatin1String(";\n\n");
 }
 
-/*! \brief Add a user-defined SQL statement to the list of SQL commands that
- *         will be executed on call to exec()
- *
+/*! \brief Add a user-defined SQL statement to the list of SQL commands that will be executed on
+ *         call to exec()
  */
 void QSqlTableModelEngine::sqlStatement(const QString& sqlStmt)
 {
   Q_D(QSqlTableModelEngine);
-  d->sqlCode += sqlStmt + QLatin1String(";\n\n");
+  d->m_sqlCode += sqlStmt + QLatin1String(";\n\n");
 }
 
 } // namespace qttools

@@ -50,7 +50,6 @@ CONTAINER<QVariant> toContainerOfVariants(const CONTAINER<T>& typeds);
 
 } // namespace qttools
 
-
 // --
 // -- Implementation
 // --

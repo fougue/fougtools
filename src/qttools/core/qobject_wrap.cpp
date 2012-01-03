@@ -42,15 +42,15 @@ namespace qttools {
 /*! \class QObjectWrap
  *  \brief Wraps (adapts) any class object into a QObject instance
  *
- *  This class is useful to let Qt handle the lifecycle of a non QObject :
- *  wrap an instance to a QObject and then let its parent takes ownership
+ *  This class is useful to let Qt handle the lifecycle of a non QObject : wrap an instance to a
+ *  QObject and then let its parent takes ownership
  */
 
 /*! \fn QObjectWrap<_T_>* wrapAsQObject(_T_* object, QObject* parent)
  *  \brief Create a QObjectWrap<_T_> owning \p object
  *
- *  This is equivalent to qttools::QObjectWrap<_T_>(\p object, \p parent), but
- *  usually requires less typing
+ *  This is equivalent to qttools::QObjectWrap<_T_>(\p object, \p parent), but usually requires less
+ *  typing
  *  \relates QObjectWrap
  */
 

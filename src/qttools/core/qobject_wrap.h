@@ -59,8 +59,6 @@ private:
 template<typename T>
 QObjectWrap<T>* wrapAsQObject(T* object, QObject* parent = 0);
 
-
-
 // --
 // -- Implementation
 // --

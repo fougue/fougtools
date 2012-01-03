@@ -43,13 +43,11 @@ namespace qttools {
  *  \brief Provides a working layer for AbstractItemModels that don't support
  *         get/set of advanced roles (like Qt::DecorationRole)
  *
- *  For example this class is especially useful in combination with
- *  QSqlTableModel which only provides handling of roles Qt::DisplayRole and
- *  Qt::EditRole.\n
- *  If you want to bind an icon for an item then you have to subclass
- *  QSqlTableModel and override data() and setData().\n
- *  An ItemModelWithRoleSupport<QSqlTableModel> can be used instead of a
- *  QSqlTableModel subclass.
+ *  For example this class is especially useful in combination with QSqlTableModel which only
+ *  provides handling of roles Qt::DisplayRole and Qt::EditRole.\n
+ *  If you want to bind an icon for an item then you have to subclass QSqlTableModel and override
+ *  data() and setData().\n
+ *  An ItemModelWithRoleSupport<QSqlTableModel> can be used instead of a QSqlTableModel subclass.
  *
  */
 

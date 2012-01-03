@@ -47,9 +47,7 @@ GridNumbering::GridNumbering()
 {
 }
 
-GridNumbering::GridNumbering(Qt::Corner corner,
-                             Qt::Orientation orientation,
-                             SweepMode sweep)
+GridNumbering::GridNumbering(Qt::Corner corner, Qt::Orientation orientation, SweepMode sweep)
   : m_startCorner(corner),
     m_orientation(orientation),
     m_sweepMode(sweep)
@@ -93,11 +91,13 @@ QVector< QVector<int> > GridNumbering::gridIndexes(const GridNumbering& gridNb,
   const bool isZigZag = gridNb.sweepMode() == ZigZag;
   const Qt::Corner nbCorner = gridNb.startCorner();
   const Qt::Orientation nbOrientation = gridNb.orientation();
+
   // Create normalized grid
   QVector< QVector<int> > grid;
   grid.resize(rowCount);
   for (int row = 0; row < rowCount; ++row)
     grid[row].resize(colCount);
+
   // Fill grid (handle the orientation and sweep mode)
   const int dim1Count = nbOrientation == Qt::Horizontal ? rowCount : colCount;
   const int dim2Count = nbOrientation == Qt::Horizontal ? colCount : rowCount;
@@ -119,6 +119,7 @@ QVector< QVector<int> > GridNumbering::gridIndexes(const GridNumbering& gridNb,
     for (int row = 0; row < rowCount; ++row)
       std::reverse(grid[row].begin(), grid[row].end());
   }
+
   // Handle top-bottom side
   if (nbCorner == Qt::BottomLeftCorner || nbCorner == Qt::BottomRightCorner)
     std::reverse(grid.begin(), grid.end());

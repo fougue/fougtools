@@ -69,8 +69,6 @@ bool AbstractDatabaseModel::isLastSqlOperationOk() const
   return this->lastSqlError().type() == QSqlError::NoError;
 }
 
-
-
 DefaultDatabaseModel::DefaultDatabaseModel(DatabaseManager* dbMgr) :
   m_dbMgr(dbMgr)
 {

@@ -45,8 +45,7 @@
 namespace qttools {
 
 /*! \class DatabaseConnectionSettings
- *  \brief Settings to connect to a database. Settings can be loaded and saved
- *         from/to a QSettings
+ *  \brief Settings to connect to a database. Settings can be loaded and saved from/to a QSettings
  *
  */
 
@@ -126,13 +125,11 @@ QString DatabaseConnectionSettings::password() const
 }
 
 /*! \brief Load settings from the persistent storage
- *  \param passwordCipher Encrypt/decrypt algorithm used to decrypt the
- *         password. If \c null then the default password is returned (see
- *         parameter \p defValues)
+ *  \param passwordCipher Encrypt/decrypt algorithm used to decrypt the password. If \c null then
+ *         the default password is returned (see parameter \p defValues)
  *  \param settingsGroup Group to be used when query persistent settings (\sa
  *         QSettings::beginGroup() )
- *  \param defValues Default values when all or some persistent settings could
- *         not be retrieved
+ *  \param defValues Default values when all or some persistent settings could not be retrieved
  */
 void DatabaseConnectionSettings::load(const AbstractCipher* passwordCipher,
                                       const QString& settingsGroup,
@@ -143,13 +140,16 @@ void DatabaseConnectionSettings::load(const AbstractCipher* passwordCipher,
   const int defPort = defValues.value("port").toInt();
   const QString defUser = defValues.value("user").toString();
   const QString defPwd = defValues.value("password").toString();
+
   QSettings settings;
   if (!settingsGroup.isEmpty())
     settings.beginGroup(settingsGroup);
+
   this->setHost(settings.value("host", defHost).toString());
   this->setDatabaseName(settings.value("name", defDbName).toString());
   this->setPort(settings.value("port", defPort).toInt());
   this->setUserName(settings.value("user", defUser).toString());
+
   if (passwordCipher != 0 && settings.contains("password")) {
     const QByteArray decryptedPwd =
         passwordCipher->decrypted(settings.value("password").toByteArray());
@@ -157,15 +157,15 @@ void DatabaseConnectionSettings::load(const AbstractCipher* passwordCipher,
   }
   else
     this->setPassword(defPwd);
+
   if (!settingsGroup.isEmpty())
     settings.endGroup();
 }
 
 /*! \brief Write settings to persistent storage
- *  \param passwordCipher Encrypt/decrypt algorithm used to encrypt the
- *         password. If \c null then an empty password is stored. Otherwise
- *         the password() is reprensented as a UTF-8 byte array and passed to
- *         to AbstractCipher::encrypted()
+ *  \param passwordCipher Encrypt/decrypt algorithm used to encrypt the password. If \c null then an
+ *         empty password is stored. Otherwise the password() is reprensented as a UTF-8 byte array
+ *         and passed to to AbstractCipher::encrypted()
  *  \param settingsGroup Group to be used when specifying persistent settings
  *         (\sa QSettings::beginGroup())
  */
@@ -173,18 +173,22 @@ void DatabaseConnectionSettings::write(const AbstractCipher* passwordCipher,
                                        const QString& settingsGroup) const
 {
   QSettings settings;
+
   if (!settingsGroup.isEmpty())
     settings.beginGroup(settingsGroup);
+
   settings.setValue("host", this->host());
   settings.setValue("name", this->databaseName());
   settings.setValue("port", this->port());
   settings.setValue("user", this->userName());
+
   if (passwordCipher != 0) {
     const QByteArray pwd = this->password().toUtf8();
     settings.setValue("password", passwordCipher->encrypted(pwd));
   }
   else
     settings.setValue("password", QString());
+
   if (!settingsGroup.isEmpty())
     settings.endGroup();
 }
@@ -194,7 +198,9 @@ void DatabaseConnectionSettings::write(const AbstractCipher* passwordCipher,
  */
 void DatabaseConnectionSettings::configureDatabase(QSqlDatabase* db) const
 {
-  assert(db != 0);
+  if (db == 0)
+    return;
+
   db->setDatabaseName(this->databaseName());
   db->setHostName(this->host());
   db->setPort(this->port());

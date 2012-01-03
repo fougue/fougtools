@@ -43,8 +43,7 @@
 
 namespace qttools {
 
-/*! \brief Move position of \p widget so it is displayed stuck to the right of
- *         \p nextTo
+/*! \brief Move position of \p widget so it is displayed stuck to the right of \p nextTo
  */
 void moveWidgetRightTo(QWidget* widget, const QWidget* nextTo)
 {
@@ -52,8 +51,7 @@ void moveWidgetRightTo(QWidget* widget, const QWidget* nextTo)
   widget->move(nextTo->mapToGlobal(QPoint(frameGeom.width(), 0)));
 }
 
-/*! \brief Move position of \p widget so it is displayed stuck to the left of
- *         \p nextTo
+/*! \brief Move position of \p widget so it is displayed stuck to the left of \p nextTo
  */
 void moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo)
 {
@@ -70,11 +68,9 @@ QPair<int, int> horizAndVertScrollValue(const QAbstractScrollArea* area)
                    area->verticalScrollBar()->value());
 }
 
-/*! \brief Set the current slide positions of the horizontal and vertical
- *         scroll bars to \p values
+/*! \brief Set the current slide positions of the horizontal and vertical scroll bars to \p values
  */
-void setHorizAndVertScrollValue(QAbstractScrollArea* area,
-                                const QPair<int, int>& values)
+void setHorizAndVertScrollValue(QAbstractScrollArea* area, const QPair<int, int>& values)
 {
   area->horizontalScrollBar()->setValue(values.first);
   area->verticalScrollBar()->setValue(values.second);

@@ -56,8 +56,6 @@ private:
 };
 } // namespace qttools
 
-
-
 // --
 // -- Implementation
 // --
@@ -72,8 +70,8 @@ ItemModelWithRoleSupport<ITEM_MODEL>::ItemModelWithRoleSupport(QObject* parent)
 template<typename ITEM_MODEL>
 QVariant ItemModelWithRoleSupport<ITEM_MODEL>::data(const QModelIndex& idx, int role) const
 {
-  if (role != Qt::DisplayRole && role != Qt::EditRole &&
-      m_data.contains(idx) && m_data[idx].contains(role))
+  if (role != Qt::DisplayRole && role != Qt::EditRole
+      && m_data.contains(idx) && m_data[idx].contains(role))
     return m_data[idx][role];
   return ITEM_MODEL::data(idx, role);
 }

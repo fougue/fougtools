@@ -55,8 +55,6 @@ PARENT_TYPE* findParent(QObject* object);
 
 } // namespace qttools
 
-
-
 // --
 // -- Implementation
 // --

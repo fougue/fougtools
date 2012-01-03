@@ -50,26 +50,25 @@ QLocale::MeasurementSystem currMeasurementSys()
 double toMmValue(double v, qttools::LengthDoubleSpinBox::MetricUnit unit)
 {
   switch (unit) {
-  case qttools::LengthDoubleSpinBox::MeterUnit :
+  case qttools::LengthDoubleSpinBox::MeterUnit:
     return v * 1000.;
-  case qttools::LengthDoubleSpinBox::CentimeterUnit :
+  case qttools::LengthDoubleSpinBox::CentimeterUnit:
     return v * 10.;
-  case qttools::LengthDoubleSpinBox::MillimeterUnit :
+  case qttools::LengthDoubleSpinBox::MillimeterUnit:
     return v;
   default:
     return v;
   }
 }
 
-double toMmValue(double v,
-                 qttools::LengthDoubleSpinBox::ImperialUnit unit)
+double toMmValue(double v, qttools::LengthDoubleSpinBox::ImperialUnit unit)
 {
   switch (unit) {
-  case qttools::LengthDoubleSpinBox::InchUnit :
+  case qttools::LengthDoubleSpinBox::InchUnit:
     return v * 25.4;
-  case qttools::LengthDoubleSpinBox::FootUnit :
+  case qttools::LengthDoubleSpinBox::FootUnit:
     return (v * 25.4) * 12.;
-  case qttools::LengthDoubleSpinBox::YardUnit :
+  case qttools::LengthDoubleSpinBox::YardUnit:
     return (v * 25.4) * 36.;
   default:
     return v;
@@ -78,36 +77,64 @@ double toMmValue(double v,
 
 } // Anonymous namespace
 
-
-
 namespace qttools {
 
+class LengthDoubleSpinBoxPrivate
+{
+public:
+  LengthDoubleSpinBoxPrivate();
+
+  void onValueChanged(double v);
+
+  double m_orgLengthMm;
+  bool m_valueHasChanged;
+  bool m_isInternalUpdateContext;
+};
+
+LengthDoubleSpinBoxPrivate::LengthDoubleSpinBoxPrivate()
+  : m_orgLengthMm(0.),
+    m_valueHasChanged(false),
+    m_isInternalUpdateContext(false)
+{
+}
+
+void LengthDoubleSpinBoxPrivate::onValueChanged(double v)
+{
+  Q_UNUSED(v);
+  if (!m_isInternalUpdateContext)
+    m_valueHasChanged = true;
+}
+
 /*! \class LengthDoubleSpinBox
- *  \brief Provides a QDoubleSpinBox adapted to the interface of
- *         AbstractLengthEditor
+ *  \brief Provides a QDoubleSpinBox adapted to the interface of AbstractLengthEditor
  *
  */
 
 LengthDoubleSpinBox::LengthDoubleSpinBox(QWidget* parent)
   : QDoubleSpinBox(parent),
-    m_orgLengthMm(0.),
-    m_valueHasChanged(false),
-    m_isInternalUpdateContext(false)
+    d_ptr(new LengthDoubleSpinBoxPrivate)
 {
   this->updateEditor(::currMeasurementSys());
   connect(this, SIGNAL(valueChanged(double)), this, SLOT(onValueChanged(double)));
 }
 
+LengthDoubleSpinBox::~LengthDoubleSpinBox()
+{
+  delete d_ptr;
+}
+
 double LengthDoubleSpinBox::length() const
 {
-  if (!m_valueHasChanged)
-    return m_orgLengthMm;
+  Q_D(const LengthDoubleSpinBox);
+
+  if (!d->m_valueHasChanged)
+    return d->m_orgLengthMm;
 
   const double v = this->value();
   switch (::currMeasurementSys()) {
-  case QLocale::MetricSystem :
+  case QLocale::MetricSystem:
     return ::toMmValue(v, this->preferredMetricUnit());
-  case QLocale::ImperialSystem :
+  case QLocale::ImperialSystem:
     return ::toMmValue(v, this->preferredImperialUnit());
   }
   return 0.;
@@ -115,10 +142,12 @@ double LengthDoubleSpinBox::length() const
 
 void LengthDoubleSpinBox::setLength(double v)
 {
-  m_orgLengthMm = v;
-  m_valueHasChanged = false;
+  Q_D(LengthDoubleSpinBox);
 
-  cpp::ScopedBool sb(m_isInternalUpdateContext, true); Q_UNUSED(sb);
+  d->m_orgLengthMm = v;
+  d->m_valueHasChanged = false;
+
+  cpp::ScopedBool sb(d->m_isInternalUpdateContext, true); Q_UNUSED(sb);
   switch (::currMeasurementSys()) {
   case QLocale::MetricSystem:
     this->setValue(AbstractLengthEditor::asMetricLength(v, this->preferredMetricUnit()));
@@ -131,33 +160,30 @@ void LengthDoubleSpinBox::setLength(double v)
 
 void LengthDoubleSpinBox::updateEditor(QLocale::MeasurementSystem newSys)
 {
-  cpp::ScopedBool sb(m_isInternalUpdateContext, true); Q_UNUSED(sb);
+  Q_D(LengthDoubleSpinBox);
+
+  cpp::ScopedBool sb(d->m_isInternalUpdateContext, true); Q_UNUSED(sb);
+
   const double oldLengthMm = this->length();
   double newLengthUnit = 0.;
   QString unitStr;
   switch (newSys) {
-  case QLocale::MetricSystem : {
+  case QLocale::MetricSystem: {
     unitStr = AbstractLengthEditor::unitText(this->preferredMetricUnit());
-    newLengthUnit = AbstractLengthEditor::asMetricLength(
-          oldLengthMm, this->preferredMetricUnit());
+    newLengthUnit = AbstractLengthEditor::asMetricLength(oldLengthMm, this->preferredMetricUnit());
     break;
   }
-  case QLocale::ImperialSystem : {
+  case QLocale::ImperialSystem: {
     unitStr = AbstractLengthEditor::unitText(this->preferredImperialUnit());
-    newLengthUnit = AbstractLengthEditor::asImperialLength(
-          oldLengthMm, this->preferredImperialUnit());
+    newLengthUnit = AbstractLengthEditor::asImperialLength(oldLengthMm, this->preferredImperialUnit());
     break;
   }
   }
+
   this->setSuffix(unitStr);
   this->setValue(newLengthUnit);
 }
 
-void LengthDoubleSpinBox::onValueChanged(double v)
-{
-  Q_UNUSED(v);
-  if (!m_isInternalUpdateContext)
-    m_valueHasChanged = true;
-}
-
 } // namespace qttools
+
+#include "moc_length_double_spinbox.cpp"

@@ -100,7 +100,6 @@ QTTOOLS_CORE_EXPORT Log warningLog();
 QTTOOLS_CORE_EXPORT Log criticalLog();
 QTTOOLS_CORE_EXPORT Log fatalLog();
 
-
 // --
 // -- class AbstractLogHandler
 // --

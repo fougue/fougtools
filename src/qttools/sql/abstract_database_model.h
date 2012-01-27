@@ -51,7 +51,7 @@ public:
   virtual void reload() = 0;
   virtual bool submitAll() = 0;
   virtual void revertAll() = 0;
-  virtual DatabaseManager* databaseManager() const = 0;
+  virtual DatabaseManager* databaseManager() const;
   virtual QSqlError lastSqlError() const = 0;
   virtual bool isLastSqlOperationOk() const;
 };
@@ -59,7 +59,7 @@ public:
 class QTTOOLS_SQL_EXPORT DefaultDatabaseModel : public AbstractDatabaseModel
 {
 public:
-  DefaultDatabaseModel(DatabaseManager* dbMgr);
+  DefaultDatabaseModel(DatabaseManager* dbMgr = 0);
 
   void reload();
   bool submitAll();

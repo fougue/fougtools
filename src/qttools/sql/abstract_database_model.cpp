@@ -56,21 +56,22 @@ namespace qttools {
  *  \brief Revert all cached changes
  */
 
-/*! \fn QSqlDatabase AbstractDatabaseModel::database() const
- *  \brief Database connection used
- */
-
 /*! \fn QSqlError AbstractDatabaseModel::lastSqlError() const
  *  \brief Error reported on the last call of submitAll()
  */
+
+DatabaseManager *AbstractDatabaseModel::databaseManager() const
+{
+  return 0;
+}
 
 bool AbstractDatabaseModel::isLastSqlOperationOk() const
 {
   return this->lastSqlError().type() == QSqlError::NoError;
 }
 
-DefaultDatabaseModel::DefaultDatabaseModel(DatabaseManager* dbMgr) :
-  m_dbMgr(dbMgr)
+DefaultDatabaseModel::DefaultDatabaseModel(DatabaseManager* dbMgr)
+    : m_dbMgr(dbMgr)
 {
 }
 

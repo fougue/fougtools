@@ -40,8 +40,6 @@ include(../../3rdparty/occ.pri)
 INCLUDEPATH *= $$BOOST_ROOT
 INCLUDEPATH *= $$PWD/..
 
-TEMPLATE = lib
-#CONFIG  *= staticlib
 HEADERS += $$PWD/io.h \
            $$PWD/occtools.h \
            $$PWD/ais_text.h \
@@ -68,4 +66,7 @@ SOURCES += $$PWD/io.cpp \
            $$PWD/ui/view_controller.cpp \
            $$PWD/ui/view_controller_delegate.cpp
 
-TARGET   = occtools$$TARGET_SUFFIX
+LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
+        -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim  -lTKService \
+        -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -lTKSTL -lTKTopAlgo \
+        -lTKV2d -lTKV3d -lTKXSBase

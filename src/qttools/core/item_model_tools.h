@@ -62,8 +62,7 @@ bool validRows(const QAbstractItemModel* model,
                const QModelIndex& parent = QModelIndex());
 
 QTTOOLS_CORE_EXPORT
-int findDataInRow(const QAbstractItemModel* model, int col,
-                  const QVariant& value);
+int findDataInRow(const QAbstractItemModel* model, int col, const QVariant& value);
 
 QTTOOLS_CORE_EXPORT
 QVariant tableModelData(const QAbstractItemModel* model,
@@ -72,18 +71,45 @@ QVariant tableModelData(const QAbstractItemModel* model,
 QTTOOLS_CORE_EXPORT
 bool isRowScheduledForDeletion(const QAbstractItemModel* model, int row);
 
+template<typename INT_CONTAINER>
+void removeRows(QAbstractItemModel* model, const INT_CONTAINER& rows);
+
+} // namespace qttools
+
 // --
 // -- Implementation
 // --
+
+#include <algorithm>
+#include <QtCore/QAbstractItemModel>
+
+namespace qttools {
 
 template<typename INT_CONTAINER>
 bool validRows(const QAbstractItemModel* model,
                const INT_CONTAINER& rows, const QModelIndex& parent)
 {
-  foreach (int row, rows)
+  foreach (int row, rows) {
     if (!qttools::isValidRow(model, row, parent))
       return false;
+  }
   return !rows.isEmpty();
+}
+
+template<typename INT_CONTAINER>
+void removeRows(QAbstractItemModel* model, const INT_CONTAINER& rows)
+{
+  if (model == 0)
+      return;
+  // Delete rows by descending order
+  QVector<int> descRows;
+  for (typename INT_CONTAINER::const_iterator it = rows.begin(); it != rows.end(); ++it) {
+    if (qttools::isValidRow(model, *it))
+      descRows.append(*it);
+  }
+  std::sort(descRows.begin(), descRows.end(), std::greater<int>());
+  foreach (int row, descRows)
+    model->removeRow(row);
 }
 
 } // namespace qttools

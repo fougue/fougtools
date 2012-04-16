@@ -39,7 +39,7 @@
 #define QTTOOLS_QML_TOOLS_H
 
 #include "qttools/gui/gui.h"
-#include <QObject>
+#include <QtCore/QObject>
 class QDeclarativeContext;
 
 namespace qttools {

@@ -64,8 +64,12 @@ QSqlError SqlQueryError::sqlError() const
 
 QSqlQuery execSqlCode(const QString& sqlCode, const QSqlDatabase& db)
 {
+  if (sqlCode.trimmed().isEmpty())
+    return QSqlQuery(sqlCode, db);
+
   if (!db.isValid() || !db.isOpen())
     throw SqlQueryError(QSqlError("db is not valid or not open", "", QSqlError::ConnectionError));
+
   QSqlQuery qry = db.exec(sqlCode);
   qttools::throwIfError(qry);
   return qry;

@@ -48,6 +48,7 @@ HEADERS += \
     $$PWD/qobject_wrap.h \
     $$PWD/qstring_boost_hash.h \
     $$PWD/qvariant_tools.h \
+    $$PWD/runtime_error.h \
     $$PWD/scoped_connection.h \
     $$PWD/scoped_model_reset.h \
     $$PWD/singleton.h \
@@ -68,6 +69,7 @@ SOURCES += \
     $$PWD/qlocale_tools.cpp \
     $$PWD/qobject_tools.cpp \
     $$PWD/qobject_wrap.cpp \
+    $$PWD/runtime_error.cpp \
     $$PWD/qstring_boost_hash.cpp \
     $$PWD/scoped_connection.cpp \
     $$PWD/scoped_model_reset.cpp \

@@ -35,10 +35,48 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/qstring_boost_hash.h"
-#include <QtCore/QHash>
+#ifndef QTTOOLS_QSTRING_TOOLS_H
+#define QTTOOLS_QSTRING_TOOLS_H
 
-std::size_t hash_value(QString const& str)
+#include "qttools/core/core.h"
+#include <QtCore/QString>
+
+namespace qttools {
+
+struct QTTOOLS_CORE_EXPORT QStringLocalEqualTo
 {
-  return qHash(str);
-}
+  bool operator()(const QString& lhs, const QString& rhs) const;
+};
+
+struct QTTOOLS_CORE_EXPORT QStringLocalNotEqualTo
+{
+  bool operator()(const QString& lhs, const QString& rhs) const;
+};
+
+struct QTTOOLS_CORE_EXPORT QStringLocalAwareLess
+{
+  bool operator()(const QString& lhs, const QString& rhs) const;
+};
+
+struct QTTOOLS_CORE_EXPORT QStringLocalAwareLessEqual
+{
+  bool operator()(const QString& lhs, const QString& rhs) const;
+};
+
+struct QTTOOLS_CORE_EXPORT QStringLocalAwareGreater
+{
+  bool operator()(const QString& lhs, const QString& rhs) const;
+};
+
+struct QTTOOLS_CORE_EXPORT QStringLocalAwareGreaterEqual
+{
+  bool operator()(const QString& lhs, const QString& rhs) const;
+};
+
+} // namespace qttools
+
+// Implementation of Boost's hash function for QString objects
+QTTOOLS_CORE_EXPORT
+std::size_t hash_value(QString const& str);
+
+#endif // QTTOOLS_QSTRING_TOOLS_H

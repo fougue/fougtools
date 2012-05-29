@@ -56,6 +56,7 @@ HEADERS += \
     $$PWD/item_view_tools.h \
     $$PWD/indexed_selection_model.h \
     $$PWD/message_dialog.h \
+    $$PWD/tree_combo_box.h \
     $$PWD/qml_tools.h
 
 SOURCES += \
@@ -72,6 +73,7 @@ SOURCES += \
     $$PWD/item_view_tools.cpp \
     $$PWD/indexed_selection_model.cpp \
     $$PWD/message_dialog.cpp \
+    $$PWD/tree_combo_box.cpp \
     $$PWD/qml_tools.cpp
 
 HEADERS += $$PWD/../core/task.h

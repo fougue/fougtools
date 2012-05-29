@@ -41,9 +41,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QCursor>
 
-namespace {
-
-Qt::CursorShape toQtCursorShape(int shape)
+static Qt::CursorShape toQtCursorShape(int shape)
 {
   switch (shape) {
   case Qt::ArrowCursor: return Qt::ArrowCursor;
@@ -73,8 +71,6 @@ Qt::CursorShape toQtCursorShape(int shape)
   }
   return Qt::ArrowCursor;
 }
-
-} // Anonymous namespace
 
 namespace qttools {
 

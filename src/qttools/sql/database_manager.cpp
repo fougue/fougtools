@@ -123,8 +123,7 @@ QSqlDatabase DatabaseManager::createDatabase(const QThread* inThread)
   return newDb;
 }
 
-QSqlQuery DatabaseManager::execSqlCode(const QString& sqlCode,
-                                       const QThread* inThread) const
+QSqlQuery DatabaseManager::execSqlCode(const QString& sqlCode, const QThread* inThread) const
 {
   return qttools::execSqlCode(sqlCode, this->database(inThread));
 }

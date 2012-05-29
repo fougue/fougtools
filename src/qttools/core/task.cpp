@@ -49,13 +49,6 @@
 
 #include <QtCore/QtDebug>
 
-namespace {
-
-bool infiniteLoopPredicate()
-{
-  return true;
-}
-
 template<typename LOOP_PREDICATE>
 void waitFor(LOOP_PREDICATE loopPredicate, int maxTime = -1)
 {
@@ -67,8 +60,6 @@ void waitFor(LOOP_PREDICATE loopPredicate, int maxTime = -1)
   while (loopPredicate() && waitForStopTime < maxTime)
     waitForStopTime += time.elapsed() - waitForStopTime;
 }
-
-} // Anonymous namespace
 
 namespace qttools {
 
@@ -114,8 +105,7 @@ Task::Task(QObject* parent)
 Task::~Task()
 {
   Q_D(Task);
-  if (this->thread() != 0 &&
-      this->isBoundToThread() && this->autoDeleteBoundThread())
+  if (this->thread() != 0 && this->isBoundToThread() && this->autoDeleteBoundThread())
     delete this->thread();
   delete d;
 }
@@ -161,11 +151,13 @@ void Task::bindToThread(QThread* thread)
   Q_D(Task);
   if (thread == 0)
     return;
+
   if (this->isBoundToThread()) {
     disconnect(this->thread(), SIGNAL(started()), this, SLOT(exec()));
     disconnect(this, SIGNAL(finished()), this->thread(), SLOT(quit()));
     disconnect(this, SIGNAL(stopped()), this->thread(), SLOT(quit()));
   }
+
   this->moveToThread(thread);
   d->m_isBoundToThread = true;
   connect(thread, SIGNAL(started()), this, SLOT(exec()), Qt::UniqueConnection);
@@ -195,6 +187,7 @@ void Task::exec()
     }
     ++currLoop;
   } // end while()
+
   if (this->isWaitingStop()) {
     this->acknowledgeStop();
   }
@@ -219,18 +212,20 @@ void Task::asynchronousStop()
 void Task::stop(int maxTime)
 {
   QThread* taskThread = this->thread();
+
   // Try to stop the task, wait until stop is acknowledged or timed out
   this->asynchronousStop();
+
   // Wait for task stop
   if (this->isBoundToThread()) {
     ::waitFor(cpp::bind(std::mem_fun(&Task::isRunning), this), maxTime);
     taskThread->quit();
     ::waitFor(cpp::bind(std::mem_fun(&QThread::isRunning), taskThread), maxTime);
   }
+
   // Handle the case when normal task stop fails
   if (this->isBoundToThread() && taskThread->isRunning()) {
-    qDebug() << "Task::stop():" << this
-             << "asynchronous stop failed, task is still running";
+    qDebug() << "Task::stop():" << this << "asynchronous stop failed, task is still running";
     // Task asynchronous stop failed, try to exit the thread's event loop
     taskThread->exit(-1);
     if (!taskThread->isRunning()) {

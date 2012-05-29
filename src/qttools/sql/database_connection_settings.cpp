@@ -186,8 +186,9 @@ void DatabaseConnectionSettings::write(const AbstractCipher* passwordCipher,
     const QByteArray pwd = this->password().toUtf8();
     settings.setValue("password", passwordCipher->encrypted(pwd));
   }
-  else
+  else {
     settings.setValue("password", QString());
+  }
 
   if (!settingsGroup.isEmpty())
     settings.endGroup();

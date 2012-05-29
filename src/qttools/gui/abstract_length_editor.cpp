@@ -39,14 +39,10 @@
 
 #include "qttools/gui/length_editor_manager.h"
 
-namespace {
-
-QLocale::MeasurementSystem currMeasurementSys()
+static QLocale::MeasurementSystem currMeasurementSys()
 {
   return qttools::LengthEditorManager::globalInstance()->measurementSytem();
 }
-
-} // Anonymous namespace
 
 namespace qttools {
 

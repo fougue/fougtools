@@ -40,14 +40,12 @@
 #include "cpptools/scoped_value.h"
 #include "qttools/gui/length_editor_manager.h"
 
-namespace {
-
-QLocale::MeasurementSystem currMeasurementSys()
+static QLocale::MeasurementSystem currMeasurementSys()
 {
   return qttools::LengthEditorManager::globalInstance()->measurementSytem();
 }
 
-double toMmValue(double v, qttools::LengthDoubleSpinBox::MetricUnit unit)
+static double toMmValue(double v, qttools::LengthDoubleSpinBox::MetricUnit unit)
 {
   switch (unit) {
   case qttools::LengthDoubleSpinBox::MeterUnit:
@@ -61,7 +59,7 @@ double toMmValue(double v, qttools::LengthDoubleSpinBox::MetricUnit unit)
   }
 }
 
-double toMmValue(double v, qttools::LengthDoubleSpinBox::ImperialUnit unit)
+static double toMmValue(double v, qttools::LengthDoubleSpinBox::ImperialUnit unit)
 {
   switch (unit) {
   case qttools::LengthDoubleSpinBox::InchUnit:
@@ -74,8 +72,6 @@ double toMmValue(double v, qttools::LengthDoubleSpinBox::ImperialUnit unit)
     return v;
   }
 }
-
-} // Anonymous namespace
 
 namespace qttools {
 

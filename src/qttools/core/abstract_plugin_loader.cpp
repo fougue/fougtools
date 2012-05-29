@@ -46,14 +46,10 @@
 
 #include <QtCore/QtDebug>
 
-namespace {
-
-bool isLibrary(const QString& path)
+static bool isLibrary(const QString& path)
 {
   return path.endsWith(QLatin1String(".so")) || path.endsWith(QLatin1String(".dll"));
 }
-
-} // Anonymous namespace
 
 namespace qttools {
 

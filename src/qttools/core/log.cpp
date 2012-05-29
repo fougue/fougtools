@@ -48,7 +48,9 @@ QList<qttools::AbstractLogHandler*> globalLogHandlers;
 typedef QPair<qttools::Log::MessageType, QString> PendingLogMessage;
 QLinkedList<PendingLogMessage> globalPendingMessages;
 
-void handleLogMessage(qttools::Log::MessageType msgType, const QString& msg)
+} // Anonymous namespace
+
+static void handleLogMessage(qttools::Log::MessageType msgType, const QString& msg)
 {
   if (globalLogHandlers.isEmpty())
     globalPendingMessages.append(qMakePair(msgType, msg));
@@ -56,7 +58,6 @@ void handleLogMessage(qttools::Log::MessageType msgType, const QString& msg)
     logHandler->handle(msgType, msg );
 }
 
-} // Anonymous namespace
 
 namespace qttools {
 

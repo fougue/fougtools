@@ -44,6 +44,7 @@ HEADERS += \
     $$PWD/line_edit_with_auto_tool_tip.h \
     $$PWD/line_numbers_bar.h \
     $$PWD/qcombo_box_current_item_keeper.h \
+    $$PWD/qstandard_item_explorer.h \
     $$PWD/read_only_item_delegate.h \
     $$PWD/sql_enum_item_delegate.h \
     $$PWD/wait_dialog.h \
@@ -64,6 +65,7 @@ SOURCES += \
     $$PWD/line_edit_with_auto_tool_tip.cpp \
     $$PWD/line_numbers_bar.cpp \
     $$PWD/qcombo_box_current_item_keeper.cpp \
+    $$PWD/qstandard_item_explorer.cpp \
     $$PWD/read_only_item_delegate.cpp \
     $$PWD/wait_dialog.cpp \
     $$PWD/widget_tools.cpp \

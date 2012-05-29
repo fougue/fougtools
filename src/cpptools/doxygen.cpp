@@ -36,23 +36,30 @@
 ****************************************************************************/
 
 namespace cpp {
-  /*! \class ScopedValue
-   *  \brief Allows to change the value of a variable during the current scope,
-   *         upon destruction, the original value is restored
-   *
-   */
 
-  /*! \class Binder
-   *  \brief Function object adaptor used to transform an adaptable unary
-   *         function into an adaptable parameterless function
-   *
-   *  Specifically, if \c f is an object of class \c Binder<AdaptableUnaryFunction>,
-   *  then \c f() returns \c F(c), where \c F is an object of class
-   *  \c AdaptableUnaryFunction and where \c c is a constant. Both \c F and \c c
-   *  are passed as arguments to binder's constructor.
-   *
-   *  The easiest way to create a cpp::Binder is not to call the constructor
-   *  explicitly, but instead to use the helper function cpp::bind.
-   *
-   */
+/*! \class AbstractTreeBfsExplorer
+ *  \brief Abstract base class providing breadth-first search (BFS) exploration of trees
+ *
+ */
+
+/*! \class ScopedValue
+ *  \brief Allows to change the value of a variable during the current scope,
+ *         upon destruction, the original value is restored
+ *
+ */
+
+/*! \class Binder
+ *  \brief Function object adaptor used to transform an adaptable unary
+ *         function into an adaptable parameterless function
+ *
+ *  Specifically, if \c f is an object of class \c Binder<AdaptableUnaryFunction>,
+ *  then \c f() returns \c F(c), where \c F is an object of class
+ *  \c AdaptableUnaryFunction and where \c c is a constant. Both \c F and \c c
+ *  are passed as arguments to binder's constructor.
+ *
+ *  The easiest way to create a cpp::Binder is not to call the constructor
+ *  explicitly, but instead to use the helper function cpp::bind.
+ *
+ */
+
 } // namespace cpp

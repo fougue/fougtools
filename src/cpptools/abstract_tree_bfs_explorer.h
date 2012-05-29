@@ -48,22 +48,22 @@ class AbstractTreeBfsExplorer
 public:
   AbstractTreeBfsExplorer();
 
-  void begin(const NODE* node = static_cast<const NODE*>(0));
+  void begin(NODE* node = static_cast<NODE*>(0));
   void goNext();
   bool atEnd() const;
 
-  const NODE* current() const;
+  NODE* current() const;
   unsigned depth() const;
 
 protected:
   virtual bool isCurrentDeeper(const NODE* previous) const = 0;
-  virtual void enqueueNodeChildren(const NODE* parentNode) = 0;
+  virtual void enqueueNodeChildren(NODE* parentNode) = 0;
 
-  void enqueueNode(const NODE* node);
+  void enqueueNode(NODE* node);
 
 private:
-  const NODE* m_current;
-  std::queue<const NODE*> m_levelNodes;
+  NODE* m_current;
+  std::queue<NODE*> m_levelNodes;
   unsigned m_depth;
 };
 
@@ -73,20 +73,20 @@ private:
 
 template<class NODE>
 AbstractTreeBfsExplorer<NODE>::AbstractTreeBfsExplorer()
-  : m_current(static_cast<const NODE*>(0)),
+  : m_current(static_cast<NODE*>(0)),
     m_depth(0)
 {
 }
 
 template<class NODE>
-void AbstractTreeBfsExplorer<NODE>::begin(const NODE* node)
+void AbstractTreeBfsExplorer<NODE>::begin(NODE* node)
 {
   while (!m_levelNodes.empty())
     m_levelNodes.pop();
-  m_current = static_cast<const NODE*>(0);
+  m_current = static_cast<NODE*>(0);
   m_depth = 0;
 
-  if (node == static_cast<const NODE*>(0))
+  if (node == static_cast<NODE*>(0))
     this->enqueueNodeChildren(node);
   else
     this->enqueueNode(node);
@@ -98,7 +98,7 @@ template<class NODE>
 void AbstractTreeBfsExplorer<NODE>::goNext()
 {
   if (m_levelNodes.empty()) {
-    m_current = static_cast<const NODE*>(0);
+    m_current = static_cast<NODE*>(0);
     return;
   }
 
@@ -122,7 +122,7 @@ bool AbstractTreeBfsExplorer<NODE>::atEnd() const
 }
 
 template<class NODE>
-const NODE* AbstractTreeBfsExplorer<NODE>::current() const
+NODE* AbstractTreeBfsExplorer<NODE>::current() const
 {
   return m_current;
 }
@@ -134,7 +134,7 @@ unsigned AbstractTreeBfsExplorer<NODE>::depth() const
 }
 
 template<class NODE>
-void AbstractTreeBfsExplorer<NODE>::enqueueNode(const NODE* node)
+void AbstractTreeBfsExplorer<NODE>::enqueueNode(NODE* node)
 {
   m_levelNodes.push(node);
 }

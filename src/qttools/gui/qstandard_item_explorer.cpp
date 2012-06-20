@@ -38,8 +38,23 @@
 #include "qttools/gui/qstandard_item_explorer.h"
 
 #include <QtGui/QStandardItem>
+#include <QtGui/QStandardItemModel>
 
 namespace qttools {
+
+QStandardItemExplorer::QStandardItemExplorer()
+{
+}
+
+QStandardItemExplorer::QStandardItemExplorer(QStandardItem *rootItem)
+{
+  this->begin(rootItem);
+}
+
+QStandardItemExplorer::QStandardItemExplorer(QStandardItemModel *model)
+{
+  this->begin(model->invisibleRootItem());
+}
 
 bool QStandardItemExplorer::isCurrentDeeper(const QStandardItem *previous) const
 {

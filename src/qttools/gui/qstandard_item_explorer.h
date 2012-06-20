@@ -41,12 +41,18 @@
 #include "qttools/gui/gui.h"
 
 #include "cpptools/abstract_tree_bfs_explorer.h"
+class QStandardItemModel;
 class QStandardItem;
 
 namespace qttools {
 
 class QTTOOLS_GUI_EXPORT QStandardItemExplorer : public cpp::AbstractTreeBfsExplorer<QStandardItem>
 {
+public:
+  QStandardItemExplorer();
+  QStandardItemExplorer(QStandardItem* rootItem);
+  QStandardItemExplorer(QStandardItemModel* model);
+
 protected:
   bool isCurrentDeeper(const QStandardItem* previous) const;
   void enqueueNodeChildren(QStandardItem* parentItem);

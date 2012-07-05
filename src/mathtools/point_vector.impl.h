@@ -63,28 +63,28 @@ Point<_T_, _S_>& Point<_T_, _S_>::operator=(const Self_t & other)
   return *this;
 }
 
-//! Synonym to distL2().
+//! Synonym to distL2()
 template<typename _T_, unsigned _S_>
 _T_ Point<_T_, _S_>::dist(const Self_t& other) const
 {
   return this->distL2(other);
 }
 
-//! Synonym to distL2Square().
+//! Synonym to distL2Square()
 template<typename _T_, unsigned _S_>
 _T_ Point<_T_, _S_>::distSquare(const Self_t& other) const
 {
   return this->distL2Square(other);
 }
 
-//! Euclidian distance.
+//! Euclidian distance
 template<typename _T_, unsigned _S_>
 _T_ Point<_T_, _S_>::distL2(const Self_t& other) const
 {
   return static_cast<_T_>(std::sqrt(this->distL2Square(other)));
 }
 
-//! Squared euclidian distance.
+//! Squared euclidian distance
 template<typename _T_, unsigned _S_>
 _T_ Point<_T_, _S_>::distL2Square(const Self_t& other) const
 {
@@ -340,7 +340,7 @@ void Vector<_T_, _S_>::reverse()
 }
 
 
-/*! \brief Vector \p u multiplied by scalar \p k.
+/*! \brief Vector \p u multiplied by scalar \p k
  *  \relates Vector
  */
 template<typename _T_, unsigned _S_>
@@ -361,7 +361,7 @@ Vector<_T_, _S_> operator*(const _T_& k, const Vector<_T_, _S_>& u)
   return u * k;
 }
 
-/*! \brief Vector \p u divided by scalar \p k.
+/*! \brief Vector \p u divided by scalar \p k
  *  \relates Vector
  */
 template<typename _T_, unsigned _S_>
@@ -373,7 +373,7 @@ Vector<_T_, _S_> operator/(const Vector<_T_, _S_>& u, const _T_& k)
   return result;
 }
 
-/*! \brief Scalar product of vectors \p u and \p v i.e. <u|v>.
+/*! \brief Scalar product of vectors \p u and \p v i.e. <u|v>
  *  \relates Vector
  */
 template<typename _T_, unsigned _S_>
@@ -397,7 +397,7 @@ Vector<_T_, _S_> operator+(const Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v)
   return result;
 }
 
-/*! \brief Point \p p translated by vector \p v.
+/*! \brief Point \p p translated by vector \p v
  *  \relates Point
  */
 template<typename _T_, unsigned _S_>
@@ -409,7 +409,7 @@ Point<_T_, _S_> operator+(const Point<_T_, _S_>& p, const Vector<_T_, _S_>& v)
   return result;
 }
 
-/*! \brief Point \p p translated by vector \p v.
+/*! \brief Point \p p translated by vector \p v
  *  \relates Point
  */
 template<typename _T_, unsigned _S_>

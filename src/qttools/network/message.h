@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_MESSAGE_H
 #define QTTOOLS_MESSAGE_H
 
-#include "qttools/network/network.h"
+#include "network.h"
 #include <QtCore/QDateTime>
 #include <QtCore/QStringList>
 

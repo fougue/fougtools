@@ -35,7 +35,11 @@
 **
 ****************************************************************************/
 
-#include "occtools/point_on_faces_projector.h"
+#include "point_on_faces_projector.h"
+
+#include "pnt_vec_traits.h"
+#include "utils.h"
+#include "../mathtools/project_point_on_triangle.h"
 
 #include <BRep_Tool.hxx>
 #include <Bnd_Box.hxx>
@@ -47,11 +51,10 @@
 #include <TopoDS.hxx>
 #include <TopoDS_Face.hxx>
 #include <TopoDS_Shape.hxx>
+
 #include <QtCore/QHash>
+
 #include <limits>
-#include "mathtools/project_point_on_triangle.h"
-#include "occtools/pnt_vec_traits.h"
-#include "occtools/utils.h"
 
 //! TODO From OCC Forum :
 //! try using DBRep_IsoBuilder to generate isolines representing your face.

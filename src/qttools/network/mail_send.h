@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_MAIL_SEND_H
 #define QTTOOLS_MAIL_SEND_H
 
-#include "qttools/network/network.h"
+#include "network.h"
 #include <QtCore/QString>
 
 namespace qttools {

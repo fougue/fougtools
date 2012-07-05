@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_TREE_COMBO_BOX_H
 #define QTTOOLS_TREE_COMBO_BOX_H
 
-#include "qttools/gui/gui.h"
+#include "gui.h"
 
 #include <QtCore/QModelIndex>
 #include <QtGui/QComboBox>

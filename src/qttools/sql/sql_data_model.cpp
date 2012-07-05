@@ -35,11 +35,11 @@
 **
 ****************************************************************************/
 
-#include "qttools/sql/sql_data_model.h"
+#include "sql_data_model.h"
 
 #include <cassert>
 #include <QtCore/QThread>
-#include "qttools/sql/database_manager.h"
+#include "database_manager.h"
 
 namespace qttools {
 

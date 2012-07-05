@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_ABSTRACT_PLUGIN_LOADER_H
 #define QTTOOLS_ABSTRACT_PLUGIN_LOADER_H
 
-#include "qttools/core/core.h"
+#include "core.h"
 #include <QtCore/QString>
 #include <QtCore/QVector>
 class QObject;

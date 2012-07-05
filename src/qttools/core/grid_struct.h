@@ -38,8 +38,8 @@
 #ifndef QTTOOLS_GRID_STRUCT_H
 #define QTTOOLS_GRID_STRUCT_H
 
-#include "qttools/core/core.h"
-#include "qttools/core/grid_numbering.h"
+#include "core.h"
+#include "grid_numbering.h"
 
 namespace qttools {
 

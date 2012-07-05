@@ -40,8 +40,8 @@
 
 #include <cmath>
 #include <limits>
-#include "mathtools/consts.h"
-#include "mathtools/utils_helpers.h"
+#include "consts.h"
+#include "utils_helpers.h"
 
 namespace math {
 

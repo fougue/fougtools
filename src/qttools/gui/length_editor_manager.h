@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_LENGTH_EDITOR_MANAGER_H
 #define QTTOOLS_LENGTH_EDITOR_MANAGER_H
 
-#include "qttools/gui/gui.h"
+#include "gui.h"
 #include <QtCore/QLocale>
 #include <QtCore/QSet>
 

@@ -35,10 +35,10 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/length_double_spinbox.h"
+#include "length_double_spinbox.h"
 
-#include "cpptools/scoped_value.h"
-#include "qttools/gui/length_editor_manager.h"
+#include "../../cpptools/scoped_value.h"
+#include "length_editor_manager.h"
 
 static QLocale::MeasurementSystem currMeasurementSys()
 {

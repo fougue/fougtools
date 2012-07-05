@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_DATABASE_MANAGER_H
 #define QTTOOLS_DATABASE_MANAGER_H
 
-#include "qttools/sql/sql.h"
+#include "sql.h"
 #include <QtCore/QThread>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>

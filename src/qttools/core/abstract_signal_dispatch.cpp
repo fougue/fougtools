@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/abstract_signal_dispatch.h"
+#include "abstract_signal_dispatch.h"
 
 namespace qttools {
 

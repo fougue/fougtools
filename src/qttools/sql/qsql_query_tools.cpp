@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/sql/qsql_query_tools.h"
+#include "qsql_query_tools.h"
 
 #include <QtCore/QVariant>
 

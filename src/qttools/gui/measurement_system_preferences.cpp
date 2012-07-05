@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/measurement_system_preferences.h"
+#include "measurement_system_preferences.h"
 
 namespace qttools {
 

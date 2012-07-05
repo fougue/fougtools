@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/grid_struct.h"
+#include "grid_struct.h"
 
 namespace qttools {
 

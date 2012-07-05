@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/scoped_connection.h"
+#include "scoped_connection.h"
 
 #include <QtCore/QObject>
 

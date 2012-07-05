@@ -37,7 +37,7 @@
 #ifndef QTTOOLS_GRID_NUMBERING_H
 #define QTTOOLS_GRID_NUMBERING_H
 
-#include "qttools/core/core.h"
+#include "core.h"
 #include <QtCore/Qt>
 #include <QtCore/QVector>
 

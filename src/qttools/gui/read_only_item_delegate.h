@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_READ_ONLY_ITEM_DELEGATE_H
 #define QTTOOLS_READ_ONLY_ITEM_DELEGATE_H
 
-#include "qttools/gui/gui.h"
+#include "gui.h"
 #include <QtGui/QStyledItemDelegate>
 
 namespace qttools {

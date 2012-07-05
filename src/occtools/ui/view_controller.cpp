@@ -35,12 +35,12 @@
 **
 ****************************************************************************/
 
-#include "occtools/ui/view_controller.h"
+#include "view_controller.h"
 
 #include <QtGui/QKeyEvent>
 #include <QtGui/QPlastiqueStyle>
 #include <QtGui/QRubberBand>
-#include "occtools/ui/view.h"
+#include "view.h"
 
 namespace occ {
 

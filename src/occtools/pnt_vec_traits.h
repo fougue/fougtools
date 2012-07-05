@@ -41,7 +41,7 @@
 #include <cassert>
 #include <gp_Pnt.hxx>
 #include <gp_Vec.hxx>
-#include "mathtools/pnt_vec_traits_def.h"
+#include "../mathtools/pnt_vec_traits_def.h"
 
 namespace geom {
 

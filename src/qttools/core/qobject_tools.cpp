@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/qobject_tools.h"
+#include "qobject_tools.h"
 
 #include <QtCore/QObject>
 

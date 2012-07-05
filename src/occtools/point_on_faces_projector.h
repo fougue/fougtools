@@ -38,7 +38,7 @@
 #ifndef OCC_POINT_ON_FACES_PROJECTOR_H
 #define OCC_POINT_ON_FACES_PROJECTOR_H
 
-#include "occtools/occtools.h"
+#include "occtools.h"
 #include <gp_Pnt.hxx>
 #include <gp_Vec.hxx>
 #include <gp_Pnt.hxx>

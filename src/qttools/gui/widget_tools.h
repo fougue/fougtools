@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_WIDGET_TOOLS_H
 #define QTTOOLS_WIDGET_TOOLS_H
 
-#include "qttools/gui/gui.h"
+#include "gui.h"
 #include <QtCore/QPair>
 class QAbstractScrollArea;
 class QWidget;

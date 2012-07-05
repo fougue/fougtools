@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_QCOMBO_BOX_CURRENT_ITEM_KEEPER_H
 #define QTTOOLS_QCOMBO_BOX_CURRENT_ITEM_KEEPER_H
 
-#include "qttools/gui/gui.h"
+#include "gui.h"
 #include <QtCore/QObject>
 #include <QtCore/QVariant>
 class QComboBox;

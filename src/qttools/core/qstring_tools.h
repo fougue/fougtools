@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_QSTRING_TOOLS_H
 #define QTTOOLS_QSTRING_TOOLS_H
 
-#include "qttools/core/core.h"
+#include "core.h"
 #include <QtCore/QString>
 
 namespace qttools {

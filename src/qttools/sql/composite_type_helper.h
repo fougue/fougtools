@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_COMPOSITE_TYPE_HELPER_H
 #define QTTOOLS_COMPOSITE_TYPE_HELPER_H
 
-#include "qttools/sql/sql.h"
+#include "sql.h"
 #include <QtCore/QList>
 #include <QtCore/QVariant>
 

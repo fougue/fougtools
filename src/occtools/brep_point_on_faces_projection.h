@@ -38,7 +38,7 @@
 #ifndef OCC_BREP_POINT_ON_FACES_PROJECTION_H
 #define OCC_BREP_POINT_ON_FACES_PROJECTION_H
 
-#include "occtools/occtools.h"
+#include "occtools.h"
 #include <TopoDS_Face.hxx>
 #include <gp_Vec.hxx>
 #include <utility>

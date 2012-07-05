@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/sleep.h"
+#include "sleep.h"
 
 #include <QtCore/QEventLoop>
 #include <QtCore/QThread>

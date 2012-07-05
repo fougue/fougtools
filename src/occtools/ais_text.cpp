@@ -35,13 +35,15 @@
 **
 ****************************************************************************/
 
-#include "occtools/ais_text.h"
+#include "ais_text.h"
+
+#include "utils.h"
+
+#include <QtCore/QList>
 
 #include <Aspect_TypeOfText.hxx>
 #include <cassert>
 #include <Graphic3d_NameOfFont.hxx>
-#include "occtools/utils.h"
-#include <QtCore/QList>
 #include <Quantity_Factor.hxx>
 #include <Quantity_PlaneAngle.hxx>
 #include <SelectMgr_SelectableObject.hxx>

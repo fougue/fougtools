@@ -35,4 +35,4 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/scoped_model_reset.h"
+#include "scoped_model_reset.h"

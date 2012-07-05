@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "occtools/ui/view.h"
+#include "view.h"
 
 #include <AIS_InteractiveContext.hxx>
 #include <V3d_View.hxx>

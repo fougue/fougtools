@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/qlocale_tools.h"
+#include "qlocale_tools.h"
 
 namespace qttools {
 

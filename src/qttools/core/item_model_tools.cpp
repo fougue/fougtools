@@ -35,10 +35,10 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/item_model_tools.h"
+#include "item_model_tools.h"
 
 #include <QtCore/QRegExp>
-#include "qttools/core/qobject_tools.h"
+#include "qobject_tools.h"
 
 namespace qttools {
 

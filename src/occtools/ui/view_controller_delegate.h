@@ -38,7 +38,7 @@
 #ifndef OCC_VIEW_CONTROLLER_DELEGATE_H
 #define OCC_VIEW_CONTROLLER_DELEGATE_H
 
-#include "occtools/occtools.h"
+#include "../occtools.h"
 class QString;
 
 namespace occ {

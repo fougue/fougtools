@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "occtools/utils.h"
+#include "utils.h"
 
 #include <AIS_InteractiveContext.hxx>
 #include <AIS_InteractiveObject.hxx>

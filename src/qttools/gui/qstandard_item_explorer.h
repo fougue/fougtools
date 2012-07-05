@@ -38,9 +38,9 @@
 #ifndef QTTOOLS_QSTANDARD_ITEM_EXPLORER_H
 #define QTTOOLS_QSTANDARD_ITEM_EXPLORER_H
 
-#include "qttools/gui/gui.h"
+#include "gui.h"
 
-#include "cpptools/abstract_tree_bfs_explorer.h"
+#include "../../cpptools/abstract_tree_bfs_explorer.h"
 class QStandardItemModel;
 class QStandardItem;
 

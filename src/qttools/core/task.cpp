@@ -35,9 +35,9 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/task.h"
+#include "task.h"
 
-#include "cpptools/functional.h"
+#include "../../cpptools/functional.h"
 #include <QtCore/QEventLoop>
 #include <QtCore/QMutex>
 #include <QtCore/QThread>

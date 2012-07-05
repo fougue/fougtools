@@ -38,7 +38,6 @@
 include(../../3rdparty/occ.pri)
 
 INCLUDEPATH *= $$BOOST_ROOT
-INCLUDEPATH *= $$PWD/..
 
 HEADERS += $$PWD/io.h \
            $$PWD/occtools.h \

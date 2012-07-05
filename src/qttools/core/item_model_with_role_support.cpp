@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/item_model_with_role_support.h"
+#include "item_model_with_role_support.h"
 
 namespace qttools {
 

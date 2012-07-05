@@ -35,9 +35,9 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/abstract_length_editor.h"
+#include "abstract_length_editor.h"
 
-#include "qttools/gui/length_editor_manager.h"
+#include "length_editor_manager.h"
 
 static QLocale::MeasurementSystem currMeasurementSys()
 {

@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/qstandard_item_explorer.h"
+#include "qstandard_item_explorer.h"
 
 #include <QtGui/QStandardItem>
 #include <QtGui/QStandardItemModel>

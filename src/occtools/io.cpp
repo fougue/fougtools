@@ -52,6 +52,7 @@
 #include <IGESControl_Writer.hxx>
 #include <STEPControl_Reader.hxx> // For STEP files reading
 #include <STEPControl_Writer.hxx>
+#include <StlMesh_Mesh.hxx>
 #include <StlAPI_Writer.hxx>
 #include <IFSelect_ReturnStatus.hxx> // For status reading
 #include <Interface_Static.hxx>
@@ -60,7 +61,29 @@
 #include <Transfer_TransientProcess.hxx>
 #include <XSControl_WorkSession.hxx>
 
+#include "../cpptools/memory_utils.h"
+
 namespace {
+
+float readLittleEndianReal32b(QFile* file)
+{
+  union Real32
+  {
+    qint32 asInteger;
+    float asFloat;
+  };
+
+  char floatBytes[4];
+  file->read(&floatBytes[0], 4);
+
+  Real32 result;
+  result.asInteger = floatBytes[0] & 0xff;
+  result.asInteger |= (floatBytes[1] & 0xff) << 0x08;
+  result.asInteger |= (floatBytes[2] & 0xff) << 0x10;
+  result.asInteger |= (floatBytes[3] & 0xff) << 0x18;
+
+  return result.asFloat;
+}
 
 template<typename _READER_>
 TopoDS_Shape loadFile(const QString& fileName, Handle_Message_ProgressIndicator indicator)
@@ -99,6 +122,7 @@ IO::Format IO::partFormat(const QString& filename)
   if (!file.open(QIODevice::ReadOnly))
     return UnknownFormat;
   const QByteArray contentsBegin = file.read(2048);
+
   // Assume a text-based format
   const QString contentsBeginText(contentsBegin);
   if (contentsBeginText.contains(QRegExp("^.{72}S\\s*[0-9]+\\s*[\\n\\r\\f]")))
@@ -109,6 +133,7 @@ IO::Format IO::partFormat(const QString& filename)
     return OccBrepFormat;
   if (contentsBeginText.contains(QRegExp("^\\s*solid")))
     return AsciiStlFormat;
+
   // Assume a binary-based format
   // -- Binary STL ?
   const int binaryStlHeaderSize = 80 + sizeof(quint32);
@@ -123,11 +148,12 @@ IO::Format IO::partFormat(const QString& filename)
     if ((facetSize * facetsCount + binaryStlHeaderSize) == file.size())
       return BinaryStlFormat;
   }
+
   // Fallback case
   return UnknownFormat;
 }
 
-const TopoDS_Shape IO::loadPartFile(const QString& filename)
+TopoDS_Shape IO::loadPartFile(const QString& filename)
 {
   switch (partFormat(filename)) {
   case StepFormat:
@@ -142,9 +168,77 @@ const TopoDS_Shape IO::loadPartFile(const QString& filename)
   return TopoDS_Shape();
 }
 
-const Handle_StlMesh_Mesh IO::loadStlFile(const QString& filename)
+Handle_StlMesh_Mesh IO::loadStlFile(const QString& filename)
 {
   return RWStl::ReadFile(OSD_Path(filename.toAscii().constData()));
+}
+
+Handle_StlMesh_Mesh IO::loadBinaryStlFile(const QString &fileName, BinaryStlLoadError* err)
+{
+  const int stlHeaderSize = 80;
+  const int stlFacetCountSize = 4;
+  const int stlFacetSize = 50;
+  const int stlMinFileSize = 284;
+
+  Handle_StlMesh_Mesh mesh;
+
+  // Check permissions
+  QFile file(fileName);
+  if (!file.open(QIODevice::ReadOnly)) {
+    cpp::checkedAssign(err, PermissionsBinaryStlLoadError);
+    return mesh;
+  }
+
+  // Check file size
+  const qint64 fileSize = file.size();
+  if (((fileSize - stlHeaderSize - stlFacetCountSize) % stlFacetSize != 0)
+      || fileSize < stlMinFileSize) {
+    cpp::checkedAssign(err, WrongFileSizeBinaryStlLoadError);
+    return mesh;
+  }
+
+  const int facetCount = (fileSize - stlHeaderSize - stlFacetCountSize) / stlFacetSize;
+
+  // Skip header
+  file.seek(stlHeaderSize + stlFacetCountSize);
+
+  // Create the output mesh
+  mesh = new StlMesh_Mesh;
+  mesh->AddDomain();
+
+  for (int facet = 0; facet < facetCount; ++facet) {
+    // Read normal
+    const double nx = ::readLittleEndianReal32b(&file);
+    const double ny = ::readLittleEndianReal32b(&file);
+    const double nz = ::readLittleEndianReal32b(&file);
+
+    // Read vertex1 u
+    const double ux = ::readLittleEndianReal32b(&file);
+    const double uy = ::readLittleEndianReal32b(&file);
+    const double uz = ::readLittleEndianReal32b(&file);
+
+    // Read vertex2 v
+    const double vx = ::readLittleEndianReal32b(&file);
+    const double vy = ::readLittleEndianReal32b(&file);
+    const double vz = ::readLittleEndianReal32b(&file);
+
+    // Read vertex2 w
+    const double wx = ::readLittleEndianReal32b(&file);
+    const double wy = ::readLittleEndianReal32b(&file);
+    const double wz = ::readLittleEndianReal32b(&file);
+
+    // Add facet to mesh
+    const int uId = mesh->AddOnlyNewVertex(ux, uy, uz);
+    const int vId = mesh->AddOnlyNewVertex(vx, vy, vz);
+    const int wId = mesh->AddOnlyNewVertex(wx, wy, wz);
+    mesh->AddTriangle(uId, vId, wId, nx, ny, nz);
+
+    // Skip attribute byte count
+    char attrByteCount[2];
+    file.read(&attrByteCount[0], 2);
+  }
+
+  return mesh;
 }
 
 /*! \brief Topologic shape read from a file (OCC's internal BREP format)
@@ -166,8 +260,7 @@ TopoDS_Shape IO::loadBrepFile(const QString& fileName,
  *  \param indicator Indicator to notify the loading progress
  *  \return The part as a whole topologic shape
  */
-TopoDS_Shape IO::loadIgesFile(const QString& fileName,
-                              Handle_Message_ProgressIndicator indicator)
+TopoDS_Shape IO::loadIgesFile(const QString& fileName, Handle_Message_ProgressIndicator indicator)
 {
   return ::loadFile<IGESControl_Reader>(fileName, indicator);
 }
@@ -177,8 +270,7 @@ TopoDS_Shape IO::loadIgesFile(const QString& fileName,
  *  \param indicator Indicator to notify the loading progress
  *  \return The part as a whole topologic shape
  */
-TopoDS_Shape IO::loadStepFile(const QString& fileName,
-                              Handle_Message_ProgressIndicator indicator)
+TopoDS_Shape IO::loadStepFile(const QString& fileName, Handle_Message_ProgressIndicator indicator)
 {
   return ::loadFile<STEPControl_Reader>(fileName, indicator);
 }

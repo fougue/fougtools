@@ -38,8 +38,8 @@
 #ifndef QTTOOLS_MEASUREMENT_SYSTEM_PREFERENCES_H
 #define QTTOOLS_MEASUREMENT_SYSTEM_PREFERENCES_H
 
-#include "qttools/gui/gui.h"
-#include "qttools/gui/abstract_length_editor.h"
+#include "gui.h"
+#include "abstract_length_editor.h"
 
 namespace qttools {
 

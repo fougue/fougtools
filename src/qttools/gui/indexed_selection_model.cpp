@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/indexed_selection_model.h"
+#include "indexed_selection_model.h"
 
 #include <cassert>
 

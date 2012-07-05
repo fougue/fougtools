@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/grid_numbering.h"
+#include "grid_numbering.h"
 #include <algorithm>
 
 namespace qttools {

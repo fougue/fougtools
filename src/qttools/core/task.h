@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_TASK_H
 #define QTTOOLS_TASK_H
 
-#include "qttools/core/core.h"
+#include "core.h"
 #include <QtCore/QObject>
 class QThread;
 

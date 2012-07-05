@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/abstract_cipher.h"
+#include "abstract_cipher.h"
 
 namespace qttools {
 

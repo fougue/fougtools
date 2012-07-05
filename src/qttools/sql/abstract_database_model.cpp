@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/sql/abstract_database_model.h"
+#include "abstract_database_model.h"
 
 namespace qttools {
 

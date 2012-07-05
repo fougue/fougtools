@@ -38,7 +38,7 @@
 #ifndef OCC_GCPNTS_UNIFORM_ABSCISSA_CONST_ITERATOR_H
 #define OCC_GCPNTS_UNIFORM_ABSCISSA_CONST_ITERATOR_H
 
-#include "occtools/occtools.h"
+#include "occtools.h"
 #include <iterator>
 class GCPnts_UniformAbscissa;
 

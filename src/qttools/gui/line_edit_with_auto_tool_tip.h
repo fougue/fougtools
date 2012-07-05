@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_LINE_EDIT_WITH_AUTO_TOOL_TIP_H
 #define QTTOOLS_LINE_EDIT_WITH_AUTO_TOOL_TIP_H
 
-#include "qttools/gui/gui.h"
+#include "gui.h"
 #include <QtGui/QLineEdit>
 
 namespace qttools {

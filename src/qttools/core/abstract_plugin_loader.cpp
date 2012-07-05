@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/abstract_plugin_loader.h"
+#include "abstract_plugin_loader.h"
 
 #include <QtCore/QDir>
 #include <QtCore/QHash>

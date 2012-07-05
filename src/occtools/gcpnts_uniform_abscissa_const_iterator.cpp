@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "occtools/gcpnts_uniform_abscissa_const_iterator.h"
+#include "gcpnts_uniform_abscissa_const_iterator.h"
 
 #include <GCPnts_UniformAbscissa.hxx>
 #include <algorithm>

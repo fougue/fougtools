@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_SQL_DATABASE_CONNECTION_SETTINGS_H
 #define QTTOOLS_SQL_DATABASE_CONNECTION_SETTINGS_H
 
-#include "qttools/sql/sql.h"
+#include "sql.h"
 #include <QtCore/QHash>
 #include <QtCore/QVariant>
 class QSqlDatabase;

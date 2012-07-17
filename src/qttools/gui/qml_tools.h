@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_QML_TOOLS_H
 #define QTTOOLS_QML_TOOLS_H
 
-#include "qttools/gui/gui.h"
+#include "gui.h"
 #include <QtCore/QObject>
 class QDeclarativeContext;
 

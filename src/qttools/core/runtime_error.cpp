@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/runtime_error.h"
+#include "runtime_error.h"
 
 namespace qttools {
 

@@ -38,7 +38,7 @@
 #ifndef OCC_AIS_TEXT_H
 #define OCC_AIS_TEXT_H
 
-#include "occtools/occtools.h"
+#include "occtools.h"
 #include <AIS_InteractiveObject.hxx>
 #include <gp_Pnt.hxx>
 #include <Handle_Graphic2d_GraphicObject.hxx>

@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/log.h"
+#include "log.h"
 
 #include <QtCore/QList>
 #include <QtCore/QLinkedList>

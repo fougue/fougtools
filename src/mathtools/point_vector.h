@@ -38,10 +38,10 @@
 #ifndef BITS_GEOM_POINT_VECTOR_H
 #define BITS_GEOM_POINT_VECTOR_H
 
-#include "mathtools/consts.h"
-#include "mathtools/point_vector_fwd.h"
-#include "mathtools/pnt_vec_traits_def.h"
-#include "mathtools/fixed_array.h"
+#include "consts.h"
+#include "point_vector_fwd.h"
+#include "pnt_vec_traits_def.h"
+#include "fixed_array.h"
 #include <cassert>
 #include <cmath>
 

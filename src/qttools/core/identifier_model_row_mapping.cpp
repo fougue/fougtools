@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/identifier_model_row_mapping.h"
+#include "identifier_model_row_mapping.h"
 
 namespace qttools {
   /*! \class IdentifierModelRowMapping

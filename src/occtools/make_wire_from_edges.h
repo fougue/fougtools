@@ -38,7 +38,7 @@
 #ifndef OCC_MAKE_WIRE_FROM_EDGES_H
 #define OCC_MAKE_WIRE_FROM_EDGES_H
 
-#include "occtools/occtools.h"
+#include "occtools.h"
 #include <ShapeExtend_WireData.hxx>
 #include <ShapeFix_Wire.hxx>
 #include <TopoDS_Wire.hxx>

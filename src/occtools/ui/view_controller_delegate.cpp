@@ -35,9 +35,9 @@
 **
 ****************************************************************************/
 
-#include "occtools/ui/view_controller_delegate.h"
+#include "view_controller_delegate.h"
 
-#include "occtools/ui/view_controller.h"
+#include "view_controller.h"
 
 namespace occ {
 

@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_QSQL_TABLE_MODEL_ENGINE_H
 #define QTTOOLS_QSQL_TABLE_MODEL_ENGINE_H
 
-#include "qttools/sql/sql.h"
+#include "sql.h"
 #include <QtCore/QHash>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlIndex>

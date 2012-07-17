@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/read_only_item_delegate.h"
+#include "read_only_item_delegate.h"
 
 namespace qttools {
 

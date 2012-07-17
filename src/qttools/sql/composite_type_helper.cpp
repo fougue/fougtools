@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/sql/composite_type_helper.h"
+#include "composite_type_helper.h"
 #include <QtCore/QRegExp>
 #include <QtCore/QStringList>
 #include <QtCore/QtDebug>

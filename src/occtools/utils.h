@@ -38,7 +38,10 @@
 #ifndef OCC_UTILS_H
 #define OCC_UTILS_H
 
-#include "occtools/occtools.h"
+#include "occtools.h"
+
+#include "../mathtools/point_vector_fwd.h"
+
 #include <BRep_Builder.hxx>
 #include <Handle_AIS_InteractiveContext.hxx>
 #include <Handle_AIS_InteractiveObject.hxx>
@@ -59,7 +62,6 @@
 #include <gp_Pnt.hxx>
 #include <gp_Pnt2d.hxx>
 #include <gp_Vec.hxx>
-#include "mathtools/point_vector_fwd.h"
 class Poly_Triangle;
 class gp_Trsf;
 class TColgp_Array1OfPnt;
@@ -87,10 +89,10 @@ OCCTOOLS_EXPORT Quantity_Color toOccColor(const QColor& c);
 OCCTOOLS_EXPORT Quantity_NameOfColor toNamedOccColor(const QColor& c);
 
 // --- Geometry conversion
-template<typename _T_>
-gp_Pnt toOccPoint3d(const geom::Point3<_T_>& p);
-template<typename _T_>
-gp_Vec toOccVector3d(const geom::Vector3<_T_>& p);
+template<typename T>
+gp_Pnt toOccPoint3d(const geom::Point3<T>& p);
+template<typename T>
+gp_Vec toOccVector3d(const geom::Vector3<T>& p);
 
 // --- Type conversion
 OCCTOOLS_EXPORT Standard_CString toOccCstring(const QString& str);

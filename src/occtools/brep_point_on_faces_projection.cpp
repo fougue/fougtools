@@ -35,7 +35,9 @@
 **
 ****************************************************************************/
 
-#include "occtools/brep_point_on_faces_projection.h"
+#include "brep_point_on_faces_projection.h"
+
+#include "utils.h"
 
 #include <BRep_Tool.hxx>
 #include <GeomAPI_ProjectPointOnSurf.hxx>
@@ -46,7 +48,6 @@
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <cassert>
-#include "occtools/utils.h"
 #include <limits>
 
 namespace {

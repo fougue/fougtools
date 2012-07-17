@@ -38,7 +38,7 @@
 #ifndef OCC_VIEW_H
 #define OCC_VIEW_H
 
-#include "occtools/occtools.h"
+#include "../occtools.h"
 #include <QtGui/QWidget>
 #include <Handle_AIS_InteractiveContext.hxx>
 #include <Handle_V3d_View.hxx>

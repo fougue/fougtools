@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_IDENTIFIER_MODEL_ROW_MAPPING_H
 #define QTTOOLS_IDENTIFIER_MODEL_ROW_MAPPING_H
 
-#include "qttools/core/core.h"
+#include "core.h"
 #include <QtCore/QHash>
 #include <QtCore/QAbstractItemModel>
 

@@ -37,7 +37,7 @@
 
 #ifdef OCC_UTILS_H
 
-#include "mathtools/point_vector.h"
+#include "../mathtools/point_vector.h"
 
 namespace occ {
 //

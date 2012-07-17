@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_RUNTIME_ERROR_H
 #define QTTOOLS_RUNTIME_ERROR_H
 
-#include "qttools/core/core.h"
+#include "core.h"
 
 #include <stdexcept>
 #include <QtCore/QString>

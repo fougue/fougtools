@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/qml_tools.h"
+#include "qml_tools.h"
 
 #include <QtDeclarative/QDeclarativeContext>
 #include <QtGui/QApplication>

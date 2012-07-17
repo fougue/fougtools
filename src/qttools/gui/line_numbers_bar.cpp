@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/line_numbers_bar.h"
+#include "line_numbers_bar.h"
 
 #include <QtCore/QRect>
 #include <QtGui/QAbstractTextDocumentLayout>

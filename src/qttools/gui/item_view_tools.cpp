@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/item_view_tools.h"
+#include "item_view_tools.h"
 
 #include <QtGui/QAbstractItemView>
 #include <QtGui/QItemSelectionModel>

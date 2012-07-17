@@ -35,9 +35,9 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/wait_dialog.h"
+#include "wait_dialog.h"
 
-#include "qttools/core/task.h"
+#include "../core/task.h"
 #include <QtCore/QTimer>
 #include <QtCore/QThread>
 #include <QtGui/QApplication>

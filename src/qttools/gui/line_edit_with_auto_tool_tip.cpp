@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/line_edit_with_auto_tool_tip.h"
+#include "line_edit_with_auto_tool_tip.h"
 
 namespace qttools {
 

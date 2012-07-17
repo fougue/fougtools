@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/core/qobject_wrap.h"
+#include "qobject_wrap.h"
 
 namespace qttools {
 

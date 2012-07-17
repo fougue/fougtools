@@ -40,7 +40,7 @@
 
 #include <QtGui/QStyledItemDelegate>
 #include <QtGui/QComboBox>
-#include "qttools/sql/cpp_sql_enum_map.h"
+#include "../sql/cpp_sql_enum_map.h"
 
 namespace qttools {
 

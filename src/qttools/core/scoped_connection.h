@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_SCOPED_CONNECTION_H
 #define QTTOOLS_SCOPED_CONNECTION_H
 
-#include "qttools/core/core.h"
+#include "core.h"
 #include <QtCore/Qt>
 class QObject;
 

@@ -35,15 +35,16 @@
 **
 ****************************************************************************/
 
-#include "qttools/sql/database_manager.h"
+#include "database_manager.h"
+
+#include "../../cpptools/memory_utils.h"
 
 #include <cassert>
 #include <QtCore/QHash>
 #include <QtCore/QMutex>
 #include <QtCore/QMutexLocker>
 #include <QtCore/QUuid>
-#include "cpptools/memory_utils.h"
-#include "qttools/sql/qsql_query_tools.h"
+#include "qsql_query_tools.h"
 
 namespace qttools {
 

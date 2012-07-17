@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qttools/gui/message_dialog.h"
+#include "message_dialog.h"
 
 #include <QtCore/QSignalMapper>
 #include <QtGui/QAbstractButton>

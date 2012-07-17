@@ -35,13 +35,13 @@
 **
 ****************************************************************************/
 
-#include "qttools/sql/qsql_table_model_engine.h"
+#include "qsql_table_model_engine.h"
 
 #include <QtSql/QSqlDriver>
 #include <QtSql/QSqlField>
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlTableModel>
-#include "qttools/sql/database_manager.h"
+#include "database_manager.h"
 
 namespace qttools {
 

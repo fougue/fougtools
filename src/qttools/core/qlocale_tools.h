@@ -38,7 +38,7 @@
 #ifndef QTOOLS_QLOCALE_TOOLS_H
 #define QTOOLS_QLOCALE_TOOLS_H
 
-#include "qttools/core/core.h"
+#include "core.h"
 #include <QtCore/QList>
 #include <QtCore/QLocale>
 

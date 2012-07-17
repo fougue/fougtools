@@ -35,12 +35,13 @@
 **
 ****************************************************************************/
 
-#include "qttools/sql/database_connection_settings.h"
+#include "database_connection_settings.h"
+
+#include "../core/abstract_cipher.h"
 
 #include <cassert>
 #include <QtCore/QSettings>
 #include <QtSql/QSqlDatabase>
-#include "qttools/core/abstract_cipher.h"
 
 namespace qttools {
 

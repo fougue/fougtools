@@ -38,7 +38,7 @@
 #ifndef QTTOOLS_LOG_H
 #define QTTOOLS_LOG_H
 
-#include "qttools/core/core.h"
+#include "core.h"
 #include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QTextStream>

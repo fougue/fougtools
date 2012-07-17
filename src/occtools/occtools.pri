@@ -38,7 +38,6 @@
 include(../../3rdparty/occ.pri)
 
 INCLUDEPATH *= $$BOOST_ROOT
-INCLUDEPATH *= $$PWD/..
 
 HEADERS += $$PWD/io.h \
            $$PWD/occtools.h \
@@ -50,7 +49,6 @@ HEADERS += $$PWD/io.h \
            $$PWD/pnt_vec_traits.h \
            $$PWD/utils.h \
            $$PWD/utils.impl.h \
-           $$PWD/ui/projection_selector_action_manager.h \
            $$PWD/ui/view.h \
            $$PWD/ui/view_controller.h \
            $$PWD/ui/view_controller_delegate.h
@@ -61,7 +59,6 @@ SOURCES += $$PWD/io.cpp \
            $$PWD/gcpnts_uniform_abscissa_const_iterator.cpp \
            $$PWD/point_on_faces_projector.cpp \
            $$PWD/utils.cpp \
-           $$PWD/ui/projection_selector_action_manager.cpp \
            $$PWD/ui/view.cpp \
            $$PWD/ui/view_controller.cpp \
            $$PWD/ui/view_controller_delegate.cpp

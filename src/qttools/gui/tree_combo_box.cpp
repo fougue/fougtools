@@ -79,7 +79,10 @@ QModelIndex TreeComboBox::currentModelIndex() const
 {
   if (this->model() == 0)
     return QModelIndex();
-  return this->model()->index(this->currentIndex(), this->modelColumn(), this->rootModelIndex());
+  const QModelIndex treeViewCurrentIndex = this->treeView()->currentIndex();
+  if (!treeViewCurrentIndex.isValid())
+    return this->model()->index(this->currentIndex(), this->modelColumn(), this->rootModelIndex());
+  return treeViewCurrentIndex;
 }
 
 void TreeComboBox::setCurrentModelIndex(const QModelIndex &modelIndex)

@@ -40,12 +40,12 @@
 
 namespace geom {
 
-template<typename _POINT_, typename _VECTOR_>
+template<typename POINT, typename VECTOR>
 struct PntVecTraits
 {
 # ifndef _MSC_VER
-  typedef _POINT_ Pnt_t;
-  typedef _VECTOR_ Vec_t;
+  typedef POINT Pnt_t;
+  typedef VECTOR Vec_t;
   typedef double Value_t;
 
   static void normalize(Vec_t* v);

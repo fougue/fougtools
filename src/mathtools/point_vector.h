@@ -50,218 +50,217 @@ namespace geom {
 // ---
 // --- class Point<>
 // ---
-template<typename _T_, unsigned _S_>
-class Point : public structs::FixedArray<_T_, _S_>
+template<typename T, unsigned S>
+class Point : public structs::FixedArray<T, S>
 {
 private:
-  typedef Point<_T_, _S_> Self_t;
-  typedef structs::FixedArray<_T_, _S_> Super_t;
+  typedef Point<T, S> Self_t;
+  typedef structs::FixedArray<T, S> Super_t;
 
 public:
-  Point<_T_, _S_>();
-  Point<_T_, _S_>(const Self_t& other);
+  Point<T, S>();
+  Point<T, S>(const Self_t& other);
 
   Self_t& operator=(const Self_t& other);
 
-  _T_ dist(const Self_t& other) const;
-  _T_ distSquare(const Self_t& other) const;
-  _T_ distL2(const Self_t& other) const;
-  _T_ distL2Square(const Self_t& other) const;
+  T dist(const Self_t& other) const;
+  T distSquare(const Self_t& other) const;
+  T distL2(const Self_t& other) const;
+  T distL2Square(const Self_t& other) const;
 };
 
-template<typename _T_, unsigned _S_>
-Point<_T_, _S_> operator-(const Point<_T_, _S_>& p);
+template<typename T, unsigned S>
+Point<T, S> operator-(const Point<T, S>& p);
 
 // ---
 // --- class Point2<>
 // ---
-template<typename _T_>
-class Point2 : public Point<_T_, 2>
+template<typename T>
+class Point2 : public Point<T, 2>
 {
 private:
-  typedef Point2<_T_>   Self_t;
-  typedef Point<_T_, 2> Super_t;
+  typedef Point2<T>   Self_t;
+  typedef Point<T, 2> Super_t;
 
 public:
-  Point2<_T_>();
-  Point2<_T_>(const _T_& vx, const _T_& vy);
-  Point2<_T_>(const Super_t& other);
+  Point2<T>();
+  Point2<T>(const T& vx, const T& vy);
+  Point2<T>(const Super_t& other);
 
-  const _T_& x() const;
-  const _T_& y() const;
-  const _T_& theta() const;
+  const T& x() const;
+  const T& y() const;
+  const T& theta() const;
 
   Self_t& operator=(const Self_t& other);
-  void setX(const _T_& v);
-  void setY(const _T_& v);
-  void setTheta(const _T_& v);
-  void setXy(const _T_& vx, const _T_& vy);
+  void setX(const T& v);
+  void setY(const T& v);
+  void setTheta(const T& v);
+  void setXy(const T& vx, const T& vy);
 };
 
 // ---
 // --- class Point3<>
 // ---
-template<typename _T_>
-class Point3 : public Point<_T_, 3>
+template<typename T>
+class Point3 : public Point<T, 3>
 {
 private:
-  typedef Point3<_T_>   Self_t;
-  typedef Point<_T_, 3> Super_t;
+  typedef Point3<T>   Self_t;
+  typedef Point<T, 3> Super_t;
 
 public:
-  Point3<_T_>();
-  Point3<_T_>(const _T_& vx, const _T_& vy, const _T_& vz);
-  Point3<_T_>(const Super_t& other);
+  Point3<T>();
+  Point3<T>(const T& vx, const T& vy, const T& vz);
+  Point3<T>(const Super_t& other);
 
-  const _T_& x() const;
-  const _T_& y() const;
-  const _T_& z() const;
+  const T& x() const;
+  const T& y() const;
+  const T& z() const;
 
   Self_t& operator=(const Self_t& other);
-  void setX(const _T_& v);
-  void setY(const _T_& v);
-  void setZ(const _T_& v);
-  void setXyz(const _T_& vx, const _T_& vy, const _T_& vz);
+  void setX(const T& v);
+  void setY(const T& v);
+  void setZ(const T& v);
+  void setXyz(const T& vx, const T& vy, const T& vz);
 };
 
 // ---
 // --- class Vector<>
 // ---
-template<typename _T_, unsigned _S_>
-class Vector : public structs::FixedArray<_T_, _S_>
+template<typename T, unsigned S>
+class Vector : public structs::FixedArray<T, S>
 {
 private:
-  typedef Vector<_T_, _S_> Self_t;
-  typedef structs::FixedArray<_T_, _S_> Super_t;
+  typedef Vector<T, S> Self_t;
+  typedef structs::FixedArray<T, S> Super_t;
 
 public:
-  Vector<_T_, _S_>();
-  Vector<_T_, _S_>(const Self_t& other);
+  Vector<T, S>();
+  Vector<T, S>(const Self_t& other);
 
-  bool isNull(const _T_& tol = static_cast<_T_>(1e-6)) const;
-  _T_ norm() const;
-  _T_ squareNorm() const;
+  bool isNull(const T& tol = static_cast<T>(1e-6)) const;
+  T norm() const;
+  T squareNorm() const;
 
   Self_t& operator=(const Self_t& other);
 
   void normalize();
-  const Vector<_T_, _S_> normalized() const;
+  const Vector<T, S> normalized() const;
 
   void reverse();
 };
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator*(const Vector<_T_, _S_>& u, const _T_& k);
+template<typename T, unsigned S>
+Vector<T, S> operator*(const Vector<T, S>& u, const T& k);
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator*(const _T_& k, const Vector<_T_, _S_>& u);
+template<typename T, unsigned S>
+Vector<T, S> operator*(const T& k, const Vector<T, S>& u);
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator/(const Vector<_T_, _S_>& u, const _T_& k);
+template<typename T, unsigned S>
+Vector<T, S> operator/(const Vector<T, S>& u, const T& k);
 
-template<typename _T_, unsigned _S_>
-_T_ operator*(const Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v);
+template<typename T, unsigned S>
+T operator*(const Vector<T, S>& u, const Vector<T, S>& v);
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator+(const Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v);
+template<typename T, unsigned S>
+Vector<T, S> operator+(const Vector<T, S>& u, const Vector<T, S>& v);
 
-template<typename _T_, unsigned _S_>
-Point<_T_, _S_> operator+(const Point<_T_, _S_>& p, const Vector<_T_, _S_>& v);
+template<typename T, unsigned S>
+Point<T, S> operator+(const Point<T, S>& p, const Vector<T, S>& v);
 
-template<typename _T_, unsigned _S_>
-Point<_T_, _S_> operator-(const Point<_T_, _S_>& p, const Vector<_T_, _S_>& v);
+template<typename T, unsigned S>
+Point<T, S> operator-(const Point<T, S>& p, const Vector<T, S>& v);
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator-(const Vector<_T_, _S_>& u);
+template<typename T, unsigned S>
+Vector<T, S> operator-(const Vector<T, S>& u);
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator-(const Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v);
+template<typename T, unsigned S>
+Vector<T, S> operator-(const Vector<T, S>& u, const Vector<T, S>& v);
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator-(const Point<_T_, _S_>& p1, const Point<_T_, _S_>& p2);
+template<typename T, unsigned S>
+Vector<T, S> operator-(const Point<T, S>& p1, const Point<T, S>& p2);
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_>& operator+=(Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v);
+template<typename T, unsigned S>
+Vector<T, S>& operator+=(Vector<T, S>& u, const Vector<T, S>& v);
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_>& operator-=(Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v);
+template<typename T, unsigned S>
+Vector<T, S>& operator-=(Vector<T, S>& u, const Vector<T, S>& v);
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_>& operator*=(Vector<_T_, _S_>& u, const _T_& k);
+template<typename T, unsigned S>
+Vector<T, S>& operator*=(Vector<T, S>& u, const T& k);
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_>& operator/=(Vector<_T_, _S_>& u, const _T_& k);
+template<typename T, unsigned S>
+Vector<T, S>& operator/=(Vector<T, S>& u, const T& k);
 
 // ---
 // --- class Vector2<>
 // ---
-template<typename _T_>
-class Vector2 : public Vector<_T_, 2>
+template<typename T>
+class Vector2 : public Vector<T, 2>
 {
 private:
-  typedef Vector2<_T_>   Self_t;
-  typedef Vector<_T_, 2> Super_t;
+  typedef Vector2<T>   Self_t;
+  typedef Vector<T, 2> Super_t;
 
 public:
-  Vector2<_T_>();
-  Vector2<_T_>(const _T_& vx, const _T_& vy);
-  Vector2<_T_>(const Super_t& other);
+  Vector2<T>();
+  Vector2<T>(const T& vx, const T& vy);
+  Vector2<T>(const Super_t& other);
 
-  const _T_& x() const;
-  const _T_& y() const;
-  const _T_& theta() const;
+  const T& x() const;
+  const T& y() const;
+  const T& theta() const;
 
   Self_t& operator=(const Self_t& other);
-  void setX(const _T_& v);
-  void setY(const _T_& v);
-  void setTheta(const _T_& v);
-  void setXy(const _T_& vx, const _T_& vy);
+  void setX(const T& v);
+  void setY(const T& v);
+  void setTheta(const T& v);
+  void setXy(const T& vx, const T& vy);
 };
 
-template<typename _T_>
-_T_ angle2(const Vector<_T_, 2>& v1, const Vector<_T_, 2>& v2);
+template<typename T>
+T angle2(const Vector<T, 2>& v1, const Vector<T, 2>& v2);
 
 // ---
 // --- class Vector3<>
 // ---
-template<typename _T_>
-class Vector3 : public Vector<_T_, 3>
+template<typename T>
+class Vector3 : public Vector<T, 3>
 {
 private:
-  typedef Vector3<_T_>   Self_t;
-  typedef Vector<_T_, 3> Super_t;
+  typedef Vector3<T>   Self_t;
+  typedef Vector<T, 3> Super_t;
 
 public:
-  Vector3<_T_>();
-  Vector3<_T_>(const _T_& vx, const _T_& vy, const _T_& vz);
-  Vector3<_T_>(const Super_t& other);
+  Vector3<T>();
+  Vector3<T>(const T& vx, const T& vy, const T& vz);
+  Vector3<T>(const Super_t& other);
 
-  const _T_& x() const;
-  const _T_& y() const;
-  const _T_& z() const;
+  const T& x() const;
+  const T& y() const;
+  const T& z() const;
 
   Self_t& operator=(const Self_t& other);
-  void setX(const _T_& v);
-  void setY(const _T_& v);
-  void setZ(const _T_& v);
-  void setXyz(const _T_& vx, const _T_& vy, const _T_& vz);
+  void setX(const T& v);
+  void setY(const T& v);
+  void setZ(const T& v);
+  void setXyz(const T& vx, const T& vy, const T& vz);
 };
 
-template<typename _T_>
-_T_ angle3(const Vector<_T_, 3>& v1, const Vector<_T_, 3>& v2);
-template<typename _T_, unsigned _S_>
-Vector<_T_, 3> operator^(const Vector<_T_, 3>& v1,
-                         const Vector<_T_, 3>& v2);
+template<typename T>
+T angle3(const Vector<T, 3>& v1, const Vector<T, 3>& v2);
+template<typename T, unsigned S>
+Vector<T, 3> operator^(const Vector<T, 3>& v1, const Vector<T, 3>& v2);
 
 // ---
 // --- PntVecTraits
 // ---
-template<typename _T_>
-struct PntVecTraits< geom::Point3<_T_>, geom::Vector3<_T_> >
+template<typename T>
+struct PntVecTraits< geom::Point3<T>, geom::Vector3<T> >
 {
-  typedef geom::Point3<_T_>  Pnt_t;
-  typedef geom::Vector3<_T_> Vec_t;
-  typedef _T_ Value_t;
+  typedef geom::Point3<T>  Pnt_t;
+  typedef geom::Vector3<T> Vec_t;
+  typedef T Value_t;
 
   static void normalize(Vec_t* v);
   static Vec_t cross(const Vec_t& u, const Vec_t& v);
@@ -272,7 +271,7 @@ struct PntVecTraits< geom::Point3<_T_>, geom::Vector3<_T_> >
   static Vec_t mult(Value_t k, const Vec_t& v);
 }; // struct PntVecTraits
 
-#include "mathtools/point_vector.impl.h"
+#include "point_vector.impl.h"
 
 // ---
 // --- Constants
@@ -283,6 +282,13 @@ const geom::Point2ld_t origin2ld(0., 0.);
 const geom::Point3f_t  origin3f(0.f, 0.f, 0.f);
 const geom::Point3d_t  origin3d(0., 0., 0.);
 const geom::Point3ld_t origin3ld(0., 0., 0.);
+
+const geom::Vector2f_t  nullVec2f(0.f, 0.f);
+const geom::Vector2d_t  nullVec2d(0., 0.);
+const geom::Vector2ld_t nullVec2ld(0., 0.);
+const geom::Vector3f_t  nullVec3f(0.f, 0.f, 0.f);
+const geom::Vector3d_t  nullVec3d(0., 0., 0.);
+const geom::Vector3ld_t nullVec3ld(0., 0., 0.);
 
 const geom::Vector2f_t  xDir2f(1.f, 0.f);
 const geom::Vector2d_t  xDir2d(1., 0.);

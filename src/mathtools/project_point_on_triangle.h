@@ -42,26 +42,26 @@
 
 namespace geom {
 
-template<typename _PNT_VEC_TRAITS_>
-const std::pair<typename _PNT_VEC_TRAITS_::Pnt_t, bool>
-projectPointOnTriangle(const typename _PNT_VEC_TRAITS_::Pnt_t& p,
-                       const typename _PNT_VEC_TRAITS_::Pnt_t& v0,
-                       const typename _PNT_VEC_TRAITS_::Pnt_t& v1,
-                       const typename _PNT_VEC_TRAITS_::Pnt_t& v2);
+template<typename PNT_VEC_TRAITS>
+const std::pair<typename PNT_VEC_TRAITS::Pnt_t, bool>
+projectPointOnTriangle(const typename PNT_VEC_TRAITS::Pnt_t& p,
+                       const typename PNT_VEC_TRAITS::Pnt_t& v0,
+                       const typename PNT_VEC_TRAITS::Pnt_t& v1,
+                       const typename PNT_VEC_TRAITS::Pnt_t& v2);
 
-template<typename _PNT_VEC_TRAITS_>
+template<typename PNT_VEC_TRAITS>
 struct project_point_on_triangle
 {
-  project_point_on_triangle(const typename _PNT_VEC_TRAITS_::Pnt_t& v0,
-                            const typename _PNT_VEC_TRAITS_::Pnt_t& v1,
-                            const typename _PNT_VEC_TRAITS_::Pnt_t& v2);
-  const std::pair<typename _PNT_VEC_TRAITS_::Pnt_t, bool>
-  operator()(const typename _PNT_VEC_TRAITS_::Pnt_t pnt);
+  project_point_on_triangle(const typename PNT_VEC_TRAITS::Pnt_t& v0,
+                            const typename PNT_VEC_TRAITS::Pnt_t& v1,
+                            const typename PNT_VEC_TRAITS::Pnt_t& v2);
+  const std::pair<typename PNT_VEC_TRAITS::Pnt_t, bool>
+  operator()(const typename PNT_VEC_TRAITS::Pnt_t pnt);
 
 private:
-  const typename _PNT_VEC_TRAITS_::Pnt_t& _v0;
-  const typename _PNT_VEC_TRAITS_::Pnt_t& _v1;
-  const typename _PNT_VEC_TRAITS_::Pnt_t& _v2;
+  const typename PNT_VEC_TRAITS::Pnt_t& _v0;
+  const typename PNT_VEC_TRAITS::Pnt_t& _v1;
+  const typename PNT_VEC_TRAITS::Pnt_t& _v2;
 }; // struct project_point_on_triangle
 
 } // namespace geom

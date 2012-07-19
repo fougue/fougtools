@@ -45,21 +45,21 @@
 // ---- Comparison
 
 
-template<typename _T_>
-bool equalByAbsError(const _T_& a, const _T_& b, const _T_& tol)
+template<typename T>
+bool equalByAbsError(const T& a, const T& b, const T& tol)
 {
-  assert(tol >= zero<_T_>() && "positive_tolerance");
+  assert(tol >= zero<T>() && "positive_tolerance");
   return std::abs(a - b) <= tol;
 }
 
-template<typename _T_>
-bool equalByRelError(const _T_& a, const _T_& b,
-                     const _T_& maxRelError,
-                     const _T_& maxAbsError)
+template<typename T>
+bool equalByRelError(const T& a, const T& b,
+                     const T& maxRelError,
+                     const T& maxAbsError)
 {
   if (std::abs(a - b) < maxAbsError)
     return true;
-  _T_ relativeError;
+  T relativeError;
   if (std::abs(b) > std::abs(a))
     relativeError = std::abs((a - b) / b);
   else
@@ -69,19 +69,19 @@ bool equalByRelError(const _T_& a, const _T_& b,
   return false;
 }
 
-template<typename _T_>
-bool equalByIntDiff(const _T_& a, const _T_& b,
-             typename __impl::TypeTraits<_T_>::IntegralType_t maxDistInts,
-             ComparisonCheckFlags checkFlags)
+template<typename T>
+bool equalByIntDiff(const T& a, const T& b,
+                    typename __impl::TypeTraits<T>::IntegralType_t maxDistInts,
+                    ComparisonCheckFlags checkFlags)
 {
-  typedef typename __impl::TypeTraits<_T_> Traits_t;
-  typedef typename __impl::TypeTraits<_T_>::IntegralType_t TraitsInt_t;
+  typedef typename __impl::TypeTraits<T> Traits_t;
+  typedef typename __impl::TypeTraits<T>::IntegralType_t TraitsInt_t;
 
   assert(0 < maxDistInts && "positive_and_small_enough");
 
   // Comparison flags handling.
   if ((checkFlags & NoCheck) == 0) {
-/*    if ((checkFlags & InfinityCheck) && (isInfinite(a) || isInfinite(b)))
+    /*    if ((checkFlags & InfinityCheck) && (isInfinite(a) || isInfinite(b)))
     {
       // a and b are infinity (positive or negative) then only return true
       // if they are exactly equal to each other that is, if they are
@@ -115,76 +115,76 @@ bool equalByIntDiff(const _T_& a, const _T_& b,
   return std::abs(static_cast<double>(aAsInt - bAsInt)) <= maxDistInts;
 }
 
-template<typename _T_>
-const _T_& minimum(const _T_& a, const _T_& b)
+template<typename T>
+const T& minimum(const T& a, const T& b)
 {
   return (b < a ? b : a);
 }
 
-template<typename _T_>
-const _T_& maximum(const _T_& a, const _T_& b)
+template<typename T>
+const T& maximum(const T& a, const T& b)
 {
   return (b < a ? a : b);
 }
 
-template<typename _T_, typename _LESS_THAN_>
-const _T_& minimum(const _T_& a, const _T_& b, _LESS_THAN_ lessThan)
+template<typename T, typename _LESS_THAN_>
+const T& minimum(const T& a, const T& b, _LESS_THAN_ lessThan)
 {
   return (lessThan(b, a) ? b : a);
 }
 
-template<typename _T_, typename _LESS_THAN_>
-const _T_& maximum(const _T_& a, const _T_& b, _LESS_THAN_ lessThan)
+template<typename T, typename _LESS_THAN_>
+const T& maximum(const T& a, const T& b, _LESS_THAN_ lessThan)
 {
   return (lessThan(b, a) ? a : b);
 }
 
-template<typename _T_>
-_T_ clamped(const _T_& v, const _T_& min, const _T_& max)
+template<typename T>
+T clamped(const T& v, const T& min, const T& max)
 {
   return v < min ? min : (v > max ? max : v);
 }
 
 // ---- Conversion
 
-template<typename _T_>
-double radianToDegree(const _T_& angle)
+template<typename T>
+double radianToDegree(const T& angle)
 {
   return (static_cast<double>(angle) * 180.) / math::pi;
 }
 
-template<typename _T_>
-double degreeToRadian(const _T_& angle)
+template<typename T>
+double degreeToRadian(const T& angle)
 {
   return (math::pi * static_cast<double>(angle)) / 180.;
 }
 
 // ---- Misceallenous
 
-template<typename _T_>
-int sign(const _T_& v)
+template<typename T>
+int sign(const T& v)
 {
-  if (v == zero<_T_>())
+  if (v == zero<T>())
     return 0;
-  typedef typename __impl::TypeTraits<_T_> Traits_t;
-  typedef typename __impl::TypeTraits<_T_>::IntegralType_t TraitsInt_t;
+  typedef typename __impl::TypeTraits<T> Traits_t;
+  typedef typename __impl::TypeTraits<T>::IntegralType_t TraitsInt_t;
   if (Traits_t::isNativeIntegralType())
     return v > 0 ? 1 : -1;
   else
     return ((*(TraitsInt_t*)&v) & Traits_t::twoComplementValue()) >= 0
-           ? 1 : -1;
+        ? 1 : -1;
 }
 
-template<typename _T_>
-_T_ square(const _T_& x)
+template<typename T>
+T square(const T& x)
 {
   return x * x;
 }
 
-template<typename _T_>
-_T_ zero()
+template<typename T>
+T zero()
 {
-  return static_cast<_T_>(0);
+  return static_cast<T>(0);
 }
 
 // ---- Status Report

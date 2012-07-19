@@ -58,63 +58,61 @@ enum ComparisonCheckFlags
 
 // ---- Comparison
 
-template<typename _T_>
-bool equalByAbsError(const _T_& a, const _T_& b,
-                     const _T_& tol = static_cast<_T_>(1e-6));
+template<typename T>
+bool equalByAbsError(const T& a, const T& b,
+                     const T& tol = static_cast<T>(1e-6));
 
-template<typename _T_>
-bool equalByRelError(
-    const _T_& a, const _T_& b,
-    const _T_& maxRelError = static_cast<_T_>(1e-5),
-    const _T_& maxAbsError = std::numeric_limits<_T_>::epsilon());
+template<typename T>
+bool equalByRelError(const T& a, const T& b,
+                     const T& maxRelError = static_cast<T>(1e-5),
+                     const T& maxAbsError = std::numeric_limits<T>::epsilon());
 
-template<typename _T_>
-bool equalByIntDiff(
-    const _T_& a, const _T_& b,
-    typename __impl::TypeTraits<_T_>::IntegralType_t maxDistInts = 10,
-    ComparisonCheckFlags checkFlags = NoCheck);
+template<typename T>
+bool equalByIntDiff(const T& a, const T& b,
+                    typename __impl::TypeTraits<T>::IntegralType_t maxDistInts = 10,
+                    ComparisonCheckFlags checkFlags = NoCheck);
 
-template<typename _T_>
-const _T_& minimum(const _T_& a, const _T_& b);
+template<typename T>
+const T& minimum(const T& a, const T& b);
 
-template<typename _T_>
-const _T_& maximum(const _T_& a, const _T_& b);
+template<typename T>
+const T& maximum(const T& a, const T& b);
 
-template<typename _T_, typename _LESS_THAN_>
-const _T_& minimum(const _T_& a, const _T_& b, _LESS_THAN_ lessThan);
+template<typename T, typename _LESS_THAN_>
+const T& minimum(const T& a, const T& b, _LESS_THAN_ lessThan);
 
-template<typename _T_, typename _LESS_THAN_>
-const _T_& maximum(const _T_& a, const _T_& b, _LESS_THAN_ lessThan);
+template<typename T, typename _LESS_THAN_>
+const T& maximum(const T& a, const T& b, _LESS_THAN_ lessThan);
 
-template<typename _T_>
-_T_ clamped(const _T_& v, const _T_& min, const _T_& max);
+template<typename T>
+T clamped(const T& v, const T& min, const T& max);
 
 // ---- Conversion
 
-template<typename _T_>
-double radianToDegree(const _T_& angle);
+template<typename T>
+double radianToDegree(const T& angle);
 
-template<typename _T_>
-double degreeToRadian(const _T_& angle);
+template<typename T>
+double degreeToRadian(const T& angle);
 
 // ---- Misceallenous
 
-template<typename _T_>
-int sign(const _T_& v);
+template<typename T>
+int sign(const T& v);
 
-template<typename _T_>
-_T_ square(const _T_& x);
+template<typename T>
+T square(const T& x);
 
-template<typename _T_>
-_T_ zero();
+template<typename T>
+T zero();
 
 // ---- Status Report
 
-template<typename _T_>
-bool isPositive(const _T_& v);
+template<typename T>
+bool isPositive(const T& v);
 
-template<typename _T_>
-bool isNegative(const _T_& v);
+template<typename T>
+bool isNegative(const T& v);
 
 //   inline const bool isInfinite(const float v);
 //   inline const bool isNan(const float v);

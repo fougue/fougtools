@@ -43,55 +43,55 @@
 
 // --- Construction
 
-template<typename _T_, unsigned _S_>
-Point<_T_, _S_>::Point()
+template<typename T, unsigned S>
+Point<T, S>::Point()
 {
 }
 
-template<typename _T_, unsigned _S_>
-Point<_T_, _S_>::Point(const Self_t& other) :
-    Super_t(other)
+template<typename T, unsigned S>
+Point<T, S>::Point(const Self_t& other) :
+  Super_t(other)
 {
 }
 
 // --- Element change
 
-template<typename _T_, unsigned _S_>
-Point<_T_, _S_>& Point<_T_, _S_>::operator=(const Self_t & other)
+template<typename T, unsigned S>
+Point<T, S>& Point<T, S>::operator=(const Self_t & other)
 {
   Super_t::operator=(other);
   return *this;
 }
 
 //! Synonym to distL2()
-template<typename _T_, unsigned _S_>
-_T_ Point<_T_, _S_>::dist(const Self_t& other) const
+template<typename T, unsigned S>
+T Point<T, S>::dist(const Self_t& other) const
 {
   return this->distL2(other);
 }
 
 //! Synonym to distL2Square()
-template<typename _T_, unsigned _S_>
-_T_ Point<_T_, _S_>::distSquare(const Self_t& other) const
+template<typename T, unsigned S>
+T Point<T, S>::distSquare(const Self_t& other) const
 {
   return this->distL2Square(other);
 }
 
 //! Euclidian distance
-template<typename _T_, unsigned _S_>
-_T_ Point<_T_, _S_>::distL2(const Self_t& other) const
+template<typename T, unsigned S>
+T Point<T, S>::distL2(const Self_t& other) const
 {
-  return static_cast<_T_>(std::sqrt(this->distL2Square(other)));
+  return static_cast<T>(std::sqrt(this->distL2Square(other)));
 }
 
 //! Squared euclidian distance
-template<typename _T_, unsigned _S_>
-_T_ Point<_T_, _S_>::distL2Square(const Self_t& other) const
+template<typename T, unsigned S>
+T Point<T, S>::distL2Square(const Self_t& other) const
 {
-  _T_ result = static_cast<_T_>(0);
-  for (unsigned i = 0; i < _S_; i++)
+  T result = static_cast<T>(0);
+  for (unsigned i = 0; i < S; i++)
   {
-    _T_ d = this->_vector[i] - other[i];
+    T d = this->_vector[i] - other[i];
     result += d * d;
   }
   assert(result >= 0 && "positive_distance");
@@ -101,11 +101,11 @@ _T_ Point<_T_, _S_>::distL2Square(const Self_t& other) const
 /*! \brief
  *  \relates Point
  */
-template<typename _T_, unsigned _S_>
-Point<_T_, _S_> operator-(const Point<_T_, _S_>& p)
+template<typename T, unsigned S>
+Point<T, S> operator-(const Point<T, S>& p)
 {
-  Point<_T_, _S_> result;
-  for (unsigned i = 0; i < _S_; ++i)
+  Point<T, S> result;
+  for (unsigned i = 0; i < S; ++i)
     result[i] = -p[i];
   return result;
 }
@@ -116,153 +116,153 @@ Point<_T_, _S_> operator-(const Point<_T_, _S_>& p)
 
 // --- Construction
 
-template<typename _T_>
-Point2<_T_>::Point2()
+template<typename T>
+Point2<T>::Point2()
 {
 }
 
-template<typename _T_>
-Point2<_T_>::Point2(const _T_& vx, const _T_& vy)
+template<typename T>
+Point2<T>::Point2(const T& vx, const T& vy)
 {
   this->_vector[0] = vx;
   this->_vector[1] = vy;
 }
 
-template<typename _T_>
-Point2<_T_>::Point2(const Super_t& other) :
-    Super_t(other)
+template<typename T>
+Point2<T>::Point2(const Super_t& other) :
+  Super_t(other)
 {
 }
 
 // --- Access
 
-template<typename _T_>
-const _T_& Point2<_T_>::x() const
+template<typename T>
+const T& Point2<T>::x() const
 {
   return this->_vector[0];
 }
 
 
-template<typename _T_>
-const _T_& Point2<_T_>::y() const
+template<typename T>
+const T& Point2<T>::y() const
 {
   return this->_vector[1];
 }
 
-template<typename _T_>
-const _T_& Point2<_T_>::theta() const
+template<typename T>
+const T& Point2<T>::theta() const
 {
   return this->_vector[1];
 }
 
 // --- Element change
 
-template<typename _T_>
-Point2<_T_>& Point2<_T_>::operator=(const Self_t & other)
+template<typename T>
+Point2<T>& Point2<T>::operator=(const Self_t & other)
 {
   Super_t::operator=(other);
   return *this;
 }
 
-template<typename _T_>
-void Point2<_T_>::setX(const _T_& v)
+template<typename T>
+void Point2<T>::setX(const T& v)
 {
   this->_vector[0] = v;
 }
 
-template<typename _T_>
-void Point2<_T_>::setY(const _T_& v)
+template<typename T>
+void Point2<T>::setY(const T& v)
 {
   this->_vector[1] = v;
 }
 
-template<typename _T_>
-void Point2<_T_>::setTheta(const _T_& v)
+template<typename T>
+void Point2<T>::setTheta(const T& v)
 {
   this->_vector[1] = v;
 }
 
-template<typename _T_>
-void Point2<_T_>::setXy(const _T_& vx, const _T_& vy)
+template<typename T>
+void Point2<T>::setXy(const T& vx, const T& vy)
 {
   this->_vector[0] = vx;
   this->_vector[1] = vy;
 }
 
 /*! \class Point3
- *  \brief 
+ *  \brief
  */
 
 // --- Construction
 
-template<typename _T_>
-Point3<_T_>::Point3()
+template<typename T>
+Point3<T>::Point3()
 {
 }
 
-template<typename _T_>
-Point3<_T_>::Point3(const _T_& vx, const _T_& vy, const _T_& vz)
+template<typename T>
+Point3<T>::Point3(const T& vx, const T& vy, const T& vz)
 {
   this->_vector[0] = vx;
   this->_vector[1] = vy;
   this->_vector[2] = vz;
 }
 
-template<typename _T_>
-Point3<_T_>::Point3(const Super_t& other) :
-    Super_t(other)
+template<typename T>
+Point3<T>::Point3(const Super_t& other) :
+  Super_t(other)
 {
 }
 
 // --- Access
 
-template<typename _T_>
-const _T_& Point3<_T_>::x() const
+template<typename T>
+const T& Point3<T>::x() const
 {
   return this->_vector[0];
 }
 
-template<typename _T_>
-const _T_& Point3<_T_>::y() const
+template<typename T>
+const T& Point3<T>::y() const
 {
   return this->_vector[1];
 }
 
-template<typename _T_>
-const _T_& Point3<_T_>::z() const
+template<typename T>
+const T& Point3<T>::z() const
 {
   return this->_vector[2];
 }
 
 // --- Element change
 
-template<typename _T_>
-Point3<_T_>& Point3<_T_>::operator=(const Self_t & other)
+template<typename T>
+Point3<T>& Point3<T>::operator=(const Self_t & other)
 {
   Super_t::operator=(other);
   return *this;
 }
 
-template<typename _T_>
-void Point3<_T_>::setX(const _T_& v)
+template<typename T>
+void Point3<T>::setX(const T& v)
 {
   this->_vector[0] = v;
 }
 
-template<typename _T_>
-void Point3<_T_>::setY(const _T_& v)
+template<typename T>
+void Point3<T>::setY(const T& v)
 {
   this->_vector[1] = v;
 }
 
-template<typename _T_>
-void Point3<_T_>::setZ(const _T_& v)
+template<typename T>
+void Point3<T>::setZ(const T& v)
 {
   this->_vector[2] = v;
 }
 
-template<typename _T_>
-void Point3<_T_>::setXyz(const _T_& vx, const _T_& vy, const _T_& vz)
+template<typename T>
+void Point3<T>::setXyz(const T& vx, const T& vy, const T& vz)
 {
   this->_vector[0] = vx;
   this->_vector[1] = vy;
@@ -270,72 +270,72 @@ void Point3<_T_>::setXyz(const _T_& vx, const _T_& vy, const _T_& vz)
 }
 
 /*! \class Vector
- *  \brief 
+ *  \brief
  */
 
 // --- Construction
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_>::Vector()
+template<typename T, unsigned S>
+Vector<T, S>::Vector()
 {
 }
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_>::Vector(const Self_t& other) :
-    Super_t(other)
+template<typename T, unsigned S>
+Vector<T, S>::Vector(const Self_t& other) :
+  Super_t(other)
 {
 }
 
-template<typename _T_, unsigned _S_>
-const Vector<_T_, _S_> Vector<_T_, _S_>::normalized() const
+template<typename T, unsigned S>
+const Vector<T, S> Vector<T, S>::normalized() const
 {
   return *this / this->norm();
 }
 
 // --- Measurement
 
-template<typename _T_, unsigned _S_>
-bool Vector<_T_, _S_>::isNull(const _T_& tol) const
+template<typename T, unsigned S>
+bool Vector<T, S>::isNull(const T& tol) const
 {
   return this->squareNorm() < tol;
 }
 
-template<typename _T_, unsigned _S_>
-_T_ Vector<_T_, _S_>::norm() const
+template<typename T, unsigned S>
+T Vector<T, S>::norm() const
 {
   return std::sqrt(this->squareNorm());
 }
 
-template<typename _T_, unsigned _S_>
-_T_ Vector<_T_, _S_>::squareNorm() const
+template<typename T, unsigned S>
+T Vector<T, S>::squareNorm() const
 {
-  _T_ result = static_cast<_T_>(0);
-  for (unsigned i = 0; i < _S_; ++i)
+  T result = static_cast<T>(0);
+  for (unsigned i = 0; i < S; ++i)
     result += this->_vector[i] * this->_vector[i];
   return result;
 }
 
 // --- Element change
 
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_>& Vector<_T_, _S_>::operator=(const Self_t & other)
+template<typename T, unsigned S>
+Vector<T, S>& Vector<T, S>::operator=(const Self_t & other)
 {
   Super_t::operator=(other);
   return *this;
 }
 
-template<typename _T_, unsigned _S_>
-void Vector<_T_, _S_>::normalize()
+template<typename T, unsigned S>
+void Vector<T, S>::normalize()
 {
-  const _T_ n = this->norm();
-  for (unsigned i = 0; i < _S_; ++i)
+  const T n = this->norm();
+  for (unsigned i = 0; i < S; ++i)
     this->_vector[i] /= n;
 }
 
-template<typename _T_, unsigned _S_>
-void Vector<_T_, _S_>::reverse()
+template<typename T, unsigned S>
+void Vector<T, S>::reverse()
 {
-  for (unsigned i = 0; i < _S_; ++i)
+  for (unsigned i = 0; i < S; ++i)
     this->_vector[i] = -this->_vector[i];
 }
 
@@ -343,11 +343,11 @@ void Vector<_T_, _S_>::reverse()
 /*! \brief Vector \p u multiplied by scalar \p k
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator*(const Vector<_T_, _S_>& u, const _T_& k)
+template<typename T, unsigned S>
+Vector<T, S> operator*(const Vector<T, S>& u, const T& k)
 {
-  Vector<_T_, _S_> result;
-  for (unsigned i = 0; i < _S_; ++i)
+  Vector<T, S> result;
+  for (unsigned i = 0; i < S; ++i)
     result[i] = k * u[i];
   return result;
 }
@@ -355,8 +355,8 @@ Vector<_T_, _S_> operator*(const Vector<_T_, _S_>& u, const _T_& k)
 /*! \brief
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator*(const _T_& k, const Vector<_T_, _S_>& u)
+template<typename T, unsigned S>
+Vector<T, S> operator*(const T& k, const Vector<T, S>& u)
 {
   return u * k;
 }
@@ -364,11 +364,11 @@ Vector<_T_, _S_> operator*(const _T_& k, const Vector<_T_, _S_>& u)
 /*! \brief Vector \p u divided by scalar \p k
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator/(const Vector<_T_, _S_>& u, const _T_& k)
+template<typename T, unsigned S>
+Vector<T, S> operator/(const Vector<T, S>& u, const T& k)
 {
-  Vector<_T_, _S_> result;
-  for (unsigned i = 0; i < _S_; ++i)
+  Vector<T, S> result;
+  for (unsigned i = 0; i < S; ++i)
     result[i] = u[i] / k;
   return result;
 }
@@ -376,11 +376,11 @@ Vector<_T_, _S_> operator/(const Vector<_T_, _S_>& u, const _T_& k)
 /*! \brief Scalar product of vectors \p u and \p v i.e. <u|v>
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-_T_ operator*(const Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v)
+template<typename T, unsigned S>
+T operator*(const Vector<T, S>& u, const Vector<T, S>& v)
 {
-  _T_ result = static_cast<_T_>(0);
-  for (unsigned i = 0; i < _S_; ++i)
+  T result = static_cast<T>(0);
+  for (unsigned i = 0; i < S; ++i)
     result += u[i] * v[i];
   return result;
 }
@@ -388,11 +388,11 @@ _T_ operator*(const Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v)
 /*! \brief
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator+(const Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v)
+template<typename T, unsigned S>
+Vector<T, S> operator+(const Vector<T, S>& u, const Vector<T, S>& v)
 {
-  Vector<_T_, _S_> result;
-  for (unsigned i = 0; i < _S_; ++i)
+  Vector<T, S> result;
+  for (unsigned i = 0; i < S; ++i)
     result[i] = u[i] + v[i];
   return result;
 }
@@ -400,11 +400,11 @@ Vector<_T_, _S_> operator+(const Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v)
 /*! \brief Point \p p translated by vector \p v
  *  \relates Point
  */
-template<typename _T_, unsigned _S_>
-Point<_T_, _S_> operator+(const Point<_T_, _S_>& p, const Vector<_T_, _S_>& v)
+template<typename T, unsigned S>
+Point<T, S> operator+(const Point<T, S>& p, const Vector<T, S>& v)
 {
-  Point<_T_, _S_> result;
-  for (unsigned i = 0; i < _S_; ++i)
+  Point<T, S> result;
+  for (unsigned i = 0; i < S; ++i)
     result[i] = p[i] + v[i];
   return result;
 }
@@ -412,11 +412,11 @@ Point<_T_, _S_> operator+(const Point<_T_, _S_>& p, const Vector<_T_, _S_>& v)
 /*! \brief Point \p p translated by vector \p v
  *  \relates Point
  */
-template<typename _T_, unsigned _S_>
-Point<_T_, _S_> operator-(const Point<_T_, _S_>& p, const Vector<_T_, _S_>& v)
+template<typename T, unsigned S>
+Point<T, S> operator-(const Point<T, S>& p, const Vector<T, S>& v)
 {
-  Point<_T_, _S_> result;
-  for (unsigned i = 0; i < _S_; ++i)
+  Point<T, S> result;
+  for (unsigned i = 0; i < S; ++i)
     result[i] = p[i] - v[i];
   return result;
 }
@@ -424,23 +424,23 @@ Point<_T_, _S_> operator-(const Point<_T_, _S_>& p, const Vector<_T_, _S_>& v)
 /*! \brief
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator-(const Vector<_T_, _S_>& u)
+template<typename T, unsigned S>
+Vector<T, S> operator-(const Vector<T, S>& u)
 {
-  Vector<_T_, _S_> result;
-  for (unsigned i = 0; i < _S_; ++i)
+  Vector<T, S> result;
+  for (unsigned i = 0; i < S; ++i)
     result[i] = -u[i];
-  return result; 
+  return result;
 }
 
 /*! \brief
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator-(const Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v)
+template<typename T, unsigned S>
+Vector<T, S> operator-(const Vector<T, S>& u, const Vector<T, S>& v)
 {
-  Vector<_T_, _S_> result;
-  for (unsigned i = 0; i < _S_; ++i)
+  Vector<T, S> result;
+  for (unsigned i = 0; i < S; ++i)
     result[i] = u[i] - v[i];
   return result;
 }
@@ -448,11 +448,11 @@ Vector<_T_, _S_> operator-(const Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v)
 /*! \brief
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_> operator-(const Point<_T_, _S_>& p1, const Point<_T_, _S_>& p2)
+template<typename T, unsigned S>
+Vector<T, S> operator-(const Point<T, S>& p1, const Point<T, S>& p2)
 {
-  Vector<_T_, _S_> result;
-  for (unsigned i = 0; i < _S_; ++i)
+  Vector<T, S> result;
+  for (unsigned i = 0; i < S; ++i)
     result[i] = p1[i] - p2[i];
   return result;
 }
@@ -460,10 +460,10 @@ Vector<_T_, _S_> operator-(const Point<_T_, _S_>& p1, const Point<_T_, _S_>& p2)
 /*! \brief
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_>& operator+=(Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v)
+template<typename T, unsigned S>
+Vector<T, S>& operator+=(Vector<T, S>& u, const Vector<T, S>& v)
 {
-  for (unsigned i = 0; i < _S_; ++i)
+  for (unsigned i = 0; i < S; ++i)
     u[i] += v[i];
   return u;
 }
@@ -471,10 +471,10 @@ Vector<_T_, _S_>& operator+=(Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v)
 /*! \brief
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_>& operator-=(Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v)
+template<typename T, unsigned S>
+Vector<T, S>& operator-=(Vector<T, S>& u, const Vector<T, S>& v)
 {
-  for (unsigned i = 0; i < _S_; ++i)
+  for (unsigned i = 0; i < S; ++i)
     u[i] -= v[i];
   return u;
 }
@@ -482,10 +482,10 @@ Vector<_T_, _S_>& operator-=(Vector<_T_, _S_>& u, const Vector<_T_, _S_>& v)
 /*! \brief
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_>& operator*=(Vector<_T_, _S_>& u, const _T_& k)
+template<typename T, unsigned S>
+Vector<T, S>& operator*=(Vector<T, S>& u, const T& k)
 {
-  for (unsigned i = 0; i < _S_; ++i)
+  for (unsigned i = 0; i < S; ++i)
     u[i] *= k;
   return u;
 }
@@ -493,98 +493,98 @@ Vector<_T_, _S_>& operator*=(Vector<_T_, _S_>& u, const _T_& k)
 /*! \brief
  *  \relates Vector
  */
-template<typename _T_, unsigned _S_>
-Vector<_T_, _S_>& operator/=(Vector<_T_, _S_>& u, const _T_& k)
+template<typename T, unsigned S>
+Vector<T, S>& operator/=(Vector<T, S>& u, const T& k)
 {
-  for (unsigned i = 0; i < _S_; ++i)
+  for (unsigned i = 0; i < S; ++i)
     u[i] /= k;
   return u;
 }
 
 /*! \class Vector2
- *  \brief 
+ *  \brief
  */
 
 // --- Construction
 
-template<typename _T_>
-Vector2<_T_>::Vector2()
+template<typename T>
+Vector2<T>::Vector2()
 {
 }
 
-template<typename _T_>
-Vector2<_T_>::Vector2(const _T_& vx, const _T_& vy)
+template<typename T>
+Vector2<T>::Vector2(const T& vx, const T& vy)
 {
   this->_vector[0] = vx;
   this->_vector[1] = vy;
 }
 
-template<typename _T_>
-Vector2<_T_>::Vector2(const Super_t& other) :
-    Super_t(other)
+template<typename T>
+Vector2<T>::Vector2(const Super_t& other) :
+  Super_t(other)
 {
 }
 
 // --- Access
 
-template<typename _T_>
-const _T_& Vector2<_T_>::x() const
+template<typename T>
+const T& Vector2<T>::x() const
 {
   return this->_vector[0];
 }
 
 
-template<typename _T_>
-const _T_& Vector2<_T_>::y() const
+template<typename T>
+const T& Vector2<T>::y() const
 {
   return this->_vector[1];
 }
 
-template<typename _T_>
-const _T_& Vector2<_T_>::theta() const
+template<typename T>
+const T& Vector2<T>::theta() const
 {
   return this->_vector[1];
 }
 
 // --- Element change
 
-template<typename _T_>
-Vector2<_T_>& Vector2<_T_>::operator=(const Self_t & other)
+template<typename T>
+Vector2<T>& Vector2<T>::operator=(const Self_t & other)
 {
   Super_t::operator=(other);
   return *this;
 }
 
-template<typename _T_>
-void Vector2<_T_>::setX(const _T_& v)
+template<typename T>
+void Vector2<T>::setX(const T& v)
 {
   this->_vector[0] = v;
 }
 
-template<typename _T_>
-void Vector2<_T_>::setY(const _T_& v)
+template<typename T>
+void Vector2<T>::setY(const T& v)
 {
   this->_vector[1] = v;
 }
 
-template<typename _T_>
-void Vector2<_T_>::setTheta(const _T_& v)
+template<typename T>
+void Vector2<T>::setTheta(const T& v)
 {
   this->_vector[1] = v;
 }
 
-template<typename _T_>
-void Vector2<_T_>::setXy(const _T_& vx, const _T_& vy)
+template<typename T>
+void Vector2<T>::setXy(const T& vx, const T& vy)
 {
   this->_vector[0] = vx;
   this->_vector[1] = vy;
 }
 
-template<typename _T_>
-_T_ angle2(const Vector<_T_, 2>& v1, const Vector<_T_, 2>& v2)
+template<typename T>
+T angle2(const Vector<T, 2>& v1, const Vector<T, 2>& v2)
 {
-  const Vector<_T_, 2> nv1(v1.normalized());
-  const Vector<_T_, 2> nv2(v2.normalized());
+  const Vector<T, 2> nv1(v1.normalized());
+  const Vector<T, 2> nv2(v2.normalized());
   const double cosinus = nv1 * nv2;
   const double sinus = nv1[0] * nv2[1] - nv1[1] * nv2[0];
   if (cosinus > -math::pi / 4. && cosinus < math::pi / 4.)
@@ -606,90 +606,90 @@ _T_ angle2(const Vector<_T_, 2>& v1, const Vector<_T_, 2>& v2)
 }
 
 /*! \class Vector3
- *  \brief 
+ *  \brief
  */
 
 // --- Construction
 
-template<typename _T_>
-Vector3<_T_>::Vector3()
+template<typename T>
+Vector3<T>::Vector3()
 {
 }
 
-template<typename _T_>
-Vector3<_T_>::Vector3(const _T_& vx, const _T_& vy, const _T_& vz)
+template<typename T>
+Vector3<T>::Vector3(const T& vx, const T& vy, const T& vz)
 {
   this->_vector[0] = vx;
   this->_vector[1] = vy;
   this->_vector[2] = vz;
 }
 
-template<typename _T_>
-Vector3<_T_>::Vector3(const Super_t& other) :
-    Super_t(other)
+template<typename T>
+Vector3<T>::Vector3(const Super_t& other) :
+  Super_t(other)
 {
 }
 
 // --- Access
 
-template<typename _T_>
-const _T_& Vector3<_T_>::x() const
+template<typename T>
+const T& Vector3<T>::x() const
 {
   return this->_vector[0];
 }
 
-template<typename _T_>
-const _T_& Vector3<_T_>::y() const
+template<typename T>
+const T& Vector3<T>::y() const
 {
   return this->_vector[1];
 }
 
-template<typename _T_>
-const _T_& Vector3<_T_>::z() const
+template<typename T>
+const T& Vector3<T>::z() const
 {
   return this->_vector[2];
 }
 
 // --- Element change
 
-template<typename _T_>
-Vector3<_T_>& Vector3<_T_>::operator=(const Self_t & other)
+template<typename T>
+Vector3<T>& Vector3<T>::operator=(const Self_t & other)
 {
   Super_t::operator=(other);
   return *this;
 }
 
-template<typename _T_>
-void Vector3<_T_>::setX(const _T_& v)
+template<typename T>
+void Vector3<T>::setX(const T& v)
 {
   this->_vector[0] = v;
 }
 
-template<typename _T_>
-void Vector3<_T_>::setY(const _T_& v)
+template<typename T>
+void Vector3<T>::setY(const T& v)
 {
   this->_vector[1] = v;
 }
 
-template<typename _T_>
-void Vector3<_T_>::setZ(const _T_& v)
+template<typename T>
+void Vector3<T>::setZ(const T& v)
 {
   this->_vector[2] = v;
 }
 
-template<typename _T_>
-void Vector3<_T_>::setXyz(const _T_& vx, const _T_& vy, const _T_& vz)
+template<typename T>
+void Vector3<T>::setXyz(const T& vx, const T& vy, const T& vz)
 {
   this->_vector[0] = vx;
   this->_vector[1] = vy;
   this->_vector[2] = vz;
 }
 
-template<typename _T_>
-_T_ angle3(const Vector<_T_, 3>& v1, const Vector<_T_, 3>& v2)
+template<typename T>
+T angle3(const Vector<T, 3>& v1, const Vector<T, 3>& v2)
 {
-  const Vector<_T_, 3> nv1(v1.normalized());
-  const Vector<_T_, 3> nv2(v2.normalized());
+  const Vector<T, 3> nv1(v1.normalized());
+  const Vector<T, 3> nv2(v2.normalized());
   const double cosinus = nv1 * nv2;
   if (cosinus > -math::pi / 4. && cosinus < math::pi / 4.)
   {
@@ -708,10 +708,10 @@ _T_ angle3(const Vector<_T_, 3>& v1, const Vector<_T_, 3>& v2)
 /*! \brief Cross product of vectors \p v1 and \p v2 i.e. v1 ^ v2.
  *  \relates Vector3
  */
-template<typename _T_>
-Vector<_T_, 3> operator^(const Vector<_T_, 3>& v1, const Vector<_T_, 3>& v2)
+template<typename T>
+Vector<T, 3> operator^(const Vector<T, 3>& v1, const Vector<T, 3>& v2)
 {
-  Vector<_T_, 3> result;
+  Vector<T, 3> result;
   result[0] = v1[1] * v2[2] - v1[2] * v2[1];
   result[1] = v1[2] * v2[0] - v1[0] * v2[2];
   result[2] = v1[0] * v2[1] - v1[1] * v2[0];
@@ -722,54 +722,54 @@ Vector<_T_, 3> operator^(const Vector<_T_, 3>& v1, const Vector<_T_, 3>& v2)
 // --- PntVecTraits
 // ---
 
-template<typename _T_>
-void PntVecTraits< geom::Point3<_T_>, geom::Vector3<_T_> >::normalize(
-  geom::Vector3<_T_>* v)
+template<typename T>
+void PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::normalize(
+    geom::Vector3<T>* v)
 {
   assert(v != 0);
   v->normalize();
 }
 
-template<typename _T_>
-geom::Vector3<_T_> PntVecTraits< geom::Point3<_T_>, geom::Vector3<_T_> >
-  ::cross(const geom::Vector3<_T_>& u, const geom::Vector3<_T_>& v)
+template<typename T>
+geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >
+::cross(const geom::Vector3<T>& u, const geom::Vector3<T>& v)
 {
   return u ^ v;
 }
 
-template<typename _T_>
-_T_ PntVecTraits< geom::Point3<_T_>, geom::Vector3<_T_> >::dot(
-  const geom::Vector3<_T_>& u, const geom::Vector3<_T_>& v)
+template<typename T>
+T PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::dot(
+    const geom::Vector3<T>& u, const geom::Vector3<T>& v)
 {
   return u * v;
 }
 
-template<typename _T_>
-geom::Point3<_T_> PntVecTraits< geom::Point3<_T_>, geom::Vector3<_T_> >::
-  translate(const geom::Point3<_T_>& p, const geom::Vector3<_T_>& v)
+template<typename T>
+geom::Point3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::
+translate(const geom::Point3<T>& p, const geom::Vector3<T>& v)
 {
   return p + v;
 }
 
-template<typename _T_>
-geom::Vector3<_T_> PntVecTraits< geom::Point3<_T_>, geom::Vector3<_T_> >::
-  vector(const geom::Point3<_T_>& p1, const geom::Point3<_T_>& p2)
+template<typename T>
+geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::
+vector(const geom::Point3<T>& p1, const geom::Point3<T>& p2)
 {
   return Vec_t(p2.x() - p1.x(), p2.y() - p1.y(), p2.z() - p1.z());
 }
 
-template<typename _T_>
-geom::Vector3<_T_> PntVecTraits< geom::Point3<_T_>, geom::Vector3<_T_> >::
-  vector(const Pnt_t& p)
+template<typename T>
+geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::
+vector(const Pnt_t& p)
 {
- return Vec_t(p.x(), p.y(), p.z());
+  return Vec_t(p.x(), p.y(), p.z());
 }
 
-template<typename _T_>
-geom::Vector3<_T_> PntVecTraits< geom::Point3<_T_>, geom::Vector3<_T_> >::
-  mult(Value_t k, const Vec_t& v)
+template<typename T>
+geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::
+mult(Value_t k, const Vec_t& v)
 {
- return k * v;
+  return k * v;
 }
 
 #endif // BITS_GEOM_POINT_VECTOR_H

@@ -42,6 +42,7 @@ namespace qttools {
 /*! \class Calculator
  *  \brief Provides evaluation of expressions
  *
+ *  \note Author of the evaluation script is Yves Bailly (kafka.fr@laposte.net)
  */
 
 Calculator::Calculator()
@@ -89,8 +90,8 @@ void Calculator::evaluate(const QString& program)
 bool Calculator::hasResult() const
 {
   return
-      !m_scriptEngine.hasUncaughtException() &&
-      (m_lastResult.isNumber() || m_lastResult.isString());
+      !m_scriptEngine.hasUncaughtException()
+      && (m_lastResult.isNumber() || m_lastResult.isString());
 }
 
 QString Calculator::lastErrorText() const

@@ -47,6 +47,7 @@ class AbstractTreeBfsExplorer
 {
 public:
   AbstractTreeBfsExplorer();
+  virtual ~AbstractTreeBfsExplorer();
 
   void begin(NODE* node = static_cast<NODE*>(0));
   void goNext();
@@ -75,6 +76,11 @@ template<class NODE>
 AbstractTreeBfsExplorer<NODE>::AbstractTreeBfsExplorer()
   : m_current(static_cast<NODE*>(0)),
     m_depth(0)
+{
+}
+
+template<class NODE>
+AbstractTreeBfsExplorer<NODE>::~AbstractTreeBfsExplorer()
 {
 }
 

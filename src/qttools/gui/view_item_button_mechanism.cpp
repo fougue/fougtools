@@ -54,60 +54,67 @@ class ViewItemButtonMechanismPrivate
 public:
   struct ButtonInfo
   {
+    int index;
     QIcon icon;
     QString toolTip;
-    bool isOverButton;
     int matchRole;
     QVariant matchData;
     int displayColumn;
     ViewItemButtonMechanism::ItemSide itemSide;
+    ViewItemButtonMechanism::DisplayMode itemDisplayMode;
   };
 
   ViewItemButtonMechanismPrivate(ViewItemButtonMechanism* backPtr);
 
-  ButtonInfo buttonInfo(int btnId) const;
+  const ButtonInfo* buttonInfo(int btnId) const;
   ButtonInfo* mutableButtonInfo(int btnId);
   void setAllIsOverButtonState(bool on);
   QModelIndex modelIndexForButtonDisplay(const QModelIndex& index) const;
   void itemViewUpdateAt(const QModelIndex& index);
+  void paintButton(ButtonInfo *btnInfo,
+                   QPainter* painter,
+                   const QStyleOptionViewItem& option,
+                   const QModelIndex& index);
+  void resetButtonUnderMouseState();
 
   QAbstractItemView* m_view;
   QHash<int, ButtonInfo> m_btnInfos;
   QModelIndex m_prevModelIndexUnderMouse;
+  const ButtonInfo* m_buttonUnderMouse;
 
 private:
   ViewItemButtonMechanism* m_backPtr;
 };
 
 ViewItemButtonMechanismPrivate::ViewItemButtonMechanismPrivate(ViewItemButtonMechanism *backPtr)
-  : m_view(nullptr),
+  : m_view(0),
+    m_buttonUnderMouse(0),
     m_backPtr(backPtr)
 {
 }
 
-ViewItemButtonMechanismPrivate::ButtonInfo ViewItemButtonMechanismPrivate::buttonInfo(int btnId) const
+const ViewItemButtonMechanismPrivate::ButtonInfo *ViewItemButtonMechanismPrivate::buttonInfo(int btnId) const
 {
-  return m_btnInfos.value(btnId);
+  const QHash<int, ButtonInfo>::ConstIterator iBtnInfo = m_btnInfos.find(btnId);
+  if (iBtnInfo != m_btnInfos.constEnd())
+    return &(iBtnInfo.value());
+  return 0;
 }
 
 ViewItemButtonMechanismPrivate::ButtonInfo *ViewItemButtonMechanismPrivate::mutableButtonInfo(int btnId)
 {
-  if (m_btnInfos.contains(btnId))
-    return &(m_btnInfos[btnId]);
-  return nullptr;
-}
-
-void ViewItemButtonMechanismPrivate::setAllIsOverButtonState(bool on)
-{
-  foreach (int id, m_btnInfos.keys())
-    this->mutableButtonInfo(id)->isOverButton = on;
+  QHash<int, ButtonInfo>::Iterator iBtnInfo = m_btnInfos.find(btnId);
+  if (iBtnInfo != m_btnInfos.end())
+    return &(iBtnInfo.value());
+  return 0;
 }
 
 QModelIndex ViewItemButtonMechanismPrivate::modelIndexForButtonDisplay(const QModelIndex &index) const
 {
   const int btnIndex = m_backPtr->buttonAtModelIndex(index);
-  if (m_btnInfos.contains(btnIndex) && this->buttonInfo(btnIndex).displayColumn != -1)
-    return index.sibling(index.row(), this->buttonInfo(btnIndex).displayColumn);
+  const ViewItemButtonMechanismPrivate::ButtonInfo* btnInfo = this->buttonInfo(btnIndex);
+  if (btnInfo != 0 && btnInfo->displayColumn != -1)
+    return index.sibling(index.row(), btnInfo->displayColumn);
   return index;
 }
 
@@ -120,6 +127,39 @@ void ViewItemButtonMechanismPrivate::itemViewUpdateAt(const QModelIndex &index)
     m_view->update(displayIndex);
 }
 
+void ViewItemButtonMechanismPrivate::paintButton(ButtonInfo *btnInfo,
+                                                 QPainter *painter,
+                                                 const QStyleOptionViewItem &option,
+                                                 const QModelIndex& index)
+{
+  if (btnInfo == 0 || painter == 0)
+    return;
+
+  const int pixWidth = option.rect.height();
+  const int pixHeight = option.rect.height();
+
+  QRect pixRect;
+  if (btnInfo->itemSide == ViewItemButtonMechanism::ItemLeftSide)
+    pixRect = QRect(option.rect.left() + 2, option.rect.top(), pixWidth, pixHeight);
+  else
+    pixRect = QRect(option.rect.right() - pixWidth - 2, option.rect.top(), pixWidth, pixHeight);
+
+  const bool isInsideButtonRegion =
+      pixRect.contains(m_view->viewport()->mapFromGlobal(QCursor::pos()));
+  const QIcon icon = btnInfo->icon;
+  const QPixmap pix = icon.pixmap(pixWidth, pixHeight, isInsideButtonRegion ? QIcon::Active :
+                                                                              QIcon::Normal);
+  painter->drawPixmap(pixRect, pix);
+
+  if (isInsideButtonRegion)
+    m_buttonUnderMouse = btnInfo;
+}
+
+void ViewItemButtonMechanismPrivate::resetButtonUnderMouseState()
+{
+  m_buttonUnderMouse = 0;
+}
+
 /*! \class ViewItemButtonMechanism
  *  \brief Provides buttons integrated to items displayed by QAbstractItemView
  */
@@ -129,7 +169,7 @@ ViewItemButtonMechanism::ViewItemButtonMechanism(QAbstractItemView* view, QObjec
     d(new ViewItemButtonMechanismPrivate(this))
 {
   d->m_view = view;
-  if (view != nullptr) {
+  if (view != 0) {
     view->viewport()->setMouseTracking(true);
     view->viewport()->installEventFilter(this);
   }
@@ -148,6 +188,7 @@ QAbstractItemView* ViewItemButtonMechanism::itemView() const
 void ViewItemButtonMechanism::reset()
 {
   d->m_prevModelIndexUnderMouse = QModelIndex();
+  d->resetButtonUnderMouseState();
 }
 
 bool ViewItemButtonMechanism::eventFilter(QObject *object, QEvent *event)
@@ -155,10 +196,11 @@ bool ViewItemButtonMechanism::eventFilter(QObject *object, QEvent *event)
   if (object == this->itemView()->viewport()) {
     const QMouseEvent* mouseEvent = dynamic_cast<const QMouseEvent*>(event);
     const QModelIndex modelIndexUnderMouse =
-        mouseEvent != nullptr ? this->itemView()->indexAt(mouseEvent->pos()) :
-                                QModelIndex();
+        mouseEvent != 0 ? this->itemView()->indexAt(mouseEvent->pos()) :
+                          QModelIndex();
     switch (event->type()) {
     case QEvent::MouseMove: {
+      d->resetButtonUnderMouseState();
       if (d->m_prevModelIndexUnderMouse != modelIndexUnderMouse)
         d->itemViewUpdateAt(d->m_prevModelIndexUnderMouse);
       d->itemViewUpdateAt(modelIndexUnderMouse);
@@ -169,23 +211,16 @@ bool ViewItemButtonMechanism::eventFilter(QObject *object, QEvent *event)
       if (mouseEvent->button() != Qt::LeftButton)
         return false;
 
-      foreach (int btnIndex, d->m_btnInfos.keys()) {
-        if (d->m_btnInfos.value(btnIndex).isOverButton) {
-          emit buttonClicked(btnIndex, modelIndexUnderMouse);
-          return true;
-        }
+      if (d->m_buttonUnderMouse != 0)
+      {
+        emit buttonClicked(d->m_buttonUnderMouse->index, modelIndexUnderMouse);
+        return true;
       }
       return false;
     }
     case QEvent::ToolTip: {
-      QString toolTip;
-      foreach (int btnIndex, d->m_btnInfos.keys()) {
-        if (d->m_btnInfos.value(btnIndex).isOverButton) {
-          toolTip = d->m_btnInfos.value(btnIndex).toolTip;
-          break;
-        }
-      }
-
+      const QString toolTip = d->m_buttonUnderMouse != 0 ? d->m_buttonUnderMouse->toolTip :
+                                                           QString();
       if (!toolTip.isEmpty()) {
         QToolTip::showText(QCursor::pos(), toolTip, this->itemView());
         return true;
@@ -206,67 +241,60 @@ void ViewItemButtonMechanism::paint(QPainter *painter,
                                     const QModelIndex &index)
 {
   bool mouseIsOver = false;
-  if (painter != nullptr) {
+  if (painter != 0) {
     QWidget* w = dynamic_cast<QWidget*>(painter->device());
-    if (w != nullptr) {
+    if (w != 0) {
       QPoint mousePos = QCursor::pos();
       QPoint wMousePos = w->mapFromGlobal(mousePos);
       mouseIsOver = option.rect.contains(wMousePos);
     }
   }
 
-//  QStyledItemDelegate::paint(painter, option, index);
+  //  QStyledItemDelegate::paint(painter, option, index);
 
   if (this->itemView()->isEnabled()) {
-    const int pixWidth = option.rect.height();
-    const int pixHeight = option.rect.height();
-
     QStyleOptionViewItemV4 optionForBtn(option);
     optionForBtn.rect = this->itemView()->visualRect(d->modelIndexForButtonDisplay(index));
-
-    if (mouseIsOver) {
-      const int btnIndex = this->buttonAtModelIndex(index);
-      if (d->m_btnInfos.contains(btnIndex)) {
-        const ViewItemButtonMechanismPrivate::ButtonInfo btnInfo = d->m_btnInfos.value(btnIndex);
-        QRect pixRect;
-        if (btnInfo.itemSide == ItemLeftSide) {
-          pixRect = QRect(optionForBtn.rect.left() + 2, optionForBtn.rect.top(),
-                          pixWidth, pixHeight);
-        }
-        else {
-          pixRect = QRect(optionForBtn.rect.right() - pixWidth - 2, optionForBtn.rect.top(),
-                          pixWidth, pixHeight);
-        }
-
-        const bool isInsideButtonRegion =
-            pixRect.contains(this->itemView()->viewport()->mapFromGlobal(QCursor::pos()));
-        const QIcon icon = btnInfo.icon;
-        const QPixmap pix = icon.pixmap(pixWidth, pixHeight, isInsideButtonRegion ? QIcon::Active :
-                                                                                    QIcon::Normal);
-        painter->drawPixmap(pixRect, pix);
-
-        d->setAllIsOverButtonState(false);
-        d->mutableButtonInfo(btnIndex)->isOverButton = isInsideButtonRegion;
-      }
+    const int btnIndex = this->buttonAtModelIndex(index);
+    ViewItemButtonMechanismPrivate::ButtonInfo* btnInfo = d->mutableButtonInfo(btnIndex);
+    const int dispMode = btnInfo != 0 ? btnInfo->itemDisplayMode : -1;
+    switch (dispMode) {
+    case DisplayPermanent: {
+      d->paintButton(btnInfo, painter, optionForBtn, index);
+      break;
     }
-    else {
-      painter->fillRect(optionForBtn.rect, optionForBtn.backgroundBrush);
+    case DisplayOnDetection: {
+      if (mouseIsOver)
+        d->paintButton(btnInfo, painter, optionForBtn, index);
+      else
+        painter->fillRect(optionForBtn.rect, optionForBtn.backgroundBrush);
+      break;
+    }
+    default:
+      break;
     }
   }
-  else  {
-    d->setAllIsOverButtonState(false);
+  else {
+    d->resetButtonUnderMouseState();
+    //    d->setAllIsOverButtonState(false);
   }
 }
 
 void ViewItemButtonMechanism::addButton(int btnId, const QIcon &icon, const QString &toolTip)
 {
+  if (d->m_btnInfos.contains(btnId)) {
+    qWarning() << QString("%1 : there is already a button of index '%2'").arg(btnId);
+    return;
+  }
+
   ViewItemButtonMechanismPrivate::ButtonInfo info;
+  info.index = btnId;
   info.icon = icon;
   info.toolTip = toolTip;
-  info.isOverButton = false;
   info.matchRole = Qt::UserRole + 1;
   info.displayColumn = -1;
   info.itemSide = ItemRightSide;
+  info.itemDisplayMode = DisplayOnDetection;
   d->m_btnInfos.insert(btnId, info);
 }
 
@@ -290,14 +318,20 @@ void ViewItemButtonMechanism::setButtonItemSide(int btnId, ItemSide side)
     d->mutableButtonInfo(btnId)->itemSide = side;
 }
 
+void ViewItemButtonMechanism::setButtonDisplayMode(int btnId, DisplayMode mode)
+{
+  if (d->m_btnInfos.contains(btnId))
+    d->mutableButtonInfo(btnId)->itemDisplayMode = mode;
+}
+
 int ViewItemButtonMechanism::buttonAtModelIndex(const QModelIndex &index) const
 {
   foreach (int id, d->m_btnInfos.keys()) {
-    const ViewItemButtonMechanismPrivate::ButtonInfo btnInfo = d->m_btnInfos.value(id);
-    const QVariant modelItemData = index.data(btnInfo.matchRole);
-    if ((!btnInfo.matchData.isNull() && btnInfo.matchData.isValid())
+    const ViewItemButtonMechanismPrivate::ButtonInfo* btnInfo = d->buttonInfo(id);
+    const QVariant modelItemData = index.data(btnInfo->matchRole);
+    if ((!btnInfo->matchData.isNull() && btnInfo->matchData.isValid())
         && (!modelItemData.isNull() && modelItemData.isValid())
-        && (btnInfo.matchData == modelItemData))
+        && (btnInfo->matchData == modelItemData))
     {
       return id;
     }

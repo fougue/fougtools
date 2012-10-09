@@ -62,7 +62,13 @@ public:
     ItemRightSide
   };
 
-  ViewItemButtonMechanism(QAbstractItemView* view, QObject* parent = nullptr);
+  enum DisplayMode
+  {
+    DisplayOnDetection,
+    DisplayPermanent
+  };
+
+  ViewItemButtonMechanism(QAbstractItemView* view, QObject* parent = 0);
   ~ViewItemButtonMechanism();
 
   QAbstractItemView* itemView() const;
@@ -74,6 +80,7 @@ public:
   void setButtonDetection(int btnId, int matchRole, const QVariant& matchData);
   void setButtonDisplayColumn(int btnId, int col = -1);
   void setButtonItemSide(int btnId, ItemSide side);
+  void setButtonDisplayMode(int btnId, DisplayMode mode);
 
 signals:
   void buttonClicked(int btnId, const QModelIndex& index);

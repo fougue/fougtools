@@ -73,8 +73,7 @@ public:
   void itemViewUpdateAt(const QModelIndex& index);
   void paintButton(ButtonInfo *btnInfo,
                    QPainter* painter,
-                   const QStyleOptionViewItem& option,
-                   const QModelIndex& index);
+                   const QStyleOptionViewItem& option);
   void resetButtonUnderMouseState();
 
   QAbstractItemView* m_view;
@@ -129,8 +128,7 @@ void ViewItemButtonMechanismPrivate::itemViewUpdateAt(const QModelIndex &index)
 
 void ViewItemButtonMechanismPrivate::paintButton(ButtonInfo *btnInfo,
                                                  QPainter *painter,
-                                                 const QStyleOptionViewItem &option,
-                                                 const QModelIndex& index)
+                                                 const QStyleOptionViewItem &option)
 {
   if (btnInfo == 0 || painter == 0)
     return;
@@ -260,12 +258,12 @@ void ViewItemButtonMechanism::paint(QPainter *painter,
     const int dispMode = btnInfo != 0 ? btnInfo->itemDisplayMode : -1;
     switch (dispMode) {
     case DisplayPermanent: {
-      d->paintButton(btnInfo, painter, optionForBtn, index);
+      d->paintButton(btnInfo, painter, optionForBtn);
       break;
     }
     case DisplayOnDetection: {
       if (mouseIsOver)
-        d->paintButton(btnInfo, painter, optionForBtn, index);
+        d->paintButton(btnInfo, painter, optionForBtn);
       else
         painter->fillRect(optionForBtn.rect, optionForBtn.backgroundBrush);
       break;

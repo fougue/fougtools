@@ -49,14 +49,14 @@ class QTTOOLS_SQL_EXPORT DatabaseManager
 {
 public:
   DatabaseManager(const QSqlDatabase& refDb);
-  ~DatabaseManager();
+  virtual ~DatabaseManager();
 
   bool isDatabaseOpen(const QThread* inThread = QThread::currentThread()) const;
   bool hasDatabase(const QThread* inThread = QThread::currentThread()) const;
 
   const QSqlDatabase& referenceDatabase() const;
   QSqlDatabase database(const QThread* inThread = QThread::currentThread()) const;
-  QSqlDatabase createDatabase(const QThread* inThread = QThread::currentThread());
+  virtual QSqlDatabase createDatabase(const QThread* inThread = QThread::currentThread());
 
   QSqlQuery execSqlCode(const QString& sqlCode,
                         const QThread* inThread = QThread::currentThread()) const;

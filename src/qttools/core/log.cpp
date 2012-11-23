@@ -42,24 +42,32 @@
 #include <QtCore/QMetaType>
 #include <QtCore/QPair>
 
-namespace {
+namespace qttools {
 
-QList<qttools::AbstractLogHandler*> globalLogHandlers;
+namespace internal {
+
+static QList<qttools::AbstractLogHandler*>* globalLogHandlers()
+{
+  static QList<qttools::AbstractLogHandler*> object;
+  return &object;
+}
+
 typedef QPair<qttools::Log::MessageType, QString> PendingLogMessage;
-QLinkedList<PendingLogMessage> globalPendingMessages;
-
-} // Anonymous namespace
+static QLinkedList<PendingLogMessage>* globalPendingMessages()
+{
+  static QLinkedList<PendingLogMessage> object;
+  return &object;
+}
 
 static void handleLogMessage(qttools::Log::MessageType msgType, const QString& msg)
 {
-  if (globalLogHandlers.isEmpty())
-    globalPendingMessages.append(qMakePair(msgType, msg));
-  foreach (qttools::AbstractLogHandler* logHandler, globalLogHandlers)
+  if (globalLogHandlers()->isEmpty())
+    globalPendingMessages()->append(qMakePair(msgType, msg));
+  foreach (qttools::AbstractLogHandler* logHandler, *(globalLogHandlers()))
     logHandler->handle(msgType, msg );
 }
 
-
-namespace qttools {
+} // namespace internal
 
 /*! \class Log::Stream
  *  \brief Encapsulates a reference-counted QTextStream so a Log object can be quickly copied
@@ -121,7 +129,7 @@ Log::~Log()
 {
   --(m_stream->refCount);
   if (m_stream->refCount == 0) {
-    ::handleLogMessage(m_stream->msgType, m_stream->buffer.toLocal8Bit().data());
+    internal::handleLogMessage(m_stream->msgType, m_stream->buffer.toLocal8Bit().data());
     delete m_stream;
   }
 }
@@ -305,12 +313,14 @@ void AbstractLogHandler::setAutoDetach(bool b)
 void attachGlobalLogHandler(AbstractLogHandler* handler)
 {
   if (handler != 0) {
-    if (::globalLogHandlers.isEmpty() && !::globalPendingMessages.isEmpty()) {
-      foreach (const PendingLogMessage& msg, ::globalPendingMessages)
+    if (internal::globalLogHandlers()->isEmpty()
+        && !internal::globalPendingMessages()->isEmpty())
+    {
+      foreach (const internal::PendingLogMessage& msg, *(internal::globalPendingMessages()))
         handler->handle(msg.first, msg.second);
-      ::globalPendingMessages.clear();
+      internal::globalPendingMessages()->clear();
     }
-    ::globalLogHandlers.append(handler);
+    internal::globalLogHandlers()->append(handler);
   }
 }
 
@@ -320,7 +330,7 @@ void attachGlobalLogHandler(AbstractLogHandler* handler)
 void detachGlobalLogHandler(AbstractLogHandler* handler)
 {
   if (handler != 0)
-    ::globalLogHandlers.removeAll(handler);
+    internal::globalLogHandlers()->removeAll(handler);
 }
 
 /*! \class LogDispatcher

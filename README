@@ -39,6 +39,10 @@ Create a file named _local_config.pri in folder qmake.build and put the
 root path to the Boost library like this :
 
   BOOST_ROOT = /path/to/boost
+  CONFIG *= occtools  # If you want to build occtools (optional)
+  CONFIG *= use_oce   # If you want OpenCascade Community edition (OCE)
+
+Or use script qmake.build/configure.rb
 
 Note that :
   - Boost >= v1.40 is required

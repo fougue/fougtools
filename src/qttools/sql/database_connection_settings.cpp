@@ -39,7 +39,6 @@
 
 #include "../core/abstract_cipher.h"
 
-#include <cassert>
 #include <QtCore/QSettings>
 #include <QtSql/QSqlDatabase>
 
@@ -156,8 +155,9 @@ void DatabaseConnectionSettings::load(const AbstractCipher* passwordCipher,
         passwordCipher->decrypted(settings.value("password").toByteArray());
     this->setPassword(decryptedPwd);
   }
-  else
+  else {
     this->setPassword(defPwd);
+  }
 
   if (!settingsGroup.isEmpty())
     settings.endGroup();

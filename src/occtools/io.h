@@ -59,18 +59,12 @@ public:
     UnknownFormat
   };
 
-  enum BinaryStlLoadError
-  {
-    NoBinaryStlLoadError,
-    PermissionsBinaryStlLoadError,
-    WrongFileSizeBinaryStlLoadError
-  };
-
   static Format partFormat(const QString& fileName);
 
-  static TopoDS_Shape loadPartFile(const QString& fileName);
-  static Handle_StlMesh_Mesh loadStlFile(const QString& fileName);
-  static Handle_StlMesh_Mesh loadBinaryStlFile(const QString& fileName, BinaryStlLoadError* err = 0);
+  static TopoDS_Shape loadPartFile(const QString& fileName,
+                                   Handle_Message_ProgressIndicator indicator = 0);
+  static Handle_StlMesh_Mesh loadStlFile(const QString& fileName,
+                                         Handle_Message_ProgressIndicator indicator = 0);
 
   static TopoDS_Shape loadBrepFile(const QString& fileName,
                                    Handle_Message_ProgressIndicator indicator = 0);

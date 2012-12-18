@@ -4,8 +4,10 @@ include(compiler_config.pri)
 }
 CASCADE_ROOT = $$(CASROOT)
 
-QTTOOLS_LIB_PATH = $$PWD/bin
-OCCTOOLS_LIB_PATH = $$PWD/bin
+QTTOOLS_INC_PATH = $$_PREFIX/include
+QTTOOLS_LIB_PATH = $$_PREFIX/lib
+OCCTOOLS_INC_PATH = $$_PREFIX/include
+OCCTOOLS_LIB_PATH = $$_PREFIX/lib
 CONFIG(debug, debug|release) {
   TARGET_SUFFIX = .debug
 } else {

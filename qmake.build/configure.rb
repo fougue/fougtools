@@ -60,14 +60,17 @@ end
 def printHelp()
   puts "Usage: configure.rb [--help|-h]"
   puts ""
-  puts "         --qt-dir <dir> .............. Qt root directory"
-  puts "         --boost-dir <dir> ........... Boost root directory"
+  puts "         --prefix <dir> ............. This will install everything relative to <dir>"
+  puts "                                      (default PWD/local)"
+  puts ""
+  puts "         --qt-dir <dir> ............. Qt root directory"
+  puts "         --boost-dir <dir> .......... Boost root directory"
   puts ""
   puts "      *  --no-occtools .............. Do not compile occtools"
   puts "         --occtools ................. Compile occtools"
   puts "                                      Requires OpenCascade + environment variable CASROOT"
   puts ""
-  puts "         --use-oce ................... Use OpenCascade community edition"
+  puts "         --use-oce .................. Use OpenCascade community edition"
   puts ""
 end
 
@@ -75,6 +78,7 @@ end
 configArgs = ARGV.join(' ')
 opts = GetoptLong.new(
   ['--help', '-h', GetoptLong::NO_ARGUMENT],
+  ['--prefix', GetoptLong::REQUIRED_ARGUMENT],
   ['--qt-dir', GetoptLong::REQUIRED_ARGUMENT],
   ['--boost-dir', GetoptLong::REQUIRED_ARGUMENT],
   ['--no-occtools', GetoptLong::NO_ARGUMENT],
@@ -82,6 +86,7 @@ opts = GetoptLong.new(
   ['--use-oce', GetoptLong::NO_ARGUMENT])
 
 options = { :boostDir => "/opt/def/boost",
+            :prefix=> "$$PWD/local",
             :qtDir => "/opt/def/qt",
             :occTools => false,
             :useOce => false }
@@ -93,6 +98,8 @@ opts.each do |opt, arg|
     when '-h'
       printHelp()
       exit
+    when '--prefix'
+      options[:prefix] = arg
     when '--qt-dir'
       options[:qtDir] = arg
     when '--boost-dir'
@@ -111,6 +118,7 @@ end
 checkFileExists(options[:boostDir])
 
 File.open('_local_config.pri', 'w') do |f|
+  f.puts("_PREFIX = #{doubleEscapeIfWinPF(options[:prefix])}")
   f.puts("BOOST_ROOT = #{doubleEscapeIfWinPF(File.expand_path(options[:boostDir]))}")
   if options[:useOce] then
     f.puts("CONFIG *= use_oce")

@@ -35,31 +35,18 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_CALCULATOR_H
-#define QTTOOLS_CALCULATOR_H
+#ifndef QTTOOLS_SCRIPT_H
+#define QTTOOLS_SCRIPT_H
 
-#include "script.h"
-#include <QtScript/QScriptEngine>
+#include <QtCore/QtGlobal>
+#ifdef QTTOOLS_SCRIPT_DLL
+# ifdef QTTOOLS_SCRIPT_MAKE_DLL
+#  define QTTOOLS_SCRIPT_EXPORT Q_DECL_EXPORT
+# else
+#  define QTTOOLS_SCRIPT_EXPORT Q_DECL_IMPORT
+# endif // QTTOOLS_SCRIPT_MAKE_DLL
+#else
+# define QTTOOLS_SCRIPT_EXPORT
+#endif // QTTOOLS_SCRIPT_DLL
 
-namespace qttools {
-
-class QTTOOLS_SCRIPT_EXPORT Calculator
-{
-public:
-  Calculator();
-
-  void evaluate(const QString& program);
-  bool hasResult() const;
-  QString lastErrorText() const;
-
-  double lastResult() const;
-  QString lastResultText() const;
-
-private:
-  QScriptEngine m_scriptEngine;
-  QScriptValue m_lastResult;
-};
-
-} // namespace qttools
-
-#endif // QTTOOLS_CALCULATOR_H
+#endif // QTTOOLS_SCRIPT_H

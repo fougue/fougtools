@@ -149,6 +149,6 @@ TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Vec& v);
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d);
 
-#include "occtools/utils.impl.h"
+#include "utils.impl.h"
 
 #endif // OCC_UTILS_H

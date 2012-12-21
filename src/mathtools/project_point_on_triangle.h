@@ -66,6 +66,6 @@ private:
 
 } // namespace geom
 
-#include "mathtools/project_point_on_triangle.impl.h"
+#include "project_point_on_triangle.impl.h"
 
 #endif // GEOM_PROJECT_POINT_ON_TRIANGLE_H

@@ -102,7 +102,7 @@ protected:
 template<typename TEXT_STREAM, typename T, unsigned S>
 TEXT_STREAM& operator<<(TEXT_STREAM& os, const FixedArray<T, S>& coords);
 
-#include "mathtools/fixed_array.impl.h"
+#include "fixed_array.impl.h"
 
 } // namespace structs
 

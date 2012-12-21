@@ -1,12 +1,13 @@
 use_oce {
-  INCLUDEPATH += $$CASCADE_ROOT/include/oce
+  CASCADE_INC_PATH = $$CASCADE_ROOT/include/oce
   !isEmpty(OCE_VERSION) {
-    LIBS += -L$$CASCADE_ROOT/lib/$$OCE_VERSION
+    CASCADE_LIB_PATH += -L$$CASCADE_ROOT/lib/$$OCE_VERSION
   }
 }
 else {
-  INCLUDEPATH += $$CASCADE_ROOT/inc
+  CASCADE_INC_PATH = $$CASCADE_ROOT/inc
 }
+INCLUDEPATH += $$CASCADE_INC_PATH
 
 linux-*:DEFINES *= HAVE_CONFIG_H \
                    HAVE_FSTREAM \
@@ -17,8 +18,9 @@ win32-*:DEFINES *= WNT
 linux-*:DEFINES *= LIN LININTEL OCC_CONVERT_SIGNALS
 *-64:DEFINES *= _OCC64
 
-linux-*:LIBS += -L$$CASCADE_ROOT/lib
-win32-*:LIBS += -L$$CASCADE_ROOT/win32/lib
+linux-*:CASCADE_LIB_PATH += -L$$CASCADE_ROOT/lib
+win32-*:CASCADE_LIB_PATH += -L$$CASCADE_ROOT/win32/lib
+LIBS += $$CASCADE_LIB_PATH
 
 # There is a weird bug with qmake on windows : it fails to correctly link with
 # TKSTEP209 due to the name of library mixing characters and digits.

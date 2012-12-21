@@ -49,12 +49,12 @@ def checkFileExists(file)
   end
 end
 
-def doubleEscapeIfWinPF(file)
+def asQMakePath(file)
   if isWinPlatform() then
-    file.gsub("\\", "\\\\")
+    return file.gsub("\\", "/")
   else
-    file
-  end         
+    return file
+  end
 end
 
 def printHelp()
@@ -65,12 +65,14 @@ def printHelp()
   puts ""
   puts "         --qt-dir <dir> ............. Qt root directory"
   puts "         --boost-dir <dir> .......... Boost root directory"
+  puts "         --occ-dir .................. Open Cascade root directory"
+  puts "                                      Useful only with --occtools"
   puts ""
   puts "      *  --no-occtools .............. Do not compile occtools"
   puts "         --occtools ................. Compile occtools"
-  puts "                                      Requires OpenCascade + environment variable CASROOT"
-  puts ""
+  puts "                                      Requires OpenCascade (see --occ-dir)"
   puts "         --use-oce .................. Use OpenCascade community edition"
+  puts "                                      Useful only with --occtools"
   puts ""
 end
 
@@ -81,6 +83,7 @@ opts = GetoptLong.new(
   ['--prefix', GetoptLong::REQUIRED_ARGUMENT],
   ['--qt-dir', GetoptLong::REQUIRED_ARGUMENT],
   ['--boost-dir', GetoptLong::REQUIRED_ARGUMENT],
+  ['--occ-dir', GetoptLong::REQUIRED_ARGUMENT],
   ['--no-occtools', GetoptLong::NO_ARGUMENT],
   ['--occtools', GetoptLong::NO_ARGUMENT],
   ['--use-oce', GetoptLong::NO_ARGUMENT])
@@ -88,6 +91,7 @@ opts = GetoptLong.new(
 options = { :boostDir => "/opt/def/boost",
             :prefix=> "$$PWD/local",
             :qtDir => "/opt/def/qt",
+            :occDir => "/opt/def/occ",
             :occTools => false,
             :useOce => false }
 opts.each do |opt, arg|
@@ -104,12 +108,12 @@ opts.each do |opt, arg|
       options[:qtDir] = arg
     when '--boost-dir'
       options[:boostDir] = arg
+    when '--occ-dir'
+      options[:occDir] = arg
     when '--no-occtools'
       options[:occtools] = false
     when '--occtools'
       options[:occtools] = true
-    when '--boostDir'
-      options[:boostDir] = arg
     when '--use-oce'
       options[:useOce] = true
   end
@@ -118,13 +122,14 @@ end
 checkFileExists(options[:boostDir])
 
 File.open('_local_config.pri', 'w') do |f|
-  f.puts("_PREFIX = #{doubleEscapeIfWinPF(options[:prefix])}")
-  f.puts("BOOST_ROOT = #{doubleEscapeIfWinPF(File.expand_path(options[:boostDir]))}")
-  if options[:useOce] then
-    f.puts("CONFIG *= use_oce")
-  end
+  f.puts("PREFIX_DIR = #{asQMakePath(options[:prefix])}")
+  f.puts("BOOST_ROOT = #{asQMakePath(File.expand_path(options[:boostDir]))}")
   if options[:occtools] then
     f.puts("CONFIG *= occtools")
+    f.puts("CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occDir]))}")
+    if options[:useOce] then
+      f.puts("CONFIG *= use_oce")
+    end
   end
 end
 

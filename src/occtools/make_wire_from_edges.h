@@ -45,8 +45,8 @@
 
 namespace occ {
 
-template<typename _FWD_ITERATOR_>
-TopoDS_Wire makeWireFromEdges(_FWD_ITERATOR_ beginEdge, _FWD_ITERATOR_ endEdge)
+template<typename FWD_ITERATOR>
+TopoDS_Wire makeWireFromEdges(FWD_ITERATOR beginEdge, FWD_ITERATOR endEdge)
 {
   // Create a wire from the edges
   Handle_ShapeExtend_WireData wireData = new ShapeExtend_WireData;

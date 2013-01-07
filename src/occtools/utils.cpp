@@ -184,8 +184,7 @@ void eraseObjectFromContext(Handle_AIS_InteractiveObject object,
  *  \param triangle
  *         Triangle whose normal has to be computed
  *  \param ori
- *         Orientation of the triangle (generally inherited from the
- *         triangulated face)
+ *         Orientation of the triangle (generally inherited from the triangulated face)
  */
 gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
                       const Poly_Triangle& triangle,

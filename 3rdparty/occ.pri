@@ -1,7 +1,7 @@
 use_oce {
   CASCADE_INC_PATH = $$CASCADE_ROOT/include/oce
   !isEmpty(OCE_VERSION) {
-    CASCADE_LIB_PATH += -L$$CASCADE_ROOT/lib/$$OCE_VERSION
+    CASCADE_LIB_PATH += -$CASCADE_ROOT/lib/$$OCE_VERSION
   }
 }
 else {
@@ -18,14 +18,14 @@ win32-*:DEFINES *= WNT
 linux-*:DEFINES *= LIN LININTEL OCC_CONVERT_SIGNALS
 *-64:DEFINES *= _OCC64
 
-linux-*:CASCADE_LIB_PATH += -L$$CASCADE_ROOT/lib
-win32-*:CASCADE_LIB_PATH += -L$$CASCADE_ROOT/win32/lib
-LIBS += $$CASCADE_LIB_PATH
+linux-*:CASCADE_LIB_PATH += $$CASCADE_ROOT/lib
+win32-*:CASCADE_LIB_PATH += $$CASCADE_ROOT/win32/lib
+LIBS += $$join(CASCADE_LIB_PATH, " -L", -L)
 
-# There is a weird bug with qmake on windows : it fails to correctly link with
-# TKSTEP209 due to the name of library mixing characters and digits.
-# Or maybe nmake is the problem ?
-# Note : you have to rename TKSTEP209 to TKSTEP_tzn in $CASROOT/win32/lib
+# There is a weird bug with qmake on windows : it fails to correctly link with TKSTEP209 due to the
+# name of library mixing characters and digits.
+#   Or maybe nmake is the problem ?
+#   Note : you have to rename TKSTEP209 to TKSTEP_tzn in $$CASCADE_ROOT/win32/lib
 win32-msvc* {
   OCC_TKSTEP = TKSTEP_tzn
 }

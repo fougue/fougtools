@@ -39,6 +39,7 @@
 #define OCC_AIS_TEXT_H
 
 #include "occtools.h"
+#include "handle_ais_text.h"
 #include <AIS_InteractiveObject.hxx>
 #include <gp_Pnt.hxx>
 #include <Handle_Graphic2d_GraphicObject.hxx>
@@ -50,10 +51,6 @@
 #include <QtCore/QString>
 #include <QtGui/QColor>
 #include <QtGui/QFont>
-#include <Standard_DefineHandle.hxx>
-#include <Standard_Macro.hxx>
-
-DEFINE_STANDARD_HANDLE(AIS_Text, AIS_InteractiveObject)
 
 class OCCTOOLS_EXPORT AIS_Text : public AIS_InteractiveObject
 {

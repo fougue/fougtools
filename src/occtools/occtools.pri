@@ -42,6 +42,7 @@ INCLUDEPATH *= $$BOOST_ROOT
 HEADERS += $$PWD/io.h \
            $$PWD/occtools.h \
            $$PWD/ais_text.h \
+           $$PWD/handle_ais_text.h \
            $$PWD/brep_point_on_faces_projection.h \
            $$PWD/gcpnts_uniform_abscissa_const_iterator.h \
            $$PWD/make_wire_from_edges.h \

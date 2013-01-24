@@ -123,17 +123,6 @@ IO::Format IO::partFormat(const QString& filename)
     return UnknownFormat;
   const QByteArray contentsBegin = file.read(2048);
 
-  // Assume a text-based format
-  const QString contentsBeginText(contentsBegin);
-  if (contentsBeginText.contains(QRegExp("^.{72}S\\s*[0-9]+\\s*[\\n\\r\\f]")))
-    return IgesFormat;
-  if (contentsBeginText.contains(QRegExp("^\\s*ISO-10303-21\\s*;\\s*HEADER")))
-    return StepFormat;
-  if (contentsBeginText.contains(QRegExp("^\\s*DBRep_DrawableShape")))
-    return OccBrepFormat;
-  if (contentsBeginText.contains(QRegExp("^\\s*solid")))
-    return AsciiStlFormat;
-
   // Assume a binary-based format
   // -- Binary STL ?
   const int binaryStlHeaderSize = 80 + sizeof(quint32);
@@ -148,6 +137,17 @@ IO::Format IO::partFormat(const QString& filename)
     if ((facetSize * facetsCount + binaryStlHeaderSize) == file.size())
       return BinaryStlFormat;
   }
+
+  // Assume a text-based format
+  const QString contentsBeginText(contentsBegin);
+  if (contentsBeginText.contains(QRegExp("^.{72}S\\s*[0-9]+\\s*[\\n\\r\\f]")))
+    return IgesFormat;
+  if (contentsBeginText.contains(QRegExp("^\\s*ISO-10303-21\\s*;\\s*HEADER")))
+    return StepFormat;
+  if (contentsBeginText.contains(QRegExp("^\\s*DBRep_DrawableShape")))
+    return OccBrepFormat;
+  if (contentsBeginText.contains(QRegExp("^\\s*solid")))
+    return AsciiStlFormat;
 
   // Fallback case
   return UnknownFormat;

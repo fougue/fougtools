@@ -54,7 +54,8 @@ HEADERS += $$PWD/io.h \
            $$PWD/ui/view_controller.h \
            $$PWD/ui/view_controller_delegate.h
 
-SOURCES += $$PWD/io.cpp \
+SOURCES += \
+           $$PWD/io.cpp \
            $$PWD/ais_text.cpp \
            $$PWD/brep_point_on_faces_projection.cpp \
            $$PWD/gcpnts_uniform_abscissa_const_iterator.cpp \
@@ -66,5 +67,5 @@ SOURCES += $$PWD/io.cpp \
 
 LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
         -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim  -lTKService \
-        -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -lTKSTL -lTKTopAlgo \
+        -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -lTKSTEP_tzn -lTKSTL -lTKTopAlgo \
         -lTKV2d -lTKV3d -lTKXSBase

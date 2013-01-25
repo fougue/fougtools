@@ -62,23 +62,17 @@ private:
   NumericType m_value;
 };
 
-struct DoubleNumericTraits
+template<typename TYPE>
+struct NumericTraits
 {
-  typedef double Type;
-  static const double zero = 0.0;
+  typedef TYPE Type;
+  static TYPE zero()
+  { return static_cast<TYPE>(0); }
 };
 
-struct FloatNumericTraits
-{
-  typedef float Type;
-  static const float zero = 0.0f;
-};
-
-struct IntNumericTraits
-{
-  typedef int Type;
-  static const int zero = 0;
-};
+typedef NumericTraits<double> DoubleNumericTraits;
+typedef NumericTraits<float> FloatNumericTraits;
+typedef NumericTraits<int> IntNumericTraits;
 
 // --
 // -- Implementation

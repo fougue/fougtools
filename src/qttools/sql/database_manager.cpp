@@ -39,7 +39,6 @@
 
 #include "../../cpptools/memory_utils.h"
 
-#include <cassert>
 #include <QtCore/QHash>
 #include <QtCore/QMutex>
 #include <QtCore/QMutexLocker>
@@ -57,7 +56,7 @@ public:
   DatabaseManagerPrivate(const QSqlDatabase& refDb)
     : m_refDatabase(refDb)
   {
-    assert(QThread::currentThread() != 0);
+    Q_ASSERT(QThread::currentThread() != 0);
     m_databases.insert(QThread::currentThread(), refDb);
   }
 
@@ -101,7 +100,7 @@ bool DatabaseManager::hasDatabase(const QThread* inThread) const
 QSqlDatabase DatabaseManager::database(const QThread* inThread) const
 {
   Q_D(const DatabaseManager);
-  assert(this->hasDatabase(inThread));
+  Q_ASSERT(this->hasDatabase(inThread));
   return d->m_databases.value(inThread);
 }
 

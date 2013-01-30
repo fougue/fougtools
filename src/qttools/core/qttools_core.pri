@@ -39,8 +39,6 @@ HEADERS += \
     $$PWD/abstract_cipher.h \
     $$PWD/abstract_plugin_loader.h \
     $$PWD/abstract_signal_dispatch.h \
-    $$PWD/identifier_model_row_mapping.h \
-    $$PWD/item_model_with_role_support.h \
     $$PWD/log.h \
     $$PWD/log_unqualified.h \
     $$PWD/qlocale_tools.h \
@@ -50,7 +48,6 @@ HEADERS += \
     $$PWD/qvariant_tools.h \
     $$PWD/runtime_error.h \
     $$PWD/scoped_connection.h \
-    $$PWD/scoped_model_reset.h \
     $$PWD/singleton.h \
     $$PWD/sleep.h \
     $$PWD/task.h \
@@ -63,8 +60,6 @@ SOURCES += \
     $$PWD/abstract_cipher.cpp \
     $$PWD/abstract_plugin_loader.cpp \
     $$PWD/abstract_signal_dispatch.cpp \
-    $$PWD/identifier_model_row_mapping.cpp \
-    $$PWD/item_model_with_role_support.cpp \
     $$PWD/log.cpp \
     $$PWD/qlocale_tools.cpp \
     $$PWD/qobject_tools.cpp \
@@ -72,7 +67,6 @@ SOURCES += \
     $$PWD/qstring_tools.cpp \
     $$PWD/runtime_error.cpp \
     $$PWD/scoped_connection.cpp \
-    $$PWD/scoped_model_reset.cpp \
     $$PWD/sleep.cpp \
     $$PWD/task.cpp \
     $$PWD/item_model_tools.cpp \

@@ -41,9 +41,7 @@
 #include "core.h"
 #include <QtCore/QModelIndex>
 #include <QtCore/QVector>
-#include <QtCore/Qt>
 class QAbstractItemModel;
-class QAbstractTableModel;
 class QVariant;
 
 namespace qttools {
@@ -68,9 +66,6 @@ QTTOOLS_CORE_EXPORT
 QVariant tableModelData(const QAbstractItemModel* model,
                         int row, int col, int role = Qt::DisplayRole);
 
-QTTOOLS_CORE_EXPORT
-bool isRowScheduledForDeletion(const QAbstractItemModel* model, int row);
-
 template<typename INT_CONTAINER>
 void removeRows(QAbstractItemModel* model, const INT_CONTAINER& rows);
 
@@ -89,8 +84,8 @@ template<typename INT_CONTAINER>
 bool validRows(const QAbstractItemModel* model,
                const INT_CONTAINER& rows, const QModelIndex& parent)
 {
-  foreach (int row, rows) {
-    if (!qttools::isValidRow(model, row, parent))
+  for (typename INT_CONTAINER::const_iterator iRow = rows.begin(); iRow != rows.end(); ++iRow) {
+    if (!qttools::isValidRow(model, *iRow, parent))
       return false;
   }
   return !rows.isEmpty();

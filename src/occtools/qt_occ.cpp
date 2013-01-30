@@ -64,26 +64,40 @@ Quantity_NameOfColor toNamedOccColor(const QColor& c)
   return toOccColor(c).Name();
 }
 
-//! Conversion of the Qt string \p str to an OCC CString
+//! Conversion of the QString \p str to an OCC CString
 Standard_CString toCString(const QString& str)
 {
   return str.toLocal8Bit().constData();
 }
 
+//! Conversion of the QString \p str to an OCC TCollection_AsciiString
 TCollection_AsciiString toAsciiString(const QString& str)
 {
   return TCollection_AsciiString(toCString(str));
 }
 
-//! Conversion of the Qt string \p str to an OCC ExtString
+//! Conversion of the QString \p str to an OCC ExtString
 Standard_ExtString toExtString(const QString& str)
 {
   return reinterpret_cast<Standard_ExtString>(str.utf16());
 }
 
+//! Conversion of the QString \p str to an OCC TCollection_ExtendedString
 TCollection_ExtendedString toOccExtendedString(const QString& str)
 {
   return TCollection_ExtendedString(toExtString(str));
+}
+
+//! Conversion of the OCC TCollection_AsciiString \p str to a QString
+QString toQString(const TCollection_AsciiString& str)
+{
+  return QString::fromAscii(str.ToCString(), str.Length());
+}
+
+//! Conversion of the OCC TCollection_ExtendedString \p str to a QString
+QString toQString(const TCollection_ExtendedString& str)
+{
+  return QString::fromUtf16(reinterpret_cast<const ushort*>(str.ToExtString()), str.Length());
 }
 
 } // namespace occ

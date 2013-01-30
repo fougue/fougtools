@@ -64,10 +64,13 @@ OCCTOOLS_EXPORT TCollection_AsciiString toAsciiString(const QString& str);
 OCCTOOLS_EXPORT Standard_ExtString toExtString(const QString& str);
 OCCTOOLS_EXPORT TCollection_ExtendedString toOccExtendedString(const QString& str);
 
+OCCTOOLS_EXPORT QString toQString(const TCollection_AsciiString& str);
+OCCTOOLS_EXPORT QString toQString(const TCollection_ExtendedString& str);
+
 template<typename OCC_PNT_VEC>
-QString toString(const OCC_PNT_VEC& pv,
-                 const QString& format = QLatin1String("(%x, %y, %z)"),
-                 char realFormat = 'g', unsigned prec = 6);
+QString toQString(const OCC_PNT_VEC& pv,
+                  const QString& format = QLatin1String("(%x, %y, %z)"),
+                  char realFormat = 'g', unsigned prec = 6);
 
 
 
@@ -76,9 +79,9 @@ QString toString(const OCC_PNT_VEC& pv,
 //
 
 template<typename OCC_PNT_VEC>
-QString toString(const OCC_PNT_VEC& pv,
-                 const QString& format,
-                 char realFormat, unsigned prec)
+QString toQString(const OCC_PNT_VEC& pv,
+                  const QString& format,
+                  char realFormat, unsigned prec)
 {
   QString result = format;
   result.replace("%x", QString::number(pv.X(), realFormat, prec));

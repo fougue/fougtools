@@ -54,9 +54,9 @@
 #include <Quantity_Color.hxx>
 #include <TCollection_ExtendedString.hxx>
 
-namespace internal { class AIS_TextPrivate; }
+namespace internal { class occ_AIS_TextPrivate; }
 
-class OCCTOOLS_EXPORT AIS_Text : public AIS_InteractiveObject
+class OCCTOOLS_EXPORT occ_AIS_Text : public AIS_InteractiveObject
 {
 public:
   enum TextDisplayMode
@@ -73,9 +73,9 @@ public:
     AnnotationStyle
   };
 
-  AIS_Text();
-  AIS_Text(const TCollection_ExtendedString& text, const gp_Pnt& pos);
-  virtual ~AIS_Text();
+  occ_AIS_Text();
+  occ_AIS_Text(const TCollection_ExtendedString& text, const gp_Pnt& pos);
+  virtual ~occ_AIS_Text();
 
 //  DEFINE_STANDARD_RTTI(AIS_Text)
 
@@ -114,7 +114,7 @@ protected:
   void ComputeSelection(const Handle_SelectMgr_Selection& sel, const Standard_Integer mode);
 
 private:
-  internal::AIS_TextPrivate* const d;
+  internal::occ_AIS_TextPrivate* const d;
 };
 
 #endif // AIS_TEXT_H

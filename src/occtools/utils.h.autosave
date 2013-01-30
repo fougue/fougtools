@@ -101,6 +101,7 @@ OCCTOOLS_EXPORT gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
                                       TopAbs_Orientation ori = TopAbs_FORWARD);
 
 // --- Classes
+
 template<typename TYPE>
 class down_cast
 {

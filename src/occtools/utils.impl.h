@@ -88,19 +88,6 @@ gp_Vec toOccVector3d(const geom::Vector3<T>& v)
                 static_cast<double>(v.z()));
 }
 
-// --- String conversion
-
-template<typename OCC_PNT_VEC>
-QString toString(const OCC_PNT_VEC& pv,
-                 const QString& format,
-                 char realFormat, unsigned prec)
-{
-  QString result = format;
-  result.replace("%x", QString::number(pv.X(), realFormat, prec));
-  result.replace("%y", QString::number(pv.Y(), realFormat, prec));
-  return result.replace("%z", QString::number(pv.Z(), realFormat, prec));
-}
-
 /*! \class occ::down_cast
  *  \brief Downcasting operator for OpenCascade handles.
  *
@@ -148,7 +135,7 @@ const TYPE down_cast<TYPE>::operator->() const
 
 // --- Related functions
 
-namespace m_occ_utils_internal {
+namespace occ_utils_internal {
 
 template<typename OCC_PT_VEC, typename TEXT_STREAM>
 TEXT_STREAM& dumpOccPtVec(TEXT_STREAM& ts, const OCC_PT_VEC& v)
@@ -156,27 +143,27 @@ TEXT_STREAM& dumpOccPtVec(TEXT_STREAM& ts, const OCC_PT_VEC& v)
   return ts << "(" << v.X() << ", " << v.Y() << ", " << v.Z() << ")";
 }
 
-} // namespace m_occ_utils_internal
+} // namespace occ_utils_internal
 
 //! Print (dump) in the text stream \p ts the point \p p
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Pnt& p)
 {
-  return m_occ_utils_internal::dumpOccPtVec(ts, p);
+  return occ_utils_internal::dumpOccPtVec(ts, p);
 }
 
 //! Print (dump) in the text stream \p ts the vector \p v
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Vec& v)
 {
-  return m_occ_utils_internal::dumpOccPtVec(ts, v);
+  return occ_utils_internal::dumpOccPtVec(ts, v);
 }
 
 //! Print (dump) in the text stream \p ts the direction \p d
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d)
 {
-  return m_occ_utils_internal::dumpOccPtVec(ts, d);
+  return occ_utils_internal::dumpOccPtVec(ts, d);
 }
 
 #endif // OCC_UTILS_H

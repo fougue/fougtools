@@ -35,44 +35,55 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_BREP_POINT_ON_FACES_PROJECTION_H
-#define OCC_BREP_POINT_ON_FACES_PROJECTION_H
-
-#include "occtools.h"
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <gp_Vec.hxx>
-#include <utility>
-#include <vector>
-class gp_Pnt;
-class GeomAPI_ProjectPointOnSurf;
+#include "qt_occ.h"
 
 namespace occ {
 
-class OCCTOOLS_EXPORT BRepPointOnFacesProjection
+//! Conversion of the Quantity_Color \p c to a QColor
+QColor toQtColor(const Quantity_Color& c)
 {
-public:
-  BRepPointOnFacesProjection();
-  BRepPointOnFacesProjection(const TopoDS_Shape& faces);
-  ~BRepPointOnFacesProjection();
-  void releaseMemory();
+  return QColor(c.Red() * 255., c.Green() * 255., c.Blue() * 255.);
+}
 
-  void prepare(const TopoDS_Shape& faces);
-  BRepPointOnFacesProjection& compute(const gp_Pnt& point);
-  bool isDone() const;
+//! Conversion of the Quantity_NameOfColor \p c to a QColor
+QColor toQtColor(const Quantity_NameOfColor c)
+{
+  Quantity_Color qc(c);
+  return toQtColor(qc);
+}
 
-  const TopoDS_Face& solutionFace() const;
-  gp_Pnt solutionPoint() const;
-  std::pair<double, double> solutionUV() const;
-  gp_Vec solutionNormal() const;
+//! Conversion of the QColor \p c to a Quantity_Color
+Quantity_Color toOccColor(const QColor& c)
+{
+  return Quantity_Color(c.red() / 255., c.green() / 255., c.blue() / 255., Quantity_TOC_RGB);
+}
 
-private:
-  typedef GeomAPI_ProjectPointOnSurf Projector;
-  typedef std::pair<Projector*, TopoDS_Face> ProjectorInfo;
-  std::vector<ProjectorInfo> m_projectors;
-  ProjectorInfo m_solProjector;
-};
+//! Conversion of the QColor object \p c to a Quantity_NameOfColor
+Quantity_NameOfColor toNamedOccColor(const QColor& c)
+{
+  return toOccColor(c).Name();
+}
+
+//! Conversion of the Qt string \p str to an OCC CString
+Standard_CString toCString(const QString& str)
+{
+  return str.toLocal8Bit().constData();
+}
+
+TCollection_AsciiString toAsciiString(const QString& str)
+{
+  return TCollection_AsciiString(toCString(str));
+}
+
+//! Conversion of the Qt string \p str to an OCC ExtString
+Standard_ExtString toExtString(const QString& str)
+{
+  return reinterpret_cast<Standard_ExtString>(str.utf16());
+}
+
+TCollection_ExtendedString toOccExtendedString(const QString& str)
+{
+  return TCollection_ExtendedString(toExtString(str));
+}
 
 } // namespace occ
-
-#endif // OCC_BREP_POINT_ON_FACES_PROJECTION_H

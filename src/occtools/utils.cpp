@@ -55,13 +55,6 @@
 #include <cassert>
 #include <gp_Trsf.hxx>
 
-namespace {
-
-const double kMaxRgbComponent = 255.;
-
-} // Anonymous namespace
-
-
 namespace occ {
 
 // --- Geometry
@@ -123,42 +116,9 @@ gp_Vec normalToSurfaceAtUV(const Handle_Geom_Surface& surface,
 
 // --- Color conversion
 
-//! Conversion of the Quantity_Color \p c to a QColor
-QColor toQtColor(const Quantity_Color& c)
+Quantity_Color rgbColor(int red, int blue, int green)
 {
-  return QColor(c.Red() * kMaxRgbComponent,
-                c.Green() * kMaxRgbComponent,
-                c.Blue() * kMaxRgbComponent);
-}
-
-//! Conversion of the Quantity_NameOfColor \p c to a QColor
-QColor toQtColor(const Quantity_NameOfColor c)
-{
-  Quantity_Color qc(c);
-  return toQtColor(qc);
-}
-
-//! Conversion of the QColor \p c to a Quantity_Color
-Quantity_Color toOccColor(const QColor& c)
-{
-  return Quantity_Color(c.red() / kMaxRgbComponent,
-                        c.green() / kMaxRgbComponent,
-                        c.blue() / kMaxRgbComponent,
-                        Quantity_TOC_RGB);
-}
-
-//! Conversion of the QColor object \p c to a Quantity_NameOfColor
-Quantity_NameOfColor toNamedOccColor(const QColor& c)
-{
-  return toOccColor(c).Name();
-}
-
-// --- Type conversion
-
-//! Conversion of the Qt string \p str to an OCC CString
-Standard_CString toOccCstring(const QString& str)
-{
-  return const_cast<char*>(qPrintable(str));
+  return Quantity_Color(red / 255., blue / 255., green / 255., Quantity_TOC_RGB);
 }
 
 // --- Visualization

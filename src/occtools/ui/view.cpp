@@ -55,21 +55,24 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+#include "../utils.h"
+
 /*!
  * \class occ::View
  * \brief Qt wrapper around the V3d_View class
  *
- * occ::View widgets are explicitely bound to a context ie an
- * AIS_InteractiveContext. The context can be retrieved with context().
+ * occ::View widgets are explicitely bound to a context ie an AIS_InteractiveContext. The context
+ * can be retrieved with context().
  *
- * An occ::View does not handle input devices interaction like keyboard and
- * mouse. It delegates this responsability to an OccViewController.
-*/
+ * An occ::View does not handle input devices interaction like keyboard and mouse. It delegates this
+ * responsability to an OccViewController.
+ */
 
 namespace occ {
 
-//! Construct an occ:View bound to the interactive context \p context3d, and
-//! having \p parent as its Qt widget parent
+/*! Construct an occ:View bound to the interactive context \p context3d, and having \p parent as its
+ *  Qt widget parent
+ */
 View::View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent) :
   QWidget(parent),
   m_context(context3d),
@@ -77,12 +80,13 @@ View::View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent) :
   m_needsResize(false)
 {
   this->setMouseTracking(true);
-  // Avoid Qt background clears to improve resizing speed,
-  // along with a couple of other attributes
+
+  // Avoid Qt background clears to improve resizing speed, along with a couple of other attributes
   this->setAutoFillBackground(false);
   this->setAttribute(Qt::WA_NoSystemBackground);
-  // This next attribute seems to be the secret of allowing OCC on Win32
-  // to "own" the window, even though its only supposed to work on X11.
+
+  // This next attribute seems to be the secret of allowing OCC on Win32 to "own" the window, even
+  // though its only supposed to work on X11
   this->setAttribute(Qt::WA_PaintOnScreen);
   this->setAttribute (Qt::WA_OpaquePaintEvent);
 #if (QT_VERSION >= QT_VERSION_CHECK(4, 4, 0))
@@ -160,20 +164,21 @@ void View::fitAll()
 
 /*! \brief Reimplemented from QWidget::paintEvent()
    */
-void View::paintEvent(QPaintEvent* /*e*/)
+void View::paintEvent(QPaintEvent* e)
 {
+  Q_UNUSED(e);
   this->initialize();
   if (!m_context->CurrentViewer().IsNull())
     this->redraw(IsPaintingStatus);
 }
 
 /*! \brief Reimplemented from QWidget::resizeEvent()
-   *  Called when the Widget needs to resize itself, but seeing as a paint
-   *  event always follows a resize event, we'll move the work into the
-   *  paint event
-  */
-void View::resizeEvent(QResizeEvent* /*e*/)
+ *  Called when the Widget needs to resize itself, but seeing as a paint event always follows a
+ *  resize event, we'll move the work into the paint event
+ */
+void View::resizeEvent(QResizeEvent* e)
 {
+  Q_UNUSED(e);
   m_needsResize = true;
 }
 
@@ -239,45 +244,30 @@ void View::initialize()
     int windowHandle = (int)(this->winId());
     short hi = static_cast<short>(windowHandle >> 16);
     short lo = static_cast<short>(windowHandle);
-    Handle_Aspect_GraphicDevice device =
-        m_context->CurrentViewer()->Device();
+    Handle_Aspect_GraphicDevice device = m_context->CurrentViewer()->Device();
 #ifdef WNT
-    Handle_WNT_Window hWnd =
-        new WNT_Window(Handle_Graphic3d_WNTGraphicDevice::DownCast(device),
-                       static_cast<Standard_Integer>(hi),
-                       static_cast<Standard_Integer>(lo));
+    Handle_WNT_Window hWnd = new WNT_Window(Handle_Graphic3d_WNTGraphicDevice::DownCast(device),
+                                            static_cast<Standard_Integer>(hi),
+                                            static_cast<Standard_Integer>(lo));
     hWnd->SetFlags(WDF_NOERASEBKGRND);
 #else
-    Handle_Xw_Window hWnd =
-        new Xw_Window(Handle(Graphic3d_GraphicDevice)::DownCast(device),
-                      static_cast<Standard_Integer>(hi),
-                      static_cast<Standard_Integer>(lo),
-                      Xw_WQ_SAMEQUALITY);
+    Handle_Xw_Window hWnd = new Xw_Window(Handle_Graphic3d_GraphicDevice::DownCast(device),
+                                          static_cast<Standard_Integer>(hi),
+                                          static_cast<Standard_Integer>(lo),
+                                          Xw_WQ_SAMEQUALITY);
 #endif // WNT
     Aspect_RenderingContext rc = 0;
     m_internalView->SetWindow(hWnd, rc, paintCallBack, this);
-    //_internalView->SetScale(2);
+    // m_internalView->SetScale(2);
     if (!hWnd->IsMapped())
       hWnd->Map();
 
-    const int w = 5;
-    const int h = 500;
-    QPixmap pixmap(w, h);
-    QPainter painter(&pixmap);
-    QLinearGradient gradient(0.0, 0.0, w, h);
-    gradient.setColorAt(0.0, QColor(128, 147, 255));
-    gradient.setColorAt(1.0, Qt::white);
-    painter.setBrush(gradient);
-    painter.fillRect(0.0, 0.0, w, h, gradient);
-    if (pixmap.save("temp_bkgnd.bmp"))
-    {
-      m_internalView->SetBackgroundImage("temp_bkgnd.bmp");
-      m_internalView->SetBgImageStyle(Aspect_FM_STRETCH);
-    }
+    m_internalView->SetBgGradientColors(occ::rgbColor(128, 147, 255), occ::rgbColor(255, 255, 255),
+                                        Aspect_GFM_VER);
 
     m_internalView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER,
-                                         Quantity_NOC_BLACK,
-                                         0.1, V3d_ZBUFFER);
+                                    occ::rgbColor(100, 100, 100).Name(),
+                                    0.1, V3d_ZBUFFER);
     m_internalView->MustBeResized();
     m_isInitialized = true;
     m_needsResize = true;

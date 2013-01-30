@@ -35,44 +35,57 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_BREP_POINT_ON_FACES_PROJECTION_H
-#define OCC_BREP_POINT_ON_FACES_PROJECTION_H
+#ifndef OCC_QT_OCC_H
+#define OCC_QT_OCC_H
 
 #include "occtools.h"
-#include <TopoDS_Face.hxx>
-#include <TopoDS_Shape.hxx>
-#include <gp_Vec.hxx>
-#include <utility>
-#include <vector>
-class gp_Pnt;
-class GeomAPI_ProjectPointOnSurf;
+
+#include <Quantity_Color.hxx>
+#include <Quantity_NameOfColor.hxx>
+#include <TCollection_AsciiString.hxx>
+#include <TCollection_ExtendedString.hxx>
+
+#include <QtCore/QString>
+#include <QtGui/QColor>
 
 namespace occ {
 
-class OCCTOOLS_EXPORT BRepPointOnFacesProjection
+// --- Color conversion
+
+OCCTOOLS_EXPORT QColor toQtColor(const Quantity_Color& c);
+OCCTOOLS_EXPORT QColor toQtColor(const Quantity_NameOfColor c);
+OCCTOOLS_EXPORT Quantity_Color toOccColor(const QColor& c);
+OCCTOOLS_EXPORT Quantity_NameOfColor toNamedOccColor(const QColor& c);
+
+// --- String conversion
+
+OCCTOOLS_EXPORT Standard_CString toCString(const QString& str);
+OCCTOOLS_EXPORT TCollection_AsciiString toAsciiString(const QString& str);
+OCCTOOLS_EXPORT Standard_ExtString toExtString(const QString& str);
+OCCTOOLS_EXPORT TCollection_ExtendedString toOccExtendedString(const QString& str);
+
+template<typename OCC_PNT_VEC>
+QString toString(const OCC_PNT_VEC& pv,
+                 const QString& format = QLatin1String("(%x, %y, %z)"),
+                 char realFormat = 'g', unsigned prec = 6);
+
+
+
+//
+// Implementation
+//
+
+template<typename OCC_PNT_VEC>
+QString toString(const OCC_PNT_VEC& pv,
+                 const QString& format,
+                 char realFormat, unsigned prec)
 {
-public:
-  BRepPointOnFacesProjection();
-  BRepPointOnFacesProjection(const TopoDS_Shape& faces);
-  ~BRepPointOnFacesProjection();
-  void releaseMemory();
-
-  void prepare(const TopoDS_Shape& faces);
-  BRepPointOnFacesProjection& compute(const gp_Pnt& point);
-  bool isDone() const;
-
-  const TopoDS_Face& solutionFace() const;
-  gp_Pnt solutionPoint() const;
-  std::pair<double, double> solutionUV() const;
-  gp_Vec solutionNormal() const;
-
-private:
-  typedef GeomAPI_ProjectPointOnSurf Projector;
-  typedef std::pair<Projector*, TopoDS_Face> ProjectorInfo;
-  std::vector<ProjectorInfo> m_projectors;
-  ProjectorInfo m_solProjector;
-};
+  QString result = format;
+  result.replace("%x", QString::number(pv.X(), realFormat, prec));
+  result.replace("%y", QString::number(pv.Y(), realFormat, prec));
+  return result.replace("%z", QString::number(pv.Z(), realFormat, prec));
+}
 
 } // namespace occ
 
-#endif // OCC_BREP_POINT_ON_FACES_PROJECTION_H
+#endif // OCC_QT_OCC_H

@@ -42,7 +42,7 @@
 #include <gp_Pnt.hxx>
 #include <gp_Vec.hxx>
 #include <gp_Pnt.hxx>
-class TopoDS_Face;
+#include <TopoDS_Face.hxx>
 class TopoDS_Shape;
 
 namespace occ {
@@ -55,7 +55,7 @@ public:
     Result();
     Result(const TopoDS_Face& sFace, const gp_Pnt& sPoint, const gp_Vec& sNormal);
     const bool isValid;
-    const TopoDS_Face& face;
+    const TopoDS_Face face;
     const gp_Pnt point;
     const gp_Vec normal;
   };
@@ -70,8 +70,7 @@ public:
   Result operator()(const gp_Pnt& point) const;
 
 private:
-  class PointOnFacesProjectorPrivate* d_ptr;
-  Q_DECLARE_PRIVATE(PointOnFacesProjector)
+  class PointOnFacesProjectorPrivate* const d;
 };
 
 } // namespace occ

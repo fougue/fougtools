@@ -123,7 +123,7 @@ class occ_AIS_TextPrivate
 {
 public:
   occ_AIS_TextPrivate()
-    : m_defaultFont(NULL),
+    : m_defaultFont(Graphic3d_NOF_ASCII_MONO),
       m_defaultColor(Quantity_NOC_YELLOW),
       m_defaultTextBackgroundColor(Quantity_NOC_GREEN),
       m_defaultTextDisplayMode(occ_AIS_Text::TextOnlyDisplay),

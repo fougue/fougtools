@@ -106,13 +106,12 @@ template<typename TYPE>
 class down_cast
 {
 public:
-  typedef Handle_Standard_Transient TransientHandle_t;
-  explicit down_cast<TYPE>(const TransientHandle_t& handle);
+  explicit down_cast<TYPE>(const Handle_Standard_Transient& handle);
   operator TYPE() const;
   const TYPE operator->() const;
 private:
-  const TransientHandle_t& m_handle;
-}; // class down_cast<>
+  const Handle_Standard_Transient& m_handle;
+};
 
 // --- Constants
 const gp_Pnt2d origin2d(0., 0.);

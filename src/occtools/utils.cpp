@@ -77,8 +77,7 @@ double curveLength(const Handle_Geom_Curve& curve)
   }
 }
 
-double curveLengthBetweenParams(const Handle_Geom_Curve& curve,
-                                double firstU, double lastU)
+double curveLengthBetweenParams(const Handle_Geom_Curve& curve, double firstU, double lastU)
 {
   try {
     GeomAdaptor_Curve adaptor(curve);
@@ -105,8 +104,7 @@ gp_Vec normalToFaceAtUV(const TopoDS_Face& face, double u, double v)
   //return normalToSurfaceAtUV(BRep_Tool::Surface(face), u, v);
 }
 
-gp_Vec normalToSurfaceAtUV(const Handle_Geom_Surface& surface,
-                           double u, double v)
+gp_Vec normalToSurfaceAtUV(const Handle_Geom_Surface& surface, double u, double v)
 {
   gp_Pnt point;
   gp_Vec d1u, d1v;
@@ -127,9 +125,9 @@ void eraseObjectFromContext(Handle_AIS_InteractiveObject object,
                             Handle_AIS_InteractiveContext context)
 {
   if (!object.IsNull()) {
-    context->Erase(object, false);
-    context->Remove(object, false);
-    context->Clear(object, false); // Remove() can be used too.
+    context->Erase(object, Standard_False);
+    context->Remove(object, Standard_False);
+    context->Clear(object, Standard_False); // Remove() can be used too
     context->SelectionManager()->Remove(object);
     while (!object.IsNull())
       object.Nullify();
@@ -162,10 +160,12 @@ gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
   const gp_Vec v2(nodes(n2), nodes(n3)); // V2=(P2,P3)
   const gp_Vec v3(nodes(n3), nodes(n1)); // V3=(P3,P1)
 
-  if ((v1.SquareMagnitude() > 1.e-10) &&
-      (v2.SquareMagnitude() > 1.e-10) &&
-      (v3.SquareMagnitude() > 1.e-10))
+  if ((v1.SquareMagnitude() > 1.e-10)
+      && (v2.SquareMagnitude() > 1.e-10)
+      && (v3.SquareMagnitude() > 1.e-10))
+  {
     return v1.Crossed(v2);
+  }
   return v1;
 }
 

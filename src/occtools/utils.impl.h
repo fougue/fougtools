@@ -89,13 +89,12 @@ gp_Vec toOccVector3d(const geom::Vector3<T>& v)
 }
 
 /*! \class occ::down_cast
- *  \brief Downcasting operator for OpenCascade handles.
+ *  \brief Downcasting operator for OpenCascade handles
  *
- *  It wraps up into a syntactic C++ sugar the way casting of handles is
- *  supported in OpenCascade.
+ *  It wraps up into a syntactic C++ sugar the way casting of handles is supported in OpenCascade
  *
- *  Example : suppose you would like to downcast an Handle_Geom_Curve into
- *  a Handle_Geom_Circle. With OpenCascade it can be done by :
+ *  Example : suppose you would like to downcast an Handle_Geom_Curve into a Handle_Geom_Circle.
+ *  With OpenCascade it can be done by :
  *    \code
  *      Handle_Geom_Circle gcircle = Handle_Geom_Circle::DownCast(gcurve);
  *    \endcode
@@ -105,15 +104,10 @@ gp_Vec toOccVector3d(const geom::Vector3<T>& v)
  *    \endcode
  */
 
-/*! \typedef Handle_Standard_Transient TransientHandle_t
- *  Type alias for handles on transient objects
- */
-
-//! Construct the operator that will down cast \p object to an handle of type
-//! TYPE
+//! Construct the operator that will down cast \p object to an handle of type TYPE
 template<typename TYPE>
-down_cast<TYPE>::down_cast(const TransientHandle_t& handle) :
-  m_handle(handle)
+down_cast<TYPE>::down_cast(const Handle_Standard_Transient& handle)
+  : m_handle(handle)
 {
 }
 

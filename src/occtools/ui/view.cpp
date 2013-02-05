@@ -47,11 +47,12 @@
 # include <Xw_Window.hxx>
 #endif // WNT
 
+#include <QtCore/QtDebug>
+#include <QtCore/QHash>
 #include <QtGui/QApplication>
 #include <QtGui/QLinearGradient>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmap>
-#include <QtCore/QtDebug>
 #include <GL/gl.h>
 #include <GL/glu.h>
 
@@ -68,122 +69,40 @@
 
 namespace occ {
 
-//! Construct an occ:View bound to the interactive context \p context3d, and
-//! having \p parent as its Qt widget parent
-View::View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent) :
-  QWidget(parent),
-  m_context(context3d),
-  m_isInitialized(false),
-  m_needsResize(false)
+class View::Private
 {
-  this->setMouseTracking(true);
-  // Avoid Qt background clears to improve resizing speed,
-  // along with a couple of other attributes
-  this->setAutoFillBackground(false);
-  this->setAttribute(Qt::WA_NoSystemBackground);
-  // This next attribute seems to be the secret of allowing OCC on Win32
-  // to "own" the window, even though its only supposed to work on X11.
-  this->setAttribute(Qt::WA_PaintOnScreen);
-  this->setAttribute (Qt::WA_OpaquePaintEvent);
-#if (QT_VERSION >= QT_VERSION_CHECK(4, 4, 0))
-  this->setAttribute(Qt::WA_NativeWindow);
-#endif
-}
+public:
+  Private(const Handle_AIS_InteractiveContext& context3d, View* backPtr);
 
-// --- Access
+  void initialize();
 
-//! Mutable bound interactive context
-Handle_AIS_InteractiveContext& View::context()
-{
-  return m_context;
-}
+  Handle_AIS_InteractiveContext m_context;
+  Handle_V3d_View m_internalView;
+  bool m_isInitialized;
+  bool m_needsResize;
+  QList<PaintCallback*> m_paintCallbacks;
+  QHash<int, QList<PaintCallback*>::iterator> m_paintCallbackMapping;
+  int m_paintCallbackLastId;
+  Aspect_GraphicCallbackStruct* m_callbackData;
 
-//! Read-only bound interactive context
-const Handle_AIS_InteractiveContext& View::context() const
-{
-  return m_context;
-}
-
-Handle_V3d_View& View::internalView()
-{
-  return m_internalView;
-}
-
-const Handle_V3d_View& View::internalView() const
-{
-  return m_internalView;
-}
-
-// --- Drawing
-
-//! Hack for Qt 4.5.x
-QPaintEngine* View::paintEngine() const
-{
-  return 0;
-}
-
-//! Force a redraw of the view (forcing depends on \p status )
-void View::redraw(RedrawStatus /*status*/)
-{
-  if (!m_internalView.IsNull()) {
-    if (m_needsResize) {
-      m_internalView->MustBeResized();
-      //this->viewPrecision( true );
-    }
-    else
-    {
-      m_internalView->Redraw();
-      /*        // Don't repaint if we are already redrawing
-        // elsewhere due to a keypress or mouse gesture
-        if (status != IsPaintingStatus ||
-            (status == IsPaintingStatus &&
-             QApplication::mouseButtons() == Qt::NoButton))
-        {
-          m_internalView->Redraw();
-        }*/
-    }
-  }
-  m_needsResize = false;
-}
-
-// --- Actions
-
-void View::fitAll()
-{
-  if (!m_internalView.IsNull()) {
-    m_internalView->ZFitAll();
-    m_internalView->FitAll();
-  }
-}
-
-// --- Event handling
-
-/*! \brief Reimplemented from QWidget::paintEvent()
-   */
-void View::paintEvent(QPaintEvent* /*e*/)
-{
-  this->initialize();
-  if (!m_context->CurrentViewer().IsNull())
-    this->redraw(IsPaintingStatus);
-}
-
-/*! \brief Reimplemented from QWidget::resizeEvent()
-   *  Called when the Widget needs to resize itself, but seeing as a paint
-   *  event always follows a resize event, we'll move the work into the
-   *  paint event
-  */
-void View::resizeEvent(QResizeEvent* /*e*/)
-{
-  m_needsResize = true;
-}
-
-// --- Implementation
+  View* m_backPtr;
+};
 
 //! Callback executed each time a paint is requested (on paintEvent())
-int paintCallBack(Aspect_Drawable /*drawable*/,
-                  void* /*pointer*/,
-                  Aspect_GraphicCallbackStruct* /*data*/)
+int paintCallBack(Aspect_Drawable drawable,
+                  void* pointer,
+                  Aspect_GraphicCallbackStruct* data)
 {
+  Q_UNUSED(drawable);
+
+  View::Private* d = reinterpret_cast<View::Private*>(pointer);
+  d->m_callbackData = data;
+
+  foreach (View::PaintCallback* callback, d->m_paintCallbacks)
+    callback->execute();
+
+  d->m_callbackData = 0;
+
   /*    View* view = reinterpret_cast<View*>(pointer);
 
         glDisable(GL_LIGHTING);
@@ -231,16 +150,24 @@ int paintCallBack(Aspect_Drawable /*drawable*/,
   return 0;
 }
 
-//! Initialize the internal V3d_View
-void View::initialize()
+View::Private::Private(const Handle_AIS_InteractiveContext &context3d, View* backPtr)
+  : m_context(context3d),
+    m_isInitialized(false),
+    m_needsResize(false),
+    m_paintCallbackLastId(0),
+    m_callbackData(0),
+    m_backPtr(backPtr)
 {
-  if (!m_isInitialized && this->winId() != 0) {
+}
+
+void View::Private::initialize()
+{
+  if (!m_isInitialized && m_backPtr->winId() != 0) {
     m_internalView = m_context->CurrentViewer()->CreateView();
-    int windowHandle = (int)(this->winId());
+    int windowHandle = (int)(m_backPtr->winId());
     short hi = static_cast<short>(windowHandle >> 16);
     short lo = static_cast<short>(windowHandle);
-    Handle_Aspect_GraphicDevice device =
-        m_context->CurrentViewer()->Device();
+    Handle_Aspect_GraphicDevice device = m_context->CurrentViewer()->Device();
 #ifdef WNT
     Handle_WNT_Window hWnd =
         new WNT_Window(Handle_Graphic3d_WNTGraphicDevice::DownCast(device),
@@ -282,6 +209,143 @@ void View::initialize()
     m_isInitialized = true;
     m_needsResize = true;
   }
+}
+
+//! Construct an occ:View bound to the interactive context \p context3d, and
+//! having \p parent as its Qt widget parent
+View::View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent) :
+  QWidget(parent),
+  d(new Private(context3d, this))
+{
+  this->setMouseTracking(true);
+
+  // Avoid Qt background clears to improve resizing speed, along with a couple of other attributes
+  this->setAutoFillBackground(false);
+  this->setAttribute(Qt::WA_NoSystemBackground);
+
+  // This next attribute seems to be the secret of allowing OCC on Win32 to "own" the window, even
+  // though its only supposed to work on X11
+  this->setAttribute(Qt::WA_PaintOnScreen);
+  this->setAttribute (Qt::WA_OpaquePaintEvent);
+#if (QT_VERSION >= QT_VERSION_CHECK(4, 4, 0))
+  this->setAttribute(Qt::WA_NativeWindow);
+#endif
+}
+
+View::~View()
+{
+  delete d;
+}
+
+// --- Access
+
+//! Mutable bound interactive context
+Handle_AIS_InteractiveContext& View::context()
+{
+  return d->m_context;
+}
+
+//! Read-only bound interactive context
+const Handle_AIS_InteractiveContext& View::context() const
+{
+  return d->m_context;
+}
+
+Handle_V3d_View& View::internalView()
+{
+  return d->m_internalView;
+}
+
+const Handle_V3d_View& View::internalView() const
+{
+  return d->m_internalView;
+}
+
+// --- Drawing
+
+//! Hack for Qt 4.5.x
+QPaintEngine* View::paintEngine() const
+{
+  return 0;
+}
+
+//! Force a redraw of the view (forcing depends on \p status )
+void View::redraw(RedrawStatus /*status*/)
+{
+  if (!d->m_internalView.IsNull()) {
+    if (d->m_needsResize) {
+      d->m_internalView->MustBeResized();
+      //this->viewPrecision( true );
+    }
+    else {
+      d->m_internalView->Redraw();
+      /*        // Don't repaint if we are already redrawing
+        // elsewhere due to a keypress or mouse gesture
+        if (status != IsPaintingStatus ||
+            (status == IsPaintingStatus &&
+             QApplication::mouseButtons() == Qt::NoButton))
+        {
+          m_internalView->Redraw();
+        }*/
+    }
+  }
+  d->m_needsResize = false;
+}
+
+int View::addPaintCallback(View::PaintCallback *callback)
+{
+  if (callback != 0) {
+    d->m_paintCallbacks.append(callback);
+    d->m_paintCallbackMapping.insert(d->m_paintCallbackLastId, --(d->m_paintCallbacks.end()));
+    return ++(d->m_paintCallbackLastId);
+  }
+  return -1;
+}
+
+void View::removePaintCallback(int callbackId)
+{
+  QList<PaintCallback*>::iterator callbackIt =
+      d->m_paintCallbackMapping.value(callbackId, d->m_paintCallbacks.end());
+  if (callbackIt != d->m_paintCallbacks.end())
+    d->m_paintCallbacks.erase(callbackIt);
+}
+
+Aspect_GraphicCallbackStruct *View::paintCallbackData() const
+{
+  return d->m_callbackData;
+}
+
+// --- Actions
+
+void View::fitAll()
+{
+  if (!d->m_internalView.IsNull()) {
+    d->m_internalView->ZFitAll();
+    d->m_internalView->FitAll();
+  }
+}
+
+// --- Event handling
+
+/*! \brief Reimplemented from QWidget::paintEvent()
+   */
+void View::paintEvent(QPaintEvent* event)
+{
+  Q_UNUSED(event);
+
+  d->initialize();
+  if (!d->m_context->CurrentViewer().IsNull())
+    this->redraw(IsPaintingStatus);
+}
+
+/*! \brief Reimplemented from QWidget::resizeEvent()
+ *  Called when the Widget needs to resize itself, but seeing as a paint event always follows a
+ *  resize event, we'll move the work into the paint event
+ */
+void View::resizeEvent(QResizeEvent* event)
+{
+  Q_UNUSED(event);
+  d->m_needsResize = true;
 }
 
 } // namespace occ

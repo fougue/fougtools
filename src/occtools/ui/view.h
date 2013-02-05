@@ -38,8 +38,10 @@
 #ifndef OCC_VIEW_H
 #define OCC_VIEW_H
 
+#include "../../cpptools/abstract_functor.h"
 #include "../occtools.h"
 #include <QtGui/QWidget>
+#include <Aspect_GraphicCallbackProc.hxx>
 #include <Handle_AIS_InteractiveContext.hxx>
 #include <Handle_V3d_View.hxx>
 
@@ -57,6 +59,7 @@ public:
   };
 
   View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent = 0);
+  ~View();
 
   Handle_AIS_InteractiveContext& context();
   const Handle_AIS_InteractiveContext& context() const;
@@ -68,20 +71,22 @@ public:
 
   void redraw(RedrawStatus status = NopStatus);
 
+  typedef cpp::AbstractFunctor<void> PaintCallback;
+  int addPaintCallback(PaintCallback* callback);
+  void removePaintCallback(int callbackId);
+  Aspect_GraphicCallbackStruct* paintCallbackData() const;
+
 public slots:
   void fitAll();
 
 protected:
-  void paintEvent(QPaintEvent* e);
-  void resizeEvent(QResizeEvent* e);
+  void paintEvent(QPaintEvent* event);
+  void resizeEvent(QResizeEvent* event);
 
 private:
-  void initialize();
-
-  Handle_AIS_InteractiveContext m_context;
-  Handle_V3d_View m_internalView;
-  bool m_isInitialized;
-  bool m_needsResize;
+  friend int paintCallBack(Aspect_Drawable, void*, Aspect_GraphicCallbackStruct*);
+  class Private;
+  Private* const d;
 };
 
 } // namespace occ

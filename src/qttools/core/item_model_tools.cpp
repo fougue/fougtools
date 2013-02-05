@@ -62,9 +62,10 @@ bool isValidColumn(const QAbstractItemModel* model, int col, const QModelIndex& 
  */
 int findDataInRow(const QAbstractItemModel* model, int col, const QVariant& value)
 {
-  for (int row = 0; row < model->rowCount(); ++row)
+  for (int row = 0; row < model->rowCount(); ++row) {
     if (model->data(model->index(row, col)) == value)
       return row;
+  }
   return -1;
 }
 
@@ -73,15 +74,6 @@ int findDataInRow(const QAbstractItemModel* model, int col, const QVariant& valu
 QVariant tableModelData(const QAbstractItemModel* model, int row, int col, int role)
 {
   return model->data(model->index(row, col), role);
-}
-
-bool isRowScheduledForDeletion(const QAbstractItemModel* model, int row)
-{
-  if (model == 0 || row >= model->rowCount())
-    return false;
-  const QVariant rowHeaderDisplayData = model->headerData(row, Qt::Vertical, Qt::DisplayRole);
-  const QRegExp remRowRx(QLatin1String("\\s*\\!\\s*"));
-  return remRowRx.indexIn(rowHeaderDisplayData.toString().simplified()) != -1;
 }
 
 } // namespace qttools

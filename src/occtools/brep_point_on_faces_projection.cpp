@@ -45,6 +45,7 @@
 #include <TopExp_Explorer.hxx>
 #include <TopoDS.hxx>
 #include <algorithm>
+#include <functional>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <cassert>

@@ -5,7 +5,7 @@
 **  contact@fougsys.fr
 **
 ** This software is a computer program whose purpose is to provide utility
-** tools for the C++ language and the Qt toolkit.
+** tools for the C++ language, the Qt and Open Cascade toolkits.
 **
 ** This software is governed by the CeCILL-C license under French law and
 ** abiding by the rules of distribution of free software.  You can  use,
@@ -35,11 +35,13 @@
 **
 ****************************************************************************/
 
-#include "identifier_model_row_mapping.h"
+#ifndef OCC_HANDLE_AIS_TEXT_H
+#define OCC_HANDLE_AIS_TEXT_H
 
-namespace qttools {
-  /*! \class IdentifierModelRowMapping
-   *  \brief
-   *
-   */
-} // namespace qttools
+#include "occtools.h"
+#include <Handle_AIS_InteractiveObject.hxx>
+#include <Standard_Macro.hxx>
+
+DEFINE_STANDARD_HANDLE(occ_AIS_Text, AIS_InteractiveObject)
+
+#endif // OCC_HANDLE_AIS_TEXT_H

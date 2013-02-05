@@ -57,9 +57,7 @@ QVector<int> selectedRows(const QAbstractItemView* view, int col)
   result.reserve(selIndexes.size());
   QSet<int> alreadyAddedRows;
   foreach (const QModelIndex& modId, selIndexes) {
-    if (!alreadyAddedRows.contains(modId.row()) &&
-        (col == -1 || modId.column() == col))
-    {
+    if (!alreadyAddedRows.contains(modId.row()) && (col == -1 || modId.column() == col)) {
       result.append(modId.row());
       alreadyAddedRows.insert(modId.row());
     }

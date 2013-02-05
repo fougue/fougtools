@@ -70,7 +70,7 @@ private:
   QDateTime m_dateTime;
   QString m_subject;
   QString m_body;
-}; // class Message
+};
 
 } // namespace qttools
 

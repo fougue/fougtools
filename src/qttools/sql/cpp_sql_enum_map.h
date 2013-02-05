@@ -38,7 +38,6 @@
 #ifndef QTTOOLS_CPP_SQL_ENUM_MAP_H
 #define QTTOOLS_CPP_SQL_ENUM_MAP_H
 
-#include <cassert>
 #include <map>
 #include <QtCore/QHash>
 #include <QtCore/QPair>
@@ -78,7 +77,6 @@ private:
 // --
 
 #include <algorithm>
-#include <cassert>
 
 namespace qttools {
 
@@ -118,21 +116,21 @@ int SqlCppEnumMap<CPP_ENUM>::index(CPP_ENUM cppVal) const
 template<typename CPP_ENUM>
 CPP_ENUM SqlCppEnumMap<CPP_ENUM>::cppValue(int i) const
 {
-  assert(i < m_intMap.size());
+  Q_ASSERT(i < m_intMap.size());
   return m_intMap.at(i);
 }
 
 template<typename CPP_ENUM>
 CPP_ENUM SqlCppEnumMap<CPP_ENUM>::cppValue(const QString& sqlVal) const
 {
-  assert(m_sqlCppMap.contains(sqlVal));
+  Q_ASSERT(m_sqlCppMap.contains(sqlVal));
   return m_sqlCppMap.find(sqlVal).value();
 }
 
 template<typename CPP_ENUM>
 QString SqlCppEnumMap<CPP_ENUM>::sqlValue(CPP_ENUM cppVal) const
 {
-  assert(m_cppSqlMap.contains(cppVal));
+  Q_ASSERT(m_cppSqlMap.contains(cppVal));
   return m_cppSqlMap.value(cppVal);
 }
 

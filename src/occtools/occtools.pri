@@ -42,6 +42,7 @@ INCLUDEPATH *= $$BOOST_ROOT
 HEADERS += $$PWD/io.h \
            $$PWD/occtools.h \
            $$PWD/ais_text.h \
+           $$PWD/handle_ais_text.h \
            $$PWD/brep_point_on_faces_projection.h \
            $$PWD/gcpnts_uniform_abscissa_const_iterator.h \
            $$PWD/make_wire_from_edges.h \
@@ -51,9 +52,11 @@ HEADERS += $$PWD/io.h \
            $$PWD/utils.impl.h \
            $$PWD/ui/view.h \
            $$PWD/ui/view_controller.h \
-           $$PWD/ui/view_controller_delegate.h
+           $$PWD/ui/view_controller_delegate.h \
+           $$PWD/qt_occ.h
 
-SOURCES += $$PWD/io.cpp \
+SOURCES += \
+           $$PWD/io.cpp \
            $$PWD/ais_text.cpp \
            $$PWD/brep_point_on_faces_projection.cpp \
            $$PWD/gcpnts_uniform_abscissa_const_iterator.cpp \
@@ -61,9 +64,10 @@ SOURCES += $$PWD/io.cpp \
            $$PWD/utils.cpp \
            $$PWD/ui/view.cpp \
            $$PWD/ui/view_controller.cpp \
-           $$PWD/ui/view_controller_delegate.cpp
+           $$PWD/ui/view_controller_delegate.cpp \
+           $$PWD/qt_occ.cpp
 
 LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
         -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim  -lTKService \
-        -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -lTKSTL -lTKTopAlgo \
+        -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -l$$OCC_TKSTEP -lTKSTL -lTKTopAlgo \
         -lTKV2d -lTKV3d -lTKXSBase

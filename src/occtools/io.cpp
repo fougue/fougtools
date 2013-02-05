@@ -123,17 +123,6 @@ IO::Format IO::partFormat(const QString& filename)
     return UnknownFormat;
   const QByteArray contentsBegin = file.read(2048);
 
-  // Assume a text-based format
-  const QString contentsBeginText(contentsBegin);
-  if (contentsBeginText.contains(QRegExp("^.{72}S\\s*[0-9]+\\s*[\\n\\r\\f]")))
-    return IgesFormat;
-  if (contentsBeginText.contains(QRegExp("^\\s*ISO-10303-21\\s*;\\s*HEADER")))
-    return StepFormat;
-  if (contentsBeginText.contains(QRegExp("^\\s*DBRep_DrawableShape")))
-    return OccBrepFormat;
-  if (contentsBeginText.contains(QRegExp("^\\s*solid")))
-    return AsciiStlFormat;
-
   // Assume a binary-based format
   // -- Binary STL ?
   const int binaryStlHeaderSize = 80 + sizeof(quint32);
@@ -149,96 +138,39 @@ IO::Format IO::partFormat(const QString& filename)
       return BinaryStlFormat;
   }
 
+  // Assume a text-based format
+  const QString contentsBeginText(contentsBegin);
+  if (contentsBeginText.contains(QRegExp("^.{72}S\\s*[0-9]+\\s*[\\n\\r\\f]")))
+    return IgesFormat;
+  if (contentsBeginText.contains(QRegExp("^\\s*ISO-10303-21\\s*;\\s*HEADER")))
+    return StepFormat;
+  if (contentsBeginText.contains(QRegExp("^\\s*DBRep_DrawableShape")))
+    return OccBrepFormat;
+  if (contentsBeginText.contains(QRegExp("^\\s*solid")))
+    return AsciiStlFormat;
+
   // Fallback case
   return UnknownFormat;
 }
 
-TopoDS_Shape IO::loadPartFile(const QString& filename)
+TopoDS_Shape IO::loadPartFile(const QString& filename, Handle_Message_ProgressIndicator indicator)
 {
   switch (partFormat(filename)) {
   case StepFormat:
-    return IO::loadStepFile(filename);
+    return IO::loadStepFile(filename, indicator);
   case IgesFormat:
-    return IO::loadIgesFile(filename);
+    return IO::loadIgesFile(filename, indicator);
   case OccBrepFormat:
-    return IO::loadBrepFile(filename);
+    return IO::loadBrepFile(filename, indicator);
   default:
     return TopoDS_Shape();
   }
   return TopoDS_Shape();
 }
 
-Handle_StlMesh_Mesh IO::loadStlFile(const QString& filename)
+Handle_StlMesh_Mesh IO::loadStlFile(const QString& filename, Handle_Message_ProgressIndicator indicator)
 {
-  return RWStl::ReadFile(OSD_Path(filename.toAscii().constData()));
-}
-
-Handle_StlMesh_Mesh IO::loadBinaryStlFile(const QString &fileName, BinaryStlLoadError* err)
-{
-  const int stlHeaderSize = 80;
-  const int stlFacetCountSize = 4;
-  const int stlFacetSize = 50;
-  const int stlMinFileSize = 284;
-
-  Handle_StlMesh_Mesh mesh;
-
-  // Check permissions
-  QFile file(fileName);
-  if (!file.open(QIODevice::ReadOnly)) {
-    cpp::checkedAssign(err, PermissionsBinaryStlLoadError);
-    return mesh;
-  }
-
-  // Check file size
-  const qint64 fileSize = file.size();
-  if (((fileSize - stlHeaderSize - stlFacetCountSize) % stlFacetSize != 0)
-      || fileSize < stlMinFileSize) {
-    cpp::checkedAssign(err, WrongFileSizeBinaryStlLoadError);
-    return mesh;
-  }
-
-  const int facetCount = (fileSize - stlHeaderSize - stlFacetCountSize) / stlFacetSize;
-
-  // Skip header
-  file.seek(stlHeaderSize + stlFacetCountSize);
-
-  // Create the output mesh
-  mesh = new StlMesh_Mesh;
-  mesh->AddDomain();
-
-  for (int facet = 0; facet < facetCount; ++facet) {
-    // Read normal
-    const double nx = ::readLittleEndianReal32b(&file);
-    const double ny = ::readLittleEndianReal32b(&file);
-    const double nz = ::readLittleEndianReal32b(&file);
-
-    // Read vertex1 u
-    const double ux = ::readLittleEndianReal32b(&file);
-    const double uy = ::readLittleEndianReal32b(&file);
-    const double uz = ::readLittleEndianReal32b(&file);
-
-    // Read vertex2 v
-    const double vx = ::readLittleEndianReal32b(&file);
-    const double vy = ::readLittleEndianReal32b(&file);
-    const double vz = ::readLittleEndianReal32b(&file);
-
-    // Read vertex2 w
-    const double wx = ::readLittleEndianReal32b(&file);
-    const double wy = ::readLittleEndianReal32b(&file);
-    const double wz = ::readLittleEndianReal32b(&file);
-
-    // Add facet to mesh
-    const int uId = mesh->AddOnlyNewVertex(ux, uy, uz);
-    const int vId = mesh->AddOnlyNewVertex(vx, vy, vz);
-    const int wId = mesh->AddOnlyNewVertex(wx, wy, wz);
-    mesh->AddTriangle(uId, vId, wId, nx, ny, nz);
-
-    // Skip attribute byte count
-    char attrByteCount[2];
-    file.read(&attrByteCount[0], 2);
-  }
-
-  return mesh;
+  return RWStl::ReadFile(OSD_Path(filename.toAscii().constData()), indicator);
 }
 
 /*! \brief Topologic shape read from a file (OCC's internal BREP format)

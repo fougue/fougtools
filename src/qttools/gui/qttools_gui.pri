@@ -45,12 +45,9 @@ HEADERS += \
     $$PWD/line_numbers_bar.h \
     $$PWD/qcombo_box_current_item_keeper.h \
     $$PWD/qstandard_item_explorer.h \
-    $$PWD/read_only_item_delegate.h \
-    $$PWD/sql_enum_item_delegate.h \
     $$PWD/wait_dialog.h \
     $$PWD/widget_tools.h \
     $$PWD/gui.h \
-    $$PWD/item_delegate_edit_mode.h \
     $$PWD/measurement_system_preferences.h \
     $$PWD/length_editor_manager.h \
     $$PWD/abstract_length_editor.h \
@@ -66,7 +63,6 @@ SOURCES += \
     $$PWD/line_numbers_bar.cpp \
     $$PWD/qcombo_box_current_item_keeper.cpp \
     $$PWD/qstandard_item_explorer.cpp \
-    $$PWD/read_only_item_delegate.cpp \
     $$PWD/wait_dialog.cpp \
     $$PWD/widget_tools.cpp \
     $$PWD/measurement_system_preferences.cpp \

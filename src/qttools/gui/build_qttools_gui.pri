@@ -41,7 +41,6 @@
 
 TEMPLATE = lib
 DESTDIR  = $$QTTOOLS_LIB_PATH
-INCLUDEPATH *= $$PWD/.. $$PWD/../..
 
 TARGET = qttools_gui$$TARGET_SUFFIX
 

@@ -38,11 +38,12 @@
 #ifndef QTTOOLS_CALCULATOR_H
 #define QTTOOLS_CALCULATOR_H
 
+#include "script.h"
 #include <QtScript/QScriptEngine>
 
 namespace qttools {
 
-class Calculator
+class QTTOOLS_SCRIPT_EXPORT Calculator
 {
 public:
   Calculator();

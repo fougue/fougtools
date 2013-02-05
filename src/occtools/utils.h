@@ -48,8 +48,6 @@
 #include <Handle_Geom_Curve.hxx>
 #include <Handle_Geom_Surface.hxx>
 #include <Handle_Message_ProgressIndicator.hxx>
-#include <QtGui/QColor>
-#include <QtCore/QString>
 #include <Quantity_Color.hxx>
 #include <Quantity_NameOfColor.hxx>
 #include <Standard_CString.hxx>
@@ -83,10 +81,7 @@ OCCTOOLS_EXPORT gp_Vec normalToFaceAtUV(const TopoDS_Face& face, double u, doubl
 OCCTOOLS_EXPORT gp_Vec normalToSurfaceAtUV(const Handle_Geom_Surface& surface, double u, double v);
 
 // --- Color conversion
-OCCTOOLS_EXPORT QColor toQtColor(const Quantity_Color& c);
-OCCTOOLS_EXPORT QColor toQtColor(const Quantity_NameOfColor c);
-OCCTOOLS_EXPORT Quantity_Color toOccColor(const QColor& c);
-OCCTOOLS_EXPORT Quantity_NameOfColor toNamedOccColor(const QColor& c);
+OCCTOOLS_EXPORT Quantity_Color rgbColor(int red, int blue, int green);
 
 // --- Geometry conversion
 template<typename T>
@@ -94,14 +89,7 @@ gp_Pnt toOccPoint3d(const geom::Point3<T>& p);
 template<typename T>
 gp_Vec toOccVector3d(const geom::Vector3<T>& p);
 
-// --- Type conversion
-OCCTOOLS_EXPORT Standard_CString toOccCstring(const QString& str);
-
 // --- String conversion
-template<typename OCC_PNT_VEC>
-QString toString(const OCC_PNT_VEC& pv,
-                 const QString& format = QLatin1String("(%x, %y, %z)"),
-                 char realFormat = 'g', unsigned prec = 6);
 
 // --- Visualization
 OCCTOOLS_EXPORT void eraseObjectFromContext(Handle_AIS_InteractiveObject object,
@@ -113,17 +101,17 @@ OCCTOOLS_EXPORT gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
                                       TopAbs_Orientation ori = TopAbs_FORWARD);
 
 // --- Classes
+
 template<typename TYPE>
 class down_cast
 {
 public:
-  typedef Handle_Standard_Transient TransientHandle_t;
-  explicit down_cast<TYPE>(const TransientHandle_t& handle);
+  explicit down_cast<TYPE>(const Handle_Standard_Transient& handle);
   operator TYPE() const;
   const TYPE operator->() const;
 private:
-  const TransientHandle_t& m_handle;
-}; // class down_cast<>
+  const Handle_Standard_Transient& m_handle;
+};
 
 // --- Constants
 const gp_Pnt2d origin2d(0., 0.);
@@ -149,6 +137,6 @@ TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Vec& v);
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d);
 
-#include "occtools/utils.impl.h"
+#include "utils.impl.h"
 
 #endif // OCC_UTILS_H

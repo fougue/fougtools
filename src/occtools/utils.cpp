@@ -55,13 +55,6 @@
 #include <cassert>
 #include <gp_Trsf.hxx>
 
-namespace {
-
-const double kMaxRgbComponent = 255.;
-
-} // Anonymous namespace
-
-
 namespace occ {
 
 // --- Geometry
@@ -84,8 +77,7 @@ double curveLength(const Handle_Geom_Curve& curve)
   }
 }
 
-double curveLengthBetweenParams(const Handle_Geom_Curve& curve,
-                                double firstU, double lastU)
+double curveLengthBetweenParams(const Handle_Geom_Curve& curve, double firstU, double lastU)
 {
   try {
     GeomAdaptor_Curve adaptor(curve);
@@ -112,8 +104,7 @@ gp_Vec normalToFaceAtUV(const TopoDS_Face& face, double u, double v)
   //return normalToSurfaceAtUV(BRep_Tool::Surface(face), u, v);
 }
 
-gp_Vec normalToSurfaceAtUV(const Handle_Geom_Surface& surface,
-                           double u, double v)
+gp_Vec normalToSurfaceAtUV(const Handle_Geom_Surface& surface, double u, double v)
 {
   gp_Pnt point;
   gp_Vec d1u, d1v;
@@ -123,42 +114,9 @@ gp_Vec normalToSurfaceAtUV(const Handle_Geom_Surface& surface,
 
 // --- Color conversion
 
-//! Conversion of the Quantity_Color \p c to a QColor
-QColor toQtColor(const Quantity_Color& c)
+Quantity_Color rgbColor(int red, int blue, int green)
 {
-  return QColor(c.Red() * kMaxRgbComponent,
-                c.Green() * kMaxRgbComponent,
-                c.Blue() * kMaxRgbComponent);
-}
-
-//! Conversion of the Quantity_NameOfColor \p c to a QColor
-QColor toQtColor(const Quantity_NameOfColor c)
-{
-  Quantity_Color qc(c);
-  return toQtColor(qc);
-}
-
-//! Conversion of the QColor \p c to a Quantity_Color
-Quantity_Color toOccColor(const QColor& c)
-{
-  return Quantity_Color(c.red() / kMaxRgbComponent,
-                        c.green() / kMaxRgbComponent,
-                        c.blue() / kMaxRgbComponent,
-                        Quantity_TOC_RGB);
-}
-
-//! Conversion of the QColor object \p c to a Quantity_NameOfColor
-Quantity_NameOfColor toNamedOccColor(const QColor& c)
-{
-  return toOccColor(c).Name();
-}
-
-// --- Type conversion
-
-//! Conversion of the Qt string \p str to an OCC CString
-Standard_CString toOccCstring(const QString& str)
-{
-  return const_cast<char*>(qPrintable(str));
+  return Quantity_Color(red / 255., blue / 255., green / 255., Quantity_TOC_RGB);
 }
 
 // --- Visualization
@@ -167,9 +125,9 @@ void eraseObjectFromContext(Handle_AIS_InteractiveObject object,
                             Handle_AIS_InteractiveContext context)
 {
   if (!object.IsNull()) {
-    context->Erase(object, false);
-    context->Remove(object, false);
-    context->Clear(object, false); // Remove() can be used too.
+    context->Erase(object, Standard_False);
+    context->Remove(object, Standard_False);
+    context->Clear(object, Standard_False); // Remove() can be used too
     context->SelectionManager()->Remove(object);
     while (!object.IsNull())
       object.Nullify();
@@ -184,8 +142,7 @@ void eraseObjectFromContext(Handle_AIS_InteractiveObject object,
  *  \param triangle
  *         Triangle whose normal has to be computed
  *  \param ori
- *         Orientation of the triangle (generally inherited from the
- *         triangulated face)
+ *         Orientation of the triangle (generally inherited from the triangulated face)
  */
 gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
                       const Poly_Triangle& triangle,
@@ -203,10 +160,12 @@ gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
   const gp_Vec v2(nodes(n2), nodes(n3)); // V2=(P2,P3)
   const gp_Vec v3(nodes(n3), nodes(n1)); // V3=(P3,P1)
 
-  if ((v1.SquareMagnitude() > 1.e-10) &&
-      (v2.SquareMagnitude() > 1.e-10) &&
-      (v3.SquareMagnitude() > 1.e-10))
+  if ((v1.SquareMagnitude() > 1.e-10)
+      && (v2.SquareMagnitude() > 1.e-10)
+      && (v3.SquareMagnitude() > 1.e-10))
+  {
     return v1.Crossed(v2);
+  }
   return v1;
 }
 

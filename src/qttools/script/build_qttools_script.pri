@@ -35,41 +35,17 @@
 ##
 #############################################################################
 
-HEADERS += \
-    $$PWD/abstract_cipher.h \
-    $$PWD/abstract_plugin_loader.h \
-    $$PWD/abstract_signal_dispatch.h \
-    $$PWD/log.h \
-    $$PWD/log_unqualified.h \
-    $$PWD/qlocale_tools.h \
-    $$PWD/qobject_tools.h \
-    $$PWD/qobject_wrap.h \
-    $$PWD/qstring_tools.h \
-    $$PWD/qvariant_tools.h \
-    $$PWD/runtime_error.h \
-    $$PWD/scoped_connection.h \
-    $$PWD/singleton.h \
-    $$PWD/sleep.h \
-    $$PWD/task.h \
-    $$PWD/core.h \
-    $$PWD/item_model_tools.h \
-    $$PWD/grid_numbering.h \
-    $$PWD/grid_struct.h
+# Parameters (input variables) :
+#   QTTOOLS_LIB_PATH
+#   TARGET_SUFFIX
 
-SOURCES += \
-    $$PWD/abstract_cipher.cpp \
-    $$PWD/abstract_plugin_loader.cpp \
-    $$PWD/abstract_signal_dispatch.cpp \
-    $$PWD/log.cpp \
-    $$PWD/qlocale_tools.cpp \
-    $$PWD/qobject_tools.cpp \
-    $$PWD/qobject_wrap.cpp \
-    $$PWD/qstring_tools.cpp \
-    $$PWD/runtime_error.cpp \
-    $$PWD/scoped_connection.cpp \
-    $$PWD/sleep.cpp \
-    $$PWD/task.cpp \
-    $$PWD/item_model_tools.cpp \
-    $$PWD/grid_numbering.cpp \
-    $$PWD/grid_struct.cpp
+TEMPLATE = lib
+DESTDIR  = $$QTTOOLS_LIB_PATH
 
+TARGET = qttools_script$$TARGET_SUFFIX
+
+CONFIG(dll) {
+  DEFINES *= QTTOOLS_SCRIPT_DLL QTTOOLS_SCRIPT_MAKE_DLL
+}
+
+include(qttools_script.pri)

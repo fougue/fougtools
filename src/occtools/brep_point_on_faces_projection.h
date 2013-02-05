@@ -40,6 +40,7 @@
 
 #include "occtools.h"
 #include <TopoDS_Face.hxx>
+#include <TopoDS_Shape.hxx>
 #include <gp_Vec.hxx>
 #include <utility>
 #include <vector>

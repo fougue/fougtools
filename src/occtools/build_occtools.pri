@@ -41,7 +41,6 @@
 
 TEMPLATE = lib
 DESTDIR  = $$OCCTOOLS_LIB_PATH
-INCLUDEPATH *= $$PWD/.. $$PWD/../..
 
 TARGET = occtools$$TARGET_SUFFIX
 

@@ -38,22 +38,16 @@
 QT *= sql
 
 HEADERS += \
-    $$PWD/abstract_database_model.h \
     $$PWD/cpp_sql_enum_map.h \
     $$PWD/cpp_sql_enum_map_fwd.h \
     $$PWD/database_connection_settings.h \
     $$PWD/database_manager.h \
     $$PWD/qsql_query_tools.h \
-    $$PWD/qsql_table_model_engine.h \
-    $$PWD/sql_data_model.h \
     $$PWD/sql.h \
     $$PWD/composite_type_helper.h
 
 SOURCES += \
-    $$PWD/abstract_database_model.cpp \
     $$PWD/database_connection_settings.cpp \
     $$PWD/database_manager.cpp \
     $$PWD/qsql_query_tools.cpp \
-    $$PWD/qsql_table_model_engine.cpp \
-    $$PWD/sql_data_model.cpp \
     $$PWD/composite_type_helper.cpp

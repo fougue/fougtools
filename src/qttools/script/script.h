@@ -35,60 +35,18 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_ITEM_MODEL_WITH_ROLE_SUPPORT_H
-#define QTTOOLS_ITEM_MODEL_WITH_ROLE_SUPPORT_H
+#ifndef QTTOOLS_SCRIPT_H
+#define QTTOOLS_SCRIPT_H
 
-#include <QtCore/QAbstractItemModel>
+#include <QtCore/QtGlobal>
+#ifdef QTTOOLS_SCRIPT_DLL
+# ifdef QTTOOLS_SCRIPT_MAKE_DLL
+#  define QTTOOLS_SCRIPT_EXPORT Q_DECL_EXPORT
+# else
+#  define QTTOOLS_SCRIPT_EXPORT Q_DECL_IMPORT
+# endif // QTTOOLS_SCRIPT_MAKE_DLL
+#else
+# define QTTOOLS_SCRIPT_EXPORT
+#endif // QTTOOLS_SCRIPT_DLL
 
-namespace qttools {
-
-template<typename ITEM_MODEL>
-class ItemModelWithRoleSupport : public ITEM_MODEL
-{
-public:
-  ItemModelWithRoleSupport(QObject* parent = 0);
-
-  QVariant data(const QModelIndex& idx, int role = Qt::DisplayRole) const;
-  bool setData(const QModelIndex& idx, const QVariant& value, int role = Qt::EditRole);
-
-private:
-  QHash<QModelIndex, QHash<int, QVariant> > m_data;
-};
-} // namespace qttools
-
-// --
-// -- Implementation
-// --
-
-namespace qttools {
-template<typename ITEM_MODEL>
-ItemModelWithRoleSupport<ITEM_MODEL>::ItemModelWithRoleSupport(QObject* parent)
-  : ITEM_MODEL(parent)
-{
-}
-
-template<typename ITEM_MODEL>
-QVariant ItemModelWithRoleSupport<ITEM_MODEL>::data(const QModelIndex& idx, int role) const
-{
-  if (role != Qt::DisplayRole && role != Qt::EditRole
-      && m_data.contains(idx) && m_data[idx].contains(role))
-    return m_data[idx][role];
-  return ITEM_MODEL::data(idx, role);
-}
-
-template<typename ITEM_MODEL>
-bool ItemModelWithRoleSupport<ITEM_MODEL>::setData(const QModelIndex& idx,
-                                                   const QVariant& value, int role)
-{
-  if (role != Qt::DisplayRole && role != Qt::EditRole) {
-    m_data[idx][role] = value;
-    emit ITEM_MODEL::dataChanged(idx, idx);
-    return true;
-  }
-  else
-    return ITEM_MODEL::setData(idx, value, role);
-}
-
-} // namespace qttools
-
-#endif // QTTOOLS_ITEM_MODEL_WITH_ROLE_SUPPORT_H
+#endif // QTTOOLS_SCRIPT_H

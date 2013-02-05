@@ -35,75 +35,69 @@
 **
 ****************************************************************************/
 
-#ifndef STRUCTS_FIXED_ARRAY_H
-#define STRUCTS_FIXED_ARRAY_H
+#include "qt_occ.h"
 
-#include <cstddef>
-#include <algorithm>
-#include <iterator>
+namespace occ {
 
-namespace structs {
-
-// ---
-// --- class FixedArray<>
-// ---
-template<typename T, unsigned S>
-class FixedArray
+//! Conversion of the Quantity_Color \p c to a QColor
+QColor toQtColor(const Quantity_Color& c)
 {
-private:
-  typedef FixedArray<T, S> Self_t;
+  return QColor(c.Red() * 255., c.Green() * 255., c.Blue() * 255.);
+}
 
-public:
-  // --- STL compatibility
-  typedef T* pointer;
-  typedef T& reference;
-  typedef T value_type;
-  typedef unsigned size_type;
-  typedef const T* const_pointer;
-  typedef const T& const_reference;
-  typedef std::ptrdiff_t difference_type;
-  typedef std::random_access_iterator_tag iterator_category;
-  typedef T* iterator;
-  typedef const T* const_iterator;
+//! Conversion of the Quantity_NameOfColor \p c to a QColor
+QColor toQtColor(const Quantity_NameOfColor c)
+{
+  Quantity_Color qc(c);
+  return toQtColor(qc);
+}
 
-  // --- Lifecycle
-  FixedArray<T, S>();
-  FixedArray<T, S>(const Self_t& other);
+//! Conversion of the QColor \p c to a Quantity_Color
+Quantity_Color toOccColor(const QColor& c)
+{
+  return Quantity_Color(c.red() / 255., c.green() / 255., c.blue() / 255., Quantity_TOC_RGB);
+}
 
-  // --- Iteration
-  const_iterator begin() const;
-  iterator begin();
-  const_iterator end() const;
-  iterator end();
+//! Conversion of the QColor object \p c to a Quantity_NameOfColor
+Quantity_NameOfColor toNamedOccColor(const QColor& c)
+{
+  return toOccColor(c).Name();
+}
 
-  // --- Measurement (STL compatibility)
-  bool empty() const;
-  size_type max_size() const;
-  size_type size() const;
+//! Conversion of the QString \p str to an OCC CString
+Standard_CString toCString(const QString& str)
+{
+  return str.toLocal8Bit().constData();
+}
 
-  // --- Access
-  T& get(unsigned i);
-  const T& get(unsigned i) const;
-  T& operator[](unsigned i);
-  const T& operator[](unsigned i) const;
-  const T* cArray() const;
-  T* cArray();
+//! Conversion of the QString \p str to an OCC TCollection_AsciiString
+TCollection_AsciiString toAsciiString(const QString& str)
+{
+  return TCollection_AsciiString(toCString(str));
+}
 
-  // --- Element change
-  void set(unsigned i, const T& coord);
-  Self_t& operator=(const Self_t& other);
+//! Conversion of the QString \p str to an OCC ExtString
+Standard_ExtString toExtString(const QString& str)
+{
+  return reinterpret_cast<Standard_ExtString>(str.utf16());
+}
 
-protected:
-  // --- Attributes
-  T _vector[S];
-};
+//! Conversion of the QString \p str to an OCC TCollection_ExtendedString
+TCollection_ExtendedString toOccExtendedString(const QString& str)
+{
+  return TCollection_ExtendedString(toExtString(str));
+}
 
-// --- Related functions
-template<typename TEXT_STREAM, typename T, unsigned S>
-TEXT_STREAM& operator<<(TEXT_STREAM& os, const FixedArray<T, S>& coords);
+//! Conversion of the OCC TCollection_AsciiString \p str to a QString
+QString toQString(const TCollection_AsciiString& str)
+{
+  return QString::fromAscii(str.ToCString(), str.Length());
+}
 
-#include "fixed_array.impl.h"
+//! Conversion of the OCC TCollection_ExtendedString \p str to a QString
+QString toQString(const TCollection_ExtendedString& str)
+{
+  return QString::fromUtf16(reinterpret_cast<const ushort*>(str.ToExtString()), str.Length());
+}
 
-} // namespace structs
-
-#endif // STRUCTS_FIXED_ARRAY_H
+} // namespace occ

@@ -59,7 +59,7 @@ public:
 
   MessageDialog(Icon icon, const QString& title, const QString& text,
                 QDialogButtonBox::StandardButtons buttons,
-                QWidget* parent = 0);
+                QWidget* parent = NULL);
 
   void setDetailsWidget(QWidget* widget);
 

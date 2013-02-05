@@ -106,7 +106,7 @@ TopoDS_Shape loadFile(const QString& fileName, Handle_Message_ProgressIndicator 
     result = reader.OneShape();
     if (!indicator.IsNull()) {
       indicator->EndScope();
-      reader.WS()->MapReader()->SetProgress(0);
+      reader.WS()->MapReader()->SetProgress(NULL);
     }
   }
   return result;
@@ -236,7 +236,7 @@ void IO::writeIgesFile(const TopoDS_Shape& shape,
   writer.AddShape(shape);
   writer.ComputeModel();
   writer.Write(fileName.toAscii().data());
-  writer.TransferProcess()->SetProgress(0);
+  writer.TransferProcess()->SetProgress(NULL);
 }
 
 /*! \brief Write a topologic shape to a file (STEP format)
@@ -254,7 +254,7 @@ void IO::writeStepFile(const TopoDS_Shape& shape,
     writer.WS()->MapReader()->SetProgress(indicator);
   status = writer.Transfer(shape, STEPControl_AsIs);
   status = writer.Write(fileName.toAscii().data());
-  writer.WS()->MapReader()->SetProgress(0);
+  writer.WS()->MapReader()->SetProgress(NULL);
 }
 
 /*! \brief Write a topologic shape to a file (ASCII STL format)

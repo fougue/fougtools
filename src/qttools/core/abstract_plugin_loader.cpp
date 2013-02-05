@@ -92,7 +92,7 @@ AbstractPluginLoader::~AbstractPluginLoader()
 {
   Q_D(AbstractPluginLoader);
   foreach (QPluginLoader* pluginLoader, d->m_pluginLoaders) {
-    if (pluginLoader != 0) {
+    if (pluginLoader != NULL) {
       if (this->autoDeletePlugins())
         pluginLoader->unload();
       delete pluginLoader;
@@ -168,7 +168,7 @@ void AbstractPluginLoader::loadPlugins(const QRegExp& fileRx, QVector<QString>* 
 #ifdef DEBUG_ABSTRACT_PLUGIN_LOADER
         qDebug() << "  not added";
 #endif // DEBUG_ABSTRACT_PLUGIN_LOADER
-        if (errors != 0)
+        if (errors != NULL)
           //: %1 holds the path to a plugin (DLL)
           //: %2 holds an error description
           errors->append(QObject::tr("Failed to load plugin (maybe wrong interface) %1 : %2")

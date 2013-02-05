@@ -105,7 +105,7 @@ Task::Task(QObject* parent)
 Task::~Task()
 {
   Q_D(Task);
-  if (this->thread() != 0 && this->isBoundToThread() && this->autoDeleteBoundThread())
+  if (this->thread() != NULL && this->isBoundToThread() && this->autoDeleteBoundThread())
     delete this->thread();
   delete d;
 }
@@ -149,7 +149,7 @@ int Task::loopInterval() const
 void Task::bindToThread(QThread* thread)
 {
   Q_D(Task);
-  if (thread == 0)
+  if (thread == NULL)
     return;
 
   if (this->isBoundToThread()) {

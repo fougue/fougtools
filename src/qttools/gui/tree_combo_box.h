@@ -52,7 +52,7 @@ class QTTOOLS_GUI_EXPORT TreeComboBox : public QComboBox
   Q_PROPERTY(QModelIndex currentModelIndex READ currentModelIndex WRITE setCurrentModelIndex)
 
 public:
-  TreeComboBox(QWidget *parent = 0);
+  TreeComboBox(QWidget *parent = NULL);
 
   void showPopup();
 

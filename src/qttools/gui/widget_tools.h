@@ -76,9 +76,9 @@ namespace qttools {
 template<typename PARENT_WIDGET>
 PARENT_WIDGET* findFirstParentWidget(QWidget* widget)
 {
-  PARENT_WIDGET* foundParentWidget = 0;
+  PARENT_WIDGET* foundParentWidget = NULL;
   QWidget* iteratorWidget = widget;
-  while (iteratorWidget != 0 && foundParentWidget == 0) {
+  while (iteratorWidget != NULL && foundParentWidget == NULL) {
     iteratorWidget = iteratorWidget->parentWidget();
     foundParentWidget = qobject_cast<PARENT_WIDGET*>(iteratorWidget);
   }
@@ -88,12 +88,12 @@ PARENT_WIDGET* findFirstParentWidget(QWidget* widget)
 template<typename PARENT_WIDGET>
 PARENT_WIDGET* findLastParentWidget(QWidget* widget)
 {
-  PARENT_WIDGET* foundParentWidget = 0;
+  PARENT_WIDGET* foundParentWidget = NULL;
   QWidget* iteratorWidget = widget;
-  while (iteratorWidget != 0) {
+  while (iteratorWidget != NULL) {
     iteratorWidget = iteratorWidget->parentWidget();
     PARENT_WIDGET* currParentWidget = qobject_cast<PARENT_WIDGET*>(iteratorWidget);
-    if (currParentWidget != 0)
+    if (currParentWidget != NULL)
       foundParentWidget = currParentWidget;
   }
   return foundParentWidget;

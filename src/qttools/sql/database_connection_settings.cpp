@@ -150,7 +150,7 @@ void DatabaseConnectionSettings::load(const AbstractCipher* passwordCipher,
   this->setPort(settings.value("port", defPort).toInt());
   this->setUserName(settings.value("user", defUser).toString());
 
-  if (passwordCipher != 0 && settings.contains("password")) {
+  if (passwordCipher != NULL && settings.contains("password")) {
     const QByteArray decryptedPwd =
         passwordCipher->decrypted(settings.value("password").toByteArray());
     this->setPassword(decryptedPwd);
@@ -183,7 +183,7 @@ void DatabaseConnectionSettings::write(const AbstractCipher* passwordCipher,
   settings.setValue("port", this->port());
   settings.setValue("user", this->userName());
 
-  if (passwordCipher != 0) {
+  if (passwordCipher != NULL) {
     const QByteArray pwd = this->password().toUtf8();
     settings.setValue("password", passwordCipher->encrypted(pwd));
   }
@@ -200,7 +200,7 @@ void DatabaseConnectionSettings::write(const AbstractCipher* passwordCipher,
  */
 void DatabaseConnectionSettings::configureDatabase(QSqlDatabase* db) const
 {
-  if (db == 0)
+  if (db == NULL)
     return;
 
   db->setDatabaseName(this->databaseName());

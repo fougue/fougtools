@@ -41,8 +41,8 @@ namespace qttools {
 
 AbstractSignalDispatch::AbstractSignalDispatch(QObject* parent)
   : QObject(parent),
-    m_sender(0),
-    m_signal(0)
+    m_sender(NULL),
+    m_signal(NULL)
 {
 }
 

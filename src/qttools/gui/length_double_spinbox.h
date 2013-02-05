@@ -52,7 +52,7 @@ class QTTOOLS_GUI_EXPORT LengthDoubleSpinBox :
   Q_PROPERTY(double length READ length WRITE setLength)
 
 public:
-  LengthDoubleSpinBox(QWidget* parent = 0);
+  LengthDoubleSpinBox(QWidget* parent = NULL);
   ~LengthDoubleSpinBox();
 
   double length() const;

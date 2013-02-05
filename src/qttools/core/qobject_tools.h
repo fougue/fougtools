@@ -73,7 +73,7 @@ template<typename PARENT_TYPE>
 PARENT_TYPE* findParent(QObject* object)
 {
   QObject* it = object;
-  while (it != 0 && qobject_cast<PARENT_TYPE*>(it) == 0)
+  while (it != NULL && qobject_cast<PARENT_TYPE*>(it) == NULL)
     it = it->parent();
   return qobject_cast<PARENT_TYPE*>(it);
 }

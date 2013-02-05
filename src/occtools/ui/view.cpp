@@ -103,7 +103,7 @@ int paintCallBack(Aspect_Drawable drawable,
   foreach (View::PaintCallback* callback, d->m_paintCallbacks)
     callback->execute();
 
-  d->m_callbackData = 0;
+  d->m_callbackData = NULL;
 
   /*    View* view = reinterpret_cast<View*>(pointer);
 
@@ -157,7 +157,7 @@ View::Private::Private(const Handle_AIS_InteractiveContext &context3d, View* bac
     m_isInitialized(false),
     m_needsResize(false),
     m_paintCallbackLastId(0),
-    m_callbackData(0),
+    m_callbackData(NULL),
     m_backPtr(backPtr)
 {
 }
@@ -254,7 +254,7 @@ const Handle_V3d_View& View::internalView() const
 //! Hack for Qt 4.5.x
 QPaintEngine* View::paintEngine() const
 {
-  return 0;
+  return NULL;
 }
 
 //! Force a redraw of the view (forcing depends on \p status )
@@ -282,7 +282,7 @@ void View::redraw(RedrawStatus /*status*/)
 
 int View::addPaintCallback(View::PaintCallback *callback)
 {
-  if (callback != 0) {
+  if (callback != NULL) {
     d->m_paintCallbacks.append(callback);
     d->m_paintCallbackMapping.insert(d->m_paintCallbackLastId, --(d->m_paintCallbacks.end()));
     return ++(d->m_paintCallbackLastId);

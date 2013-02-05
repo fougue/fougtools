@@ -48,8 +48,8 @@ class QTTOOLS_GUI_EXPORT LineEditWithAutoToolTip : public QLineEdit
   Q_OBJECT
 
 public:
-  LineEditWithAutoToolTip(QWidget* parent = 0);
-  LineEditWithAutoToolTip(const QString& contents, QWidget* parent = 0);
+  LineEditWithAutoToolTip(QWidget* parent = NULL);
+  LineEditWithAutoToolTip(const QString& contents, QWidget* parent = NULL);
 
 private slots:
   void onTextChanged(const QString& text);

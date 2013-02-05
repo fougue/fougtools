@@ -55,7 +55,7 @@ public:
     NoOption
   };
 
-  WaitDialog(QWidget* parent = 0);
+  WaitDialog(QWidget* parent = NULL);
   ~WaitDialog();
 
   bool isWaiting() const;

@@ -56,7 +56,7 @@ public:
   DatabaseManagerPrivate(const QSqlDatabase& refDb)
     : m_refDatabase(refDb)
   {
-    Q_ASSERT(QThread::currentThread() != 0);
+    Q_ASSERT(QThread::currentThread() != NULL);
     m_databases.insert(QThread::currentThread(), refDb);
   }
 

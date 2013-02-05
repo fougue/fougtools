@@ -118,7 +118,7 @@ void SmtpAccount::setPassword(const QString& pwd)
  */
 SmtpAccount::AuthenticationMethod SmtpAccount::toAuthenticationMethod(int id, bool* ok)
 {
-  if (ok != 0)
+  if (ok != NULL)
     *ok = SmtpAccount::NoAuthentication <= id && id <= SmtpAccount::CramMd5Authentication;
 
   switch (id) {
@@ -143,7 +143,7 @@ SmtpAccount::AuthenticationMethod SmtpAccount::toAuthenticationMethod(int id, bo
  */
 SmtpAccount::ConnectionSecurity SmtpAccount::toConnectionSecurity(int id, bool* ok)
 {
-  if (ok != 0)
+  if (ok != NULL)
     *ok = SmtpAccount::NoSecurity <= id && id <= SmtpAccount::SslTlsSecurity;
 
   switch (id) {

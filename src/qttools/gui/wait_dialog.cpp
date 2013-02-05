@@ -52,9 +52,9 @@ class WaitDialogPrivate
 {
 public:
   WaitDialogPrivate(WaitDialog* parent)
-    : m_waitLabel(0),
-      m_progressBar(0),
-      m_btnBox(0),
+    : m_waitLabel(NULL),
+      m_progressBar(NULL),
+      m_btnBox(NULL),
       m_updateTimer(new QTimer(parent)),
       m_minDuration(1000)
   {

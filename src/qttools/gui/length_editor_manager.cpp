@@ -55,20 +55,20 @@ LengthEditorManager::LengthEditorManager()
 
 void LengthEditorManager::attach(AbstractLengthEditor* editor)
 {
-  if (editor != 0)
+  if (editor != NULL)
     m_lengthEditors.insert(editor);
 }
 
 void LengthEditorManager::detach(AbstractLengthEditor* editor)
 {
-  if (editor != 0)
+  if (editor != NULL)
     m_lengthEditors.remove(editor);
 }
 
 LengthEditorManager* LengthEditorManager::globalInstance()
 {
   static std::auto_ptr<LengthEditorManager> gManager;
-  if (gManager.get() == 0)
+  if (gManager.get() == NULL)
     gManager.reset(new LengthEditorManager);
   return gManager.get();
 }

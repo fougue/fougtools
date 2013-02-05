@@ -93,7 +93,7 @@ MessageDialog::MessageDialog(Icon icon,
 
 void MessageDialog::setDetailsWidget(QWidget* widget)
 {
-  if (widget == 0)
+  if (widget == NULL)
     return;
   widget->setParent(m_detailsWidget);
   QBoxLayout* layout = new QVBoxLayout;

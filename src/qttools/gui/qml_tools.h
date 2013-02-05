@@ -49,7 +49,7 @@ class QTTOOLS_GUI_EXPORT QmlTools : public QObject
   Q_OBJECT
 
 public:
-  QmlTools(QObject* parent = 0);
+  QmlTools(QObject* parent = NULL);
 
   Q_INVOKABLE void setOverrideCursor(int shape);
   Q_INVOKABLE void restoreOverrideCursor();

@@ -45,13 +45,13 @@ namespace occ {
 
 void ViewControllerDelegate::notifyContextSelectionChanged()
 {
-  if (0 != this->controller())
+  if (NULL != this->controller())
     this->controller()->notifyContextSelectionChanged();
 }
 
 void ViewControllerDelegate::notifyEscaped()
 {
-  if (0 != this->controller())
+  if (NULL != this->controller())
     this->controller()->notifyEscaped();
 }
 

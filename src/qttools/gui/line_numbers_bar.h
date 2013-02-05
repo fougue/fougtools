@@ -49,7 +49,7 @@ class QTTOOLS_GUI_EXPORT LineNumbersBar : public QWidget
   Q_OBJECT
 
 public:
-  LineNumbersBar(QWidget* parent = 0);
+  LineNumbersBar(QWidget* parent = NULL);
   ~LineNumbersBar();
 
   void setCurrentLine(int lineno);

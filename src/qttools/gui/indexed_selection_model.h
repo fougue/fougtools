@@ -49,7 +49,7 @@ class QTTOOLS_GUI_EXPORT IndexedSelectionModel : public QObject
   Q_OBJECT
 
 public:
-  IndexedSelectionModel(QObject* parent = 0);
+  IndexedSelectionModel(QObject* parent = NULL);
 
   const QSet<int>& selectedItems() const;
 

@@ -62,23 +62,23 @@ public:
   static Format partFormat(const QString& fileName);
 
   static TopoDS_Shape loadPartFile(const QString& fileName,
-                                   Handle_Message_ProgressIndicator indicator = 0);
+                                   Handle_Message_ProgressIndicator indicator = NULL);
   static Handle_StlMesh_Mesh loadStlFile(const QString& fileName,
-                                         Handle_Message_ProgressIndicator indicator = 0);
+                                         Handle_Message_ProgressIndicator indicator = NULL);
 
   static TopoDS_Shape loadBrepFile(const QString& fileName,
-                                   Handle_Message_ProgressIndicator indicator = 0);
+                                   Handle_Message_ProgressIndicator indicator = NULL);
   static TopoDS_Shape loadIgesFile(const QString& fileName,
-                                   Handle_Message_ProgressIndicator indicator = 0);
+                                   Handle_Message_ProgressIndicator indicator = NULL);
   static TopoDS_Shape loadStepFile(const QString& fileName,
-                                   Handle_Message_ProgressIndicator indicator = 0);
+                                   Handle_Message_ProgressIndicator indicator = NULL);
 
   static void writeBrepFile(const TopoDS_Shape& shape, const QString& fileName,
-                            Handle_Message_ProgressIndicator indicator = 0);
+                            Handle_Message_ProgressIndicator indicator = NULL);
   static void writeIgesFile(const TopoDS_Shape& shape, const QString& fileName,
-                            Handle_Message_ProgressIndicator indicator = 0);
+                            Handle_Message_ProgressIndicator indicator = NULL);
   static void writeStepFile(const TopoDS_Shape& shape, const QString& fileName,
-                            Handle_Message_ProgressIndicator indicator = 0);
+                            Handle_Message_ProgressIndicator indicator = NULL);
   static void writeAsciiStlFile(const TopoDS_Shape& shape, const QString& fileName);
   static void writeBinaryStlFile(const TopoDS_Shape& shape, const QString& fileName);
 };

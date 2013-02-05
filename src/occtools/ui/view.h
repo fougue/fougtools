@@ -58,7 +58,7 @@ public:
     NopStatus
   };
 
-  View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent = 0);
+  View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent = NULL);
   ~View();
 
   Handle_AIS_InteractiveContext& context();

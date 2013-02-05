@@ -312,7 +312,7 @@ void AbstractLogHandler::setAutoDetach(bool b)
  */
 void attachGlobalLogHandler(AbstractLogHandler* handler)
 {
-  if (handler != 0) {
+  if (handler != NULL) {
     if (internal::globalLogHandlers()->isEmpty()
         && !internal::globalPendingMessages()->isEmpty())
     {
@@ -329,7 +329,7 @@ void attachGlobalLogHandler(AbstractLogHandler* handler)
  */
 void detachGlobalLogHandler(AbstractLogHandler* handler)
 {
-  if (handler != 0)
+  if (handler != NULL)
     internal::globalLogHandlers()->removeAll(handler);
 }
 

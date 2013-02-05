@@ -46,7 +46,7 @@ template<typename T>
 class QObjectWrap : public QObject
 {
 public:
-  QObjectWrap(T* object, QObject* parent = 0);
+  QObjectWrap(T* object, QObject* parent = NULL);
   ~QObjectWrap();
 
   T* wrapped();
@@ -57,7 +57,7 @@ private:
 };
 
 template<typename T>
-QObjectWrap<T>* wrapAsQObject(T* object, QObject* parent = 0);
+QObjectWrap<T>* wrapAsQObject(T* object, QObject* parent = NULL);
 
 // --
 // -- Implementation

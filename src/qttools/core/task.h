@@ -55,7 +55,7 @@ class QTTOOLS_CORE_EXPORT Task : public QObject
   Q_PROPERTY(bool loopInterval READ loopInterval WRITE setLoopInterval)
 
 public:
-  Task(QObject* parent = 0);
+  Task(QObject* parent = NULL);
   ~Task();
 
   bool isRunning() const;
@@ -97,7 +97,7 @@ template<typename FUNCTOR>
 class FunctorTask : public Task
 {
 public:
-  FunctorTask(FUNCTOR functor, QObject* parent = 0);
+  FunctorTask(FUNCTOR functor, QObject* parent = NULL);
 
 protected:
   void action();
@@ -107,7 +107,7 @@ private:
 };
 
 template<typename FUNCTOR>
-Task* newFunctorTask(FUNCTOR functor, QObject* parent = 0);
+Task* newFunctorTask(FUNCTOR functor, QObject* parent = NULL);
 
 // --
 // -- Implementation

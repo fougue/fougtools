@@ -125,7 +125,7 @@ class QTTOOLS_CORE_EXPORT LogDispatcher :
 {
   Q_OBJECT
 public:
-  LogDispatcher(QObject* parent = 0);
+  LogDispatcher(QObject* parent = NULL);
   void handle(Log::MessageType msgType, const QString& msg);
 signals:
   void log(qttools::Log::MessageType msgType, const QString& msg);

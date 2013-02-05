@@ -56,7 +56,7 @@ class LineNumbersBarPrivate
 {
 public:
   LineNumbersBarPrivate()
-    : m_edit(0),
+    : m_edit(NULL),
       m_stopLine(-1),
       m_currentLine(-1),
       m_bugLine(-1)

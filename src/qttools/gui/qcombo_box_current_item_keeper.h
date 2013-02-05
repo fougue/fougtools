@@ -50,7 +50,7 @@ class QTTOOLS_GUI_EXPORT QComboBoxCurrentItemKeeper : public QObject
   Q_OBJECT
 
 public:
-  QComboBoxCurrentItemKeeper(QComboBox* comboBox = 0);
+  QComboBoxCurrentItemKeeper(QComboBox* comboBox = NULL);
 
   int columnForModelRowIdentifier() const;
   void setColumnForModelRowIdentifier(int col);

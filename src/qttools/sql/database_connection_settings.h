@@ -71,10 +71,10 @@ public:
 
   void configureDatabase(QSqlDatabase* db) const;
 
-  void load(const AbstractCipher* passwordCipher = 0,
+  void load(const AbstractCipher* passwordCipher = NULL,
             const QString& settingsGroup = QString(),
             const SettingsMap& defValues = SettingsMap());
-  void write(const AbstractCipher* passwordCipher = 0,
+  void write(const AbstractCipher* passwordCipher = NULL,
              const QString& settingsGroup = QString()) const;
 
 private:

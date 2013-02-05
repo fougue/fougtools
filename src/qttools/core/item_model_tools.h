@@ -94,7 +94,7 @@ bool validRows(const QAbstractItemModel* model,
 template<typename INT_CONTAINER>
 void removeRows(QAbstractItemModel* model, const INT_CONTAINER& rows)
 {
-  if (model == 0)
+  if (model == NULL)
       return;
   // Delete rows by descending order
   QVector<int> descRows;

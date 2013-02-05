@@ -77,7 +77,7 @@ void Singleton<T>::release()
   m_mutex.lock();
   if (m_instance)
     delete m_instance;
-  m_instance = 0;
+  m_instance = NULL;
   m_mutex.unlock();
 }
 

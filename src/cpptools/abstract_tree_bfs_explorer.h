@@ -49,7 +49,7 @@ public:
   AbstractTreeBfsExplorer();
   virtual ~AbstractTreeBfsExplorer();
 
-  void begin(NODE* node = static_cast<NODE*>(0));
+  void begin(NODE* node = static_cast<NODE*>(NULL));
   void goNext();
   bool atEnd() const;
 
@@ -74,7 +74,7 @@ private:
 
 template<class NODE>
 AbstractTreeBfsExplorer<NODE>::AbstractTreeBfsExplorer()
-  : m_current(static_cast<NODE*>(0)),
+  : m_current(static_cast<NODE*>(NULL)),
     m_depth(0)
 {
 }
@@ -89,10 +89,10 @@ void AbstractTreeBfsExplorer<NODE>::begin(NODE* node)
 {
   while (!m_levelNodes.empty())
     m_levelNodes.pop();
-  m_current = static_cast<NODE*>(0);
+  m_current = static_cast<NODE*>(NULL);
   m_depth = 0;
 
-  if (node == static_cast<NODE*>(0))
+  if (node == static_cast<NODE*>(NULL))
     this->enqueueNodeChildren(node);
   else
     this->enqueueNode(node);
@@ -104,7 +104,7 @@ template<class NODE>
 void AbstractTreeBfsExplorer<NODE>::goNext()
 {
   if (m_levelNodes.empty()) {
-    m_current = static_cast<NODE*>(0);
+    m_current = static_cast<NODE*>(NULL);
     return;
   }
 
@@ -113,18 +113,20 @@ void AbstractTreeBfsExplorer<NODE>::goNext()
   m_current = m_levelNodes.front();
   m_levelNodes.pop();
 
-  if (previous != static_cast<const NODE*>(0) && m_current != static_cast<const NODE*>(0)
+  if (previous != static_cast<const NODE*>(NULL) && m_current != static_cast<const NODE*>(NULL)
       && this->isCurrentDeeper(previous))
+  {
     ++m_depth;
+  }
 
-  if (m_current != static_cast<const NODE*>(0))
+  if (m_current != static_cast<const NODE*>(NULL))
     this->enqueueNodeChildren(m_current);
 }
 
 template<class NODE>
 bool AbstractTreeBfsExplorer<NODE>::atEnd() const
 {
-  return m_current == static_cast<const NODE*>(0);
+  return m_current == static_cast<const NODE*>(NULL);
 }
 
 template<class NODE>

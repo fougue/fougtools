@@ -64,7 +64,7 @@ public:
 
 protected:
   void setLoadingFolder(const QString& folder);
-  void loadPlugins(const QRegExp& fileRx, QVector<QString>* errors = 0);
+  void loadPlugins(const QRegExp& fileRx, QVector<QString>* errors = NULL);
   void discardPlugin(QObject* plugin);
   virtual bool isPluginCompatible(const QObject* plugin) const = 0;
 

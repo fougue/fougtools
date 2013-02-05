@@ -47,7 +47,7 @@ namespace occ {
 ViewController::ViewController(View* view) :
   QObject(view),
   m_view(view),
-  m_rubberBand(0)
+  m_rubberBand(NULL)
 {
 }
 
@@ -127,7 +127,7 @@ View* ViewController::view()
 
 const QRect ViewController::rubberBandGeometry() const
 {
-  if (m_rubberBand == 0)
+  if (m_rubberBand == NULL)
     return QRect();
   return m_rubberBand->geometry();
 }
@@ -136,7 +136,7 @@ const QRect ViewController::rubberBandGeometry() const
 
 void ViewController::createRubberBand()
 {
-  if (m_rubberBand == 0) {
+  if (m_rubberBand == NULL) {
     m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this->view());
     //_rubberBand->setWindowOpacity(0.7);
     // TODO Is this instruction really needed ?

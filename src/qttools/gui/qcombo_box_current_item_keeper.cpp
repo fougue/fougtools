@@ -44,8 +44,8 @@
 namespace qttools {
 
 /*! \class QComboBoxCurrentItemKeeper
- *  \brief Provides automatic preservation of a QComboBox's current item on
- *         reset of a QAbstractItemModel
+ *  \brief Provides automatic preservation of a QComboBox's current item on reset of a
+ *         QAbstractItemModel
  *
  */
 
@@ -55,7 +55,7 @@ QComboBoxCurrentItemKeeper::QComboBoxCurrentItemKeeper(QComboBox* comboBox)
     m_oldIdentifierValue(),
     m_columnForModelRowIdentifier(0)
 {
-  if (comboBox == 0)
+  if (comboBox == NULL)
     return;
   const QAbstractItemModel* model = comboBox->model();
   connect(model, SIGNAL(modelAboutToBeReset()),

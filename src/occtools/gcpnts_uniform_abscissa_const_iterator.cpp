@@ -44,7 +44,7 @@
 namespace occ {
 
 GCPnts_UniformAbscissaConstIterator::GCPnts_UniformAbscissaConstIterator()
-  : m_ua(0),
+  : m_ua(NULL),
     m_index(1)
 {
 }

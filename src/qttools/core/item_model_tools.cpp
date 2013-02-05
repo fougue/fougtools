@@ -44,14 +44,14 @@ namespace qttools {
 
 bool isValidRow(const QAbstractItemModel* model, int row, const QModelIndex& parent)
 {
-  if (model == 0)
+  if (model == NULL)
     return false;
   return 0 <= row && row < model->rowCount(parent);
 }
 
 bool isValidColumn(const QAbstractItemModel* model, int col, const QModelIndex& parent)
 {
-  if (model == 0)
+  if (model == NULL)
     return false;
   return 0 <= col && col < model->columnCount(parent);
 }

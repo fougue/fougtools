@@ -68,7 +68,7 @@ QTreeView *TreeComboBox::treeView() const
 
 QModelIndex TreeComboBox::treeFindData(const QVariant &data, int role, Qt::MatchFlags flags) const
 {
-  if (this->model() == 0)
+  if (this->model() == NULL)
     return QModelIndex();
   const QModelIndex startId = this->model()->index(0, this->modelColumn(), QModelIndex());
   const QModelIndexList matchIds = this->model()->match(startId, role, data, 1, flags);
@@ -77,7 +77,7 @@ QModelIndex TreeComboBox::treeFindData(const QVariant &data, int role, Qt::Match
 
 QModelIndex TreeComboBox::currentModelIndex() const
 {
-  if (this->model() == 0)
+  if (this->model() == NULL)
     return QModelIndex();
   const QModelIndex treeViewCurrentIndex = this->treeView()->currentIndex();
   if (!treeViewCurrentIndex.isValid())

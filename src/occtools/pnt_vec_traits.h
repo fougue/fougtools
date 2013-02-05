@@ -54,7 +54,7 @@ struct PntVecTraits<gp_Pnt, gp_Vec>
 
   static void normalize(Vec_t* v)
   {
-    assert(v != 0);
+    assert(v != NULL);
     v->Normalize();
   }
 

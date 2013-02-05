@@ -81,8 +81,8 @@ public:
   QString password() const;
   void setPassword(const QString& pwd);
 
-  static AuthenticationMethod toAuthenticationMethod(int id, bool* ok = 0);
-  static ConnectionSecurity toConnectionSecurity(int id, bool* ok = 0);
+  static AuthenticationMethod toAuthenticationMethod(int id, bool* ok = NULL);
+  static ConnectionSecurity toConnectionSecurity(int id, bool* ok = NULL);
 
 private:
   QString m_host;

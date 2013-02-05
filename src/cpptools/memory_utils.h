@@ -51,16 +51,16 @@ size_t scalarAddress(const T* pointer)
 template<typename T>
 void checkedReset(T*& pointer)
 {
-  if (pointer != 0) {
+  if (pointer != NULL) {
     delete pointer;
-    pointer = 0;
+    pointer = NULL;
   }
 }
 
 template<typename T>
 void checkedAssign(T* pointer, T value)
 {
-  if (pointer != 0)
+  if (pointer != NULL)
     *pointer = value;
 }
 

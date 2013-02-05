@@ -50,7 +50,7 @@ namespace qttools {
 QVector<int> selectedRows(const QAbstractItemView* view, int col)
 {
   const QItemSelectionModel* itemSelModel = view->selectionModel();
-  if (itemSelModel == 0 || !itemSelModel->hasSelection())
+  if (itemSelModel == NULL || !itemSelModel->hasSelection())
     return QVector<int>();
   const QModelIndexList selIndexes = itemSelModel->selectedIndexes();
   QVector<int> result;
@@ -69,7 +69,7 @@ void selectRows(QAbstractItemView* view, const QVector<int>& rows)
 {
   const QAbstractItemModel* model = view->model();
   QItemSelectionModel* selModel = view->selectionModel();
-  if (model == 0 || selModel == 0)
+  if (model == NULL || selModel == NULL)
     return;
   const QItemSelectionModel::SelectionFlags selFlags =
       QItemSelectionModel::ToggleCurrent | QItemSelectionModel::Rows;

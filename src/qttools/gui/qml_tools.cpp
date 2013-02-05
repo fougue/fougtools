@@ -91,7 +91,7 @@ void QmlTools::restoreOverrideCursor()
 
 void QmlTools::declareObject(QDeclarativeContext* context, QmlTools* obj)
 {
-  if (obj != 0)
+  if (obj != NULL)
     context->setContextProperty(QLatin1String("qttools_QmlTools"), obj);
 }
 

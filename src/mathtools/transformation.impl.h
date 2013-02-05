@@ -1,4 +1,3 @@
-
 /****************************************************************************
 **
 **  FougTools
@@ -65,18 +64,15 @@ Transformation<T, SIZE>::Transformation(const Transformation<T, SIZE>& m)
 template<typename T, unsigned SIZE>
 Transformation<T, SIZE>& Transformation<T, SIZE>::makeIdentity()
 {
-  for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol)
-  {
-    std::fill(this->_m[iCol].begin(), this->_m[iCol].end(),
-              static_cast<T>(0));
+  for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol) {
+    std::fill(this->_m[iCol].begin(), this->_m[iCol].end(), static_cast<T>(0));
     this->_m[iCol][iCol] = static_cast<T>(1);
   }
   return *this;
 }
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::makeTranslation(const Vector<T, SIZE>& dv)
+Transformation<T, SIZE>& Transformation<T, SIZE>::makeTranslation(const Vector<T, SIZE>& dv)
 {
   this->makeIdentity();
   std::copy(dv.begin(), dv.end(), this->_m[SIZE].begin());
@@ -84,8 +80,7 @@ Transformation<T, SIZE>::makeTranslation(const Vector<T, SIZE>& dv)
 }
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::makeScaling(const Vector<T, SIZE>& scaleFactors)
+Transformation<T, SIZE>& Transformation<T, SIZE>::makeScaling(const Vector<T, SIZE>& scaleFactors)
 {
   this->makeIdentity();
   for (unsigned i = 0; i < SIZE; ++i)
@@ -103,29 +98,24 @@ void Transformation<T, SIZE>::fill(const T& val)
 }
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::set(unsigned col, unsigned row, const T& val)
+Transformation<T, SIZE>& Transformation<T, SIZE>::set(unsigned col, unsigned row, const T& val)
 {
   this->_m[col][row] = val;
   return *this;
 }
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::set(const T* m)
+Transformation<T, SIZE>& Transformation<T, SIZE>::set(const T* m)
 {
-  if (m != 0)
-  {
+  if (m != 0) {
     for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol)
-      std::copy(m + (iCol * (SIZE + 1)),
-                m + (iCol * (SIZE + 1)) + SIZE + 1, this->_m[iCol].begin());
+      std::copy(m + (iCol * (SIZE + 1)), m + (iCol * (SIZE + 1)) + SIZE + 1, this->_m[iCol].begin());
   }
   return *this;
 }
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::set(const Transformation<T, SIZE>& m)
+Transformation<T, SIZE>& Transformation<T, SIZE>::set(const Transformation<T, SIZE>& m)
 {
   for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol)
     std::copy(m[iCol].begin(), m[iCol].end(), this->_m[iCol].begin());
@@ -133,8 +123,7 @@ Transformation<T, SIZE>::set(const Transformation<T, SIZE>& m)
 }
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::operator=(const Transformation<T, SIZE>& m)
+Transformation<T, SIZE>& Transformation<T, SIZE>::operator=(const Transformation<T, SIZE>& m)
 {
   return this->set(m);
 }
@@ -142,14 +131,11 @@ Transformation<T, SIZE>::operator=(const Transformation<T, SIZE>& m)
 // --- Operations
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::composeBy(const Transformation<T, SIZE>& m)
+Transformation<T, SIZE>& Transformation<T, SIZE>::composeBy(const Transformation<T, SIZE>& m)
 {
   Transformation<T, SIZE> tmp(*this);
-  for (unsigned iRow = 0; iRow < SIZE + 1; ++iRow)
-  {
-    for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol)
-    {
+  for (unsigned iRow = 0; iRow < SIZE + 1; ++iRow) {
+    for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol) {
       this->_m[iCol][iRow] = static_cast<T>(0);
       for (unsigned k = 0; k < SIZE + 1; ++k)
         this->_m[iCol][iRow] += m[k][iRow] * tmp[iCol][k];
@@ -159,14 +145,11 @@ Transformation<T, SIZE>::composeBy(const Transformation<T, SIZE>& m)
 }
 
 template<typename T, unsigned SIZE>
-void
-Transformation<T, SIZE>::compose(const Transformation<T, SIZE>& m,
-                                     Transformation<T, SIZE>& to) const
+void Transformation<T, SIZE>::compose(const Transformation<T, SIZE>& m,
+                                      Transformation<T, SIZE>& to) const
 {
-  for (unsigned iRow = 0; iRow < SIZE + 1; ++iRow)
-  {
-    for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol)
-    {
+  for (unsigned iRow = 0; iRow < SIZE + 1; ++iRow) {
+    for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol) {
       to[iCol][iRow] = static_cast<T>(0);
       for (unsigned k = 0; k < SIZE + 1; ++k)
         to[iCol][iRow] += m[k][iRow] * this->_m[iCol][k];
@@ -175,8 +158,7 @@ Transformation<T, SIZE>::compose(const Transformation<T, SIZE>& m,
 }
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::translate(const Vector<T, SIZE>& dv)
+Transformation<T, SIZE>& Transformation<T, SIZE>::translate(const Vector<T, SIZE>& dv)
 {
   for (unsigned iRow = 0; iRow < SIZE; ++iRow)
     this->_m[SIZE][iRow] += dv[iRow];
@@ -184,8 +166,7 @@ Transformation<T, SIZE>::translate(const Vector<T, SIZE>& dv)
 }
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::scale(const Vector<T, SIZE>& scaleFactors)
+Transformation<T, SIZE>& Transformation<T, SIZE>::scale(const Vector<T, SIZE>& scaleFactors)
 {
   for (unsigned i = 0; i < SIZE; ++i)
     this->_m[i] *= scaleFactors[i];
@@ -193,16 +174,14 @@ Transformation<T, SIZE>::scale(const Vector<T, SIZE>& scaleFactors)
 }
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::setTranslation(const Vector<T, SIZE>& pv)
+Transformation<T, SIZE>& Transformation<T, SIZE>::setTranslation(const Vector<T, SIZE>& pv)
 {
   this->_m[SIZE].set(pv);
   return *this;
 }
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::setAxis(int i, const Vector<T, SIZE>& pv)
+Transformation<T, SIZE>& Transformation<T, SIZE>::setAxis(int i, const Vector<T, SIZE>& pv)
 {
   this->_m[i].set(pv);
   return *this;
@@ -212,8 +191,7 @@ template<typename T, unsigned SIZE>
 void Transformation<T, SIZE>::applyOnPoint(Point<T, SIZE>& pv) const
 {
   Point<T, SIZE> tmp = pv;
-  for (unsigned iRow = 0; iRow < SIZE; ++iRow)
-  {
+  for (unsigned iRow = 0; iRow < SIZE; ++iRow) {
     pv[iRow] = this->_m[SIZE][iRow];
     for (unsigned iCol = 0; iCol < SIZE; ++iCol)
       pv[iRow] += this->_m[iCol][iRow] * tmp[iCol];
@@ -221,12 +199,9 @@ void Transformation<T, SIZE>::applyOnPoint(Point<T, SIZE>& pv) const
 }
 
 template<typename T, unsigned SIZE>
-void Transformation<T, SIZE>::applyOnPoint(
-  const Point<T, SIZE>& pv,
-  Point<T, SIZE>& to) const
+void Transformation<T, SIZE>::applyOnPoint(const Point<T, SIZE>& pv, Point<T, SIZE>& to) const
 {
-  for (unsigned iRow = 0; iRow < SIZE; ++iRow)
-  {
+  for (unsigned iRow = 0; iRow < SIZE; ++iRow) {
     to[iRow] = this->_m[SIZE][iRow];
     for (unsigned iCol = 0; iCol < SIZE; ++iCol)
       to[iRow] += this->_m[iCol][iRow] * pv[iCol];
@@ -237,8 +212,7 @@ template<typename T, unsigned SIZE>
 void Transformation<T, SIZE>::applyOnVector(Vector<T, SIZE>& pv) const
 {
   Vector<T, SIZE> tmp = pv;
-  for (unsigned iRow = 0; iRow < SIZE; ++iRow)
-  {
+  for (unsigned iRow = 0; iRow < SIZE; ++iRow) {
     pv[iRow] = static_cast<T>(0);
     for (unsigned iCol = 0; iCol < SIZE; ++iCol)
       pv[iRow] += this->_m[iCol][iRow] * tmp[iCol];
@@ -246,13 +220,10 @@ void Transformation<T, SIZE>::applyOnVector(Vector<T, SIZE>& pv) const
 }
 
 template<typename T, unsigned SIZE>
-void Transformation<T, SIZE>::applyOnVector(
-  const Vector<T, SIZE>& pv,
-  Vector<T, SIZE>& to) const
+void Transformation<T, SIZE>::applyOnVector(const Vector<T, SIZE>& pv, Vector<T, SIZE>& to) const
 {
   Vector<T, SIZE> tmp = pv;
-  for (unsigned iRow = 0; iRow < SIZE; ++iRow)
-  {
+  for (unsigned iRow = 0; iRow < SIZE; ++iRow) {
     to[iRow] = static_cast<T>(0);
     for (unsigned iCol = 0; iCol < SIZE; ++iCol)
       to[iRow] += this->_m[iCol][iRow] * pv[iCol];
@@ -260,8 +231,7 @@ void Transformation<T, SIZE>::applyOnVector(
 }
 
 template<typename T, unsigned SIZE>
-Transformation<T, SIZE>&
-Transformation<T, SIZE>::operator*=(const Transformation<T, SIZE>& m)
+Transformation<T, SIZE>& Transformation<T, SIZE>::operator*=(const Transformation<T, SIZE>& m)
 {
   return this->composeBy(m);
 }
@@ -281,8 +251,7 @@ T& Transformation<T, SIZE>::get(unsigned col, unsigned row)
 }
 
 template<typename T, unsigned SIZE>
-const Vector<T, SIZE + 1>&
-Transformation<T, SIZE>::operator[](unsigned col) const
+const Vector<T, SIZE + 1>& Transformation<T, SIZE>::operator[](unsigned col) const
 {
   return this->_m[col];
 }
@@ -294,8 +263,7 @@ Vector<T, SIZE + 1>& Transformation<T, SIZE>::operator[](unsigned col)
 }
 
 template<typename T, unsigned SIZE>
-const T&
-Transformation<T, SIZE>::operator()(unsigned col, unsigned row) const
+const T& Transformation<T, SIZE>::operator()(unsigned col, unsigned row) const
 {
   return this->get(col, row);
 }
@@ -338,17 +306,13 @@ T* Transformation<T, SIZE>::cArray()
 template<typename T, unsigned SIZE>
 bool Transformation<T, SIZE>::isIdentity(const T& tol) const
 {
-  for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol)
-  {
-    for (unsigned iRow = 0; iRow < SIZE + 1; ++iRow)
-    {
-      if (iCol == iRow)
-      {
+  for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol) {
+    for (unsigned iRow = 0; iRow < SIZE + 1; ++iRow) {
+      if (iCol == iRow) {
         if (std::abs(this->_m[iCol][iRow] - 1.) > tol)
           return false;
       }
-      else
-      {
+      else {
         if (std::abs(this->_m[iCol][iRow]) > tol)
           return false;
       }
@@ -360,17 +324,13 @@ bool Transformation<T, SIZE>::isIdentity(const T& tol) const
 template<typename T, unsigned SIZE>
 bool Transformation<T, SIZE>::isTranslation(const T& tol) const
 {
-  for (unsigned iCol = 0; iCol < SIZE; ++iCol)
-  {
-    for (unsigned iRow = 0; iRow < SIZE + 1; ++iRow)
-    {
-      if (iCol == iRow)
-      {
+  for (unsigned iCol = 0; iCol < SIZE; ++iCol) {
+    for (unsigned iRow = 0; iRow < SIZE + 1; ++iRow) {
+      if (iCol == iRow) {
         if (std::abs(this->_m[iCol][iRow] - 1.) > tol)
           return false;
       }
-      else
-      {
+      else {
         if (std::abs(this->_m[iCol][iRow]) > tol)
           return false;
       }
@@ -382,12 +342,9 @@ bool Transformation<T, SIZE>::isTranslation(const T& tol) const
 template<typename T, unsigned SIZE>
 bool Transformation<T, SIZE>::isScaling(const T& tol) const
 {
-  for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol)
-  {
-    for (unsigned iRow = 0; iRow < SIZE + 1; ++iRow)
-    {
-      if (iCol != iRow)
-      {
+  for (unsigned iCol = 0; iCol < SIZE + 1; ++iCol) {
+    for (unsigned iRow = 0; iRow < SIZE + 1; ++iRow) {
+      if (iCol != iRow) {
         if (std::abs(this->_m[iCol][iRow]) > tol)
           return false;
       }
@@ -401,17 +358,15 @@ bool Transformation<T, SIZE>::isScaling(const T& tol) const
 // ---
 
 template<typename T, unsigned SIZE>
-const Transformation<T, SIZE> operator*(
-  const Transformation<T, SIZE>& m1,
-  const Transformation<T, SIZE>& m2)
+const Transformation<T, SIZE> operator*(const Transformation<T, SIZE>& m1,
+                                        const Transformation<T, SIZE>& m2)
 {
   Transformation<T, SIZE> m(m2);
   return m.composeBy(m1);
 }
 
 template<typename T, unsigned SIZE>
-Point<T, SIZE> operator*(const Transformation<T, SIZE>& m,
-                             const Point<T, SIZE>& pt)
+Point<T, SIZE> operator*(const Transformation<T, SIZE>& m, const Point<T, SIZE>& pt)
 {
   Point<T, SIZE> p;
   m.applyOnPoint(pt, p);
@@ -419,8 +374,7 @@ Point<T, SIZE> operator*(const Transformation<T, SIZE>& m,
 }
 
 template<typename T, unsigned SIZE>
-Vector<T, SIZE> operator*(const Transformation<T, SIZE>& m,
-                              const Vector<T, SIZE>& v)
+Vector<T, SIZE> operator*(const Transformation<T, SIZE>& m, const Vector<T, SIZE>& v)
 {
   Vector<T, SIZE> vec;
   m.applyOnVector(v, vec);
@@ -434,28 +388,26 @@ Vector<T, SIZE> operator*(const Transformation<T, SIZE>& m,
 // --- Construction
 
 template<typename T>
-Transformation2<T>::Transformation2() :
-    Transformation<T, 2>()
+Transformation2<T>::Transformation2()
+  : Transformation<T, 2>()
 {
 }
 
 template<typename T>
-Transformation2<T>::Transformation2(const T* m) :
-    Transformation<T, 2>(m)
+Transformation2<T>::Transformation2(const T* m)
+  : Transformation<T, 2>(m)
 {
 }
 
 template<typename T>
-Transformation2<T>::Transformation2(const Transformation<T, 2>& m) :
-    Transformation<T, 2>(m)
+Transformation2<T>::Transformation2(const Transformation<T, 2>& m)
+  : Transformation<T, 2>(m)
 {
 }
 
 template<typename T>
-Transformation2<T>::Transformation2(const Vector2<T>& v1,
-                                      const Vector2<T>& v2,
-                                      const Vector2<T>& t) :
-    Transformation<T, 2>()
+Transformation2<T>::Transformation2(const Vector2<T>& v1, const Vector2<T>& v2, const Vector2<T>& t)
+  : Transformation<T, 2>()
 {
   this->_m[0].set(v1);
   this->_m[1].set(v1);
@@ -463,10 +415,9 @@ Transformation2<T>::Transformation2(const Vector2<T>& v1,
 }
 
 template<typename T>
-Transformation2<T>::Transformation2(
-    const T& m11, const T& m21, const T& m31,
-    const T& m12, const T& m22, const T& m32,
-    const T& m13, const T& m23, const T& m33)
+Transformation2<T>::Transformation2(const T& m11, const T& m21, const T& m31,
+                                    const T& m12, const T& m22, const T& m32,
+                                    const T& m13, const T& m23, const T& m33)
 {
   this->_m[0].set(Vector3<T>(m11, m12, m13));
   this->_m[1].set(Vector3<T>(m21, m22, m23));
@@ -480,19 +431,18 @@ Transformation2<T>& Transformation2<T>::makeRotation(const T& angle)
   const T s = std::sin(angle);
   this->_m[0][0] = c;
   this->_m[0][1] = s;
-  this->_m[0][2] = static_cast<T>(0);;
+  this->_m[0][2] = static_cast<T>(0);
   this->_m[1][0] = -s;
   this->_m[1][1] = c;
-  this->_m[1][2] = static_cast<T>(0);;
-  this->_m[2][0] = static_cast<T>(0);;
-  this->_m[2][1] = static_cast<T>(0);;
-  this->_m[2][2] = static_cast<T>(1);;
+  this->_m[1][2] = static_cast<T>(0);
+  this->_m[2][0] = static_cast<T>(0);
+  this->_m[2][1] = static_cast<T>(0);
+  this->_m[2][2] = static_cast<T>(1);
   return *this;
 }
 
 template<typename T>
-Transformation2<T>& Transformation2<T>::makeRotation(
-    const Vector2<T>& axis, const T& angle)
+Transformation2<T>& Transformation2<T>::makeRotation(const Vector2<T>& axis, const T& angle)
 {
   const T c = std::cos(angle);
   const T s = std::sin(angle);
@@ -522,40 +472,39 @@ bool Transformation2<T>::isRotation(const T& tol) const
     return false;
   if (std::abs((a * d - b * c) - 1.) > tol) // det /= 1?
     return false;
-  return
-    std::abs(this->_m[2][0]) <= tol && std::abs(this->_m[2][1]) <= tol; // no translation
+  return std::abs(this->_m[2][0]) <= tol && std::abs(this->_m[2][1]) <= tol; // no translation
 }
 
 /*! \class Transformation3
- *  \brief 
+ *  \brief
  */
 
 // --- Construction
 
 template<typename T>
-Transformation3<T>::Transformation3()  :
-    Transformation<T, 3>()
+Transformation3<T>::Transformation3()
+  : Transformation<T, 3>()
 {
 }
 
 template<typename T>
-Transformation3<T>::Transformation3(const T* m) :
-    Transformation<T, 3>(m)
+Transformation3<T>::Transformation3(const T* m)
+  : Transformation<T, 3>(m)
 {
 }
 
 template<typename T>
-Transformation3<T>::Transformation3(const Transformation<T, 3>& m) :
-    Transformation<T, 3>(m)
+Transformation3<T>::Transformation3(const Transformation<T, 3>& m)
+  : Transformation<T, 3>(m)
 {
 }
 
 template<typename T>
 Transformation3<T>::Transformation3(const Vector3<T>& v1,
-                                      const Vector3<T>& v2,
-                                      const Vector3<T>& v3,
-                                      const Vector3<T>& t) :
-    Transformation<T, 3>()
+                                    const Vector3<T>& v2,
+                                    const Vector3<T>& v3,
+                                    const Vector3<T>& t)
+  : Transformation<T, 3>()
 {
   this->_m[0].set(v1);
   this->_m[1].set(v2);
@@ -564,12 +513,11 @@ Transformation3<T>::Transformation3(const Vector3<T>& v1,
 }
 
 template<typename T>
-Transformation3<T>::Transformation3(
-    const T& m11, const T& m21, const T& m31, const T& m41,
-    const T& m12, const T& m22, const T& m32, const T& m42,
-    const T& m13, const T& m23, const T& m33, const T& m43,
-    const T& m14, const T& m24, const T& m34, const T& m44) :
-    Transformation<T, 3>()
+Transformation3<T>::Transformation3(const T& m11, const T& m21, const T& m31, const T& m41,
+                                    const T& m12, const T& m22, const T& m32, const T& m42,
+                                    const T& m13, const T& m23, const T& m33, const T& m43,
+                                    const T& m14, const T& m24, const T& m34, const T& m44)
+  : Transformation<T, 3>()
 {
   this->_m[0][0] = m11;
   this->_m[0][1] = m12;
@@ -593,8 +541,7 @@ Transformation3<T>::Transformation3(
 }
 
 template<typename T>
-Transformation3<T>&
-Transformation3<T>::makeRotation(const Vector3<T>& axis, const T& angle)
+Transformation3<T>& Transformation3<T>::makeRotation(const Vector3<T>& axis, const T& angle)
 {
   const T c = std::cos(angle);
   const T s = std::sin(angle);
@@ -632,24 +579,20 @@ template<typename T>
 bool Transformation3<T>::isRotation(const T& tol) const
 {
   const T d = static_cast<T>(0);
-  for (unsigned iCol1 = 0; iCol1 < 3; ++iCol1)
-  {
-    for (unsigned iCol2 = 0; iCol2 < 3; ++iCol2)
-    {
-      if (iCol1 == iCol2)
-      {
+  for (unsigned iCol1 = 0; iCol1 < 3; ++iCol1) {
+    for (unsigned iCol2 = 0; iCol2 < 3; ++iCol2) {
+      if (iCol1 == iCol2) {
         if (std::abs(this->_m[iCol1].squareNorm() - 1.0) > tol)
           return false;
       }
-      else
-      {
+      else {
         if (std::abs(this->_m[iCol1]*this->_m[iCol2]) > tol)
           return false;
       }
     }
   }
-  for (unsigned iRow = 0; iRow < 3; ++iRow)
-  {
+
+  for (unsigned iRow = 0; iRow < 3; ++iRow) {
     if (std::abs(this->_m[3][iRow]) > tol)
       return false;
   }
@@ -659,15 +602,12 @@ bool Transformation3<T>::isRotation(const T& tol) const
 // --- Operations
 
 template<typename T>
-Transformation3<T>&
-Transformation3<T>::rotate(const Vector3<T>& axis, const T& angle)
+Transformation3<T>& Transformation3<T>::rotate(const Vector3<T>& axis, const T& angle)
 {
   Transformation3<T> tmp;
   tmp.makeRotation(axis, angle);
   const Vector3<T> tr(this->translation());
-  this->setTranslation(Vector3<T>(static_cast<T>(0),
-                                    static_cast<T>(0),
-                                    static_cast<T>(0)));
+  this->setTranslation(Vector3<T>(static_cast<T>(0), static_cast<T>(0), static_cast<T>(0)));
   this->composeBy(tmp);
   this->setTranslation(tr);
   return *this;
@@ -688,8 +628,7 @@ void Transformation3<T>::invertTo(Transformation3<T>& to) const
   const T c21 = kM[2][0] * kM[0][1] - kM[0][0] * kM[2][1];
   const T c22 = kM[0][0] * kM[1][1] - kM[1][0] * kM[0][1];
   const T d = kM[0][0] * c00 + kM[1][0] * c01 + kM[2][0] * c02;
-  if (std::abs(d) < 1.e-10)
-  {
+  if (std::abs(d) < 1.e-10) {
     to.fill(static_cast<T>(0));
     return;
   }

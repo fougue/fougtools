@@ -40,14 +40,19 @@
 
 namespace cpp {
 
+template<typename RESULT_TYPE = void>
 class AbstractFunctor
 {
 public:
-  virtual void execute() = 0;
+  typedef RESULT_TYPE result_type;
+  typedef RESULT_TYPE ResultType;
+  typedef void argument_type;
+
+  virtual RESULT_TYPE execute() = 0;
 };
 
 template<typename FUNCTOR>
-class WrappedFunctor : public AbstractFunctor
+class WrappedFunctor : public AbstractFunctor<typename FUNCTOR::result_type>
 {
 public:
   WrappedFunctor(FUNCTOR functor)
@@ -55,16 +60,17 @@ public:
   {
   }
 
-  void execute()
+  typename AbstractFunctor<typename FUNCTOR::result_type>::ResultType execute()
   {
-    m_functor();
+    return m_functor();
   }
+
 private:
   FUNCTOR m_functor;
 };
 
 template<typename FUNCTOR>
-AbstractFunctor* newWrappedFunctor(FUNCTOR functor)
+AbstractFunctor<typename FUNCTOR::result_type>* newWrappedFunctor(FUNCTOR functor)
 {
   return new WrappedFunctor<FUNCTOR>(functor);
 }

@@ -37,6 +37,9 @@
 
 #include "utils.h"
 
+#include <cassert>
+#include <sstream>
+
 #include <AIS_InteractiveContext.hxx>
 #include <AIS_InteractiveObject.hxx>
 #include <BRepAdaptor_Surface.hxx>
@@ -52,7 +55,6 @@
 #include <SelectMgr_SelectionManager.hxx>
 #include <TColgp_Array1OfPnt.hxx>
 #include <TopoDS.hxx>
-#include <cassert>
 #include <gp_Trsf.hxx>
 
 namespace occ {
@@ -119,6 +121,25 @@ Quantity_Color rgbColor(int red, int blue, int green)
   return Quantity_Color(red / 255., blue / 255., green / 255., Quantity_TOC_RGB);
 }
 
+// --- String conversion
+
+OCCTOOLS_EXPORT std::string shapeToString(const TopoDS_Shape& shape)
+{
+  std::ostringstream oss(std::ios_base::out);
+  BRepTools::Write(shape, oss);
+  return oss.str();
+}
+
+OCCTOOLS_EXPORT TopoDS_Shape shapeFromString(const std::string& str)
+{
+  TopoDS_Shape shape;
+  BRep_Builder brepBuilder;
+
+  std::istringstream iss(str, std::ios_base::in);
+  BRepTools::Read(shape, iss, brepBuilder);
+  return shape;
+}
+
 // --- Visualization
 
 void eraseObjectFromContext(Handle_AIS_InteractiveObject object,
@@ -148,7 +169,7 @@ gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
                       const Poly_Triangle& triangle,
                       TopAbs_Orientation ori)
 {
-  int n1, n2, n3;
+  Standard_Integer n1, n2, n3;
   if (ori == TopAbs_REVERSED)
     triangle.Get(n1, n3, n2);
   else

@@ -42,6 +42,8 @@
 
 #include "../mathtools/point_vector_fwd.h"
 
+#include <string>
+
 #include <BRep_Builder.hxx>
 #include <Handle_AIS_InteractiveContext.hxx>
 #include <Handle_AIS_InteractiveObject.hxx>
@@ -49,20 +51,18 @@
 #include <Handle_Geom_Surface.hxx>
 #include <Handle_Message_ProgressIndicator.hxx>
 #include <Quantity_Color.hxx>
-#include <Quantity_NameOfColor.hxx>
-#include <Standard_CString.hxx>
 #include <TopAbs_Orientation.hxx>
 #include <TopoDS_Compound.hxx>
-#include <TopoDS_Face.hxx>
 #include <TopoDS_Shape.hxx>
 #include <gp_Dir.hxx>
 #include <gp_Dir2d.hxx>
 #include <gp_Pnt.hxx>
 #include <gp_Pnt2d.hxx>
 #include <gp_Vec.hxx>
-class Poly_Triangle;
 class gp_Trsf;
+class Poly_Triangle;
 class TColgp_Array1OfPnt;
+class TopoDS_Face;
 
 namespace occ {
 
@@ -90,6 +90,8 @@ template<typename T>
 gp_Vec toOccVector3d(const geom::Vector3<T>& p);
 
 // --- String conversion
+OCCTOOLS_EXPORT std::string shapeToString(const TopoDS_Shape& shape);
+OCCTOOLS_EXPORT TopoDS_Shape shapeFromString(const std::string& str);
 
 // --- Visualization
 OCCTOOLS_EXPORT void eraseObjectFromContext(Handle_AIS_InteractiveObject object,

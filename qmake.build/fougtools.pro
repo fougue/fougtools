@@ -9,6 +9,7 @@ SUBDIRS += qttools_core \
            qttools_sql
 
 occtools:SUBDIRS += occtools
+utest:SUBDIRS += ../utest
 
 # INSTALLS for cpptools
 cpptools_include.path  = $$PREFIX_DIR/include/cpptools

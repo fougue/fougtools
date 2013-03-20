@@ -233,7 +233,7 @@ WaitLoop::~WaitLoop()
 {
   d->stopWait();
   d->m_stopConditions.removeFirst(); // TimeOut stop condition is deleted by parent QObject
-  qDeleteAll(d->m_stopConditions);
+  //qDeleteAll(d->m_stopConditions);
   delete d;
 }
 

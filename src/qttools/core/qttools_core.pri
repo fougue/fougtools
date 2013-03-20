@@ -39,6 +39,10 @@ HEADERS += \
     $$PWD/abstract_cipher.h \
     $$PWD/abstract_plugin_loader.h \
     $$PWD/abstract_signal_dispatch.h \
+    $$PWD/core.h \
+    $$PWD/grid_numbering.h \
+    $$PWD/grid_struct.h \
+    $$PWD/item_model_tools.h \
     $$PWD/log.h \
     $$PWD/log_unqualified.h \
     $$PWD/qlocale_tools.h \
@@ -51,10 +55,7 @@ HEADERS += \
     $$PWD/singleton.h \
     $$PWD/sleep.h \
     $$PWD/task.h \
-    $$PWD/core.h \
-    $$PWD/item_model_tools.h \
-    $$PWD/grid_numbering.h \
-    $$PWD/grid_struct.h
+    $$PWD/wait_loop.h
 
 SOURCES += \
     $$PWD/abstract_cipher.cpp \
@@ -71,5 +72,5 @@ SOURCES += \
     $$PWD/task.cpp \
     $$PWD/item_model_tools.cpp \
     $$PWD/grid_numbering.cpp \
-    $$PWD/grid_struct.cpp
-
+    $$PWD/grid_struct.cpp \
+    $$PWD/wait_loop.cpp

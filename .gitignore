@@ -6,3 +6,7 @@ release
 *.pro.user
 bin
 *.pdb
+*.o
+*.obj
+moc_*
+object_script.*

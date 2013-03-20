@@ -41,6 +41,10 @@
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
 
+namespace qttools {
+
+namespace internal {
+
 namespace {
 
 class SleepTool : public QThread
@@ -54,7 +58,7 @@ public:
 
 } // Anonymous namespace
 
-namespace qttools {
+} // namespace internal
 
 /*! \brief Cause the current thread to sleep for \p msecs milliseconds
  *
@@ -62,7 +66,7 @@ namespace qttools {
  */
 void mSecSleep(unsigned msec)
 {
-  ::SleepTool::milliSleep(msec);
+  internal::SleepTool::milliSleep(msec);
 }
 
 void waitForMSec(unsigned msec)

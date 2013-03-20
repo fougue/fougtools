@@ -123,6 +123,10 @@ Quantity_Color rgbColor(int red, int blue, int green)
 
 // --- String conversion
 
+/*! String representation of a TopoDS_Shape
+ *
+ *  Uses BRepTools::Write() internally
+ */
 OCCTOOLS_EXPORT std::string shapeToString(const TopoDS_Shape& shape)
 {
   std::ostringstream oss(std::ios_base::out);
@@ -130,6 +134,11 @@ OCCTOOLS_EXPORT std::string shapeToString(const TopoDS_Shape& shape)
   return oss.str();
 }
 
+/*! Construct the TopoDS_Shape from the string representation \p str (previously generated with
+ *  shapeToString())
+ *
+ *  Uses BRepTools::Read() internally
+ */
 OCCTOOLS_EXPORT TopoDS_Shape shapeFromString(const std::string& str)
 {
   TopoDS_Shape shape;

@@ -64,7 +64,8 @@ public:
                                      const QThread* inThread = QThread::currentThread()) const;
 
 private:
-  class DatabaseManagerPrivate* const d;
+  class Private;
+  Private* const d;
 };
 
 } // namespace qttools

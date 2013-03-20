@@ -47,13 +47,13 @@
 
 namespace qttools {
 
-/*! \class DatabaseManagerPrivate
+/*! \class DatabaseManager::Private
  *  \brief Internal (pimpl of DatabaseManager)
  */
-class DatabaseManagerPrivate
+class DatabaseManager::Private
 {
 public:
-  DatabaseManagerPrivate(const QSqlDatabase& refDb)
+  Private(const QSqlDatabase& refDb)
     : m_refDatabase(refDb)
   {
     Q_ASSERT(QThread::currentThread() != NULL);
@@ -70,7 +70,7 @@ public:
  */
 
 DatabaseManager::DatabaseManager(const QSqlDatabase& refDb)
-  : d(new DatabaseManagerPrivate(refDb))
+  : d(new Private(refDb))
 {
 }
 

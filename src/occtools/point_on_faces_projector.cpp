@@ -55,6 +55,8 @@
 #include <limits>
 #include <map>
 
+namespace occ {
+
 //! TODO From OCC Forum :
 //! try using DBRep_IsoBuilder to generate isolines representing your face.
 //! Load the isolines into a DBRep_Face. Then, you can query the isolines to get
@@ -65,6 +67,7 @@
 //! More generally, face and "sample points" should be decoupled.
 //! It should be up to the user to give sample points for each face.
 
+namespace internal {
 namespace {
 
 typedef std::pair<int, Handle_Poly_Triangulation> NodeIndexInTriangulation_t;
@@ -130,16 +133,15 @@ private:
   NodeIndexInTriangulation_t m_currMinDistNodeId;
 };
 
-const TopoDS_Face dummyFace;
+static const TopoDS_Face dummyFace;
 
 } // Anonymous namespace
+} // namespace internal
 
-namespace occ {
-
-class PointOnFacesProjectorPrivate
+class PointOnFacesProjector::Private
 {
 public:
-  ~PointOnFacesProjectorPrivate();
+  ~Private();
 
   void clear();
 
@@ -148,33 +150,34 @@ public:
   void insertMapping(const Handle_Poly_Triangulation& tri, const TopoDS_Face& face);
 
   std::map<const Poly_Triangulation*, TopoDS_Face> m_faceMap;
-  UBTreeOfNodeIndices_t m_ubTree;
+  internal::UBTreeOfNodeIndices_t m_ubTree;
 };
 
-PointOnFacesProjectorPrivate::~PointOnFacesProjectorPrivate()
+PointOnFacesProjector::Private::~Private()
 {
   this->clear();
 }
 
-void PointOnFacesProjectorPrivate::clear()
+void PointOnFacesProjector::Private::clear()
 {
   m_faceMap.clear();
   m_ubTree.Clear();
 }
 
-const TopoDS_Face *PointOnFacesProjectorPrivate::triangulationToFace(Poly_Triangulation *tri) const
+const TopoDS_Face *PointOnFacesProjector::Private::triangulationToFace(Poly_Triangulation *tri) const
 {
   std::map<const Poly_Triangulation*, TopoDS_Face>::const_iterator it = m_faceMap.find(tri);
   return it != m_faceMap.end() ? &(it->second) : NULL;
 }
 
-const TopoDS_Face* PointOnFacesProjectorPrivate::triangulationToFace(const Handle_Poly_Triangulation& tri) const
+const TopoDS_Face*
+PointOnFacesProjector::Private::triangulationToFace(const Handle_Poly_Triangulation& tri) const
 {
   return this->triangulationToFace(tri.operator->());
 }
 
-void PointOnFacesProjectorPrivate::insertMapping(const Handle_Poly_Triangulation &tri,
-                                                 const TopoDS_Face &face)
+void PointOnFacesProjector::Private::insertMapping(const Handle_Poly_Triangulation &tri,
+                                                   const TopoDS_Face &face)
 {
   m_faceMap[tri.operator->()] = face;
 }
@@ -183,7 +186,7 @@ void PointOnFacesProjectorPrivate::insertMapping(const Handle_Poly_Triangulation
 
 PointOnFacesProjector::Result::Result()
   : isValid(false),
-    face(::dummyFace),
+    face(internal::dummyFace),
     point(occ::origin3d),
     normal(occ::zDir3d)
 {
@@ -202,7 +205,7 @@ PointOnFacesProjector::Result::Result(const TopoDS_Face& sFace,
 }
 
 PointOnFacesProjector::PointOnFacesProjector()
-  : d(new PointOnFacesProjectorPrivate)
+  : d(new Private)
 {
 }
 
@@ -210,7 +213,7 @@ PointOnFacesProjector::PointOnFacesProjector()
  *
  */
 PointOnFacesProjector::PointOnFacesProjector(const TopoDS_Shape& faces)
-  : d(new PointOnFacesProjectorPrivate)
+  : d(new Private)
 {
   this->prepare(faces);
 }
@@ -224,7 +227,7 @@ void PointOnFacesProjector::prepare(const TopoDS_Shape& faces)
 {
   d->clear();
   // Build the UB tree for binary search of points
-  UBTreeOfNodeIndicesFiller_t ubTreeFiller(d->m_ubTree, Standard_False);
+  internal::UBTreeOfNodeIndicesFiller_t ubTreeFiller(d->m_ubTree, Standard_False);
   for (TopExp_Explorer exp(faces, TopAbs_FACE); exp.More(); exp.Next()) {
     const TopoDS_Face face = TopoDS::Face(exp.Current());
     if (!face.IsNull()) {
@@ -249,7 +252,7 @@ void PointOnFacesProjector::prepare(const TopoDS_Shape& faces)
 const TopoDS_Face* PointOnFacesProjector::faceOfProjection(const gp_Pnt& point) const
 {
   // Find the closest node in the triangulations
-  NodeBndBoxSelector selector(point);
+  internal::NodeBndBoxSelector selector(point);
   if (d->m_ubTree.Select(selector) <= 0)
     return NULL;
   const Handle_Poly_Triangulation& triangulation = selector.minDistanceNodeIndex().second;
@@ -259,7 +262,7 @@ const TopoDS_Face* PointOnFacesProjector::faceOfProjection(const gp_Pnt& point) 
 PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& point) const
 {
   // Find the closest node in the triangulations
-  NodeBndBoxSelector selector(point);
+  internal::NodeBndBoxSelector selector(point);
   if (d->m_ubTree.Select(selector) <= 0)
     return PointOnFacesProjector::Result();
 

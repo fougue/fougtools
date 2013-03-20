@@ -46,20 +46,24 @@
 
 #include <QtCore/QtDebug>
 
+namespace qttools {
+
+namespace internal {
+
 static bool isLibrary(const QString& path)
 {
   return path.endsWith(QLatin1String(".so")) || path.endsWith(QLatin1String(".dll"));
 }
 
-namespace qttools {
+} // namespace internal
 
 /*! \class AbstractPluginLoaderPrivate
  *  \brief Internal (pimpl of AbstractPluginLoader)
  */
-class AbstractPluginLoaderPrivate
+class AbstractPluginLoader::Private
 {
 public:
-  AbstractPluginLoaderPrivate()
+  Private()
     : m_autoDeletePlugins(true)
   {
     m_plugins.reserve(100);
@@ -84,7 +88,7 @@ public:
  */
 
 AbstractPluginLoader::AbstractPluginLoader()
-  : d(new AbstractPluginLoaderPrivate)
+  : d(new Private)
 {
 }
 
@@ -142,7 +146,7 @@ void AbstractPluginLoader::loadPlugins(const QRegExp& fileRx, QVector<QString>* 
   const QDir pluginsFolder(this->loadingFolder());
   QStringList entries(pluginsFolder.entryList(QDir::Files));
   foreach (const QString& entry, entries) {
-    if (fileRx.indexIn(entry) != -1 && ::isLibrary(entry)) {
+    if (fileRx.indexIn(entry) != -1 && internal::isLibrary(entry)) {
       // Try to load the plugin
 #ifdef DEBUG_ABSTRACT_PLUGIN_LOADER
       qDebug() << "try to load" << entry;

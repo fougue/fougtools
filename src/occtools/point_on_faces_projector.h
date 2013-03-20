@@ -50,7 +50,7 @@ namespace occ {
 class OCCTOOLS_EXPORT PointOnFacesProjector
 {
 public:
-  struct Result
+  struct OCCTOOLS_EXPORT Result
   {
     Result();
     Result(const TopoDS_Face& sFace, const gp_Pnt& sPoint, const gp_Vec& sNormal);
@@ -70,7 +70,8 @@ public:
   Result operator()(const gp_Pnt& point) const;
 
 private:
-  class PointOnFacesProjectorPrivate* const d;
+  class Private;
+  Private* const d;
 };
 
 } // namespace occ

@@ -49,13 +49,13 @@
 
 namespace qttools {
 
-/*! \class LineNumbersBarPrivate
+/*! \class LineNumbersBar::Private
  *  \brief Internal (pimpl of LineNumbersBar)
  */
-class LineNumbersBarPrivate
+class LineNumbersBar::Private
 {
 public:
-  LineNumbersBarPrivate()
+  Private()
     : m_edit(NULL),
       m_stopLine(-1),
       m_currentLine(-1),
@@ -81,7 +81,7 @@ public:
 
 LineNumbersBar::LineNumbersBar(QWidget *parent)
   : QWidget(parent),
-    d(new LineNumbersBarPrivate)
+    d(new Private)
 {
   // Make room for 4 digits and the breakpoint icon
   this->setFixedWidth(this->fontMetrics().width(QLatin1String("000") + 10 + 32));
@@ -180,11 +180,11 @@ bool LineNumbersBar::event(QEvent* event)
   if (event->type() == QEvent::ToolTip) {
     QHelpEvent *helpEvent = static_cast<QHelpEvent *>(event);
     if (d->m_stopRect.contains(helpEvent->pos()))
-      QToolTip::showText(helpEvent->globalPos(), "Stop Here");
+      QToolTip::showText(helpEvent->globalPos(), tr("Stop Here"));
     else if (d->m_currentRect.contains(helpEvent->pos()))
-      QToolTip::showText(helpEvent->globalPos(), "Current Line" );
+      QToolTip::showText(helpEvent->globalPos(), tr("Current Line"));
     else if (d->m_bugRect.contains(helpEvent->pos()))
-      QToolTip::showText(helpEvent->globalPos(), "Error Line" );
+      QToolTip::showText(helpEvent->globalPos(), tr("Error Line" ));
   }
   return QWidget::event(event);
 }

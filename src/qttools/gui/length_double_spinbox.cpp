@@ -40,6 +40,8 @@
 #include "../../cpptools/scoped_value.h"
 #include "length_editor_manager.h"
 
+namespace qttools {
+
 namespace internal {
 
 static QLocale::MeasurementSystem currMeasurementSys()
@@ -77,12 +79,10 @@ static double toMmValue(double v, qttools::LengthDoubleSpinBox::ImperialUnit uni
 
 } // namespace internal
 
-namespace qttools {
-
-class LengthDoubleSpinBoxPrivate
+class LengthDoubleSpinBox::Private
 {
 public:
-  LengthDoubleSpinBoxPrivate();
+  Private();
 
   void onValueChanged(double v);
 
@@ -91,14 +91,14 @@ public:
   bool m_isInternalUpdateContext;
 };
 
-LengthDoubleSpinBoxPrivate::LengthDoubleSpinBoxPrivate()
+LengthDoubleSpinBox::Private::Private()
   : m_orgLengthMm(0.),
     m_valueHasChanged(false),
     m_isInternalUpdateContext(false)
 {
 }
 
-void LengthDoubleSpinBoxPrivate::onValueChanged(double v)
+void LengthDoubleSpinBox::Private::onValueChanged(double v)
 {
   Q_UNUSED(v);
   if (!m_isInternalUpdateContext)
@@ -112,7 +112,7 @@ void LengthDoubleSpinBoxPrivate::onValueChanged(double v)
 
 LengthDoubleSpinBox::LengthDoubleSpinBox(QWidget* parent)
   : QDoubleSpinBox(parent),
-    d(new LengthDoubleSpinBoxPrivate)
+    d(new Private)
 {
   this->updateEditor(internal::currMeasurementSys());
   connect(this, SIGNAL(valueChanged(double)), this, SLOT(onValueChanged(double)));

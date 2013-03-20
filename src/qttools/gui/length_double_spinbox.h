@@ -62,7 +62,8 @@ public slots:
   void updateEditor(QLocale::MeasurementSystem newSys);
 
 private:
-  class LengthDoubleSpinBoxPrivate* const d;
+  class Private;
+  Private* const d;
   Q_PRIVATE_SLOT(d, void onValueChanged(double))
 };
 

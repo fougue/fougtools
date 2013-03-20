@@ -69,7 +69,8 @@ protected:
   virtual bool isPluginCompatible(const QObject* plugin) const = 0;
 
 private:
-  class AbstractPluginLoaderPrivate* const d;
+  class Private;
+  Private* const d;
 };
 
 } // namespace qttools

@@ -41,11 +41,9 @@
 #include "occtools.h"
 #include <TopoDS_Face.hxx>
 #include <TopoDS_Shape.hxx>
+#include <gp_Pnt.hxx>
 #include <gp_Vec.hxx>
 #include <utility>
-#include <vector>
-class gp_Pnt;
-class GeomAPI_ProjectPointOnSurf;
 
 namespace occ {
 
@@ -67,10 +65,8 @@ public:
   gp_Vec solutionNormal() const;
 
 private:
-  typedef GeomAPI_ProjectPointOnSurf Projector;
-  typedef std::pair<Projector*, TopoDS_Face> ProjectorInfo;
-  std::vector<ProjectorInfo> m_projectors;
-  ProjectorInfo m_solProjector;
+  class Private;
+  Private* const d;
 };
 
 } // namespace occ

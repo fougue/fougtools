@@ -89,7 +89,8 @@ protected:
   void acknowledgeStop();
 
 private:
-  class TaskPrivate* const d;
+  class Private;
+  Private* const d;
 };
 
 template<typename FUNCTOR>

@@ -49,6 +49,10 @@
 
 #include <QtCore/QtDebug>
 
+namespace qttools {
+
+namespace internal {
+
 template<typename LOOP_PREDICATE>
 void waitFor(LOOP_PREDICATE loopPredicate, int maxTime = -1)
 {
@@ -61,16 +65,16 @@ void waitFor(LOOP_PREDICATE loopPredicate, int maxTime = -1)
     waitForStopTime += time.elapsed() - waitForStopTime;
 }
 
-namespace qttools {
+} // namespace internal
 
-/*! \class TaskPrivate
+/*! \class Task::Private
  *  \brief Internal (pimpl for Task)
  */
 
-class TaskPrivate
+class Task::Private
 {
 public:
-  TaskPrivate();
+  Private();
 
   bool m_isBoundToThread;
   bool m_isRunning;
@@ -81,7 +85,7 @@ public:
   QMutex m_mutex;
 };
 
-TaskPrivate::TaskPrivate()
+Task::Private::Private()
   : m_isBoundToThread(false),
     m_isRunning(false),
     m_isWaitingStop(false),
@@ -98,7 +102,7 @@ TaskPrivate::TaskPrivate()
 
 Task::Task(QObject* parent)
   : QObject(parent),
-    d(new TaskPrivate)
+    d(new Private)
 {
 }
 
@@ -208,9 +212,9 @@ void Task::stop(int maxTime)
 
   // Wait for task stop
   if (this->isBoundToThread()) {
-    ::waitFor(cpp::bind(std::mem_fun(&Task::isRunning), this), maxTime);
+    internal::waitFor(cpp::bind(std::mem_fun(&Task::isRunning), this), maxTime);
     taskThread->quit();
-    ::waitFor(cpp::bind(std::mem_fun(&QThread::isRunning), taskThread), maxTime);
+    internal::waitFor(cpp::bind(std::mem_fun(&QThread::isRunning), taskThread), maxTime);
   }
 
   // Handle the case when normal task stop fails

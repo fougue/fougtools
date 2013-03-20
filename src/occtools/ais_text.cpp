@@ -96,6 +96,8 @@ IMPLEMENT_STANDARD_TYPE_END(occ_AIS_Text)
 
 namespace internal {
 
+namespace {
+
 class TextProperties
 {
 public:
@@ -119,10 +121,14 @@ public:
   Handle_Prs3d_TextAspect m_aspect;
 };
 
-class occ_AIS_TextPrivate
+} // Anonymous namespace
+
+} // namespace internal
+
+class occ_AIS_Text::Private
 {
 public:
-  occ_AIS_TextPrivate()
+  Private()
     : m_defaultFont(Graphic3d_NOF_ASCII_MONO),
       m_defaultColor(Quantity_NOC_YELLOW),
       m_defaultTextBackgroundColor(Quantity_NOC_GREEN),
@@ -137,10 +143,8 @@ public:
   Quantity_Color m_defaultTextBackgroundColor;
   occ_AIS_Text::TextDisplayMode m_defaultTextDisplayMode;
   occ_AIS_Text::TextStyle m_defaultTextStyle;
-  std::vector<TextProperties> m_textProps;
+  std::vector<internal::TextProperties> m_textProps;
 };
-
-} // namespace internal
 
 /*!
  * \class occ_AIS_Text
@@ -168,13 +172,13 @@ public:
 
 //! Construct a default occ_AIS_Text
 occ_AIS_Text::occ_AIS_Text()
-  : d(new internal::occ_AIS_TextPrivate)
+  : d(new Private)
 {
 }
 
 //! Construct a fully initialized occ_AIS_Text
 occ_AIS_Text::occ_AIS_Text(const TCollection_ExtendedString &text, const gp_Pnt& pos)
-  : d(new internal::occ_AIS_TextPrivate)
+  : d(new Private)
 {
   internal::TextProperties defaultProps;
   d->m_textProps.push_back(defaultProps);

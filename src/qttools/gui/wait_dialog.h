@@ -71,7 +71,8 @@ private slots:
   void updateProgress();
 
 private:
-  class WaitDialogPrivate* const d;
+  class Private;
+  Private* const d;
 };
 
 } // namespace qttools

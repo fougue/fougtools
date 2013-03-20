@@ -49,16 +49,16 @@
 
 namespace qttools {
 
-/*! \class MailSendPrivate
+/*! \class MailSend::Private
  *  \brief Private (pimpl of MailSend)
  */
 
-class MailSendPrivate : public QObject
+class MailSend::Private : public QObject
 {
   Q_OBJECT
 
 public:
-  MailSendPrivate()
+  Private()
     : m_socket(new QSslSocket(this)),
       m_timeout(30000)
   {
@@ -98,7 +98,7 @@ public:
     else if (responseCode != expectedCode) {
       //: %1 and %2: SMTP server response codes   %3: whole SMTP server response
       m_error = tr("Unexpected response code, got %1 instead of %2\n%3")
-        .arg(responseCode).arg(expectedCode).arg(QString(response));
+          .arg(responseCode).arg(expectedCode).arg(QString(response));
     }
     return responseCode == expectedCode && responseCode != -1;
   }
@@ -126,7 +126,7 @@ private slots:
  */
 
 MailSend::MailSend()
-  : d(new MailSendPrivate)
+  : d(new Private)
 {
 }
 
@@ -167,7 +167,7 @@ bool MailSend::connectToSmtpServer(const SmtpAccount& account)
   d->m_socket->connectToHost(account.host(), account.port());
   if (!d->m_socket->waitForConnected(this->timeout())) {
     //: %1: Error description
-    d->m_error = MailSendPrivate::tr("Connection failed (timeout)\n%1").arg(d->m_socket->errorString());
+    d->m_error = Private::tr("Connection failed (timeout)\n%1").arg(d->m_socket->errorString());
     return false;
   }
 
@@ -180,8 +180,8 @@ bool MailSend::connectToSmtpServer(const SmtpAccount& account)
   // Read initial server response
   if (!d->m_socket->waitForReadyRead(this->timeout())) {
     //: %1: Error description
-    d->m_error = MailSendPrivate::tr("Failed to read server response after "
-                                     "connection\n%1").arg(d->m_socket->errorString());
+    d->m_error = Private::tr("Failed to read server response after "
+                             "connection\n%1").arg(d->m_socket->errorString());
     return false;
   }
 #ifdef QTTOOLS_MAILSEND_TRACE

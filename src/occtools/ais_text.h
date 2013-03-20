@@ -54,8 +54,6 @@
 #include <Quantity_Color.hxx>
 #include <TCollection_ExtendedString.hxx>
 
-namespace internal { class occ_AIS_TextPrivate; }
-
 class OCCTOOLS_EXPORT occ_AIS_Text : public AIS_InteractiveObject
 {
 public:
@@ -114,7 +112,8 @@ protected:
   void ComputeSelection(const Handle_SelectMgr_Selection& sel, const Standard_Integer mode);
 
 private:
-  internal::occ_AIS_TextPrivate* const d;
+  class Private;
+  Private* const d;
 };
 
 #endif // AIS_TEXT_H

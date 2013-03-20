@@ -122,16 +122,11 @@ SmtpAccount::AuthenticationMethod SmtpAccount::toAuthenticationMethod(int id, bo
     *ok = SmtpAccount::NoAuthentication <= id && id <= SmtpAccount::CramMd5Authentication;
 
   switch (id) {
-  case SmtpAccount::NoAuthentication:
-    return SmtpAccount::NoAuthentication;
-  case SmtpAccount::LoginAuthentication:
-    return SmtpAccount::LoginAuthentication;
-  case SmtpAccount::PlainAuthentication:
-    return SmtpAccount::PlainAuthentication;
-  case SmtpAccount::CramMd5Authentication:
-    return SmtpAccount::CramMd5Authentication;
-  default:
-    return SmtpAccount::NoAuthentication;
+  case SmtpAccount::NoAuthentication:      return SmtpAccount::NoAuthentication;
+  case SmtpAccount::LoginAuthentication:   return SmtpAccount::LoginAuthentication;
+  case SmtpAccount::PlainAuthentication:   return SmtpAccount::PlainAuthentication;
+  case SmtpAccount::CramMd5Authentication: return SmtpAccount::CramMd5Authentication;
+  default: return SmtpAccount::NoAuthentication;
   }
 }
 
@@ -147,14 +142,10 @@ SmtpAccount::ConnectionSecurity SmtpAccount::toConnectionSecurity(int id, bool* 
     *ok = SmtpAccount::NoSecurity <= id && id <= SmtpAccount::SslTlsSecurity;
 
   switch (id) {
-  case SmtpAccount::NoSecurity:
-    return SmtpAccount::NoSecurity;
-  case SmtpAccount::StartTlsSecurity:
-    return SmtpAccount::StartTlsSecurity;
-  case SmtpAccount::SslTlsSecurity:
-    return SmtpAccount::SslTlsSecurity;
-  default:
-    return SmtpAccount::NoSecurity;
+  case SmtpAccount::NoSecurity:       return SmtpAccount::NoSecurity;
+  case SmtpAccount::StartTlsSecurity: return SmtpAccount::StartTlsSecurity;
+  case SmtpAccount::SslTlsSecurity:   return SmtpAccount::SslTlsSecurity;
+  default: return SmtpAccount::NoSecurity;
   }
 }
 

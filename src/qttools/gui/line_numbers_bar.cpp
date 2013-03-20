@@ -81,7 +81,7 @@ public:
 
 LineNumbersBar::LineNumbersBar(QWidget *parent)
   : QWidget(parent),
-    d_ptr(new LineNumbersBarPrivate)
+    d(new LineNumbersBarPrivate)
 {
   // Make room for 4 digits and the breakpoint icon
   this->setFixedWidth(this->fontMetrics().width(QLatin1String("000") + 10 + 32));
@@ -92,31 +92,26 @@ LineNumbersBar::LineNumbersBar(QWidget *parent)
 
 LineNumbersBar::~LineNumbersBar()
 {
-  Q_D(LineNumbersBar);
   delete d;
 }
 
 void LineNumbersBar::setCurrentLine(int lineno)
 {
-  Q_D(LineNumbersBar);
   d->m_currentLine = lineno;
 }
 
 void LineNumbersBar::setStopLine(int lineno)
 {
-  Q_D(LineNumbersBar);
   d->m_stopLine = lineno;
 }
 
 void LineNumbersBar::setBugLine(int lineno)
 {
-  Q_D(LineNumbersBar);
   d->m_bugLine = lineno;
 }
 
 void LineNumbersBar::setTextEdit(QTextEdit* edit)
 {
-  Q_D(LineNumbersBar);
   d->m_edit = edit;
   connect(edit->document()->documentLayout(), SIGNAL(update(const QRectF&)), this, SLOT(update()));
   connect(edit->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(update()));
@@ -125,7 +120,6 @@ void LineNumbersBar::setTextEdit(QTextEdit* edit)
 void LineNumbersBar::paintEvent(QPaintEvent* event)
 {
   Q_UNUSED(event);
-  Q_D(LineNumbersBar);
 
   QAbstractTextDocumentLayout* layout = d->m_edit->document()->documentLayout();
   const int contentsY = d->m_edit->verticalScrollBar()->value();
@@ -183,7 +177,6 @@ void LineNumbersBar::paintEvent(QPaintEvent* event)
 
 bool LineNumbersBar::event(QEvent* event)
 {
-  Q_D(const LineNumbersBar);
   if (event->type() == QEvent::ToolTip) {
     QHelpEvent *helpEvent = static_cast<QHelpEvent *>(event);
     if (d->m_stopRect.contains(helpEvent->pos()))

@@ -62,9 +62,8 @@ public slots:
   void updateEditor(QLocale::MeasurementSystem newSys);
 
 private:
-  class LengthDoubleSpinBoxPrivate* const d_ptr;
-  Q_DECLARE_PRIVATE(LengthDoubleSpinBox)
-  Q_PRIVATE_SLOT(d_func(), void onValueChanged(double))
+  class LengthDoubleSpinBoxPrivate* const d;
+  Q_PRIVATE_SLOT(d, void onValueChanged(double))
 };
 
 } // namespace qttools

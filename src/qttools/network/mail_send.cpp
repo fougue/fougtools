@@ -126,13 +126,12 @@ private slots:
  */
 
 MailSend::MailSend()
-  : d_ptr(new MailSendPrivate)
+  : d(new MailSendPrivate)
 {
 }
 
 MailSend::~MailSend()
 {
-  Q_D(MailSend);
   d->m_socket->disconnectFromHost();
   delete d;
 }
@@ -145,13 +144,11 @@ MailSend::~MailSend()
  */
 int MailSend::timeout() const
 {
-  Q_D(const MailSend);
   return d->m_timeout;
 }
 
 void MailSend::setTimeout(int msecs)
 {
-  Q_D(MailSend);
   d->m_timeout = msecs;
 }
 
@@ -163,7 +160,6 @@ void MailSend::setTimeout(int msecs)
  */
 bool MailSend::connectToSmtpServer(const SmtpAccount& account)
 {
-  Q_D(MailSend);
   d->m_error.clear();
   d->m_smtpAccount = account;
 
@@ -248,7 +244,6 @@ bool MailSend::connectToSmtpServer(const SmtpAccount& account)
  */
 bool MailSend::sendMessage(const Message& msg)
 {
-  Q_D(MailSend);
   d->m_error.clear();
   if (!d->sendSmtpCommand(QString("MAIL FROM:<%1>").arg(msg.from()).toUtf8(), 250))
     return false;
@@ -277,9 +272,9 @@ bool MailSend::sendMessage(const Message& msg)
  */
 QString MailSend::errorString() const
 {
-  Q_D(const MailSend);
   return d->m_error;
 }
+
 } // namespace qttools
 
 #include "mail_send.moc"

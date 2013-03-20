@@ -61,8 +61,7 @@ public:
   QString errorString() const;
 
 private:
-  class MailSendPrivate* const d_ptr;
-  Q_DECLARE_PRIVATE(MailSend)
+  class MailSendPrivate* const d;
 };
 
 } // namespace qttools

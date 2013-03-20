@@ -62,8 +62,7 @@ protected:
   bool event(QEvent *event);
 
 private:
-  class LineNumbersBarPrivate* const d_ptr;
-  Q_DECLARE_PRIVATE(LineNumbersBar)
+  class LineNumbersBarPrivate* const d;
 };
 
 } //namespace qttools

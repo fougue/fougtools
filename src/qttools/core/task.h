@@ -89,8 +89,7 @@ protected:
   void acknowledgeStop();
 
 private:
-  class TaskPrivate* const d_ptr;
-  Q_DECLARE_PRIVATE(Task)
+  class TaskPrivate* const d;
 };
 
 template<typename FUNCTOR>

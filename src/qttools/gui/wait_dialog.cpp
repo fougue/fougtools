@@ -69,9 +69,8 @@ public:
 
 WaitDialog::WaitDialog(QWidget* parent)
   : QDialog(parent),
-    d_ptr(new WaitDialogPrivate(this))
+    d(new WaitDialogPrivate(this))
 {
-  Q_D(WaitDialog);
 
   // Create the UI
   this->setObjectName("qttools__WaitDialog");
@@ -99,7 +98,6 @@ WaitDialog::WaitDialog(QWidget* parent)
 
 WaitDialog::~WaitDialog()
 {
-  Q_D(WaitDialog);
   if (this->isWaiting())
     this->stopWait();
   delete d;
@@ -107,25 +105,21 @@ WaitDialog::~WaitDialog()
 
 bool WaitDialog::isWaiting() const
 {
-  Q_D(const WaitDialog);
   return d->m_updateTimer->isActive();
 }
 
 void WaitDialog::setWaitLabel(const QString& text)
 {
-  Q_D(WaitDialog);
   d->m_waitLabel->setText(text);
 }
 
 void WaitDialog::setMinimumDuration(int msecs)
 {
-  Q_D(WaitDialog);
   d->m_minDuration = msecs;
 }
 
 void WaitDialog::startWait()
 {
-  Q_D(WaitDialog);
   if (this->isWaiting())
     return;
   d->m_progressBar->setValue(0);
@@ -134,15 +128,12 @@ void WaitDialog::startWait()
 
 void WaitDialog::stopWait()
 {
-  Q_D(WaitDialog);
   d->m_updateTimer->stop();
   this->close();
 }
 
 void WaitDialog::waitFor(qttools::Task* task, WaitForOption opt)
 {
-  Q_D(WaitDialog);
-
   QThread* taskThread = new QThread;
   task->bindToThread(taskThread);
   QEventLoop eventLoop;
@@ -158,8 +149,6 @@ void WaitDialog::waitFor(qttools::Task* task, WaitForOption opt)
 
 void WaitDialog::updateProgress()
 {
-  Q_D(WaitDialog);
-
   const int incr = 5;
   const int currValue = d->m_progressBar->value();
   const int newValue = currValue + incr <= d->m_progressBar->maximum() ? currValue + incr :

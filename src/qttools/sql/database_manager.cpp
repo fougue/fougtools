@@ -70,19 +70,17 @@ public:
  */
 
 DatabaseManager::DatabaseManager(const QSqlDatabase& refDb)
-  : d_ptr(new DatabaseManagerPrivate(refDb))
+  : d(new DatabaseManagerPrivate(refDb))
 {
 }
 
 DatabaseManager::~DatabaseManager()
 {
-  Q_D(DatabaseManager);
   delete d;
 }
 
 const QSqlDatabase& DatabaseManager::referenceDatabase() const
 {
-  Q_D(const DatabaseManager);
   return d->m_refDatabase;
 }
 
@@ -93,20 +91,17 @@ bool DatabaseManager::isDatabaseOpen(const QThread* inThread) const
 
 bool DatabaseManager::hasDatabase(const QThread* inThread) const
 {
-  Q_D(const DatabaseManager);
   return d->m_databases.contains(inThread);
 }
 
 QSqlDatabase DatabaseManager::database(const QThread* inThread) const
 {
-  Q_D(const DatabaseManager);
   Q_ASSERT(this->hasDatabase(inThread));
   return d->m_databases.value(inThread);
 }
 
 QSqlDatabase DatabaseManager::createDatabase(const QThread* inThread)
 {
-  Q_D(DatabaseManager);
   if (this->hasDatabase(inThread))
     return this->database(inThread);
 

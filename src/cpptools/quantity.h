@@ -80,7 +80,7 @@ typedef NumericTraits<int> IntNumericTraits;
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>::Quantity()
-  : m_value(NUMERIC_TRAITS::zero)
+  : m_value(NUMERIC_TRAITS::zero())
 {
 }
 

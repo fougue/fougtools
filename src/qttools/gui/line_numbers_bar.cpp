@@ -112,14 +112,23 @@ void LineNumbersBar::setBugLine(int lineno)
 
 void LineNumbersBar::setTextEdit(QTextEdit* edit)
 {
+  if (d->m_edit != NULL) {
+    disconnect(edit->document()->documentLayout(), SIGNAL(update(QRectF)), this, SLOT(update()));
+    disconnect(edit->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(update()));
+  }
   d->m_edit = edit;
-  connect(edit->document()->documentLayout(), SIGNAL(update(const QRectF&)), this, SLOT(update()));
-  connect(edit->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(update()));
+  if (edit != NULL) {
+    connect(edit->document()->documentLayout(), SIGNAL(update(QRectF)), this, SLOT(update()));
+    connect(edit->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(update()));
+  }
 }
 
 void LineNumbersBar::paintEvent(QPaintEvent* event)
 {
-  Q_UNUSED(event);
+  if (d->m_edit == NULL) {
+    QWidget::paintEvent(event);
+    return;
+  }
 
   QAbstractTextDocumentLayout* layout = d->m_edit->document()->documentLayout();
   const int contentsY = d->m_edit->verticalScrollBar()->value();

@@ -40,6 +40,7 @@ INCLUDEPATH *= $$PWD/.. $$PWD/../..
 QT *= gui declarative
 
 HEADERS += \
+    $$PWD/code_editor.h \
     $$PWD/length_double_spinbox.h \
     $$PWD/line_edit_with_auto_tool_tip.h \
     $$PWD/line_numbers_bar.h \
@@ -58,6 +59,7 @@ HEADERS += \
     $$PWD/qml_tools.h
 
 SOURCES += \
+    $$PWD/code_editor.cpp \
     $$PWD/length_double_spinbox.cpp \
     $$PWD/line_edit_with_auto_tool_tip.cpp \
     $$PWD/line_numbers_bar.cpp \

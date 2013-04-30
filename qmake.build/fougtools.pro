@@ -20,3 +20,8 @@ INSTALLS += cpptools_include
 mathtools_include.path  = $$PREFIX_DIR/include/mathtools
 mathtools_include.files = ../src/mathtools/*.h
 INSTALLS += mathtools_include
+
+# INSTALLS for scripts
+scripts.path  = $$PREFIX_DIR/scripts
+scripts.files = ../scripts/*
+INSTALLS += scripts

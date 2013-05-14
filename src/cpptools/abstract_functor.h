@@ -48,6 +48,10 @@ public:
   typedef RESULT_TYPE ResultType;
   typedef void argument_type;
 
+  virtual ~AbstractFunctor()
+  {
+  }
+
   virtual RESULT_TYPE execute() = 0;
 };
 

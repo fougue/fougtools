@@ -127,72 +127,59 @@ QString DatabaseConnectionSettings::password() const
 /*! \brief Load settings from the persistent storage
  *  \param passwordCipher Encrypt/decrypt algorithm used to decrypt the password. If \c null then
  *         the default password is returned (see parameter \p defValues)
- *  \param settingsGroup Group to be used when query persistent settings (\sa
- *         QSettings::beginGroup() )
  *  \param defValues Default values when all or some persistent settings could not be retrieved
  */
-void DatabaseConnectionSettings::load(const AbstractCipher* passwordCipher,
-                                      const QString& settingsGroup,
+void DatabaseConnectionSettings::load(const QSettings* settings,
+                                      const AbstractCipher* passwordCipher,
                                       const SettingsMap& defValues)
 {
+  if (settings == NULL)
+    return;
+
   const QString defHost = defValues.value("host").toString();
   const QString defDbName = defValues.value("name").toString();
   const int defPort = defValues.value("port").toInt();
   const QString defUser = defValues.value("user").toString();
   const QString defPwd = defValues.value("password").toString();
 
-  QSettings settings;
-  if (!settingsGroup.isEmpty())
-    settings.beginGroup(settingsGroup);
+  this->setHost(settings->value("database/host", defHost).toString());
+  this->setDatabaseName(settings->value("database/name", defDbName).toString());
+  this->setPort(settings->value("database/port", defPort).toInt());
+  this->setUserName(settings->value("database/user", defUser).toString());
 
-  this->setHost(settings.value("host", defHost).toString());
-  this->setDatabaseName(settings.value("name", defDbName).toString());
-  this->setPort(settings.value("port", defPort).toInt());
-  this->setUserName(settings.value("user", defUser).toString());
-
-  if (passwordCipher != NULL && settings.contains("password")) {
+  if (passwordCipher != NULL && settings->contains("database/password")) {
     const QByteArray decryptedPwd =
-        passwordCipher->decrypted(settings.value("password").toByteArray());
+        passwordCipher->decrypted(settings->value("database/password").toByteArray());
     this->setPassword(decryptedPwd);
   }
   else {
     this->setPassword(defPwd);
   }
-
-  if (!settingsGroup.isEmpty())
-    settings.endGroup();
 }
 
 /*! \brief Write settings to persistent storage
  *  \param passwordCipher Encrypt/decrypt algorithm used to encrypt the password. If \c null then an
  *         empty password is stored. Otherwise the password() is reprensented as a UTF-8 byte array
- *         and passed to to AbstractCipher::encrypted()
- *  \param settingsGroup Group to be used when specifying persistent settings
- *         (\sa QSettings::beginGroup())
+ *         and passed to AbstractCipher::encrypted()
  */
-void DatabaseConnectionSettings::write(const AbstractCipher* passwordCipher,
-                                       const QString& settingsGroup) const
+void DatabaseConnectionSettings::write(QSettings* settings,
+                                       const AbstractCipher* passwordCipher) const
 {
-  QSettings settings;
+  if (settings == NULL)
+    return;
 
-  if (!settingsGroup.isEmpty())
-    settings.beginGroup(settingsGroup);
-
-  settings.setValue("host", this->host());
-  settings.setValue("name", this->databaseName());
-  settings.setValue("port", this->port());
-  settings.setValue("user", this->userName());
+  settings->setValue("database/host", this->host());
+  settings->setValue("database/name", this->databaseName());
+  settings->setValue("database/port", this->port());
+  settings->setValue("database/user", this->userName());
 
   if (passwordCipher != NULL) {
     const QByteArray pwd = this->password().toUtf8();
-    settings.setValue("password", passwordCipher->encrypted(pwd));
+    settings->setValue("database/password", passwordCipher->encrypted(pwd));
   }
   else {
-    settings.setValue("password", QString());
+    settings->setValue("database/password", QString());
   }
-
-  if (!settingsGroup.isEmpty())
-    settings.endGroup();
 }
 
 /*! \brief Apply the current settings to a QSqlDatabase instance

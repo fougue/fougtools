@@ -41,6 +41,7 @@
 #include "sql.h"
 #include <QtCore/QHash>
 #include <QtCore/QVariant>
+class QSettings;
 class QSqlDatabase;
 
 namespace qttools {
@@ -71,11 +72,11 @@ public:
 
   void configureDatabase(QSqlDatabase* db) const;
 
-  void load(const AbstractCipher* passwordCipher = NULL,
-            const QString& settingsGroup = QString(),
+  void load(const QSettings* settings,
+            const AbstractCipher* passwordCipher = NULL,
             const SettingsMap& defValues = SettingsMap());
-  void write(const AbstractCipher* passwordCipher = NULL,
-             const QString& settingsGroup = QString()) const;
+  void write(QSettings* settings,
+             const AbstractCipher* passwordCipher = NULL) const;
 
 private:
   QString m_host;

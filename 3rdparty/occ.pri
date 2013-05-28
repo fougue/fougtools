@@ -19,6 +19,7 @@ INCLUDEPATH += $$CASCADE_INC_PATH
 linux-*:DEFINES *= HAVE_CONFIG_H \
                    HAVE_FSTREAM \
                    HAVE_IOSTREAM \
+                   HAVE_IOMANIP \
                    HAVE_LIMITS_H
 
 win32-*:DEFINES *= WNT

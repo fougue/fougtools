@@ -38,14 +38,8 @@
 #include "view.h"
 
 #include <AIS_InteractiveContext.hxx>
+#include <Graphic3d_GraphicDriver.hxx>
 #include <V3d_View.hxx>
-#ifdef WNT
-# include <Graphic3d_WNTGraphicDevice.hxx>
-# include <WNT_Window.hxx>
-#else
-# include <Graphic3d_GraphicDevice.hxx>
-# include <Xw_Window.hxx>
-#endif // WNT
 
 #include <QtCore/QtDebug>
 #include <QtCore/QHash>
@@ -57,6 +51,24 @@
 #include <GL/glu.h>
 
 #include "../utils.h"
+
+#if defined(Q_OS_WIN32)
+#include <WNT_Window.hxx>
+#elif defined(Q_OS_MAC) && !defined(MACOSX_USE_GLX)
+#include <Cocoa_Window.hxx>
+#else
+//#include <QX11Info>
+//#include <GL/glx.h>
+//#include <X11/Xutil.h>
+//#include <X11/Xatom.h>
+//#include <X11/Xmu/StdCmap.h>
+//#include <X11/Xlib.h>
+//#include <QtGui/QColormap>
+#include <Aspect_DisplayConnection.hxx>
+#include <Xw_Window.hxx> // OpenCascade
+#include <X11/X.h>
+#endif
+
 
 /*!
  * \class occ::View
@@ -166,24 +178,19 @@ void View::Private::initialize()
 {
   if (!m_isInitialized && m_backPtr->winId() != 0) {
     m_internalView = m_context->CurrentViewer()->CreateView();
-    int windowHandle = (int)(m_backPtr->winId());
-    short hi = static_cast<short>(windowHandle >> 16);
-    short lo = static_cast<short>(windowHandle);
-    Handle_Aspect_GraphicDevice device = m_context->CurrentViewer()->Device();
-#ifdef WNT
-    Handle_WNT_Window hWnd = new WNT_Window(Handle_Graphic3d_WNTGraphicDevice::DownCast(device),
-                                            static_cast<Standard_Integer>(hi),
-                                            static_cast<Standard_Integer>(lo));
-    hWnd->SetFlags(WDF_NOERASEBKGRND);
+
+#if defined(Q_OS_WIN32)
+    Aspect_Handle winHandle = (Aspect_Handle)m_backPtr->winId();
+    Handle(WNT_Window) hWnd = new WNT_Window(winHandle);
+#elif defined(Q_OS_MAC) && !defined(MACOSX_USE_GLX)
+    NSView* viewHandle = (NSView*)m_backPtr->winId();
+    Handle_Cocoa_Window hWnd = new Cocoa_Window(viewHandle);
 #else
-    Handle_Xw_Window hWnd = new Xw_Window(Handle_Graphic3d_GraphicDevice::DownCast(device),
-                                          static_cast<Standard_Integer>(hi),
-                                          static_cast<Standard_Integer>(lo),
-                                          Xw_WQ_SAMEQUALITY);
-#endif // WNT
-    Aspect_RenderingContext rc = 0;
-    m_internalView->SetWindow(hWnd, rc, paintCallBack, this);
-    // m_internalView->SetScale(2);
+    Window winHandle = (Window)m_backPtr->winId();
+    Handle_Aspect_DisplayConnection dispConnection = m_context->CurrentViewer()->Driver()->GetDisplayConnection();
+    Handle_Xw_Window hWnd = new Xw_Window(dispConnection, winHandle);
+#endif
+    m_internalView->SetWindow(hWnd);
     if (!hWnd->IsMapped())
       hWnd->Map();
 
@@ -192,7 +199,9 @@ void View::Private::initialize()
 
     m_internalView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER,
                                     occ::rgbColor(100, 100, 100).Name(),
-                                    0.1, V3d_ZBUFFER);
+                                    0.1,
+                                    V3d_ZBUFFER);
+
     m_internalView->MustBeResized();
     m_isInitialized = true;
     m_needsResize = true;

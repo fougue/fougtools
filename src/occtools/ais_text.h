@@ -43,12 +43,10 @@
 
 #include <AIS_InteractiveObject.hxx>
 #include <gp_Pnt.hxx>
-#include <Handle_Graphic2d_GraphicObject.hxx>
 #include <Handle_Graphic3d_AspectText3d.hxx>
 #include <Handle_Prs3d_Presentation.hxx>
 #include <Handle_Prs3d_Projector.hxx>
 #include <Handle_Prs3d_TextAspect.hxx>
-#include <Handle_PrsMgr_PresentationManager2d.hxx>
 #include <Handle_PrsMgr_PresentationManager3d.hxx>
 #include <Handle_SelectMgr_Selection.hxx>
 #include <Quantity_Color.hxx>
@@ -106,9 +104,6 @@ protected:
                const Handle_Prs3d_Presentation& pres,
                const Standard_Integer mode);
   void Compute(const Handle_Prs3d_Projector& proj, const Handle_Prs3d_Presentation& pres);
-  void Compute(const Handle_PrsMgr_PresentationManager2d& pres,
-               const Handle_Graphic2d_GraphicObject& grObj,
-               const Standard_Integer mode);
   void ComputeSelection(const Handle_SelectMgr_Selection& sel, const Standard_Integer mode);
 
 private:

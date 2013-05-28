@@ -70,4 +70,4 @@ SOURCES += \
 LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
         -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim  -lTKService \
         -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -l$$OCC_TKSTEP -lTKSTL -lTKTopAlgo \
-        -lTKV2d -lTKV3d -lTKXSBase
+        -lTKV3d -lTKXSBase

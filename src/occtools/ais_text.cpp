@@ -40,7 +40,6 @@
 #include <vector>
 
 #include <Aspect_TypeOfText.hxx>
-#include <Graphic3d_NameOfFont.hxx>
 #include <Quantity_Factor.hxx>
 #include <Quantity_PlaneAngle.hxx>
 #include <SelectMgr_SelectableObject.hxx>
@@ -76,20 +75,10 @@ IMPLEMENT_STANDARD_SUPERTYPE_ARRAY_END()
 IMPLEMENT_STANDARD_TYPE_END(occ_AIS_Text)
 
 #include <gp_Pnt.hxx>
-#include <Graphic2d_Array1OfVertex.hxx>
-#include <Graphic2d_DisplayList.hxx>
-#include <Graphic2d_Drawer.hxx>
-#include <Graphic2d_Polyline.hxx>
-#include <Graphic2d_Segment.hxx>
-#include <Graphic2d_Text.hxx>
-#include <Graphic2d_Vertex.hxx>
-#include <Graphic2d_View.hxx>
 #include <Graphic3d_AspectText3d.hxx>
 #include <OSD_Environment.hxx>
 #include <Prs3d_TextAspect.hxx>
 #include <Prs3d_Text.hxx>
-#include <PrsMgr_PresentationManager2d.hxx>
-#include <Select2D_SensitiveBox.hxx>
 #include <SelectMgr_Selection.hxx>
 
 // --- Handle/Body Implementation
@@ -129,7 +118,7 @@ class occ_AIS_Text::Private
 {
 public:
   Private()
-    : m_defaultFont(Graphic3d_NOF_ASCII_MONO),
+    : m_defaultFont("Courrier"/*Graphic3d_NOF_ASCII_MONO*/),
       m_defaultColor(Quantity_NOC_YELLOW),
       m_defaultTextBackgroundColor(Quantity_NOC_GREEN),
       m_defaultTextDisplayMode(occ_AIS_Text::TextOnlyDisplay),
@@ -362,28 +351,6 @@ void occ_AIS_Text::Compute(const Handle_PrsMgr_PresentationManager3d& /*pm*/,
 void occ_AIS_Text::Compute(const Handle_Prs3d_Projector& /*proj*/,
                        const Handle_Prs3d_Presentation& /*pres*/)
 {
-}
-
-//! -- from PrsMgr_PresentableObject
-void occ_AIS_Text::Compute(const Handle_PrsMgr_PresentationManager2d& /*pres*/,
-                       const Handle_Graphic2d_GraphicObject& /*grObj*/,
-                       const Standard_Integer /*mode*/)
-{
-  //   Handle_Graphic2d_Text text =
-  //     new Graphic2d_Text(grObj,(Standard_CString) m_text.ascii(),
-  //    m_position.x(), m_position.y(),
-  //    m_angle, Aspect_TOT_SOLID, m_scale);
-  //   text->SetFontIndex(m_fontId);
-
-  //   text->SetColorIndex(m_colorId);
-
-  //   text->SetSlant(m_slant);
-  //   text->SetUnderline(false);
-  //   text->SetZoomable(true);
-  //   grObj->Display();
-  //   Real xOffset;
-  //   Real yOffset;
-  //   text->TextSize(m_width, m_height, xOffset, yOffset);
 }
 
 //! -- from SelectMgr_SelectableObject

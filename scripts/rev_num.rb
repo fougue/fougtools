@@ -16,6 +16,7 @@ def revNum(rcsType, workDir)
   supportedRcsHash = Hash.new
   supportedRcsHash["bzr"] = RcsSpec.new("bzr revno", /^([0-9]+)/)
   supportedRcsHash["svn"] = RcsSpec.new("svnversion", /^([0-9]+)/)
+  supportedRcsHash["git"] = RcsSpec.new("git rev-parse --short HEAD", /^([0-9a-zA-Z]+)/)
 
   if not supportedRcsHash.has_key?(rcsType) then
     puts "Revision control system not supported '#{rcsType}'"

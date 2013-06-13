@@ -24,5 +24,5 @@ INSTALLS += mathtools_include
 
 # INSTALLS for scripts
 scripts.path  = $$PREFIX_DIR/scripts
-scripts.files = ../scripts/*
+scripts.files = ../scripts/*.rb
 INSTALLS += scripts

@@ -12,6 +12,13 @@ SUBDIRS += qttools_core \
 occtools:SUBDIRS += occtools
 utest:SUBDIRS += ../utest
 
+HEADERS += ../src/fougtools_global.h
+
+# INSTALLS for globals
+globals_include.path  = $$PREFIX_DIR/include
+globals_include.files = ../src/*.h
+INSTALLS += globals_include
+
 # INSTALLS for cpptools
 cpptools_include.path  = $$PREFIX_DIR/include/cpptools
 cpptools_include.files = ../src/cpptools/*.h

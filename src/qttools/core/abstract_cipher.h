@@ -36,10 +36,10 @@
 ****************************************************************************/
 
 #ifndef QTTOOLS_ABSTRACT_CIPHER_H
-# define QTTOOLS_ABSTRACT_CIPHER_H
+#define QTTOOLS_ABSTRACT_CIPHER_H
 
-# include "core.h"
-# include <QtCore/QByteArray>
+#include "core.h"
+#include <QtCore/QByteArray>
 
 namespace qttools {
 

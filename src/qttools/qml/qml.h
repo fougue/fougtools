@@ -35,28 +35,18 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QML_TOOLS_H
-#define QTTOOLS_QML_TOOLS_H
+#ifndef QTTOOLS_QML_H
+#define QTTOOLS_QML_H
 
-#include "gui.h"
-#include <QtCore/QObject>
-class QDeclarativeContext;
+#include <QtCore/QtGlobal>
+#ifdef QTTOOLS_QML_DLL
+# ifdef QTTOOLS_QML_MAKE_DLL
+#  define QTTOOLS_QML_EXPORT Q_DECL_EXPORT
+# else
+#  define QTTOOLS_QML_EXPORT Q_DECL_IMPORT
+# endif // QTTOOLS_QML_MAKE_DLL
+#else
+# define QTTOOLS_QML_EXPORT
+#endif // QTTOOLS_QML_DLL
 
-namespace qttools {
-
-class QTTOOLS_GUI_EXPORT QmlTools : public QObject
-{
-  Q_OBJECT
-
-public:
-  QmlTools(QObject* parent = NULL);
-
-  Q_INVOKABLE void setOverrideCursor(int shape);
-  Q_INVOKABLE void restoreOverrideCursor();
-
-  static void declareObject(QDeclarativeContext* context, QmlTools* obj);
-};
-
-} // namespace qttools
-
-#endif // QTTOOLS_QML_TOOLS_H
+#endif // QTTOOLS_QML_H

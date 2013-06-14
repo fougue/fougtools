@@ -35,22 +35,21 @@ knowledge of the CeCILL-C license and that you accept its terms.
 
 INSTALLING FougTools
 
-Create a file named _local_config.pri in folder qmake.build and put the
-root path to the Boost library like this :
-
-  BOOST_ROOT = /path/to/boost
+Create a file named _local_config.pri in folder qmake.build and define
+the following variables, depending on your needs:
+  PREFIX_DIR = ../gcc-linux64  # Everything will be installed here
   CONFIG *= occtools  # If you want to build occtools (optional)
   CONFIG *= use_oce   # If you want OpenCascade Community edition (OCE)
+  CASCADE_ROOT = /path/to/opencascade
 
-Or use script qmake.build/configure.rb
+Or use Ruby script qmake.build/configure.rb
+Type "ruby configure.rb -h" for help.
 
-Note that :
-  - Boost >= v1.40 is required
-  - On Windows, qmake can complain about deprecated warnings for escape 
-    characters. So you may have to double separator characters like
-    C:\\path\\to\\boost
+Note that on Windows, qmake can complain about deprecated warnings for
+backslash '\' characters.
+So you may have to escape backslashes like C:\\path\\to\\opencascade
 
-Then inside sub-folder qmake.build, type :
+Once configuration is done, then from withing sub-folder qmake.build:
   qmake -r
   make (or nmake with Visual C++)
 

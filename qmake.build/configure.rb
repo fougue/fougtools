@@ -63,8 +63,6 @@ def printHelp()
   puts "         --prefix <dir> ............. This will install everything relative to <dir>"
   puts "                                      (default PWD/local)"
   puts ""
-  puts "         --qt-dir <dir> ............. Qt root directory"
-  puts "         --boost-dir <dir> .......... Boost root directory"
   puts "         --occ-dir .................. Open Cascade root directory"
   puts "                                      Useful only with --occtools"
   puts ""
@@ -81,16 +79,12 @@ configArgs = ARGV.join(' ')
 opts = GetoptLong.new(
   ['--help', '-h', GetoptLong::NO_ARGUMENT],
   ['--prefix', GetoptLong::REQUIRED_ARGUMENT],
-  ['--qt-dir', GetoptLong::REQUIRED_ARGUMENT],
-  ['--boost-dir', GetoptLong::REQUIRED_ARGUMENT],
   ['--occ-dir', GetoptLong::REQUIRED_ARGUMENT],
   ['--no-occtools', GetoptLong::NO_ARGUMENT],
   ['--occtools', GetoptLong::NO_ARGUMENT],
   ['--use-oce', GetoptLong::NO_ARGUMENT])
 
-options = { :boostDir => "/opt/def/boost",
-            :prefix=> "$$PWD/local",
-            :qtDir => "/opt/def/qt",
+options = { :prefix=> "$$PWD/local",
             :occDir => "/opt/def/occ",
             :occTools => false,
             :useOce => false }
@@ -104,10 +98,6 @@ opts.each do |opt, arg|
       exit
     when '--prefix'
       options[:prefix] = arg
-    when '--qt-dir'
-      options[:qtDir] = arg
-    when '--boost-dir'
-      options[:boostDir] = arg
     when '--occ-dir'
       options[:occDir] = arg
     when '--no-occtools'
@@ -119,12 +109,10 @@ opts.each do |opt, arg|
   end
 end
 
-checkFileExists(options[:boostDir])
-
 File.open('_local_config.pri', 'w') do |f|
   f.puts("PREFIX_DIR = #{asQMakePath(options[:prefix])}")
-  f.puts("BOOST_ROOT = #{asQMakePath(File.expand_path(options[:boostDir]))}")
   if options[:occtools] then
+    checkFileExists(options[:occDir])
     f.puts("CONFIG *= occtools")
     f.puts("CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occDir]))}")
     if options[:useOce] then

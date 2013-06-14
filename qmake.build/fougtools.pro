@@ -13,6 +13,7 @@ occtools:SUBDIRS += occtools
 utest:SUBDIRS += ../utest
 
 HEADERS += ../src/fougtools_global.h
+OTHER_FILES += configure.rb ../README
 
 # INSTALLS for globals
 globals_include.path  = $$PREFIX_DIR/include

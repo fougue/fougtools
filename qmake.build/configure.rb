@@ -110,7 +110,7 @@ opts.each do |opt, arg|
 end
 
 File.open('_local_config.pri', 'w') do |f|
-  f.puts("PREFIX_DIR = #{asQMakePath(options[:prefix])}")
+  f.puts("PREFIX_DIR = #{asQMakePath(File.expand_path(options[:prefix]))}")
   if options[:occtools] then
     checkFileExists(options[:occDir])
     f.puts("CONFIG *= occtools")

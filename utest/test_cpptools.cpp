@@ -1,15 +1,16 @@
 #include "test_cpptools.h"
 
-#include "cpptools/quantity.h"
+#include "../src/cpptools/quantity.h"
 #include <QtCore/QtDebug>
 
 struct LengthTrait {};
 typedef cpp::Quantity<cpp::DoubleNumericTraits, LengthTrait> Length;
+typedef cpp::Quantity<cpp::IntNumericTraits, LengthTrait> Length_i;
 
 struct AngleTrait {};
 typedef cpp::Quantity<cpp::DoubleNumericTraits, AngleTrait> Angle;
 
-void TestCppTools::quantity_test()
+void TestCppTools::Quantity_test()
 {
   Length length1(1.);
   Length length2(length1 * 5);
@@ -21,22 +22,36 @@ void TestCppTools::quantity_test()
 
 }
 
-void TestCppTools::quantity_benchmark1()
+void TestCppTools::Quantity_operators_test()
 {
-  QBENCHMARK {
-    Length length;
-    for (int i = 0; i < 100000000; ++i)
-      length = Length(i + length);
-    qDebug() << length;
-  }
+  QCOMPARE((Length_i(5) + Length_i(10)).value(), 15);
+  QCOMPARE((Length_i(5) - Length_i(10)).value(), -5);
+  QCOMPARE((Length_i(5) * Length_i(10)).value(), 50);
+  QCOMPARE((Length_i(10) / Length_i(5)).value(), 2);
+
+  QCOMPARE((2 * Length_i(10)).value(), 20);
+  QCOMPARE((Length_i(15) * 2).value(), 30);
+  QCOMPARE((2 * Length_i(15) * 2).value(), 60);
+  QCOMPARE((2 + Length_i(15)).value(), 17);
+  QCOMPARE((2 - Length_i(15)).value(), 13);
 }
 
-void TestCppTools::quantity_benchmark2()
+void TestCppTools::Quantity_benchmark1()
 {
-  QBENCHMARK {
-    double length = 0;
-    for (int i = 0; i < 100000000; ++i)
-      length = i + length;
-    qDebug() << length;
-  }
+//  QBENCHMARK {
+//    Length length;
+//    for (int i = 0; i < 100000000; ++i)
+//      length = Length(i + length);
+//    qDebug() << length.value();
+//  }
+}
+
+void TestCppTools::Quantity_benchmark2()
+{
+//  QBENCHMARK {
+//    double length = 0;
+//    for (int i = 0; i < 100000000; ++i)
+//      length = i + length;
+//    qDebug() << length;
+//  }
 }

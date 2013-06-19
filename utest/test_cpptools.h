@@ -8,9 +8,10 @@ class TestCppTools : public QObject
   Q_OBJECT
 
 private slots:
-  void quantity_test();
-  void quantity_benchmark1();
-  void quantity_benchmark2();
+  void Quantity_test();
+  void Quantity_operators_test();
+  void Quantity_benchmark1();
+  void Quantity_benchmark2();
 };
 
 #endif // TEST_CPPTOOLS_H

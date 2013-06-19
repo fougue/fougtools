@@ -18,7 +18,7 @@ int main(int argc, char** argv)
 
   // Run tests
   QList<QObject*> testObjects;
-  testObjects /*<< new TestCppTools*/
+  testObjects << new TestCppTools
               << new TestQtToolsCore;
   int exitCode = 0;
   foreach (QObject* iTestObject, testObjects)

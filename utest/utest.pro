@@ -3,8 +3,6 @@ TARGET = utest
 
 CONFIG *= console qtestlib
 
-INCLUDEPATH += ../src
-
 HEADERS += \
     test_cpptools.h \
     test_qttools_core.h \

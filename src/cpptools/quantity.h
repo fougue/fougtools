@@ -38,7 +38,7 @@
 #ifndef CPPTOOLS_QUANTITY_H
 #define CPPTOOLS_QUANTITY_H
 
-#include "cpptools/null.h"
+#include "null.h"
 
 namespace cpp {
 
@@ -52,15 +52,77 @@ public:
   Quantity();
   explicit Quantity(NumericType v);
   Quantity(const QuantityType& other);
-  QuantityType& operator=(const QuantityType& other);
 
-  operator NumericType() const;
+  //operator NumericType() const;
   NumericType value() const;
   void setValue(NumericType v);
+
+  QuantityType& operator=(const QuantityType& other);
+  QuantityType& operator+=(const QuantityType& other);
+  QuantityType& operator-=(const QuantityType& other);
+  QuantityType& operator*=(const QuantityType& other);
+  QuantityType& operator/=(const QuantityType& other);
+
+  QuantityType& operator+=(NumericType v);
+  QuantityType& operator-=(NumericType v);
+  QuantityType& operator*=(NumericType v);
+  QuantityType& operator/=(NumericType v);
 
 private:
   NumericType m_value;
 };
+
+// Operator +
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator+(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs);
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator+(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                typename NUMERIC_TRAITS::Type k);
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator+(typename NUMERIC_TRAITS::Type k,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs);
+
+// Operator -
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator-(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs);
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator-(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                typename NUMERIC_TRAITS::Type k);
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator-(typename NUMERIC_TRAITS::Type k,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs);
+
+// Operator *
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator*(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs);
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator*(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                typename NUMERIC_TRAITS::Type k);
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator*(typename NUMERIC_TRAITS::Type k,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs);
+
+// Operator /
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator/(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs);
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator/(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                typename NUMERIC_TRAITS::Type k);
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator/(typename NUMERIC_TRAITS::Type k,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs);
 
 template<typename TYPE>
 struct NumericTraits
@@ -96,18 +158,11 @@ Quantity<NUMERIC_TRAITS, TRAIT>::Quantity(const QuantityType& other)
 {
 }
 
-template<typename NUMERIC_TRAITS, typename TRAIT>
-Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator=(const QuantityType& other)
-{
-  m_value = other.value();
-  return *this;
-}
-
-template<typename NUMERIC_TRAITS, typename TRAIT>
-Quantity<NUMERIC_TRAITS, TRAIT>::operator typename NUMERIC_TRAITS::Type() const
-{
-  return m_value;
-}
+//template<typename NUMERIC_TRAITS, typename TRAIT>
+//Quantity<NUMERIC_TRAITS, TRAIT>::operator typename NUMERIC_TRAITS::Type() const
+//{
+//  return m_value;
+//}
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 typename NUMERIC_TRAITS::Type Quantity<NUMERIC_TRAITS, TRAIT>::value() const
@@ -119,6 +174,166 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 void Quantity<NUMERIC_TRAITS, TRAIT>::setValue(NumericType v)
 {
   m_value = v;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator=(const QuantityType& other)
+{
+  if (this != &other)
+    m_value = other.value();
+  return *this;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator+=(const QuantityType& other)
+{
+  if (this != &other)
+    m_value += other.value();
+  return *this;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator-=(const QuantityType& other)
+{
+  if (this != &other)
+    m_value -= other.value();
+  return *this;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator*=(const QuantityType& other)
+{
+  if (this != &other)
+    m_value *= other.value();
+  return *this;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator/=(const QuantityType& other)
+{
+  if (this != &other)
+    m_value /= other.value();
+  return *this;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator+=(NumericType v)
+{
+  m_value += v;
+  return *this;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator-=(NumericType v)
+{
+  m_value -= v;
+  return *this;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator*=(NumericType v)
+{
+  m_value *= v;
+  return *this;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator/=(NumericType v)
+{
+  m_value /= v;
+  return *this;
+}
+
+// Operator +
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator+(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) += rhs;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator+(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                typename NUMERIC_TRAITS::Type k)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) += k;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator+(typename NUMERIC_TRAITS::Type k,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) += k;
+}
+
+// Operator -
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator-(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) -= rhs;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator-(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                typename NUMERIC_TRAITS::Type k)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) -= k;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator-(typename NUMERIC_TRAITS::Type k,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) -= k;
+}
+
+// Operator *
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator*(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) *= rhs;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator*(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                typename NUMERIC_TRAITS::Type k)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) *= k;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator*(typename NUMERIC_TRAITS::Type k,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) *= k;
+}
+
+// Operator /
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator/(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) /= rhs;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator/(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
+                                                typename NUMERIC_TRAITS::Type k)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) /= k;
+}
+
+template<typename NUMERIC_TRAITS, typename TRAIT>
+const Quantity<NUMERIC_TRAITS, TRAIT> operator/(typename NUMERIC_TRAITS::Type k,
+                                                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
+{
+  return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) /= k;
 }
 
 } // namespace cpp

@@ -42,6 +42,7 @@
 #include <QtCore/QThread>
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlQuery>
+class QIODevice;
 
 namespace qttools {
 
@@ -58,10 +59,17 @@ public:
   QSqlDatabase database(const QThread* inThread = QThread::currentThread()) const;
   virtual QSqlDatabase createDatabase(const QThread* inThread = QThread::currentThread());
 
-  QSqlQuery execSqlCode(const QString& sqlCode,
-                        const QThread* inThread = QThread::currentThread()) const;
-  QSqlQuery execSqlCodeInTransaction(const QString& sqlCode,
-                                     const QThread* inThread = QThread::currentThread()) const;
+  virtual QSqlQuery execSqlCode(const QString& sqlCode,
+                                const QThread* inThread = QThread::currentThread()) const;
+  virtual QSqlQuery execSqlCodeInTransaction(const QString& sqlCode,
+                                             const QThread* inThread = QThread::currentThread()) const;
+
+  // SQL output
+  bool isSqlOutputEnabled() const;
+  void setSqlOutputEnabled(bool on);
+
+  QIODevice* sqlOutputDevice() const;
+  void setSqlOutputDevice(QIODevice* device);
 
 private:
   class Private;

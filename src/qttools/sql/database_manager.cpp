@@ -39,9 +39,11 @@
 
 #include "../../cpptools/memory_utils.h"
 
+#include <cstdio>
 #include <QtCore/QHash>
 #include <QtCore/QMutex>
 #include <QtCore/QMutexLocker>
+#include <QtCore/QTextStream>
 #include <QtCore/QUuid>
 #include "qsql_query_tools.h"
 
@@ -54,15 +56,30 @@ class DatabaseManager::Private
 {
 public:
   Private(const QSqlDatabase& refDb)
-    : m_refDatabase(refDb)
+    : m_refDatabase(refDb),
+      m_isSqlOutputEnabled(false)
   {
     Q_ASSERT(QThread::currentThread() != NULL);
     m_databases.insert(QThread::currentThread(), refDb);
   }
 
+  void logSql(const QString& sqlCode, const QThread* inThread)
+  {
+    if (m_isSqlOutputEnabled && m_sqlOutStream.device() != NULL) {
+      const QString threadObjectName = inThread != NULL ? inThread->objectName() : QString();
+      m_sqlOutStream << QString("[thread%1 0x%2] %3")
+                        .arg(threadObjectName)
+                        .arg(QString::number(reinterpret_cast<std::size_t>(inThread), 16))
+                        .arg(sqlCode)
+                     << endl;
+    }
+  }
+
   QHash<const QThread*, QSqlDatabase> m_databases;
   QSqlDatabase m_refDatabase;
   QMutex m_mutex;
+  bool m_isSqlOutputEnabled;
+  QTextStream m_sqlOutStream;
 };
 
 /*! \class DatabaseManager
@@ -120,13 +137,36 @@ QSqlDatabase DatabaseManager::createDatabase(const QThread* inThread)
 
 QSqlQuery DatabaseManager::execSqlCode(const QString& sqlCode, const QThread* inThread) const
 {
+  d->logSql(sqlCode, inThread);
   return qttools::execSqlCode(sqlCode, this->database(inThread));
 }
 
 QSqlQuery DatabaseManager::execSqlCodeInTransaction(const QString& sqlCode,
                                                     const QThread* inThread) const
 {
+  d->logSql(sqlCode, inThread);
   return qttools::execSqlCodeInTransaction(sqlCode, this->database(inThread));
+}
+
+bool DatabaseManager::isSqlOutputEnabled() const
+{
+  return d->m_isSqlOutputEnabled;
+}
+
+void DatabaseManager::setSqlOutputEnabled(bool on)
+{
+  d->m_isSqlOutputEnabled = on;
+}
+
+QIODevice* DatabaseManager::sqlOutputDevice() const
+{
+  return d->m_sqlOutStream.device();
+}
+
+void DatabaseManager::setSqlOutputDevice(QIODevice* device)
+{
+  if (d->m_sqlOutStream.device() != device)
+    d->m_sqlOutStream.setDevice(device);
 }
 
 } // namespace qttools

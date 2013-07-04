@@ -38,11 +38,12 @@
 #include "message_dialog.h"
 
 #include <QtCore/QSignalMapper>
-#include <QtGui/QAbstractButton>
-#include <QtGui/QApplication>
-#include <QtGui/QGridLayout>
-#include <QtGui/QLabel>
-#include <QtGui/QStyle>
+// QtWidgets
+#include <QApplication>
+#include <QAbstractButton>
+#include <QGridLayout>
+#include <QLabel>
+#include <QStyle>
 
 namespace qttools {
 

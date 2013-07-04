@@ -41,11 +41,12 @@
 #include <QtGui/QAbstractTextDocumentLayout>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmap>
-#include <QtGui/QScrollBar>
 #include <QtGui/QTextBlock>
 #include <QtGui/QTextDocument>
-#include <QtGui/QTextEdit>
-#include <QtGui/QToolTip>
+// QtWidgets
+#include <QScrollBar>
+#include <QTextEdit>
+#include <QToolTip>
 
 namespace qttools {
 

@@ -39,7 +39,8 @@
 #define QT_TOOLS_LINE_NUMBERS_BAR_H
 
 #include "gui.h"
-#include <QtGui/QWidget>
+// QtWidgets
+#include <QWidget>
 class QTextEdit;
 
 namespace qttools {

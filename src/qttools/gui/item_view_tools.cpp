@@ -37,9 +37,12 @@
 
 #include "item_view_tools.h"
 
-#include <QtGui/QAbstractItemView>
-#include <QtGui/QItemSelectionModel>
-#include <QtGui/QSortFilterProxyModel>
+// Those classe are in Qt4/QtGui and Qt5/QtCore
+#include <QSortFilterProxyModel>
+#include <QItemSelectionModel>
+
+// QtWidgets
+#include <QAbstractItemView>
 
 namespace qttools {
 

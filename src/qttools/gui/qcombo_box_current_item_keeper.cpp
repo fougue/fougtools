@@ -37,9 +37,9 @@
 
 #include "qcombo_box_current_item_keeper.h"
 
-#include <QtGui/QComboBox>
-
 #include <QtCore/QtDebug>
+// QtWidgets
+#include <QComboBox>
 
 namespace qttools {
 

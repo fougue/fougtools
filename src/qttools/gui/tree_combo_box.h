@@ -41,7 +41,8 @@
 #include "gui.h"
 
 #include <QtCore/QModelIndex>
-#include <QtGui/QComboBox>
+// QtWidgets
+#include <QComboBox>
 class QTreeView;
 
 namespace qttools {

@@ -69,7 +69,8 @@ void setHorizAndVertScrollValue(QAbstractScrollArea* area, const QPair<int, int>
 // -- Implementation
 // --
 
-#include <QtGui/QWidget>
+// QtWidgets
+#include <QWidget>
 
 namespace qttools {
 

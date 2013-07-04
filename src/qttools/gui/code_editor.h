@@ -40,7 +40,8 @@
 
 #include "gui.h"
 #include <QtCore/QObject>
-#include <QtGui/QPlainTextEdit>
+// QtWidgets
+#include <QPlainTextEdit>
 
 QT_BEGIN_NAMESPACE
 class QResizeEvent;

@@ -37,9 +37,10 @@
 
 #include "widget_tools.h"
 
-#include <QtGui/QAbstractScrollArea>
-#include <QtGui/QScrollBar>
-#include <QtGui/QWidget>
+// QtWidgets
+#include <QAbstractScrollArea>
+#include <QScrollBar>
+#include <QWidget>
 
 namespace qttools {
 

@@ -38,6 +38,7 @@
 INCLUDEPATH *= $$PWD/.. $$PWD/../..
 
 QT *= gui
+isEqual(QT_MAJOR_VERSION, 5): QT *= widgets
 
 HEADERS += \
     $$PWD/code_editor.h \

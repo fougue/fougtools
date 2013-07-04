@@ -1,7 +1,8 @@
 TEMPLATE = app
 TARGET = utest
 
-CONFIG *= console qtestlib
+CONFIG *= console
+QT *= testlib
 
 HEADERS += \
     test_cpptools.h \

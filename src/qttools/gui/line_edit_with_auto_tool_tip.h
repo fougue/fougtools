@@ -39,7 +39,8 @@
 #define QTTOOLS_LINE_EDIT_WITH_AUTO_TOOL_TIP_H
 
 #include "gui.h"
-#include <QtGui/QLineEdit>
+// QtWidgets
+#include <QLineEdit>
 
 namespace qttools {
 

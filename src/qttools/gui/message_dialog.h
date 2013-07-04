@@ -39,8 +39,9 @@
 #define QTTOOLS_MESSAGE_DIALOG_H
 
 #include "gui.h"
-#include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
+// QtWidgets
+#include <QDialog>
+#include <QDialogButtonBox>
 class QLabel;
 
 namespace qttools {

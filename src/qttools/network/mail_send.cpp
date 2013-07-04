@@ -196,7 +196,11 @@ bool MailSend::connectToSmtpServer(const SmtpAccount& account)
 
   // Initiate TLS if required
   if (account.connectionSecurity() == SmtpAccount::StartTlsSecurity) {
+#if QT_VERSION > 0x050000
+    d->m_socket->setProtocol(QSsl::TlsV1_0);
+#else
     d->m_socket->setProtocol(QSsl::TlsV1);
+#endif // QT_VERSION
     if (!d->sendSmtpCommand("STARTTLS", 220))
       return false;
     d->m_socket->startClientEncryption();

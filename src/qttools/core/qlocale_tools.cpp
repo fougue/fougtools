@@ -83,7 +83,6 @@ QLocale::Country toQLocaleCountry(int code)
   case QLocale::BouvetIsland : return QLocale::BouvetIsland;
   case QLocale::Brazil : return QLocale::Brazil;
   case QLocale::BritishIndianOceanTerritory : return QLocale::BritishIndianOceanTerritory;
-  case QLocale::BruneiDarussalam : return QLocale::BruneiDarussalam;
   case QLocale::Bulgaria : return QLocale::Bulgaria;
   case QLocale::BurkinaFaso : return QLocale::BurkinaFaso;
   case QLocale::Burundi : return QLocale::Burundi;
@@ -123,10 +122,8 @@ QLocale::Country toQLocaleCountry(int code)
   case QLocale::Ethiopia : return QLocale::Ethiopia;
   case QLocale::FalklandIslands : return QLocale::FalklandIslands;
   case QLocale::FaroeIslands : return QLocale::FaroeIslands;
-  case QLocale::FijiCountry : return QLocale::FijiCountry;
   case QLocale::Finland : return QLocale::Finland;
   case QLocale::France : return QLocale::France;
-  case QLocale::MetropolitanFrance : return QLocale::MetropolitanFrance;
   case QLocale::FrenchGuiana : return QLocale::FrenchGuiana;
   case QLocale::FrenchPolynesia : return QLocale::FrenchPolynesia;
   case QLocale::FrenchSouthernTerritories : return QLocale::FrenchSouthernTerritories;
@@ -168,12 +165,10 @@ QLocale::Country toQLocaleCountry(int code)
   case QLocale::RepublicOfKorea : return QLocale::RepublicOfKorea;
   case QLocale::Kuwait : return QLocale::Kuwait;
   case QLocale::Kyrgyzstan : return QLocale::Kyrgyzstan;
-  case QLocale::Lao : return QLocale::Lao;
   case QLocale::Latvia : return QLocale::Latvia;
   case QLocale::Lebanon : return QLocale::Lebanon;
   case QLocale::Lesotho : return QLocale::Lesotho;
   case QLocale::Liberia : return QLocale::Liberia;
-  case QLocale::LibyanArabJamahiriya : return QLocale::LibyanArabJamahiriya;
   case QLocale::Liechtenstein : return QLocale::Liechtenstein;
   case QLocale::Lithuania : return QLocale::Lithuania;
   case QLocale::Luxembourg : return QLocale::Luxembourg;
@@ -203,7 +198,6 @@ QLocale::Country toQLocaleCountry(int code)
   case QLocale::NauruCountry : return QLocale::NauruCountry;
   case QLocale::Nepal : return QLocale::Nepal;
   case QLocale::Netherlands : return QLocale::Netherlands;
-  case QLocale::NetherlandsAntilles : return QLocale::NetherlandsAntilles;
   case QLocale::NewCaledonia : return QLocale::NewCaledonia;
   case QLocale::NewZealand : return QLocale::NewZealand;
   case QLocale::Nicaragua : return QLocale::Nicaragua;
@@ -216,7 +210,6 @@ QLocale::Country toQLocaleCountry(int code)
   case QLocale::Oman : return QLocale::Oman;
   case QLocale::Pakistan : return QLocale::Pakistan;
   case QLocale::Palau : return QLocale::Palau;
-  case QLocale::PalestinianTerritory : return QLocale::PalestinianTerritory;
   case QLocale::Panama : return QLocale::Panama;
   case QLocale::PapuaNewGuinea : return QLocale::PapuaNewGuinea;
   case QLocale::Paraguay : return QLocale::Paraguay;
@@ -232,8 +225,6 @@ QLocale::Country toQLocaleCountry(int code)
   case QLocale::RussianFederation : return QLocale::RussianFederation;
   case QLocale::Rwanda : return QLocale::Rwanda;
   case QLocale::SaintKittsAndNevis : return QLocale::SaintKittsAndNevis;
-  case QLocale::StLucia : return QLocale::StLucia;
-  case QLocale::StVincentAndTheGrenadines : return QLocale::StVincentAndTheGrenadines;
   case QLocale::Samoa : return QLocale::Samoa;
   case QLocale::SanMarino : return QLocale::SanMarino;
   case QLocale::SaoTomeAndPrincipe : return QLocale::SaoTomeAndPrincipe;
@@ -250,8 +241,6 @@ QLocale::Country toQLocaleCountry(int code)
   case QLocale::SouthGeorgiaAndTheSouthSandwichIslands : return QLocale::SouthGeorgiaAndTheSouthSandwichIslands;
   case QLocale::Spain : return QLocale::Spain;
   case QLocale::SriLanka : return QLocale::SriLanka;
-  case QLocale::StHelena : return QLocale::StHelena;
-  case QLocale::StPierreAndMiquelon : return QLocale::StPierreAndMiquelon;
   case QLocale::Sudan : return QLocale::Sudan;
   case QLocale::Suriname : return QLocale::Suriname;
   case QLocale::SvalbardAndJanMayenIslands : return QLocale::SvalbardAndJanMayenIslands;
@@ -265,7 +254,6 @@ QLocale::Country toQLocaleCountry(int code)
   case QLocale::Thailand : return QLocale::Thailand;
   case QLocale::Togo : return QLocale::Togo;
   case QLocale::Tokelau : return QLocale::Tokelau;
-  case QLocale::TongaCountry : return QLocale::TongaCountry;
   case QLocale::TrinidadAndTobago : return QLocale::TrinidadAndTobago;
   case QLocale::Tunisia : return QLocale::Tunisia;
   case QLocale::Turkey : return QLocale::Turkey;
@@ -283,21 +271,48 @@ QLocale::Country toQLocaleCountry(int code)
   case QLocale::Vanuatu : return QLocale::Vanuatu;
   case QLocale::VaticanCityState : return QLocale::VaticanCityState;
   case QLocale::Venezuela : return QLocale::Venezuela;
-  case QLocale::VietNam : return QLocale::VietNam;
   case QLocale::BritishVirginIslands : return QLocale::BritishVirginIslands;
-  case QLocale::USVirginIslands : return QLocale::USVirginIslands;
   case QLocale::WallisAndFutunaIslands : return QLocale::WallisAndFutunaIslands;
   case QLocale::WesternSahara : return QLocale::WesternSahara;
   case QLocale::Yemen : return QLocale::Yemen;
-  case QLocale::Yugoslavia : return QLocale::Yugoslavia;
   case QLocale::Zambia : return QLocale::Zambia;
   case QLocale::Zimbabwe : return QLocale::Zimbabwe;
-  case QLocale::SerbiaAndMontenegro : return QLocale::SerbiaAndMontenegro;
   case QLocale::Montenegro : return QLocale::Montenegro;
   case QLocale::Serbia : return QLocale::Serbia;
   case QLocale::SaintBarthelemy : return QLocale::SaintBarthelemy;
   case QLocale::SaintMartin : return QLocale::SaintMartin;
   case QLocale::LatinAmericaAndTheCaribbean : return QLocale::LatinAmericaAndTheCaribbean;
+#if QT_VERSION >= 0x050000
+  case QLocale::Brunei : return QLocale::Brunei;
+  case QLocale::Fiji : return QLocale::Fiji;
+  case QLocale::PalestinianTerritories : return QLocale::PalestinianTerritories;
+  case QLocale::Libya : return QLocale::Libya;
+  case QLocale::SaintLucia : return QLocale::SaintLucia;
+  case QLocale::SaintVincentAndTheGrenadines : return QLocale::SaintVincentAndTheGrenadines;
+  case QLocale::SaintHelena : return QLocale::SaintHelena;
+  case QLocale::SaintPierreAndMiquelon : return QLocale::SaintPierreAndMiquelon;
+  case QLocale::Tonga : return QLocale::Tonga;
+  case QLocale::Vietnam : return QLocale::Vietnam;
+  case QLocale::UnitedStatesVirginIslands: return QLocale::UnitedStatesVirginIslands;
+  case QLocale::Laos : return QLocale::Laos;
+#else
+  case QLocale::BruneiDarussalam : return QLocale::BruneiDarussalam;
+  case QLocale::FijiCountry : return QLocale::FijiCountry;
+  case QLocale::MetropolitanFrance : return QLocale::MetropolitanFrance;
+  case QLocale::LibyanArabJamahiriya : return QLocale::LibyanArabJamahiriya;
+  case QLocale::NetherlandsAntilles : return QLocale::NetherlandsAntilles;
+  case QLocale::PalestinianTerritory : return QLocale::PalestinianTerritory;
+  case QLocale::StLucia : return QLocale::StLucia;
+  case QLocale::StVincentAndTheGrenadines : return QLocale::StVincentAndTheGrenadines;
+  case QLocale::StHelena : return QLocale::StHelena;
+  case QLocale::StPierreAndMiquelon : return QLocale::StPierreAndMiquelon;
+  case QLocale::TongaCountry : return QLocale::TongaCountry;
+  case QLocale::VietNam : return QLocale::VietNam;
+  case QLocale::USVirginIslands : return QLocale::USVirginIslands;
+  case QLocale::Yugoslavia : return QLocale::Yugoslavia;
+  case QLocale::SerbiaAndMontenegro : return QLocale::SerbiaAndMontenegro;
+  case QLocale::Lao : return QLocale::Lao;
+#endif // QT_VERSION
   }
   return QLocale::AnyCountry;
 }
@@ -337,7 +352,6 @@ QList<QLocale::Country> allQLocaleCountries()
             << QLocale::BouvetIsland
             << QLocale::Brazil
             << QLocale::BritishIndianOceanTerritory
-            << QLocale::BruneiDarussalam
             << QLocale::Bulgaria
             << QLocale::BurkinaFaso
             << QLocale::Burundi
@@ -377,10 +391,8 @@ QList<QLocale::Country> allQLocaleCountries()
             << QLocale::Ethiopia
             << QLocale::FalklandIslands
             << QLocale::FaroeIslands
-            << QLocale::FijiCountry
             << QLocale::Finland
             << QLocale::France
-            << QLocale::MetropolitanFrance
             << QLocale::FrenchGuiana
             << QLocale::FrenchPolynesia
             << QLocale::FrenchSouthernTerritories
@@ -422,12 +434,10 @@ QList<QLocale::Country> allQLocaleCountries()
             << QLocale::RepublicOfKorea
             << QLocale::Kuwait
             << QLocale::Kyrgyzstan
-            << QLocale::Lao
             << QLocale::Latvia
             << QLocale::Lebanon
             << QLocale::Lesotho
             << QLocale::Liberia
-            << QLocale::LibyanArabJamahiriya
             << QLocale::Liechtenstein
             << QLocale::Lithuania
             << QLocale::Luxembourg
@@ -457,7 +467,6 @@ QList<QLocale::Country> allQLocaleCountries()
             << QLocale::NauruCountry
             << QLocale::Nepal
             << QLocale::Netherlands
-            << QLocale::NetherlandsAntilles
             << QLocale::NewCaledonia
             << QLocale::NewZealand
             << QLocale::Nicaragua
@@ -470,7 +479,6 @@ QList<QLocale::Country> allQLocaleCountries()
             << QLocale::Oman
             << QLocale::Pakistan
             << QLocale::Palau
-            << QLocale::PalestinianTerritory
             << QLocale::Panama
             << QLocale::PapuaNewGuinea
             << QLocale::Paraguay
@@ -486,8 +494,6 @@ QList<QLocale::Country> allQLocaleCountries()
             << QLocale::RussianFederation
             << QLocale::Rwanda
             << QLocale::SaintKittsAndNevis
-            << QLocale::StLucia
-            << QLocale::StVincentAndTheGrenadines
             << QLocale::Samoa
             << QLocale::SanMarino
             << QLocale::SaoTomeAndPrincipe
@@ -504,8 +510,6 @@ QList<QLocale::Country> allQLocaleCountries()
             << QLocale::SouthGeorgiaAndTheSouthSandwichIslands
             << QLocale::Spain
             << QLocale::SriLanka
-            << QLocale::StHelena
-            << QLocale::StPierreAndMiquelon
             << QLocale::Sudan
             << QLocale::Suriname
             << QLocale::SvalbardAndJanMayenIslands
@@ -519,7 +523,6 @@ QList<QLocale::Country> allQLocaleCountries()
             << QLocale::Thailand
             << QLocale::Togo
             << QLocale::Tokelau
-            << QLocale::TongaCountry
             << QLocale::TrinidadAndTobago
             << QLocale::Tunisia
             << QLocale::Turkey
@@ -537,21 +540,51 @@ QList<QLocale::Country> allQLocaleCountries()
             << QLocale::Vanuatu
             << QLocale::VaticanCityState
             << QLocale::Venezuela
-            << QLocale::VietNam
             << QLocale::BritishVirginIslands
-            << QLocale::USVirginIslands
             << QLocale::WallisAndFutunaIslands
             << QLocale::WesternSahara
             << QLocale::Yemen
-            << QLocale::Yugoslavia
             << QLocale::Zambia
             << QLocale::Zimbabwe
-            << QLocale::SerbiaAndMontenegro
             << QLocale::Montenegro
             << QLocale::Serbia
             << QLocale::SaintBarthelemy
             << QLocale::SaintMartin
             << QLocale::LatinAmericaAndTheCaribbean;
+
+  countries <<
+             #if QT_VERSION >= 0x050000
+               QLocale::Brunei
+            << QLocale::Fiji
+            << QLocale::PalestinianTerritories
+            << QLocale::Libya
+            << QLocale::SaintLucia
+            << QLocale::SaintVincentAndTheGrenadines
+            << QLocale::SaintHelena
+            << QLocale::SaintPierreAndMiquelon
+            << QLocale::Tonga
+            << QLocale::Vietnam
+            << QLocale::UnitedStatesVirginIslands
+            << QLocale::Laos;
+#else
+               QLocale::BruneiDarussalam
+            << QLocale::FijiCountry
+            << QLocale::MetropolitanFrance
+            << QLocale::LibyanArabJamahiriya
+            << QLocale::NetherlandsAntilles
+            << QLocale::PalestinianTerritory
+            << QLocale::StLucia
+            << QLocale::StVincentAndTheGrenadines
+            << QLocale::StHelena
+            << QLocale::StPierreAndMiquelon
+            << QLocale::TongaCountry
+            << QLocale::VietNam
+            << QLocale::USVirginIslands
+            << QLocale::Yugoslavia
+            << QLocale::SerbiaAndMontenegro
+            << QLocale::Lao;
+#endif // QT_VERSION
+
   return countries;
 }
 

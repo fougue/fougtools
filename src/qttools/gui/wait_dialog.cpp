@@ -40,11 +40,12 @@
 #include "../core/task.h"
 #include <QtCore/QTimer>
 #include <QtCore/QThread>
-#include <QtGui/QApplication>
-#include <QtGui/QBoxLayout>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QLabel>
-#include <QtGui/QProgressBar>
+// QtWidgets
+#include <QApplication>
+#include <QBoxLayout>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QProgressBar>
 
 namespace qttools {
 

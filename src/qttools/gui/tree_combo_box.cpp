@@ -37,9 +37,10 @@
 
 #include "tree_combo_box.h"
 
-#include <QtGui/QHeaderView>
-#include <QtGui/QTreeView>
 #include <QtCore/QtDebug>
+// QtWidgets
+#include <QHeaderView>
+#include <QTreeView>
 
 namespace qttools {
 

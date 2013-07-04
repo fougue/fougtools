@@ -39,7 +39,8 @@
 #define QTTOOLS_WAIT_DIALOG_H
 
 #include "gui.h"
-#include <QtGui/QDialog>
+// QtWidgets
+#include <QDialog>
 
 namespace qttools {
 class Task;

@@ -40,7 +40,8 @@
 
 #include "gui.h"
 #include "abstract_length_editor.h"
-#include <QtGui/QDoubleSpinBox>
+// QtWidgets
+#include <QDoubleSpinBox>
 
 namespace qttools {
 

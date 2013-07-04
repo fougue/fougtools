@@ -40,7 +40,11 @@
 
 #include "qml.h"
 #include <QtCore/QObject>
+#if QT_VERSION >= 0x050000
+class QQmlContext;
+#else
 class QDeclarativeContext;
+#endif // QT_VERSION
 
 namespace qttools {
 
@@ -54,7 +58,11 @@ public:
   Q_INVOKABLE void setOverrideCursor(int shape);
   Q_INVOKABLE void restoreOverrideCursor();
 
+#if QT_VERSION >= 0x050000
+  static void declareObject(QQmlContext* context, QmlTools* obj);
+#else
   static void declareObject(QDeclarativeContext* context, QmlTools* obj);
+#endif // QT_VERSION
 };
 
 } // namespace qttools

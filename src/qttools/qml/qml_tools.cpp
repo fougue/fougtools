@@ -47,6 +47,10 @@
 # include <QtGui/QApplication>
 #endif // QT_VERSION
 
+namespace qttools {
+
+namespace internal {
+
 static Qt::CursorShape toQtCursorShape(int shape)
 {
   switch (shape) {
@@ -78,7 +82,7 @@ static Qt::CursorShape toQtCursorShape(int shape)
   return Qt::ArrowCursor;
 }
 
-namespace qttools {
+} // namespace internal
 
 QmlTools::QmlTools(QObject* parent)
   : QObject(parent)
@@ -88,9 +92,9 @@ QmlTools::QmlTools(QObject* parent)
 void QmlTools::setOverrideCursor(int shape)
 {
 #if QT_VERSION >= 0x050000
-  QGuiApplication::setOverrideCursor(QCursor(::toQtCursorShape(shape)));
+  QGuiApplication::setOverrideCursor(QCursor(internal::toQtCursorShape(shape)));
 #else
-  QApplication::setOverrideCursor(QCursor(::toQtCursorShape(shape)));
+  QApplication::setOverrideCursor(QCursor(internal::toQtCursorShape(shape)));
 #endif // QT_VERSION
 }
 

@@ -43,6 +43,9 @@ QLocale::MeasurementSystem toQLocaleMeasurementSystem(int measSys)
 {
   switch (measSys) {
   case QLocale::MetricSystem : return QLocale::MetricSystem;
+#if QT_VERSION > 0x050000
+  case QLocale::ImperialUKSystem : return QLocale::ImperialUKSystem;
+#endif // QT_VERSION
   case QLocale::ImperialSystem : return QLocale::ImperialSystem;
   default : return QLocale::MetricSystem;
   }

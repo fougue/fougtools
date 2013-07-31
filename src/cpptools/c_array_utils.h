@@ -42,19 +42,19 @@
 
 namespace cpp {
 
-template <typename T, size_t N>
-size_t cArraySize(const T (&/*array*/)[N])
+template <typename T, std::size_t N>
+std::size_t cArraySize(const T (&/*array*/)[N])
 {
   return N;
 }
 
-template <typename T, size_t N>
+template <typename T, std::size_t N>
 T* cArrayEnd(T (&array)[N])
 {
   return array + N;
 }
 
-template <typename T, size_t N>
+template <typename T, std::size_t N>
 const T* cArrayEnd(const T (&array)[N])
 {
   return array + N;

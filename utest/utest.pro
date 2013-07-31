@@ -1,5 +1,11 @@
 TEMPLATE = app
-TARGET = utest
+
+CONFIG(debug, debug|release) {
+  TARGET_SUFFIX = .debug
+} else {
+  TARGET_SUFFIX = .release
+}
+TARGET = utest$$TARGET_SUFFIX
 
 CONFIG *= console
 QT *= testlib

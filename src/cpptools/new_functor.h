@@ -40,6 +40,7 @@
 #define CPPTOOLS_NEW_FUNCTOR_H
 
 #include "abstract_functor.h"
+#include "generic_stored_functor.h"
 
 namespace cpp {
 
@@ -423,102 +424,105 @@ AbstractFunctor<T>* newFunctor(T (*functionPointer)(PARAM1, PARAM2, PARAM3), con
 template <typename T, typename CLASS>
 AbstractFunctor<T>* newFunctor(const CLASS& object, T (CLASS::*funcPtr)())
 {
-    return new StoredMemberFunctor0<T, CLASS>(funcPtr, object);
+  return new StoredMemberFunctor0<T, CLASS>(funcPtr, object);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1>
 AbstractFunctor<T>* newFunctor(const CLASS& object, T (CLASS::*funcPtr)(PARAM1), const ARG1 &arg1)
 {
-    return new StoredMemberFunctor1<T, CLASS, PARAM1, ARG1>(funcPtr, object, arg1);
+  return new StoredMemberFunctor1<T, CLASS, PARAM1, ARG1>(funcPtr, object, arg1);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1, typename PARAM2, typename ARG2>
 AbstractFunctor<T>* newFunctor(const CLASS& object, T (CLASS::*funcPtr)(PARAM1, PARAM2), const ARG1 &arg1, const ARG2 &arg2)
 {
-    return new StoredMemberFunctor2<T, CLASS, PARAM1, ARG1, PARAM2, ARG2>(funcPtr, object, arg1, arg2);
+  return new StoredMemberFunctor2<T, CLASS, PARAM1, ARG1, PARAM2, ARG2>(funcPtr, object, arg1, arg2);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1, typename PARAM2, typename ARG2, typename PARAM3, typename ARG3>
 AbstractFunctor<T>* newFunctor(const CLASS& object, T (CLASS::*funcPtr)(PARAM1, PARAM2, PARAM3), const ARG1 &arg1, const ARG2 &arg2, const ARG3 &arg3)
 {
-    return new StoredMemberFunctor3<T, CLASS, PARAM1, ARG1, PARAM2, ARG2, PARAM3, ARG3>(funcPtr, object, arg1, arg2, arg3);
+  return new StoredMemberFunctor3<T, CLASS, PARAM1, ARG1, PARAM2, ARG2, PARAM3, ARG3>(funcPtr, object, arg1, arg2, arg3);
 }
 
 
 template <typename T, typename CLASS>
 AbstractFunctor<T>* newFunctor(const CLASS& object, T (CLASS::*funcPtr)() const)
 {
-    return new StoredConstMemberFunctor0<T, CLASS>(funcPtr, object);
+  return new StoredConstMemberFunctor0<T, CLASS>(funcPtr, object);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1>
 AbstractFunctor<T>* newFunctor(const CLASS& object, T (CLASS::*funcPtr)(PARAM1) const, const ARG1 &arg1)
 {
-    return new StoredConstMemberFunctor1<T, CLASS, PARAM1, ARG1>(funcPtr, object, arg1);
+  return new StoredConstMemberFunctor1<T, CLASS, PARAM1, ARG1>(funcPtr, object, arg1);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1, typename PARAM2, typename ARG2>
 AbstractFunctor<T>* newFunctor(const CLASS& object, T (CLASS::*funcPtr)(PARAM1, PARAM2) const, const ARG1 &arg1, const ARG2 &arg2)
 {
-    return new StoredConstMemberFunctor2<T, CLASS, PARAM1, ARG1, PARAM2, ARG2>(funcPtr, object, arg1, arg2);
+  return new StoredConstMemberFunctor2<T, CLASS, PARAM1, ARG1, PARAM2, ARG2>(funcPtr, object, arg1, arg2);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1, typename PARAM2, typename ARG2, typename PARAM3, typename ARG3>
 AbstractFunctor<T>* newFunctor(const CLASS& object, T (CLASS::*funcPtr)(PARAM1, PARAM2, PARAM3) const, const ARG1 &arg1, const ARG2 &arg2, const ARG3 &arg3)
 {
-    return new StoredConstMemberFunctor3<T, CLASS, PARAM1, ARG1, PARAM2, ARG2, PARAM3, ARG3>(funcPtr, object, arg1, arg2, arg3);
+  return new StoredConstMemberFunctor3<T, CLASS, PARAM1, ARG1, PARAM2, ARG2, PARAM3, ARG3>(funcPtr, object, arg1, arg2, arg3);
 }
 
 
 template <typename T, typename CLASS>
 AbstractFunctor<T>* newFunctor(CLASS* object, T (CLASS::*funcPtr)())
 {
-    return new StoredMemberFunctorPtr0<T, CLASS>(funcPtr, object);
+  return new StoredMemberFunctorPtr0<T, CLASS>(funcPtr, object);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1>
 AbstractFunctor<T>* newFunctor(CLASS* object, T (CLASS::*funcPtr)(PARAM1), const ARG1 &arg1)
 {
-    return new StoredMemberFunctorPtr1<T, CLASS, PARAM1, ARG1>(funcPtr, object, arg1);
+  return new StoredMemberFunctorPtr1<T, CLASS, PARAM1, ARG1>(funcPtr, object, arg1);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1, typename PARAM2, typename ARG2>
 AbstractFunctor<T>* newFunctor(CLASS* object, T (CLASS::*funcPtr)(PARAM1, PARAM2), const ARG1 &arg1, const ARG2 &arg2)
 {
-    return new StoredMemberFunctorPtr2<T, CLASS, PARAM1, ARG1, PARAM2, ARG2>(funcPtr, object, arg1, arg2);
+  return new StoredMemberFunctorPtr2<T, CLASS, PARAM1, ARG1, PARAM2, ARG2>(funcPtr, object, arg1, arg2);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1, typename PARAM2, typename ARG2, typename PARAM3, typename ARG3>
 AbstractFunctor<T>* newFunctor(CLASS* object, T (CLASS::*funcPtr)(PARAM1, PARAM2, PARAM3), const ARG1 &arg1, const ARG2 &arg2, const ARG3 &arg3)
 {
-    return new StoredMemberFunctorPtr3<T, CLASS, PARAM1, ARG1, PARAM2, ARG2, PARAM3, ARG3>(funcPtr, object, arg1, arg2, arg3);
+  return new StoredMemberFunctorPtr3<T, CLASS, PARAM1, ARG1, PARAM2, ARG2, PARAM3, ARG3>(funcPtr, object, arg1, arg2, arg3);
 }
 
 
 template <typename T, typename CLASS>
 AbstractFunctor<T>* newFunctor(const CLASS* object, T (CLASS::*funcPtr)() const)
 {
-    return new StoredConstMemberFunctorPtr0<T, CLASS>(funcPtr, object);
+  return new StoredConstMemberFunctorPtr0<T, CLASS>(funcPtr, object);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1>
 AbstractFunctor<T>* newFunctor(const CLASS* object, T (CLASS::*funcPtr)(PARAM1) const, const ARG1 &arg1)
 {
-    return new StoredConstMemberFunctorPtr1<T, CLASS, PARAM1, ARG1>(funcPtr, object, arg1);
+  return new StoredConstMemberFunctorPtr1<T, CLASS, PARAM1, ARG1>(funcPtr, object, arg1);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1, typename PARAM2, typename ARG2>
 AbstractFunctor<T>* newFunctor(const CLASS* object, T (CLASS::*funcPtr)(PARAM1, PARAM2) const, const ARG1 &arg1, const ARG2 &arg2)
 {
-    return new StoredConstMemberFunctorPtr2<T, CLASS, PARAM1, ARG1, PARAM2, ARG2>(funcPtr, object, arg1, arg2);
+  return new StoredConstMemberFunctorPtr2<T, CLASS, PARAM1, ARG1, PARAM2, ARG2>(funcPtr, object, arg1, arg2);
 }
 
 template <typename T, typename CLASS, typename PARAM1, typename ARG1, typename PARAM2, typename ARG2, typename PARAM3, typename ARG3>
 AbstractFunctor<T>* newFunctor(const CLASS* object, T (CLASS::*funcPtr)(PARAM1, PARAM2, PARAM3) const, const ARG1 &arg1, const ARG2 &arg2, const ARG3 &arg3)
 {
-    return new StoredConstMemberFunctorPtr3<T, CLASS, PARAM1, ARG1, PARAM2, ARG2, PARAM3, ARG3>(funcPtr, object, arg1, arg2, arg3);
+  return new StoredConstMemberFunctorPtr3<T, CLASS, PARAM1, ARG1, PARAM2, ARG2, PARAM3, ARG3>(funcPtr, object, arg1, arg2, arg3);
 }
+
 
 } // namespace cpp
 
 #endif // CPPTOOLS_NEW_FUNCTOR_H
+
+

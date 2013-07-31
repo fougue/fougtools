@@ -91,7 +91,7 @@ TCollection_ExtendedString toOccExtendedString(const QString& str)
 //! Conversion of the OCC TCollection_AsciiString \p str to a QString
 QString toQString(const TCollection_AsciiString& str)
 {
-  return QString::fromAscii(str.ToCString(), str.Length());
+  return QString::fromLatin1(str.ToCString(), str.Length());
 }
 
 //! Conversion of the OCC TCollection_ExtendedString \p str to a QString

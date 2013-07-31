@@ -43,7 +43,13 @@
 
 #include <QtCore/QtDebug>
 #include <QtCore/QHash>
-#include <QtGui/QApplication>
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+# include <QtWidgets/QApplication>
+#else
+# include <QtGui/QApplication>
+#endif
+
 #include <QtGui/QLinearGradient>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmap>

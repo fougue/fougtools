@@ -38,16 +38,21 @@
 #include "view_controller.h"
 
 #include <QtGui/QKeyEvent>
-#include <QtGui/QPlastiqueStyle>
-#include <QtGui/QRubberBand>
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+# include <QtWidgets/QRubberBand>
+#else
+# include <QtGui/QRubberBand>
+//# include <QtGui/QPlastiqueStyle>
+#endif
+
 #include "view.h"
 
 namespace occ {
 
-ViewController::ViewController(View* view) :
-  QObject(view),
-  m_view(view),
-  m_rubberBand(NULL)
+ViewController::ViewController(View* view)
+  : QObject(view),
+    m_view(view),
+    m_rubberBand(NULL)
 {
 }
 
@@ -140,7 +145,7 @@ void ViewController::createRubberBand()
     m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this->view());
     //_rubberBand->setWindowOpacity(0.7);
     // TODO Is this instruction really needed ?
-    m_rubberBand->setStyle(static_cast<QStyle*>(new QPlastiqueStyle()));
+    // m_rubberBand->setStyle(static_cast<QStyle*>(new QPlastiqueStyle()));
   }
 }
 

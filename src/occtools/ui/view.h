@@ -40,7 +40,13 @@
 
 #include "../../cpptools/abstract_functor.h"
 #include "../occtools.h"
-#include <QtGui/QWidget>
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+# include <QtWidgets/QWidget>
+#else
+# include <QtGui/QWidget>
+#endif
+
 #include <Aspect_GraphicCallbackProc.hxx>
 #include <Handle_AIS_InteractiveContext.hxx>
 #include <Handle_V3d_View.hxx>

@@ -49,35 +49,10 @@ public:
   typedef void argument_type;
 
   virtual ~AbstractFunctor()
-  {
-  }
+  { }
 
   virtual RESULT_TYPE execute() = 0;
 };
-
-template<typename FUNCTOR>
-class WrappedFunctor : public AbstractFunctor<typename FUNCTOR::result_type>
-{
-public:
-  WrappedFunctor(FUNCTOR functor)
-    : m_functor(functor)
-  {
-  }
-
-  typename AbstractFunctor<typename FUNCTOR::result_type>::ResultType execute()
-  {
-    return m_functor();
-  }
-
-private:
-  FUNCTOR m_functor;
-};
-
-template<typename FUNCTOR>
-AbstractFunctor<typename FUNCTOR::result_type>* newWrappedFunctor(FUNCTOR functor)
-{
-  return new WrappedFunctor<FUNCTOR>(functor);
-}
 
 } // namespace cpp
 

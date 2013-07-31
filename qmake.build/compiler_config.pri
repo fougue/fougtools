@@ -20,6 +20,3 @@ win32-msvc*:DEFINES *= BOOST_TYPEOF_SILENT \
 # This explicitely defines INTXX_C() and UINTXX_C() macros in <stdint.h> and
 # also in <boost/cstdint.hpp>
 DEFINES *= __STDC_CONSTANT_MACROS
-
-# Disables serialization support for bimap
-DEFINES *= BOOST_BIMAP_DISABLE_SERIALIZATION

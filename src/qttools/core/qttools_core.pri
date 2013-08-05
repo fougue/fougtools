@@ -55,7 +55,8 @@ HEADERS += \
     $$PWD/singleton.h \
     $$PWD/sleep.h \
     $$PWD/task.h \
-    $$PWD/wait_loop.h
+    $$PWD/wait_loop.h \
+    $$PWD/unique_id.h
 
 SOURCES += \
     $$PWD/abstract_cipher.cpp \
@@ -73,4 +74,5 @@ SOURCES += \
     $$PWD/item_model_tools.cpp \
     $$PWD/grid_numbering.cpp \
     $$PWD/grid_struct.cpp \
-    $$PWD/wait_loop.cpp
+    $$PWD/wait_loop.cpp \
+    $$PWD/unique_id.cpp

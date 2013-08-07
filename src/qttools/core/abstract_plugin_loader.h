@@ -56,6 +56,7 @@ public:
   void setAutoDeletePlugins(bool v);
 
   QString loadingFolder() const;
+  void setLoadingFolder(const QString& folder);
 
   QString filename(const QObject* plugin) const;
 
@@ -63,7 +64,6 @@ public:
   const QVector<QObject*>& plugins() const;
 
 protected:
-  void setLoadingFolder(const QString& folder);
   void loadPlugins(const QRegExp& fileRx, QVector<QString>* errors = NULL);
   void discardPlugin(QObject* plugin);
   virtual bool isPluginCompatible(const QObject* plugin) const = 0;

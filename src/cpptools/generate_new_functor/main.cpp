@@ -76,7 +76,7 @@ Item storedFunctors(Item className, Item functorType)
 {
   return
       Line("template<typename T, typename FUNCTION_PTR" + typenameArgumentTypes + ">") +
-      Line("struct " + className + Counter() + " : public AbstractFunctor<T>") +
+      Line("struct " + className + Counter() + " : public AbstractFunctor0<T>") +
       Line("{") +
       Line("  " + className + Counter() + "(" + functorType + " funcPtr" + functionParameters + ")") +
       Line("    : m_funcPtr(funcPtr)" + initializers + " { }") +
@@ -95,7 +95,7 @@ Item memberFunctors(Item className,
 {
   return
       Line("template <typename T, typename CLASS"  + typenameTypes + ">") +
-      Line("class " + className + Counter() + " : public AbstractFunctor<T>") +
+      Line("class " + className + Counter() + " : public AbstractFunctor0<T>") +
       Line("{") +
       Line("public:")+
       Line("  " + className + Counter() + "(T (CLASS::*funcPtr)(" + parameterTypesNoPrefix  + ") " + constFunction + ", " + objectArgument + functionParameters + ")") +
@@ -121,9 +121,9 @@ Item newFunctorFunctions(int repeatCount)
   // plain functions
   Repeater function =
       Line("template<typename T" + typenameTypes + ">") +
-      Line ("AbstractFunctor<T>* newFunctor(" + functionPointerParameter + functionParameters + ")")  +
+      Line ("AbstractFunctor0<T>* newFunctor0(" + functionPointerParameter + functionParameters + ")")  +
       Line("{") +
-      Line("  return new StoredFunctor" + Counter() + "<T, " + functionPointerType + argumentTypes + ">" +
+      Line("  return new StoredFunctor0_" + Counter() + "<T, " + functionPointerType + argumentTypes + ">" +
            "(functionPointer" + arguments + ");") +
       Line("}\n");
   function.setRepeatCount(repeatCount);
@@ -131,9 +131,9 @@ Item newFunctorFunctions(int repeatCount)
   // member functions by value
   Repeater memberFunction =
       Line ("template <typename T, typename CLASS" + typenameTypes + ">") +
-      Line ("AbstractFunctor<T>* newFunctor(const CLASS& object, T (CLASS::*funcPtr)(" + parameterTypesNoPrefix  + ")" + functionParameters + ")") +
+      Line ("AbstractFunctor0<T>* newFunctor0(const CLASS& object, T (CLASS::*funcPtr)(" + parameterTypesNoPrefix  + ")" + functionParameters + ")") +
       Line("{") +
-      Line("  return new StoredMemberFunctor" + Counter() + "<T, CLASS" + types + ">" +
+      Line("  return new StoredMemberFunctor0_" + Counter() + "<T, CLASS" + types + ">" +
            "(funcPtr, object" + arguments + ");") +
       Line("}\n");
   memberFunction.setRepeatCount(repeatCount);
@@ -141,9 +141,9 @@ Item newFunctorFunctions(int repeatCount)
   // const member functions by value
   Repeater constMemberFunction =
       Line ("template <typename T, typename CLASS" + typenameTypes + ">") +
-      Line ("AbstractFunctor<T>* newFunctor(const CLASS& object, T (CLASS::*funcPtr)(" + parameterTypesNoPrefix  + ") const" + functionParameters + ")") +
+      Line ("AbstractFunctor0<T>* newFunctor0(const CLASS& object, T (CLASS::*funcPtr)(" + parameterTypesNoPrefix  + ") const" + functionParameters + ")") +
       Line("{") +
-      Line("  return new StoredConstMemberFunctor" + Counter() + "<T, CLASS" + types + ">" +
+      Line("  return new StoredConstMemberFunctor0_" + Counter() + "<T, CLASS" + types + ">" +
            "(funcPtr, object" + arguments + ");") +
       Line("}\n");
   constMemberFunction.setRepeatCount(repeatCount);
@@ -151,9 +151,9 @@ Item newFunctorFunctions(int repeatCount)
   // member functions by class pointer
   Repeater memberFunctionPtr =
       Line ("template <typename T, typename CLASS" + typenameTypes + ">") +
-      Line ("AbstractFunctor<T>* newFunctor(CLASS* object, T (CLASS::*funcPtr)(" + parameterTypesNoPrefix  + ")" + functionParameters + ")") +
+      Line ("AbstractFunctor0<T>* newFunctor0(CLASS* object, T (CLASS::*funcPtr)(" + parameterTypesNoPrefix  + ")" + functionParameters + ")") +
       Line("{") +
-      Line("  return new StoredMemberFunctorPtr" + Counter() + "<T, CLASS" + types + ">" +
+      Line("  return new StoredMemberFunctorPtr0_" + Counter() + "<T, CLASS" + types + ">" +
            "(funcPtr, object" + arguments + ");") +
       Line("}\n");
   memberFunctionPtr.setRepeatCount(repeatCount);
@@ -161,9 +161,9 @@ Item newFunctorFunctions(int repeatCount)
   // const member functions by class pointer
   Repeater constMemberFunctionPtr =
       Line ("template <typename T, typename CLASS" + typenameTypes + ">") +
-      Line ("AbstractFunctor<T>* newFunctor(const CLASS* object, T (CLASS::*funcPtr)(" + parameterTypesNoPrefix  + ") const" + functionParameters + ")") +
+      Line ("AbstractFunctor0<T>* newFunctor0(const CLASS* object, T (CLASS::*funcPtr)(" + parameterTypesNoPrefix  + ") const" + functionParameters + ")") +
       Line("{") +
-      Line("  return new StoredConstMemberFunctorPtr" + Counter() + "<T, CLASS" + types + ">" +
+      Line("  return new StoredConstMemberFunctorPtr0_" + Counter() + "<T, CLASS" + types + ">" +
            "(funcPtr, object" + arguments + ");") +
       Line("}\n");
   constMemberFunctionPtr.setRepeatCount(repeatCount);
@@ -181,12 +181,12 @@ int main(int argc, char** argv)
   init();
 
   Repeater dataStructs =
-      storedFunctors(Item("StoredFunctor"), Item("FUNCTION_PTR"))
-      + storedFunctors(Item("StoredFunctorPtr"), Item("FUNCTION_PTR*"))
-      + memberFunctors(Item("StoredMemberFunctor"), Item(""), Item("const CLASS& object"), Item("CLASS m_object"), Item("."))
-      + memberFunctors(Item("StoredConstMemberFunctor"), Item("const"), Item("const CLASS& object"), Item("const CLASS m_object"), Item("."))
-      + memberFunctors(Item("StoredMemberFunctorPtr"), Item(""), Item("CLASS* object"), Item("CLASS* m_object"), Item("->"))
-      + memberFunctors(Item("StoredConstMemberFunctorPtr"), Item("const"), Item("CLASS const* object"), Item("CLASS const* m_object"), Item("->"));
+      storedFunctors(Item("StoredFunctor0_"), Item("FUNCTION_PTR"))
+      + storedFunctors(Item("StoredFunctorPtr0_"), Item("FUNCTION_PTR*"))
+      + memberFunctors(Item("StoredMemberFunctor0_"), Item(""), Item("const CLASS& object"), Item("CLASS m_object"), Item("."))
+      + memberFunctors(Item("StoredConstMemberFunctor0_"), Item("const"), Item("const CLASS& object"), Item("const CLASS m_object"), Item("."))
+      + memberFunctors(Item("StoredMemberFunctorPtr0_"), Item(""), Item("CLASS* object"), Item("CLASS* m_object"), Item("->"))
+      + memberFunctors(Item("StoredConstMemberFunctorPtr0_"), Item("const"), Item("CLASS const* object"), Item("CLASS const* m_object"), Item("->"));
   dataStructs.setRepeatCount(4);
 
   Item newFunctors = newFunctorFunctions(4);
@@ -230,11 +230,11 @@ int main(int argc, char** argv)
       Line("****************************************************************************/") +
       Line("") +
       Line("// Generated code, do not edit!") +
-      Line("#ifndef CPPTOOLS_NEW_FUNCTOR_H") +
-      Line("#define CPPTOOLS_NEW_FUNCTOR_H") +
+      Line("#ifndef CPPTOOLS_NEW_FUNCTOR0_H") +
+      Line("#define CPPTOOLS_NEW_FUNCTOR0_H") +
       Line("") +
       Line("#include \"abstract_functor.h\"") +
-      Line("#include \"generic_stored_functor.h\"") +
+      Line("#include \"generic_stored_functor0.h\"") +
       Line("") +
       Line("namespace cpp {") +
       Line("") +
@@ -242,7 +242,7 @@ int main(int argc, char** argv)
       newFunctors +
       Line("} // namespace cpp") +
       Line("") +
-      Line("#endif // CPPTOOLS_NEW_FUNCTOR_H") +
+      Line("#endif // CPPTOOLS_NEW_FUNCTOR0_H") +
       Line("");
 
   std::cout << rootItem.generate().constData() << std::endl;

@@ -43,14 +43,14 @@
 namespace cpp {
 
 template<typename FUNCTOR>
-class GenericStoredFunctor : public AbstractFunctor<typename FUNCTOR::result_type>
+class GenericStoredFunctor0 : public AbstractFunctor0<typename FUNCTOR::result_type>
 {
 public:
-  GenericStoredFunctor(FUNCTOR functor)
+  GenericStoredFunctor0(FUNCTOR functor)
     : m_functor(functor)
   { }
 
-  typename AbstractFunctor<typename FUNCTOR::result_type>::ResultType execute()
+  typename AbstractFunctor0<typename FUNCTOR::result_type>::ResultType execute()
   {
     return m_functor();
   }
@@ -60,9 +60,9 @@ private:
 };
 
 template<typename FUNCTOR>
-AbstractFunctor<typename FUNCTOR::result_type>* newFunctor(FUNCTOR functor)
+AbstractFunctor0<typename FUNCTOR::result_type>* newFunctor0(FUNCTOR functor)
 {
-  return new GenericStoredFunctor<FUNCTOR>(functor);
+  return new GenericStoredFunctor0<FUNCTOR>(functor);
 }
 
 } // namespace cpp

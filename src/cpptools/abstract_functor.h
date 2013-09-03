@@ -41,17 +41,46 @@
 namespace cpp {
 
 template<typename RESULT_TYPE = void>
-class AbstractFunctor
+class AbstractFunctor0
 {
 public:
   typedef RESULT_TYPE result_type;
   typedef RESULT_TYPE ResultType;
   typedef void argument_type;
 
-  virtual ~AbstractFunctor()
+  virtual ~AbstractFunctor0()
   { }
 
   virtual RESULT_TYPE execute() = 0;
+};
+
+template<typename RESULT_TYPE, typename ARG_TYPE>
+class AbstractFunctor1
+{
+public:
+  typedef RESULT_TYPE result_type;
+  typedef RESULT_TYPE ResultType;
+  typedef ARG_TYPE argument_type;
+
+  virtual ~AbstractFunctor1()
+  { }
+
+  virtual RESULT_TYPE execute(ARG_TYPE arg) = 0;
+};
+
+template<typename RESULT_TYPE, typename ARG1_TYPE, typename ARG2_TYPE>
+class AbstractFunctor2
+{
+public:
+  typedef RESULT_TYPE result_type;
+  typedef RESULT_TYPE ResultType;
+  typedef ARG1_TYPE first_argument_type;
+  typedef ARG2_TYPE second_argument_type;
+
+  virtual ~AbstractFunctor2()
+  { }
+
+  virtual RESULT_TYPE execute(ARG1_TYPE arg1, ARG2_TYPE arg2) = 0;
 };
 
 } // namespace cpp

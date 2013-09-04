@@ -77,7 +77,7 @@ public:
 
   void redraw(RedrawStatus status = NopStatus);
 
-  typedef cpp::AbstractFunctor<void> PaintCallback;
+  typedef cpp::AbstractFunctor0<void> PaintCallback;
   int addPaintCallback(PaintCallback* callback);
   void removePaintCallback(int callbackId);
   Aspect_GraphicCallbackStruct* paintCallbackData() const;

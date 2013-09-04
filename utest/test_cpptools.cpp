@@ -50,7 +50,7 @@ public:
 
 void TestCppTools::AbstractFunctor_test()
 {
-  // AbstractFunctor<>
+  // AbstractFunctor0<>
   {
     // Functions
     typedef cpp::AbstractFunctor0<int> IntFunctor;

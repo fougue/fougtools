@@ -65,6 +65,9 @@ public:
 
   void logSql(const QString& sqlCode, const QThread* inThread)
   {
+    if (sqlCode.trimmed().isEmpty())
+      return;
+
     if (m_isSqlOutputEnabled && m_sqlOutStream.device() != NULL) {
       const QString threadObjectName = inThread != NULL ? inThread->objectName() : QString();
       m_sqlOutStream << QString("[thread%1 0x%2] %3")

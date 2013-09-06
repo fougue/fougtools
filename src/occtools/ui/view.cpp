@@ -100,8 +100,8 @@ public:
   Handle_V3d_View m_internalView;
   bool m_isInitialized;
   bool m_needsResize;
-  QList<PaintCallback*> m_paintCallbacks;
-  QHash<int, QList<PaintCallback*>::iterator> m_paintCallbackMapping;
+  QList<View::PaintCallback> m_paintCallbacks;
+  QHash<int, QList<View::PaintCallback>::iterator> m_paintCallbackMapping;
   int m_paintCallbackLastId;
   Aspect_GraphicCallbackStruct* m_callbackData;
 
@@ -118,8 +118,8 @@ int paintCallBack(Aspect_Drawable drawable,
   View::Private* d = reinterpret_cast<View::Private*>(pointer);
   d->m_callbackData = data;
 
-  foreach (View::PaintCallback* callback, d->m_paintCallbacks)
-    callback->execute();
+  foreach (const View::PaintCallback& callback, d->m_paintCallbacks)
+    callback.execute();
 
   d->m_callbackData = NULL;
 
@@ -295,9 +295,9 @@ void View::redraw(RedrawStatus /*status*/)
   d->m_needsResize = false;
 }
 
-int View::addPaintCallback(View::PaintCallback *callback)
+int View::addPaintCallback(const PaintCallback &callback)
 {
-  if (callback != NULL) {
+  if (callback.isValid()) {
     d->m_paintCallbacks.append(callback);
     d->m_paintCallbackMapping.insert(d->m_paintCallbackLastId, --(d->m_paintCallbacks.end()));
     return ++(d->m_paintCallbackLastId);
@@ -307,7 +307,7 @@ int View::addPaintCallback(View::PaintCallback *callback)
 
 void View::removePaintCallback(int callbackId)
 {
-  QList<PaintCallback*>::iterator callbackIt =
+  QList<PaintCallback>::iterator callbackIt =
       d->m_paintCallbackMapping.value(callbackId, d->m_paintCallbacks.end());
   if (callbackIt != d->m_paintCallbacks.end())
     d->m_paintCallbacks.erase(callbackIt);

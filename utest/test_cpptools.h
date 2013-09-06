@@ -8,7 +8,7 @@ class TestCppTools : public QObject
   Q_OBJECT
 
 private slots:
-  void AbstractFunctor_test();
+  void Functor_test();
 
   void Quantity_test();
   void Quantity_operators_test();

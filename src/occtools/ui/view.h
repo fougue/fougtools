@@ -38,7 +38,7 @@
 #ifndef OCC_VIEW_H
 #define OCC_VIEW_H
 
-#include "../../cpptools/abstract_functor.h"
+#include "../../cpptools/functor.h"
 #include "../occtools.h"
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
@@ -77,8 +77,8 @@ public:
 
   void redraw(RedrawStatus status = NopStatus);
 
-  typedef cpp::AbstractFunctor0<void> PaintCallback;
-  int addPaintCallback(PaintCallback* callback);
+  typedef cpp::Functor0<void> PaintCallback;
+  int addPaintCallback(const PaintCallback& callback);
   void removePaintCallback(int callbackId);
   Aspect_GraphicCallbackStruct* paintCallbackData() const;
 

@@ -1,150 +1,104 @@
 #include "test_cpptools.h"
 
-#include "../src/cpptools/new_functor.h"
-#include "../src/cpptools/new_functor1.h"
+#include "../src/cpptools/functor.h"
 #include "../src/cpptools/quantity.h"
 #include <QtCore/QScopedPointer>
 #include <QtCore/QtDebug>
 
 // --
-// -- AbstractFunctor<> tests
+// -- Functor<> tests
 // --
-
-int function0()
-{
-  return 0;
-}
-
-int function1(double arg)
-{
-  return qRound(arg);
-}
-
-int function2(double arg1, const int* arg2)
-{
-  return qRound(arg1) + (arg2 != NULL ? *arg2 : 0);
-}
 
 class Foo
 {
 public:
-  QString memberFunction0()
-  { return "0"; }
+  virtual int bar()
+  { return 1; }
 
-  QString constMemberFunction0() const
-  { return "const0"; }
+  int constBar() const
+  { return 2; }
 
-  QString memberFunction1(int v)
-  { return QString("1_%1").arg(v); }
+  int bar1(double v)
+  { return qRound(v); }
 
-  QString constMemberFunction1(int v) const
-  { return QString("const1_%1").arg(v); }
+  int constBar1(double v) const
+  { return qRound(v) + 1; }
 
-  QString memberFunction2(int v, const int* ptr)
-  { return QString("2_%1_%2").arg(v).arg(ptr != NULL ? *ptr : 0); }
+  int bar2(float v, double w)
+  { return qRound(v + w); }
 
-  QString constMemberFunction2(int v, const int* ptr) const
-  { return QString("const2_%1_%2").arg(v).arg(ptr != NULL ? *ptr : 0); }
-
+  int constBar2(float v, double w) const
+  { return qRound(v + w) + 1; }
 };
 
-void TestCppTools::AbstractFunctor_test()
+class FooHeir : public Foo
 {
-  // AbstractFunctor0<>
-  {
-    // Functions
-    typedef cpp::AbstractFunctor0<int> IntFunctor;
+public:
+  int bar()
+  { return 3; }
+};
 
-    QScopedPointer<IntFunctor> func0(cpp::newFunctor0(&function0));
-    QCOMPARE(func0->execute(), 0);
+int func0()
+{ return 4; }
 
-    QScopedPointer<IntFunctor> func1(cpp::newFunctor0(&function1, 1.2));
-    QCOMPARE(func1->execute(), 1);
+int func1(double v)
+{ return qRound(v) * 2; }
 
-    // Member functions
-    typedef cpp::AbstractFunctor0<QString> QStringFunctor;
-    Foo foo;
-    QScopedPointer<QStringFunctor> mbFunc0(cpp::newFunctor0(foo, &Foo::memberFunction0));
-    QCOMPARE(mbFunc0->execute(), QString("0"));
-    QScopedPointer<QStringFunctor> mbFuncPtr0(cpp::newFunctor0(&foo, &Foo::memberFunction0));
-    QCOMPARE(mbFuncPtr0->execute(), QString("0"));
+int func2(float v, double w)
+{ return qRound(v + w) * 2; }
 
-    QScopedPointer<QStringFunctor> constMbFunc0(cpp::newFunctor0(foo, &Foo::constMemberFunction0));
-    QCOMPARE(constMbFunc0->execute(), QString("const0"));
-    QScopedPointer<QStringFunctor> constMbFuncPtr0(cpp::newFunctor0(&foo, &Foo::constMemberFunction0));
-    QCOMPARE(constMbFuncPtr0->execute(), QString("const0"));
+void TestCppTools::Functor_test()
+{
+  Foo foo;
+  FooHeir fooHeir;
 
-    QScopedPointer<QStringFunctor> mbFunc1(cpp::newFunctor0(foo, &Foo::memberFunction1, 5));
-    QCOMPARE(mbFunc1->execute(), QString("1_5"));
-    QScopedPointer<QStringFunctor> mbFuncPtr1(cpp::newFunctor0(&foo, &Foo::memberFunction1, 5));
-    QCOMPARE(mbFuncPtr1->execute(), QString("1_5"));
+  // Functor0<>
+  cpp::Functor0<int> ftor0 = cpp::Functor0<int>::make(&foo, &Foo::bar);
+  QCOMPARE(ftor0(), 1);
 
-    QScopedPointer<QStringFunctor> constMbFunc1(cpp::newFunctor0(foo, &Foo::constMemberFunction1, 10));
-    QCOMPARE(constMbFunc1->execute(), QString("const1_10"));
-    QScopedPointer<QStringFunctor> constMbFuncPtr1(cpp::newFunctor0(&foo, &Foo::constMemberFunction1, 10));
-    QCOMPARE(constMbFuncPtr1->execute(), QString("const1_10"));
+  ftor0 = cpp::Functor0<int>::make(&foo, &Foo::constBar);
+  QCOMPARE(ftor0(), 2);
 
-    const int intVal = 7;
-    QScopedPointer<QStringFunctor> mbFunc2(cpp::newFunctor0(foo, &Foo::memberFunction2, 5, &intVal));
-    QCOMPARE(mbFunc2->execute(), QString("2_5_%1").arg(intVal));
-    QScopedPointer<QStringFunctor> mbFuncPtr2(cpp::newFunctor0(&foo, &Foo::memberFunction2, 5, &intVal));
-    QCOMPARE(mbFuncPtr2->execute(), QString("2_5_%1").arg(intVal));
+  ftor0 = cpp::Functor0<int>::make(&fooHeir, &Foo::bar);
+  QCOMPARE(ftor0(), 3);
 
-    QScopedPointer<QStringFunctor> constMbFunc2(cpp::newFunctor0(foo, &Foo::constMemberFunction2, 10, &intVal));
-    QCOMPARE(constMbFunc2->execute(), QString("const2_10_%1").arg(intVal));
-    QScopedPointer<QStringFunctor> constMbFuncPtr2(cpp::newFunctor0(&foo, &Foo::constMemberFunction2, 10, &intVal));
-    QCOMPARE(constMbFuncPtr2->execute(), QString("const2_10_%1").arg(intVal));
-  }
+  ftor0 = cpp::Functor0<int>::make(&func0);
+  QCOMPARE(ftor0(), 4);
 
+  ftor0 = cpp::Functor0<int>::make(&func1, 5.);
+  QCOMPARE(ftor0(), 5 * 2);
+  ftor0 = cpp::Functor0<int>::make(&func2, 5.1, 7.2);
+  QCOMPARE(ftor0(), (5 + 7) * 2);
 
-  // AbstractFunctor1<>
-  {
-    // Functions
-    typedef cpp::AbstractFunctor1<int, double> IntFunctor1;
+  ftor0 = cpp::Functor0<int>::make(&foo, &Foo::bar1, 5.2);
+  QCOMPARE(ftor0(), 5);
+  ftor0 = cpp::Functor0<int>::make(&foo, &Foo::constBar1, 5.3);
+  QCOMPARE(ftor0(), 6);
 
-    QScopedPointer<IntFunctor1> func1(cpp::newFunctor1(&function1));
-    QCOMPARE(func1->execute(1.2), 1);
+  ftor0 = cpp::Functor0<int>::make(&foo, &Foo::bar2, 5.1, 7.2);
+  QCOMPARE(ftor0(), 5 + 7);
+  ftor0 = cpp::Functor0<int>::make(&foo, &Foo::constBar2, 5.1, 7.2);
+  QCOMPARE(ftor0(), 5 + 7 + 1);
 
-    // Member functions
-    typedef cpp::AbstractFunctor1<QString, int> QStringFunctor1;
-    Foo foo;
+  // Functor1<>
+  cpp::Functor1<int, double> ftor1 = cpp::Functor1<int, double>::make(&foo, &Foo::bar1);
+  QCOMPARE(ftor1(5.1), 5);
 
-    QScopedPointer<QStringFunctor1> mbFunc1(cpp::newFunctor1(foo, &Foo::memberFunction1));
-    QCOMPARE(mbFunc1->execute(5), QString("1_5"));
-    QScopedPointer<QStringFunctor1> mbFuncPtr1(cpp::newFunctor1(&foo, &Foo::memberFunction1));
-    QCOMPARE(mbFuncPtr1->execute(5), QString("1_5"));
+  ftor1 = cpp::Functor1<int, double>::make(&foo, &Foo::constBar1);
+  QCOMPARE(ftor1(5.1), 5 + 1);
 
-    QScopedPointer<QStringFunctor1> constMbFunc1(cpp::newFunctor1(foo, &Foo::constMemberFunction1));
-    QCOMPARE(constMbFunc1->execute(10), QString("const1_10"));
-    QScopedPointer<QStringFunctor1> constMbFuncPtr1(cpp::newFunctor1(&foo, &Foo::constMemberFunction1));
-    QCOMPARE(constMbFuncPtr1->execute(10), QString("const1_10"));
-  }
+  ftor1 = cpp::Functor1<int, double>::make(&func1);
+  QCOMPARE(ftor1(7.2), 7 * 2);
 
+  // Functor2<>
+  cpp::Functor2<int, float, double> ftor2 = cpp::Functor2<int, float, double>::make(&foo, &Foo::bar2);
+  QCOMPARE(ftor2(5.1, 7.2), 5 + 7);
 
-  // AbstractFunctor2<>
-  {
-    // Functions
-    typedef cpp::AbstractFunctor2<int, double, const int*> IntFunctor2;
+  ftor2 = cpp::Functor2<int, float, double>::make(&foo, &Foo::constBar2);
+  QCOMPARE(ftor2(5.1, 7.2), 5 + 7 + 1);
 
-    const int intVal = 7;
-    QScopedPointer<IntFunctor2> func2(cpp::newFunctor2(&function2));
-    QCOMPARE(func2->execute(1.2, &intVal), 1 + intVal);
-    QCOMPARE(func2->execute(1.2, NULL), 1);
-
-    // Member functions
-    typedef cpp::AbstractFunctor2<QString, int, const int*> QStringFunctor2;
-    Foo foo;
-
-    QScopedPointer<QStringFunctor2> mbFunc2(cpp::newFunctor2(foo, &Foo::memberFunction2));
-    QCOMPARE(mbFunc2->execute(5, &intVal), QString("2_5_%1").arg(intVal));
-    QScopedPointer<QStringFunctor2> mbFuncPtr2(cpp::newFunctor2(&foo, &Foo::memberFunction2));
-    QCOMPARE(mbFuncPtr2->execute(5, &intVal), QString("2_5_%1").arg(intVal));
-
-    QScopedPointer<QStringFunctor2> constMbFunc2(cpp::newFunctor2(foo, &Foo::constMemberFunction2));
-    QCOMPARE(constMbFunc2->execute(10, &intVal), QString("const2_10_%1").arg(intVal));
-    QScopedPointer<QStringFunctor2> constMbFuncPtr2(cpp::newFunctor2(&foo, &Foo::constMemberFunction2));
-    QCOMPARE(constMbFuncPtr2->execute(10, &intVal), QString("const2_10_%1").arg(intVal));
-  }
+  ftor2 = cpp::Functor2<int, float, double>::make(&func2);
+  QCOMPARE(ftor2(5.1, 7.2), (5 + 7) * 2);
 }
 
 

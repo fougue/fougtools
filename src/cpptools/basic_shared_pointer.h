@@ -35,54 +35,110 @@
 **
 ****************************************************************************/
 
-#ifndef CPPTOOLS_ABSTRACT_FUNCTOR_H
-#define CPPTOOLS_ABSTRACT_FUNCTOR_H
+#ifndef CPPTOOLS_BASIC_SHARED_POINTER_H
+#define CPPTOOLS_BASIC_SHARED_POINTER_H
 
-namespace cpp {
+#include <cstddef>
 
-template<typename RESULT_TYPE = void>
-class AbstractFunctor0
+template <typename T>
+class BasicSharedPointer
 {
 public:
-  typedef RESULT_TYPE result_type;
-  typedef RESULT_TYPE ResultType;
-  typedef void argument_type;
+  BasicSharedPointer(T* data = NULL);
+  BasicSharedPointer(const BasicSharedPointer<T>& other);
+  ~BasicSharedPointer();
 
-  virtual ~AbstractFunctor0()
-  { }
+  T& operator*() const;
+  T* operator->() const;
+  T* data() const;
 
-  virtual RESULT_TYPE execute() = 0;
+  bool isNull() const;
+
+  BasicSharedPointer<T>& operator=(const BasicSharedPointer<T>& other);
+
+private:
+  void addRef();
+  void releaseRef();
+
+  T* m_data;
+  unsigned* m_refCount;
 };
 
-template<typename RESULT_TYPE, typename ARG_TYPE>
-class AbstractFunctor1
+//
+// Implementation
+//
+
+template<typename T>
+BasicSharedPointer<T>::BasicSharedPointer(T* data)
+  : m_data(data),
+    m_refCount(new unsigned(1))
 {
-public:
-  typedef RESULT_TYPE result_type;
-  typedef RESULT_TYPE ResultType;
-  typedef ARG_TYPE argument_type;
+}
 
-  virtual ~AbstractFunctor1()
-  { }
-
-  virtual RESULT_TYPE execute(ARG_TYPE arg) = 0;
-};
-
-template<typename RESULT_TYPE, typename ARG1_TYPE, typename ARG2_TYPE>
-class AbstractFunctor2
+template<typename T>
+BasicSharedPointer<T>::BasicSharedPointer(const BasicSharedPointer<T>& other)
+  : m_data(other.m_data),
+    m_refCount(other.m_refCount)
 {
-public:
-  typedef RESULT_TYPE result_type;
-  typedef RESULT_TYPE ResultType;
-  typedef ARG1_TYPE first_argument_type;
-  typedef ARG2_TYPE second_argument_type;
+  this->addRef();
+}
 
-  virtual ~AbstractFunctor2()
-  { }
+template<typename T>
+BasicSharedPointer<T>::~BasicSharedPointer()
+{
+  this->releaseRef();
+}
 
-  virtual RESULT_TYPE execute(ARG1_TYPE arg1, ARG2_TYPE arg2) = 0;
-};
+template<typename T>
+T& BasicSharedPointer<T>::operator*() const
+{
+  return *m_data;
+}
 
-} // namespace cpp
+template<typename T>
+T* BasicSharedPointer<T>::operator->() const
+{
+  return m_data;
+}
 
-#endif // CPPTOOLS_ABSTRACT_FUNCTOR_H
+template<typename T>
+T* BasicSharedPointer<T>::data() const
+{
+  return m_data;
+}
+
+template<typename T>
+bool BasicSharedPointer<T>::isNull() const
+{
+  return m_data == NULL;
+}
+
+template<typename T>
+BasicSharedPointer<T>& BasicSharedPointer<T>::operator=(const BasicSharedPointer<T>& other)
+{
+  if (this != &other) {
+    this->releaseRef();
+    m_data = other.m_data;
+    m_refCount = other.m_refCount;
+    this->addRef();
+  }
+  return *this;
+}
+
+template<typename T>
+void BasicSharedPointer<T>::addRef()
+{
+  ++(*m_refCount);
+}
+
+template<typename T>
+void BasicSharedPointer<T>::releaseRef()
+{
+  --(*m_refCount);
+  if (*m_refCount == 0) {
+    delete m_data;
+    delete m_refCount;
+  }
+}
+
+#endif // CPPTOOLS_BASIC_SHARED_POINTER_H

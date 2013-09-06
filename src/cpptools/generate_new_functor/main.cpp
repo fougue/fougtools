@@ -80,7 +80,7 @@ Item storedFunctors(Item className, Item functorType)
       Line("{") +
       Line("  " + className + Counter() + "(" + functorType + " funcPtr" + functionParameters + ")") +
       Line("    : m_funcPtr(funcPtr)" + initializers + " { }") +
-      Line("  T execute() { return m_funcPtr(" + memberArgumentsNoPrefix + "); }") +
+      Line("  T execute() const { return m_funcPtr(" + memberArgumentsNoPrefix + "); }") +
       Line("  " + functorType + " m_funcPtr;") +
       Line(classData) +
       Line("};") +
@@ -101,7 +101,7 @@ Item memberFunctors(Item className,
       Line("  " + className + Counter() + "(T (CLASS::*funcPtr)(" + parameterTypesNoPrefix  + ") " + constFunction + ", " + objectArgument + functionParameters + ")") +
       Line("    : m_funcPtr(funcPtr), m_object(object)" + initializers + " { }" ) +
       Line("")+
-      Line("  T execute()")+
+      Line("  T execute() const")+
       Line("  {")+
       Line("    return (m_object" + funcOp + "*m_funcPtr)(" + memberArgumentsNoPrefix +  ");")+
       Line("  }")+
@@ -170,8 +170,8 @@ Item newFunctorFunctions(int repeatCount)
 
   return
       function + Line("") +
-      memberFunction + Line("") +
-      constMemberFunction + Line("") +
+//      memberFunction + Line("") +
+//      constMemberFunction + Line("") +
       memberFunctionPtr + Line("") +
       constMemberFunctionPtr + Line("");
 }
@@ -183,8 +183,6 @@ int main(int argc, char** argv)
   Repeater dataStructs =
       storedFunctors(Item("StoredFunctor0_"), Item("FUNCTION_PTR"))
       + storedFunctors(Item("StoredFunctorPtr0_"), Item("FUNCTION_PTR*"))
-      + memberFunctors(Item("StoredMemberFunctor0_"), Item(""), Item("const CLASS& object"), Item("CLASS m_object"), Item("."))
-      + memberFunctors(Item("StoredConstMemberFunctor0_"), Item("const"), Item("const CLASS& object"), Item("const CLASS m_object"), Item("."))
       + memberFunctors(Item("StoredMemberFunctorPtr0_"), Item(""), Item("CLASS* object"), Item("CLASS* m_object"), Item("->"))
       + memberFunctors(Item("StoredConstMemberFunctorPtr0_"), Item("const"), Item("CLASS const* object"), Item("CLASS const* m_object"), Item("->"));
   dataStructs.setRepeatCount(4);
@@ -230,19 +228,28 @@ int main(int argc, char** argv)
       Line("****************************************************************************/") +
       Line("") +
       Line("// Generated code, do not edit!") +
-      Line("#ifndef CPPTOOLS_NEW_FUNCTOR0_H") +
-      Line("#define CPPTOOLS_NEW_FUNCTOR0_H") +
-      Line("") +
-      Line("#include \"abstract_functor.h\"") +
-      Line("#include \"generic_stored_functor0.h\"") +
+      Line("#ifndef CPPTOOLS_FUNCTOR0_BIND_H") +
+      Line("#define CPPTOOLS_FUNCTOR0_BIND_H") +
       Line("") +
       Line("namespace cpp {") +
+      Line("namespace internal {") +
+      Line("") +
+      Line("template<typename RESULT_TYPE = void>") +
+      Line("class AbstractFunctor0") +
+      Line("{") +
+      Line("public:") +
+      Line("  virtual ~AbstractFunctor0()") +
+      Line("  { }") +
+      Line("") +
+      Line("  virtual RESULT_TYPE execute() const = 0;") +
+      Line("};") +
       Line("") +
       dataStructs +
       newFunctors +
+      Line("} // namespace internal") +
       Line("} // namespace cpp") +
       Line("") +
-      Line("#endif // CPPTOOLS_NEW_FUNCTOR0_H") +
+      Line("#endif // CPPTOOLS_FUNCTOR0_BIND_H") +
       Line("");
 
   std::cout << rootItem.generate().constData() << std::endl;

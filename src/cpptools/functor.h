@@ -115,34 +115,26 @@ public:
 
   // Free function
   template<typename TRT, typename TARG>
-  static Functor1 make(TRT (*f)(TARG))
-  {
-    return Functor1(&Functor1::freeFunctionThunk<TRT (*)(TARG)>, NULL, (const void*)f, 0);
-  }
+  Functor1(TRT (*f)(TARG))
+    : FunctorBase(NULL, (const void*)f, 0),
+      m_thunk(&Functor1::freeFunctionThunk<TRT (*)(TARG)>)
+  { }
 
   // Member function
   template<typename CLASS, typename TRT, typename TARG, class CALL_TYPE>
-  static Functor1 make(CLASS* object, TRT (CALL_TYPE::* const &f)(TARG))
-  {
-    typedef TRT (CALL_TYPE::*MemFunc)(TARG);
-    return Functor1(&Functor1::classMemberFunctionThunk<CLASS, MemFunc>, object, &f, sizeof(MemFunc));
-  }
+  Functor1(CLASS* object, TRT (CALL_TYPE::* const &f)(TARG))
+    : FunctorBase(object, &f, sizeof(TRT (CALL_TYPE::*)(TARG))),
+      m_thunk(&Functor1::classMemberFunctionThunk<CLASS, TRT (CALL_TYPE::*)(TARG)>)
+  { }
 
   // Const member function
   template<typename CLASS, typename TRT, typename TARG, class CALL_TYPE>
-  static Functor1 make(const CLASS* object, TRT (CALL_TYPE::* const &f)(TARG) const)
-  {
-    typedef TRT (CALL_TYPE::*MemFunc)(TARG) const;
-    return Functor1(&Functor1::classMemberFunctionThunk<CLASS, MemFunc>, object, &f, sizeof(MemFunc));
-  }
-
-private:
-  typedef RESULT_TYPE (*Thunk)(const FunctorBase&, ARG_TYPE);
-  Functor1(Thunk t, const void* c, const void* f, std::size_t sz)
-    : FunctorBase(c, f, sz),
-      m_thunk(t)
+  Functor1(const CLASS* object, TRT (CALL_TYPE::* const &f)(TARG) const)
+    : FunctorBase(object, &f, sizeof(TRT (CALL_TYPE::*)(TARG) const)),
+      m_thunk(&Functor1::classMemberFunctionThunk<CLASS, TRT (CALL_TYPE::*)(TARG) const>)
   { }
 
+private:
   template<typename CLASS, typename MEM_FUNC>
   static RESULT_TYPE classMemberFunctionThunk(const FunctorBase& ftor, ARG_TYPE arg)
   {
@@ -157,6 +149,7 @@ private:
     return (FUNC(ftor.m_func))(arg);
   }
 
+  typedef RESULT_TYPE (*Thunk)(const FunctorBase&, ARG_TYPE);
   Thunk m_thunk;
 };
 
@@ -187,33 +180,26 @@ public:
 
   // Free function
   template<typename TRT, typename TARG1, typename TARG2>
-  static Functor2 make(TRT (*f)(TARG1, TARG2))
-  {
-    return Functor2(&Functor2::freeFunctionThunk<TRT (*)(TARG1, TARG2)>, NULL, (const void*)f, 0);
-  }
+  Functor2(TRT (*f)(TARG1, TARG2))
+    : FunctorBase(NULL, (const void*)f, 0),
+      m_thunk(&Functor2::freeFunctionThunk<TRT (*)(TARG1, TARG2)>)
+  { }
 
   // Member function
   template<typename CLASS, typename TRT, typename TARG1, typename TARG2, class CALL_TYPE>
-  static Functor2 make(CLASS* object, TRT (CALL_TYPE::* const &f)(TARG1, TARG2))
-  {
-    typedef TRT (CALL_TYPE::*MemFunc)(TARG1, TARG2);
-    return Functor2(&Functor2::classMemberFunctionThunk<CLASS, MemFunc>, object, &f, sizeof(MemFunc));
-  }
+  Functor2(CLASS* object, TRT (CALL_TYPE::* const &f)(TARG1, TARG2))
+    : FunctorBase(object, &f, sizeof(TRT (CALL_TYPE::*)(TARG1, TARG2))),
+      m_thunk(&Functor2::classMemberFunctionThunk<CLASS, TRT (CALL_TYPE::*)(TARG1, TARG2)>)
+  { }
 
   // Const member function
   template<typename CLASS, typename TRT, typename TARG1, typename TARG2, class CALL_TYPE>
-  static Functor2 make(const CLASS* object, TRT (CALL_TYPE::* const &f)(TARG1, TARG2) const)
-  {
-    typedef TRT (CALL_TYPE::*MemFunc)(TARG1, TARG2) const;
-    return Functor2(&Functor2::classMemberFunctionThunk<CLASS, MemFunc>, object, &f, sizeof(MemFunc));
-  }
+  Functor2(const CLASS* object, TRT (CALL_TYPE::* const &f)(TARG1, TARG2) const)
+    : FunctorBase(object, &f, sizeof(TRT (CALL_TYPE::*)(TARG1, TARG2) const)),
+      m_thunk(&Functor2::classMemberFunctionThunk<CLASS, TRT (CALL_TYPE::*)(TARG1, TARG2) const>)
+  { }
 
 private:
-  typedef RESULT_TYPE (*Thunk)(const FunctorBase&, ARG1_TYPE, ARG2_TYPE);
-  Functor2(Thunk t, const void* c, const void* f, std::size_t sz)
-    : FunctorBase(c, f, sz),
-      m_thunk(t)
-  { }
 
   template<typename CLASS, typename MEM_FUNC>
   static RESULT_TYPE classMemberFunctionThunk(const FunctorBase& ftor, ARG1_TYPE arg1, ARG2_TYPE arg2)
@@ -229,6 +215,7 @@ private:
     return (FUNC(ftor.m_func))(arg1, arg2);
   }
 
+  typedef RESULT_TYPE (*Thunk)(const FunctorBase&, ARG1_TYPE, ARG2_TYPE);
   Thunk m_thunk;
 };
 
@@ -309,87 +296,72 @@ public:
 
   // Free function
   template<typename TRT>
-  static Functor0 make(TRT (*f)())
-  {
-    return Functor0(&Functor0::freeFunctionThunk<TRT (*)()>, NULL, (const void*)f, 0);
-  }
+  Functor0(TRT (*f)())
+    : FunctorBase(NULL, (const void*)f, 0),
+      m_thunk(&Functor0::freeFunctionThunk<TRT (*)()>)
+  { }
 
   // Member function
   template<typename CLASS, typename TRT, class CALL_TYPE>
-  static Functor0 make(CLASS* object, TRT (CALL_TYPE::* const &f)())
-  {
-    typedef TRT (CALL_TYPE::*MemFunc)();
-    return Functor0(&Functor0::classMemberFunctionThunk<CLASS, MemFunc>, object, &f, sizeof(MemFunc));
-  }
+  Functor0(CLASS* object, TRT (CALL_TYPE::* const &f)())
+    : FunctorBase(object, &f, sizeof(TRT (CALL_TYPE::*)())),
+      m_thunk(Functor0::classMemberFunctionThunk<CLASS, TRT (CALL_TYPE::*)()>)
+  { }
 
   // Const member function
   template<typename CLASS, typename TRT, class CALL_TYPE>
-  static Functor0 make(const CLASS* object, TRT (CALL_TYPE::* const &f)() const)
-  {
-    typedef TRT (CALL_TYPE::*MemFunc)() const;
-    return Functor0(&Functor0::classMemberFunctionThunk<CLASS, MemFunc>, object, &f, sizeof(MemFunc));
-  }
+  Functor0(CLASS* object, TRT (CALL_TYPE::* const &f)() const)
+    : FunctorBase(object, &f, sizeof(TRT (CALL_TYPE::*)() const)),
+      m_thunk(Functor0::classMemberFunctionThunk<CLASS, TRT (CALL_TYPE::*)() const>)
+  { }
 
   // Free function binders
   template<typename PARAM1, typename ARG1>
-  static Functor0 make(RESULT_TYPE (*funcPtr)(PARAM1), const ARG1 &arg1)
-  {
-    return Functor0(new internal::StoredFunctor1Call<RESULT_TYPE, PARAM1>(
-                      Functor1<RESULT_TYPE, PARAM1>::make(funcPtr), arg1));
-  }
+  Functor0(RESULT_TYPE (*funcPtr)(PARAM1), const ARG1 &arg1)
+    : m_thunk(&Functor0::functorBindThunk),
+      m_funcBindPtr(new internal::StoredFunctor1Call<RESULT_TYPE, PARAM1>(
+                      Functor1<RESULT_TYPE, PARAM1>(funcPtr), arg1))
+  { }
 
   template<typename PARAM1, typename ARG1, typename PARAM2, typename ARG2>
-  static Functor0 make(RESULT_TYPE (*funcPtr)(PARAM1, PARAM2), const ARG1 &arg1, const ARG2 &arg2)
-  {
-    return Functor0(new internal::StoredFunctor2Call<RESULT_TYPE, PARAM1, PARAM2>(
-                      Functor2<RESULT_TYPE, PARAM1, PARAM2>::make(funcPtr), arg1, arg2));
-  }
+  Functor0(RESULT_TYPE (*funcPtr)(PARAM1, PARAM2), const ARG1 &arg1, const ARG2 &arg2)
+    : m_thunk(&Functor0::functorBindThunk),
+      m_funcBindPtr(new internal::StoredFunctor2Call<RESULT_TYPE, PARAM1, PARAM2>(
+                      Functor2<RESULT_TYPE, PARAM1, PARAM2>(funcPtr), arg1, arg2))
+  { }
 
   // Member function binders
   template <typename CLASS, typename PARAM1, typename ARG1>
-  static Functor0 make(CLASS* object, RESULT_TYPE (CLASS::*funcPtr)(PARAM1), const ARG1 &arg1)
-  {
-    return Functor0(new internal::StoredFunctor1Call<RESULT_TYPE, PARAM1>(
-                      Functor1<RESULT_TYPE, PARAM1>::make(object, funcPtr), arg1));
-  }
+  Functor0(CLASS* object, RESULT_TYPE (CLASS::*funcPtr)(PARAM1), const ARG1 &arg1)
+    : m_thunk(&Functor0::functorBindThunk),
+      m_funcBindPtr(new internal::StoredFunctor1Call<RESULT_TYPE, PARAM1>(
+                      Functor1<RESULT_TYPE, PARAM1>(object, funcPtr), arg1))
+  { }
 
   template <typename CLASS, typename PARAM1, typename ARG1, typename PARAM2, typename ARG2>
-  static Functor0 make(CLASS* object, RESULT_TYPE (CLASS::*funcPtr)(PARAM1, PARAM2), const ARG1 &arg1, const ARG2 &arg2)
-  {
-    return Functor0(new internal::StoredFunctor2Call<RESULT_TYPE, PARAM1, PARAM2>(
-                      Functor2<RESULT_TYPE, PARAM1, PARAM2>::make(object, funcPtr), arg1, arg2));
-  }
+  Functor0(CLASS* object, RESULT_TYPE (CLASS::*funcPtr)(PARAM1, PARAM2), const ARG1 &arg1, const ARG2 &arg2)
+    : m_thunk(&Functor0::functorBindThunk),
+      m_funcBindPtr(new internal::StoredFunctor2Call<RESULT_TYPE, PARAM1, PARAM2>(
+                      Functor2<RESULT_TYPE, PARAM1, PARAM2>(object, funcPtr), arg1, arg2))
+  { }
 
   // Const member function binders
   template <typename CLASS, typename PARAM1, typename ARG1>
-  static Functor0 make(const CLASS* object, RESULT_TYPE (CLASS::*funcPtr)(PARAM1) const, const ARG1 &arg1)
-  {
-    return Functor0(new internal::StoredFunctor1Call<RESULT_TYPE, PARAM1>(
-                      Functor1<RESULT_TYPE, PARAM1>::make(object, funcPtr), arg1));
-  }
+  Functor0(const CLASS* object, RESULT_TYPE (CLASS::*funcPtr)(PARAM1) const, const ARG1 &arg1)
+    : m_thunk(&Functor0::functorBindThunk),
+      m_funcBindPtr(new internal::StoredFunctor1Call<RESULT_TYPE, PARAM1>(
+                      Functor1<RESULT_TYPE, PARAM1>(object, funcPtr), arg1))
+  { }
 
   template <typename CLASS, typename PARAM1, typename ARG1, typename PARAM2, typename ARG2>
-  static Functor0 make(const CLASS* object, RESULT_TYPE (CLASS::*funcPtr)(PARAM1, PARAM2) const, const ARG1 &arg1, const ARG2 &arg2)
-  {
-    return Functor0(new internal::StoredFunctor2Call<RESULT_TYPE, PARAM1, PARAM2>(
-                      Functor2<RESULT_TYPE, PARAM1, PARAM2>::make(object, funcPtr), arg1, arg2));
-  }
+  Functor0(const CLASS* object, RESULT_TYPE (CLASS::*funcPtr)(PARAM1, PARAM2) const, const ARG1 &arg1, const ARG2 &arg2)
+    : m_thunk(&Functor0::functorBindThunk),
+      m_funcBindPtr(new internal::StoredFunctor2Call<RESULT_TYPE, PARAM1, PARAM2>(
+                      Functor2<RESULT_TYPE, PARAM1, PARAM2>(object, funcPtr), arg1, arg2))
+  { }
 
   // Implementation
 private:
-  typedef RESULT_TYPE (*Thunk)(const Functor0&);
-  Functor0(Thunk t, const void* c, const void* f, std::size_t sz)
-    : FunctorBase(c, f, sz),
-      m_thunk(t)
-  { }
-
-  typedef internal::AbstractStoredFunctorCall<RESULT_TYPE> FunctorBind0;
-  Functor0(FunctorBind0* funcBind)
-    : FunctorBase(NULL, NULL, 0),
-      m_thunk(&Functor0::functorBindThunk),
-      m_funcBindPtr(funcBind)
-  { }
-
   template<typename CLASS, typename MEM_FUNC>
   static RESULT_TYPE classMemberFunctionThunk(const Functor0& ftor)
   {
@@ -409,6 +381,8 @@ private:
     return ftor.m_funcBindPtr->execute();
   }
 
+  typedef RESULT_TYPE (*Thunk)(const Functor0&);
+  typedef internal::AbstractStoredFunctorCall<RESULT_TYPE> FunctorBind0;
   Thunk m_thunk;
   BasicSharedPointer<FunctorBind0> m_funcBindPtr;
 };

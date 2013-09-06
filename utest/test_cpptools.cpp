@@ -53,51 +53,54 @@ void TestCppTools::Functor_test()
   FooHeir fooHeir;
 
   // Functor0<>
-  cpp::Functor0<int> ftor0 = cpp::Functor0<int>::make(&foo, &Foo::bar);
+  cpp::Functor0<int> ftor0 = cpp::Functor0<int>(&foo, &Foo::bar);
   QCOMPARE(ftor0(), 1);
 
-  ftor0 = cpp::Functor0<int>::make(&foo, &Foo::constBar);
-  QCOMPARE(ftor0(), 2);
-
-  ftor0 = cpp::Functor0<int>::make(&fooHeir, &Foo::bar);
-  QCOMPARE(ftor0(), 3);
-
-  ftor0 = cpp::Functor0<int>::make(&func0);
+  ftor0 = cpp::Functor0<int>(&func0);
   QCOMPARE(ftor0(), 4);
 
-  ftor0 = cpp::Functor0<int>::make(&func1, 5.);
+  ftor0 = cpp::Functor0<int>(&foo, &Foo::constBar);
+  QCOMPARE(ftor0(), 2);
+
+  ftor0 = cpp::Functor0<int>(&fooHeir, &Foo::bar);
+  QCOMPARE(ftor0(), 3);
+
+  ftor0 = cpp::Functor0<int>(&func0);
+  QCOMPARE(ftor0(), 4);
+
+  ftor0 = cpp::Functor0<int>(&func1, 5.);
   QCOMPARE(ftor0(), 5 * 2);
-  ftor0 = cpp::Functor0<int>::make(&func2, 5.1, 7.2);
+  ftor0 = cpp::Functor0<int>(&func2, 5.1, 7.2);
   QCOMPARE(ftor0(), (5 + 7) * 2);
 
-  ftor0 = cpp::Functor0<int>::make(&foo, &Foo::bar1, 5.2);
+  ftor0 = cpp::Functor0<int>(&foo, &Foo::bar1, 5.2);
   QCOMPARE(ftor0(), 5);
-  ftor0 = cpp::Functor0<int>::make(&foo, &Foo::constBar1, 5.3);
+  ftor0 = cpp::Functor0<int>(&foo, &Foo::constBar1, 5.3);
   QCOMPARE(ftor0(), 6);
 
-  ftor0 = cpp::Functor0<int>::make(&foo, &Foo::bar2, 5.1, 7.2);
+  ftor0 = cpp::Functor0<int>(&foo, &Foo::bar2, 5.1, 7.2);
   QCOMPARE(ftor0(), 5 + 7);
-  ftor0 = cpp::Functor0<int>::make(&foo, &Foo::constBar2, 5.1, 7.2);
+  ftor0 = cpp::Functor0<int>(&foo, &Foo::constBar2, 5.1, 7.2);
   QCOMPARE(ftor0(), 5 + 7 + 1);
 
   // Functor1<>
-  cpp::Functor1<int, double> ftor1 = cpp::Functor1<int, double>::make(&foo, &Foo::bar1);
+  cpp::Functor1<int, double> ftor1 = cpp::Functor1<int, double>(&foo, &Foo::bar1);
   QCOMPARE(ftor1(5.1), 5);
 
-  ftor1 = cpp::Functor1<int, double>::make(&foo, &Foo::constBar1);
+  ftor1 = cpp::Functor1<int, double>(&foo, &Foo::constBar1);
   QCOMPARE(ftor1(5.1), 5 + 1);
 
-  ftor1 = cpp::Functor1<int, double>::make(&func1);
+  ftor1 = cpp::Functor1<int, double>(&func1);
   QCOMPARE(ftor1(7.2), 7 * 2);
 
   // Functor2<>
-  cpp::Functor2<int, float, double> ftor2 = cpp::Functor2<int, float, double>::make(&foo, &Foo::bar2);
+  cpp::Functor2<int, float, double> ftor2 = cpp::Functor2<int, float, double>(&foo, &Foo::bar2);
   QCOMPARE(ftor2(5.1, 7.2), 5 + 7);
 
-  ftor2 = cpp::Functor2<int, float, double>::make(&foo, &Foo::constBar2);
+  ftor2 = cpp::Functor2<int, float, double>(&foo, &Foo::constBar2);
   QCOMPARE(ftor2(5.1, 7.2), 5 + 7 + 1);
 
-  ftor2 = cpp::Functor2<int, float, double>::make(&func2);
+  ftor2 = cpp::Functor2<int, float, double>(&func2);
   QCOMPARE(ftor2(5.1, 7.2), (5 + 7) * 2);
 }
 

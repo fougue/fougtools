@@ -113,7 +113,7 @@ Item memberFunctors(Item className,
       Line("");
 }
 
-Item newFunctorFunctions(int repeatCount)
+Item newFunctorFunctions(int repeatCount, int repeatOffset = 0)
 {
   Item functionPointerType = "T (*)(" + parameterTypesNoPrefix + ")";
   Item functionPointerParameter = "T (*functionPointer)(" + parameterTypesNoPrefix + ")";
@@ -127,6 +127,7 @@ Item newFunctorFunctions(int repeatCount)
            "(functionPointer" + arguments + ");") +
       Line("}\n");
   function.setRepeatCount(repeatCount);
+  function.setRepeatOffset(repeatOffset);
 
   // member functions by value
   Repeater memberFunction =
@@ -137,6 +138,7 @@ Item newFunctorFunctions(int repeatCount)
            "(funcPtr, object" + arguments + ");") +
       Line("}\n");
   memberFunction.setRepeatCount(repeatCount);
+  memberFunction.setRepeatOffset(repeatOffset);
 
   // const member functions by value
   Repeater constMemberFunction =
@@ -147,6 +149,7 @@ Item newFunctorFunctions(int repeatCount)
            "(funcPtr, object" + arguments + ");") +
       Line("}\n");
   constMemberFunction.setRepeatCount(repeatCount);
+  constMemberFunction.setRepeatOffset(repeatOffset);
 
   // member functions by class pointer
   Repeater memberFunctionPtr =
@@ -157,6 +160,7 @@ Item newFunctorFunctions(int repeatCount)
            "(funcPtr, object" + arguments + ");") +
       Line("}\n");
   memberFunctionPtr.setRepeatCount(repeatCount);
+  memberFunctionPtr.setRepeatOffset(repeatOffset);
 
   // const member functions by class pointer
   Repeater constMemberFunctionPtr =
@@ -167,6 +171,7 @@ Item newFunctorFunctions(int repeatCount)
            "(funcPtr, object" + arguments + ");") +
       Line("}\n");
   constMemberFunctionPtr.setRepeatCount(repeatCount);
+  constMemberFunctionPtr.setRepeatOffset(repeatOffset);
 
   return
       function + Line("") +
@@ -185,9 +190,10 @@ int main(int argc, char** argv)
       + storedFunctors(Item("StoredFunctorPtr0_"), Item("FUNCTION_PTR*"))
       + memberFunctors(Item("StoredMemberFunctorPtr0_"), Item(""), Item("CLASS* object"), Item("CLASS* m_object"), Item("->"))
       + memberFunctors(Item("StoredConstMemberFunctorPtr0_"), Item("const"), Item("CLASS const* object"), Item("CLASS const* m_object"), Item("->"));
-  dataStructs.setRepeatCount(4);
+  dataStructs.setRepeatCount(2);
+  dataStructs.setRepeatOffset(1);
 
-  Item newFunctors = newFunctorFunctions(4);
+  Item newFunctors = newFunctorFunctions(2, 1);
 
   Item rootItem =
       Line("/****************************************************************************") +

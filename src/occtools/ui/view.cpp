@@ -37,6 +37,10 @@
 
 #include "view.h"
 
+#if defined(Q_OS_WIN32)
+# include <windows.h>
+#endif
+
 #include <AIS_InteractiveContext.hxx>
 #include <Graphic3d_GraphicDriver.hxx>
 #include <V3d_View.hxx>
@@ -59,9 +63,9 @@
 #include "../utils.h"
 
 #if defined(Q_OS_WIN32)
-#include <WNT_Window.hxx>
+# include <WNT_Window.hxx>
 #elif defined(Q_OS_MAC) && !defined(MACOSX_USE_GLX)
-#include <Cocoa_Window.hxx>
+# include <Cocoa_Window.hxx>
 #else
 //#include <QX11Info>
 //#include <GL/glx.h>
@@ -70,9 +74,9 @@
 //#include <X11/Xmu/StdCmap.h>
 //#include <X11/Xlib.h>
 //#include <QtGui/QColormap>
-#include <Aspect_DisplayConnection.hxx>
-#include <Xw_Window.hxx> // OpenCascade
-#include <X11/X.h>
+# include <Aspect_DisplayConnection.hxx>
+# include <Xw_Window.hxx> // OpenCascade
+# include <X11/X.h>
 #endif
 
 

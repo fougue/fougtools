@@ -71,6 +71,9 @@ public:
   QIODevice* sqlOutputDevice() const;
   void setSqlOutputDevice(QIODevice* device);
 
+protected:
+  virtual void logSql(const QString& sqlCode, const QThread* inThread) const;
+
 private:
   class Private;
   Private* const d;

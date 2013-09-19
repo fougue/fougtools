@@ -45,8 +45,6 @@ namespace qttools {
 
 namespace internal {
 
-namespace {
-
 class SleepTool : public QThread
 {
 public:
@@ -55,8 +53,6 @@ public:
     QThread::msleep(msec);
   }
 };
-
-} // Anonymous namespace
 
 } // namespace internal
 
@@ -74,7 +70,7 @@ void waitForMSec(unsigned msec)
   if (msec > 0) {
     QEventLoop eventLoop;
     QTimer::singleShot(msec, &eventLoop, SLOT(quit()));
-    eventLoop.exec(QEventLoop::ExcludeUserInputEvents | QEventLoop::ExcludeSocketNotifiers);
+    eventLoop.exec();
   }
 }
 

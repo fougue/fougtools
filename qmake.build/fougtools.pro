@@ -34,3 +34,14 @@ INSTALLS += mathtools_include
 scripts.path  = $$PREFIX_DIR/scripts
 scripts.files = ../scripts/*.rb
 INSTALLS += scripts
+
+
+# Automatic generation of version infos
+VER_MAJ = 0
+VER_MIN = 4
+VER_PAT = 0
+_REV_NUM = $$system(ruby ../scripts/rev_num.rb  --rcs git  --workdir $$PWD)
+_FOUGTOOLS_VERSION = "$$VER_MAJ"."$$VER_MIN"."$$VER_PAT"dev-$$_REV_NUM
+
+# Automatic generation of doxygen PROJECT_NUMBER value
+system(echo PROJECT_NUMBER = $$_FOUGTOOLS_VERSION > ../doc/_project_number.dox)

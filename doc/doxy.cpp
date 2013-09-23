@@ -1,10 +1,19 @@
+/*!
+
+\mainpage
+
+
+\section intro_sec INTRODUCTION
+
 This is FougTools v0.4
+
+Check source code at : https://github.com/fougsys/fougtools
 
 FougTools is a collection of utility tools for the C++ language, Qt and 
 Open Cascade toolkits.
 
 
-LICENSE
+\section license_sec LICENSE
 
 This software is governed by the CeCILL-C license under French law and
 abiding by the rules of distribution of free software.  You can  use,
@@ -33,14 +42,16 @@ The fact that you are presently reading this means that you have had
 knowledge of the CeCILL-C license and that you accept its terms.
 
 
-INSTALLING FougTools
+\section install_sec INSTALLING FougTools
 
 Create a file named _local_config.pri in folder qmake.build and define
 the following variables, depending on your needs:
+  \code
   PREFIX_DIR = ../gcc-linux64  # Everything will be installed here
   CONFIG *= occtools  # If you want to build occtools (optional)
   CONFIG *= use_oce   # If you want OpenCascade Community edition (OCE)
   CASCADE_ROOT = /path/to/opencascade
+  \endcode
 
 Or use Ruby script qmake.build/configure.rb
 Type "ruby configure.rb -h" for help.
@@ -50,11 +61,13 @@ backslash '\' characters.
 So you may have to escape backslashes like C:\\path\\to\\opencascade
 
 Once configuration is done, then from within sub-folder qmake.build:
+  \code
   qmake -r
-  make (or nmake with Visual C++)
+  (n)make
+  \endcode
 
 
-HOW TO REPORT A BUG
+\section reportbug_sec HOW TO REPORT A BUG
 
 If you think you have found a bug in FougTools, we would like to hear
 about it so that we can fix it. The FougTools bug tracking system is
@@ -69,4 +82,6 @@ your operating system; the version of FougTools you are using, and
 what configure options it was compiled with.
 
 If the problem you are reporting is only visible at run-time, try to
-create a small test program that shows the problem when run.
+create a small test program that shows the problem when run. 
+ 
+ */

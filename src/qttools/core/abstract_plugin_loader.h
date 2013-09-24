@@ -53,7 +53,7 @@ public:
   virtual ~AbstractPluginLoader();
 
   bool autoDeletePlugins() const;
-  void setAutoDeletePlugins(bool v);
+  void setAutoDeletePlugins(bool on);
 
   QString loadingFolder() const;
   void setLoadingFolder(const QString& folder);

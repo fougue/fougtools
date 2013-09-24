@@ -77,14 +77,15 @@ public:
   QString m_loadingFolder;
 };
 
-/*! \class AbstractPluginLoader
+/*!
+ *  \class AbstractPluginLoader
  *  \brief Base abstract class for dynamic loading of plugins
+ *  \headerfile abstract_plugin_loader.h <qttools/core/abstract_plugin_loader.h>
  *
- *  AbstractPluginLoader loads plugin DLLs from a specified folder (see loadPlugins()).
+ *  AbstractPluginLoader loads plugin DLLs from a specified folder (see setLoadingFolder() and
+ *  loadPlugins()).
  *
- *  AbstractPluginLoader cannot be used as is, it must be redefined to call loadPlugins() with the
- *  right folder. In most cases loadPlugins() should be called from within the constructor of the
- *  descendant class.
+ *  AbstractPluginLoader cannot be used as is, function isPluginCompatible() must be redefined.
  */
 
 AbstractPluginLoader::AbstractPluginLoader()
@@ -104,16 +105,51 @@ AbstractPluginLoader::~AbstractPluginLoader()
   delete d;
 }
 
+/*!
+ * \brief Is auto-deletion of plugins enabled ?
+ *
+ * If plugins auto-deletion is enabled, AbstractPluginLoader will automatically delete plugins
+ * (and the associated QPluginLoader) on destruction of this object.
+ *
+ * \sa setAutoDeletePlugins()
+ */
 bool AbstractPluginLoader::autoDeletePlugins() const
 {
   return d->m_autoDeletePlugins;
 }
 
+/*!
+ * \brief Enables plugins auto-deletion of \p on is true; otherwise auto-deletion is disabled
+ * \sa autoDeletePlugins()
+ */
+void AbstractPluginLoader::setAutoDeletePlugins(bool on)
+{
+  d->m_autoDeletePlugins = on;
+}
+
+/*!
+ * \brief The folder used when dynamically loading plugins
+ * \sa setLoadingFolder()
+ */
 QString AbstractPluginLoader::loadingFolder() const
 {
   return d->m_loadingFolder;
 }
 
+/*!
+ * \brief Set the folder used when dynamically loading plugins
+ * \sa loadingFolder()
+ */
+void AbstractPluginLoader::setLoadingFolder(const QString& folder)
+{
+  d->m_loadingFolder = folder;
+}
+
+/*!
+ * \brief File name of a loaded plugin object (e.g. libmy_plugin.so, other_plugin.dll, ...)
+ *
+ *  \p plugin must have been successfully loaded with loadPlugins()
+ */
 QString AbstractPluginLoader::filename(const QObject* plugin) const
 {
   if (d->m_pluginFilenames.contains(plugin))
@@ -121,26 +157,27 @@ QString AbstractPluginLoader::filename(const QObject* plugin) const
   return QString();
 }
 
+/*!
+ * \brief Array of all loaded plugin objects
+ * \return
+ */
 QVector<QObject*> AbstractPluginLoader::plugins()
 {
   return d->m_plugins;
 }
 
+/*!
+ * \brief Read-only array of all loaded plugin objects
+ * \return
+ */
 const QVector<QObject*>& AbstractPluginLoader::plugins() const
 {
   return d->m_plugins;
 }
 
-void AbstractPluginLoader::setAutoDeletePlugins(bool v)
-{
-  d->m_autoDeletePlugins = v;
-}
-
-void AbstractPluginLoader::setLoadingFolder(const QString& folder)
-{
-  d->m_loadingFolder = folder;
-}
-
+/*!
+ * \brief Load plugins with file names matchine regexp \p fileRx, any error is reported in \p errors
+ */
 void AbstractPluginLoader::loadPlugins(const QRegExp& fileRx, QVector<QString>* errors)
 {
   const QDir pluginsFolder(this->loadingFolder());
@@ -177,6 +214,8 @@ void AbstractPluginLoader::loadPlugins(const QRegExp& fileRx, QVector<QString>* 
   } // end foreach ()
 }
 
+/*! \brief Remove a previously loaded plugin object
+ */
 void AbstractPluginLoader::discardPlugin(QObject* plugin)
 {
   for (int i = 0; i < d->m_plugins.size(); ++i) {
@@ -190,5 +229,15 @@ void AbstractPluginLoader::discardPlugin(QObject* plugin)
   }
   d->m_pluginFilenames.remove(plugin);
 }
+
+/*!
+ *  \fn bool AbstractPluginLoader::isPluginCompatible(const QObject*) const
+ *  \brief Check if a not yet added (but loaded) plugin object is compatible with this plugin
+ *         loader
+ *
+ *  This abstract function acts like a filter when loading plugins. It is called by loadPlugins()
+ *  any time a new plugin object has just been loaded. If isPluginCompatible() returns false then
+ *  the new plugin is destroyed and not added to the array of available plugins (see plugins())
+ */
 
 } // namespace qttools

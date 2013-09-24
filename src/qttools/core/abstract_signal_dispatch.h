@@ -49,7 +49,8 @@ class QTTOOLS_CORE_EXPORT AbstractSignalDispatch : public QObject
 
 public:
   AbstractSignalDispatch(QObject* parent = NULL);
-  void dispatch(const QObject* sender, const char* paramLessSignal,
+  void dispatch(const QObject* sender,
+                const char* paramLessSignal,
                 Qt::ConnectionType type = Qt::AutoConnection);
 
 public slots:

@@ -40,8 +40,21 @@
 namespace qttools {
 
 /*! \class AbstractCipher
- *  \brief
+ *  \brief Base class of all cipher algorithms
+ *  \headerfile abstract_cipher.h <qttools/core/abstract_cipher.h>
  *
+ *  It defines the functions for the functionality shared by all cipher algorithms.
+ */
+
+/*! \fn QByteArray AbstractCipher::encrypted(const QByteArray&) const
+ *  \brief Encrypts the \p data byte array and returns the encrypted data in a new byte array
+ */
+
+/*! \fn QByteArray AbstractCipher::decrypted(const QByteArray&) const
+ *  \brief Decrypts the \p encryptedData byte array and returns a new byte array with the decrypted
+ *         data
+ *
+ *  Returns an empty QByteArray an empty QByteArray on failure
  */
 
 } // namespace qttools

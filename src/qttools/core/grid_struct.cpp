@@ -39,6 +39,13 @@
 
 namespace qttools {
 
+/*!
+ *  \class GridStruct
+ *  \brief Basic data for a grid structure : row and column count + cell numbering
+ *  \headerfile grid_struct.h <qttools/core/grid_struct.h>
+ *
+ */
+
 GridStruct::GridStruct()
   : m_rowCount(0),
     m_colCount(0)

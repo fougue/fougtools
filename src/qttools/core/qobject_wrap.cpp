@@ -39,8 +39,12 @@
 
 namespace qttools {
 
-/*! \class QObjectWrap
- *  \brief Wraps (adapts) any class object into a QObject instance
+/*!
+ * \class QObjectWrap
+ * \brief Wraps (adapts) any class object into a QObject instance
+ *
+ * \headerfile qobject_wrap.h <qttools/core/qobject_wrap.h>
+ * \ingroup qttools_core
  *
  *  This class is useful to let Qt handle the lifecycle of a non QObject : wrap an instance to a
  *  QObject and then let its parent takes ownership

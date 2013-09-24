@@ -78,14 +78,15 @@ public:
 };
 
 /*!
- *  \class AbstractPluginLoader
- *  \brief Base abstract class for dynamic loading of plugins
- *  \headerfile abstract_plugin_loader.h <qttools/core/abstract_plugin_loader.h>
+ * \class AbstractPluginLoader
+ * \brief Base abstract class for dynamic loading of plugins
+ * \headerfile abstract_plugin_loader.h <qttools/core/abstract_plugin_loader.h>
+ * \ingroup qttools_core
  *
- *  AbstractPluginLoader loads plugin DLLs from a specified folder (see setLoadingFolder() and
- *  loadPlugins()).
+ * AbstractPluginLoader loads plugin DLLs from a specified folder (see setLoadingFolder() and
+ * loadPlugins()).
  *
- *  AbstractPluginLoader cannot be used as is, function isPluginCompatible() must be redefined.
+ * AbstractPluginLoader cannot be used as is, function isPluginCompatible() must be redefined.
  */
 
 AbstractPluginLoader::AbstractPluginLoader()
@@ -159,7 +160,6 @@ QString AbstractPluginLoader::filename(const QObject* plugin) const
 
 /*!
  * \brief Array of all loaded plugin objects
- * \return
  */
 QVector<QObject*> AbstractPluginLoader::plugins()
 {
@@ -168,7 +168,6 @@ QVector<QObject*> AbstractPluginLoader::plugins()
 
 /*!
  * \brief Read-only array of all loaded plugin objects
- * \return
  */
 const QVector<QObject*>& AbstractPluginLoader::plugins() const
 {

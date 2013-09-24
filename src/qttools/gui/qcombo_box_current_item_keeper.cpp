@@ -43,9 +43,13 @@
 
 namespace qttools {
 
-/*! \class QComboBoxCurrentItemKeeper
- *  \brief Provides automatic preservation of a QComboBox's current item on reset of a
+/*!
+ * \class QComboBoxCurrentItemKeeper
+ * \brief Provides automatic preservation of a QComboBox's current item on reset of a
  *         QAbstractItemModel
+ *
+ * \headerfile qcombo_box_current_item_keeper.h <qttools/gui/qcombo_box_current_item_keeper.h>
+ * \ingroup qttools_gui
  *
  */
 

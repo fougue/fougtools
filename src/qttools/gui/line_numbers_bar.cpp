@@ -76,8 +76,12 @@ public:
   QPixmap m_bugMarker;
 };
 
-/*! \class LineNumbersBar
- *  \brief Provides numbering of the lines of a QTextEdit as a vertical bar
+/*!
+ * \class LineNumbersBar
+ * \brief Provides numbering of the lines of a QTextEdit as a vertical bar
+ *
+ * \headerfile line_numbers_bar.h <qttools/gui/line_numbers_bar.h>
+ * \ingroup qttools_gui
  */
 
 LineNumbersBar::LineNumbersBar(QWidget *parent)

@@ -39,6 +39,12 @@
 
 namespace qttools {
 
+/*!
+ * \class AbstractSignalDispatch
+ * \brief
+ * \ingroup qttools_core
+ */
+
 AbstractSignalDispatch::AbstractSignalDispatch(QObject* parent)
   : QObject(parent),
     m_sender(NULL),

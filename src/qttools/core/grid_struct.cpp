@@ -40,9 +40,10 @@
 namespace qttools {
 
 /*!
- *  \class GridStruct
- *  \brief Basic data for a grid structure : row and column count + cell numbering
- *  \headerfile grid_struct.h <qttools/core/grid_struct.h>
+ * \class GridStruct
+ * \brief Basic data for a grid structure : row and column count + cell numbering
+ * \headerfile grid_struct.h <qttools/core/grid_struct.h>
+ * \ingroup qttools_core
  *
  */
 

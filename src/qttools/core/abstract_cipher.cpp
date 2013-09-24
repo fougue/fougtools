@@ -39,11 +39,14 @@
 
 namespace qttools {
 
-/*! \class AbstractCipher
- *  \brief Base class of all cipher algorithms
- *  \headerfile abstract_cipher.h <qttools/core/abstract_cipher.h>
+/*!
+ * \class AbstractCipher
+ * \brief Base class of all cipher algorithms
+ * \headerfile abstract_cipher.h <qttools/core/abstract_cipher.h>
+ * \ingroup qttools_core
  *
- *  It defines the functions for the functionality shared by all cipher algorithms.
+ * It defines the functions for the functionality shared by all cipher algorithms.
+ *
  */
 
 /*! \fn QByteArray AbstractCipher::encrypted(const QByteArray&) const

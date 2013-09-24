@@ -39,8 +39,13 @@
 
 namespace qttools {
 
-/*! \class MeasurementSystemPreferences
- *  \brief
+/*!
+ * \class MeasurementSystemPreferences
+ * \brief
+ *
+ * \headerfile measurement_system_preferences.h <qttools/gui/measurement_system_preferences.h>
+ * \ingroup qttools_gui
+ *
  */
 
 MeasurementSystemPreferences::MeasurementSystemPreferences()

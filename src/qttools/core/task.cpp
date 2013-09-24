@@ -96,8 +96,13 @@ Task::Private::Private()
 {
 }
 
-/*! \class Task
- *  \brief Abstract base class for all objects that perform an operation
+/*!
+ * \class Task
+ * \brief Abstract base class for all objects that perform an operation
+ *
+ * \headerfile task.h <qttools/core/task.h>
+ * \ingroup qttools_core
+ *
  */
 
 Task::Task(QObject* parent)

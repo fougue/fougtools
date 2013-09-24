@@ -184,6 +184,15 @@ void WaitLoopTimeOutStopCondition::timerEvent(QTimerEvent* event)
 
 } // namespace internal
 
+/*!
+ * \class WaitLoop
+ * \brief
+ *
+ * \headerfile wait_loop.h <qttools/core/wait_loop.h>
+ * \ingroup qttools_core
+ *
+ */
+
 // --
 // -- WaitLoop::StopCondition (Impl)
 // --

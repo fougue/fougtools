@@ -39,9 +39,11 @@
 
 namespace qttools {
 
-/*! \class RuntimeError
- *  \brief Provides a std::runtime_error that can convey a QString error message
- *
+/*!
+ * \class RuntimeError
+ * \brief Provides a std::runtime_error that can convey a QString error message
+ * \headerfile runtime_error.h <qttools/core/runtime_error.h>
+ * \ingroup qttools_core
  */
 
 RuntimeError::RuntimeError(const QString& err)

@@ -42,6 +42,15 @@
 
 namespace qttools {
 
+/*!
+ * \class QStandardItemExplorer
+ * \brief
+ *
+ * \headerfile qstandard_item_explorer.h <qttools/gui/qstandard_item_explorer.h>
+ * \ingroup qttools_gui
+ *
+ */
+
 QStandardItemExplorer::QStandardItemExplorer()
 {
 }

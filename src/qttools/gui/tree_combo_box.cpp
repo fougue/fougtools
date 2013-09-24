@@ -44,6 +44,15 @@
 
 namespace qttools {
 
+/*!
+ * \class TreeComboBox
+ * \brief Provides a QComboBox able to display a tree model item
+ *
+ * \headerfile tree_combo_box.h <qttools/gui/tree_combo_box.h>
+ * \ingroup qttools_gui
+ *
+ */
+
 TreeComboBox::TreeComboBox(QWidget *parent)
   : QComboBox(parent)
 {

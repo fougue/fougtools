@@ -47,6 +47,15 @@
 
 namespace qttools {
 
+/*!
+ * \class MessageDialog
+ * \brief
+ *
+ * \headerfile message_dialog.h <qttools/gui/message_dialog.h>
+ * \ingroup qttools_gui
+ *
+ */
+
 MessageDialog::MessageDialog(Icon icon,
                              const QString& title,
                              const QString& text,

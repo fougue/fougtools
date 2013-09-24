@@ -68,6 +68,15 @@ public:
   int m_minDuration;
 };
 
+/*!
+ * \class WaitDialog
+ * \brief
+ *
+ * \headerfile wait_dialog.h <qttools/gui/wait_dialog.h>
+ * \ingroup qttools_gui
+ *
+ */
+
 WaitDialog::WaitDialog(QWidget* parent)
   : QDialog(parent),
     d(new Private(this))

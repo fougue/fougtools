@@ -75,7 +75,7 @@ struct QTTOOLS_CORE_EXPORT QStringLocalAwareGreaterEqual
 
 } // namespace qttools
 
-// Implementation of Boost's hash function for QString objects
+//! Implementation of Boost's hash function for QString objects
 QTTOOLS_CORE_EXPORT
 std::size_t hash_value(QString const& str);
 

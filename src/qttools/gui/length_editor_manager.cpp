@@ -42,10 +42,13 @@
 
 namespace qttools {
 
-/*! \class LengthEditorManager
- *  \brief Manages a set of AbstractLengthEditor objects that will get notified when the current
+/*!
+ * \class LengthEditorManager
+ * \brief Manages a set of AbstractLengthEditor objects that will get notified when the current
  *         measurement system is changed
  *
+ * \headerfile length_editor_manager.h <qttools/gui/length_editor_manager.h>
+ * \ingroup qttools_gui
  */
 
 LengthEditorManager::LengthEditorManager()

@@ -64,6 +64,7 @@ public:
 /*! \class CodeEditor::LineNumberArea
  *  \brief Provides a buddy widget with line numbering capacity (internal)
  */
+
 class CodeEditor::LineNumberArea : public QWidget
 {
 public:
@@ -174,6 +175,10 @@ void CodeEditor::Private::updateLineNumberArea(const QRect &rect, int dy)
 
 /*! \class CodeEditor
  *  \brief Provides a text editor with a line numbering bar
+ *
+ * \headerfile code_editor.h <qttools/gui/code_editor.h>
+ * \ingroup qttools_gui
+ *
  */
 
 CodeEditor::CodeEditor(QWidget *parent)

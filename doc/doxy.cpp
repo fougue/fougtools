@@ -85,3 +85,16 @@ If the problem you are reporting is only visible at run-time, try to
 create a small test program that shows the problem when run. 
  
  */
+
+
+/*! \defgroup qttools_core QtTools Core
+ */
+
+/*! \defgroup qttools_gui QtTools GUI
+ */
+
+/*! \defgroup qttools_sql QtTools SQL
+ */
+
+/*! \defgroup qttools_network QtTools Network
+ */

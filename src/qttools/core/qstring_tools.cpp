@@ -39,30 +39,72 @@
 
 namespace qttools {
 
+/*!
+ * \class QStringLocalEqualTo
+ * \brief
+ * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
+ * \ingroup qttools_core
+ */
+
 bool QStringLocalEqualTo::operator()(const QString &lhs, const QString &rhs) const
 {
   return QString::localeAwareCompare(lhs, rhs) == 0;
 }
+
+/*!
+ * \class QStringLocalNotEqualTo
+ * \brief
+ * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
+ * \ingroup qttools_core
+ */
 
 bool QStringLocalNotEqualTo::operator()(const QString &lhs, const QString &rhs) const
 {
   return QString::localeAwareCompare(lhs, rhs) != 0;
 }
 
+/*!
+ * \class QStringLocalAwareLess
+ * \brief
+ * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
+ * \ingroup qttools_core
+ */
+
 bool QStringLocalAwareLess::operator()(const QString& lhs, const QString& rhs) const
 {
   return QString::localeAwareCompare(lhs, rhs) < 0;
 }
+
+/*!
+ * \class QStringLocalAwareLessEqual
+ * \brief
+ * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
+ * \ingroup qttools_core
+ */
 
 bool QStringLocalAwareLessEqual::operator()(const QString &lhs, const QString &rhs) const
 {
   return QString::localeAwareCompare(lhs, rhs) <= 0;
 }
 
+/*!
+ * \class QStringLocalAwareGreater
+ * \brief
+ * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
+ * \ingroup qttools_core
+ */
+
 bool QStringLocalAwareGreater::operator()(const QString &lhs, const QString &rhs) const
 {
   return QString::localeAwareCompare(lhs, rhs) > 0;
 }
+
+/*!
+ * \class QStringLocalAwareGreaterEqual
+ * \brief
+ * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
+ * \ingroup qttools_core
+ */
 
 bool QStringLocalAwareGreaterEqual::operator()(const QString &lhs, const QString &rhs) const
 {

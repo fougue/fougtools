@@ -50,11 +50,15 @@ static QLocale::MeasurementSystem currMeasurementSys()
 
 namespace qttools {
 
-/*! \class AbstractLengthEditor
- *  \brief Abstract base class for all length (\c [L]) editors that are aware of the current
+/*!
+ * \class AbstractLengthEditor
+ * \brief Abstract base class for all length (\c [L]) editors that are aware of the current
  *         measurement system (metric or imperial)
  *
- *  length() and setLength() use values in millimeter (mm).
+ * \headerfile abstract_length_editor.h <qttools/gui/abstract_length_editor.h>
+ * \ingroup qttools_gui
+ *
+ * length() and setLength() use values in millimeter (mm).
  */
 
 // -- Lifecycle

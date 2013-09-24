@@ -41,6 +41,14 @@
 
 namespace qttools {
 
+/*! \class IndexedSelectionModel
+ *  \brief
+ *
+ * \headerfile indexed_selection_model.h <qttools/gui/indexed_selection_model.h>
+ * \ingroup qttools_gui
+ *
+ */
+
 IndexedSelectionModel::IndexedSelectionModel(QObject* parent)
   : QObject(parent),
     m_hadSelection(false)

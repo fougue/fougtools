@@ -41,11 +41,12 @@
 namespace qttools {
 
 /*!
- *  \class GridNumbering
- *  \brief Represents standard numbering of grid cells
- *  \headerfile grid_numbering.h <qttools/core/grid_numbering.h>
+ * \class GridNumbering
+ * \brief Represents standard numbering of grid cells
+ * \headerfile grid_numbering.h <qttools/core/grid_numbering.h>
+ * \ingroup qttools_core
  *
- *  GridNumbering stores key information about numbering of grid cells :
+ * GridNumbering stores key information about numbering of grid cells :
  *    \li start corner (grid corner where the numbering starts, i.e. the firt cell)
  *    \li orientation (horizontal or vertical numbering)
  *    \li sweep mode (one-way or zig-zag numbering)

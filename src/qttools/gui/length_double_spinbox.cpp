@@ -105,9 +105,12 @@ void LengthDoubleSpinBox::Private::onValueChanged(double v)
     m_valueHasChanged = true;
 }
 
-/*! \class LengthDoubleSpinBox
- *  \brief Provides a QDoubleSpinBox adapted to the interface of AbstractLengthEditor
+/*!
+ * \class LengthDoubleSpinBox
+ * \brief Provides a QDoubleSpinBox adapted to the interface of AbstractLengthEditor
  *
+ * \headerfile length_double_spinbox.h <qttools/gui/length_double_spinbox.h>
+ * \ingroup qttools_gui
  */
 
 LengthDoubleSpinBox::LengthDoubleSpinBox(QWidget* parent)

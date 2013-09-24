@@ -81,12 +81,15 @@ Log::Stream::Stream(MessageType mType)
 {
 }
 
-/*! \class Log
- *  \brief Provides an easy-to-use output stream for logging
+/*!
+ * \class Log
+ * \brief Provides an easy-to-use output stream for logging
+ * \headerfile log.h <qttools/core/log.h>
+ * \ingroup qttools_core
  *
- *  This class is almost a clone of QDebug, but it's focused on logging.\n
- *  Also the way messages are handled is different as there can be multiple logging handlers
- *  attached (not just one).
+ * This class is almost a clone of QDebug, but it's focused on logging.\n
+ * Also the way messages are handled is different as there can be multiple logging handlers
+ * attached (not just one).
  */
 
 /*! \enum Log::MessageType
@@ -270,8 +273,11 @@ Log fatalLog()
   return Log(Log::FatalMessage);
 }
 
-/*! \class AbstractLogHandler
- *  \brief Abstract base class of all logging message handlers
+/*!
+ * \class AbstractLogHandler
+ * \brief Abstract base class of all logging message handlers
+ * \headerfile log.h <qttools/core/log.h>
+ * \ingroup qttools_core
  */
 
 AbstractLogHandler::AbstractLogHandler()
@@ -333,9 +339,11 @@ void detachGlobalLogHandler(AbstractLogHandler* handler)
     internal::globalLogHandlers()->removeAll(handler);
 }
 
-/*! \class LogDispatcher
- *  \brief Dispatches a logging message as a Qt signal
- *
+/*!
+ * \class LogDispatcher
+ * \brief Dispatches a logging message as a Qt signal
+ * \headerfile log.h <qttools/core/log.h>
+ * \ingroup qttools_core
  */
 
 LogDispatcher::LogDispatcher(QObject* parent)

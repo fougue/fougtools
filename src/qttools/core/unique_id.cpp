@@ -56,6 +56,14 @@ public:
 
 Q_GLOBAL_STATIC(internal::UniqueIdRegistration, uniqueIdRegistrationHelper)
 
+/*!
+ * \class UniqueId
+ * \brief
+ *
+ * \headerfile unique_id.h <qttools/core/unique_id.h>
+ * \ingroup qttools_core
+ *
+ */
 UniqueId::RegisterResult UniqueId::registerId(int min, int max)
 {
   UniqueId::RegisterResult result;

@@ -43,6 +43,7 @@ namespace qttools {
 /*!
  * \class GridNumbering
  * \brief Represents standard numbering of grid cells
+ *
  * \headerfile grid_numbering.h <qttools/core/grid_numbering.h>
  * \ingroup qttools_core
  *

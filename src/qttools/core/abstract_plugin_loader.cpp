@@ -80,6 +80,7 @@ public:
 /*!
  * \class AbstractPluginLoader
  * \brief Base abstract class for dynamic loading of plugins
+
  * \headerfile abstract_plugin_loader.h <qttools/core/abstract_plugin_loader.h>
  * \ingroup qttools_core
  *

@@ -37,12 +37,15 @@
 
 #include "view_item_button_mechanism.h"
 
+#include "proxy_styled_item_delegate.h"
+
 #include <QtCore/QtDebug>
 #include <QtGui/QPainter>
 #include <QtGui/QMouseEvent>
 // QtWidgets
 #include <QAbstractItemView>
 #include <QToolTip>
+#include <QStyledItemDelegate>
 
 namespace qttools {
 
@@ -53,6 +56,21 @@ namespace qttools {
 class ViewItemButtonMechanism::Private
 {
 public:
+  class ProxyItemDelegate : public ProxyStyledItemDelegate
+  {
+  public:
+    ProxyItemDelegate(const ViewItemButtonMechanism* itemBtns,
+                      QStyledItemDelegate* srcDelegate,
+                      QObject* parent = NULL);
+
+    void paint(QPainter *painter,
+               const QStyleOptionViewItem &option,
+               const QModelIndex &index) const;
+
+  private:
+    const ViewItemButtonMechanism* m_itemBtns;
+  };
+
   struct ButtonInfo
   {
     int index;
@@ -63,7 +81,7 @@ public:
     QVariant matchData;
     int displayColumn;
     ViewItemButtonMechanism::ItemSide itemSide;
-    ViewItemButtonMechanism::DisplayMode itemDisplayMode;
+    ViewItemButtonMechanism::DisplayModes itemDisplayModes;
   };
 
   Private(ViewItemButtonMechanism* backPtr);
@@ -86,6 +104,23 @@ public:
 private:
   ViewItemButtonMechanism* m_backPtr;
 };
+
+ViewItemButtonMechanism::Private::ProxyItemDelegate::ProxyItemDelegate(const ViewItemButtonMechanism *itemBtns,
+                                                                       QStyledItemDelegate *srcDelegate,
+                                                                       QObject* parent)
+  : ProxyStyledItemDelegate(srcDelegate, parent),
+    m_itemBtns(itemBtns)
+{
+}
+
+void ViewItemButtonMechanism::Private::ProxyItemDelegate::paint(QPainter *painter,
+                                                                const QStyleOptionViewItem &option,
+                                                                const QModelIndex &index) const
+{
+  ProxyStyledItemDelegate::paint(painter, option, index);
+  if (m_itemBtns != NULL)
+    m_itemBtns->paint(painter, option, index);
+}
 
 ViewItemButtonMechanism::Private::Private(ViewItemButtonMechanism *backPtr)
   : m_view(NULL),
@@ -247,7 +282,7 @@ bool ViewItemButtonMechanism::eventFilter(QObject *object, QEvent *event)
 
 void ViewItemButtonMechanism::paint(QPainter *painter,
                                     const QStyleOptionViewItem &option,
-                                    const QModelIndex &index)
+                                    const QModelIndex &index) const
 {
   bool mouseIsOver = false;
   if (painter != NULL) {
@@ -266,21 +301,25 @@ void ViewItemButtonMechanism::paint(QPainter *painter,
     optionForBtn.rect = this->itemView()->visualRect(d->modelIndexForButtonDisplay(index));
     const int btnIndex = this->buttonAtModelIndex(index);
     Private::ButtonInfo* btnInfo = d->mutableButtonInfo(btnIndex);
-    const int dispMode = btnInfo != NULL ? btnInfo->itemDisplayMode : -1;
-    switch (dispMode) {
-    case DisplayPermanent: {
-      d->paintButton(btnInfo, painter, optionForBtn);
-      break;
+    if (btnInfo == NULL)
+      return;
+
+    // Check if button can be displayed
+    if (btnInfo->itemDisplayModes.testFlag(DisplayWhenItemSelected)
+        && !option.state.testFlag(QStyle::State_Selected))
+    {
+//      painter->fillRect(optionForBtn.rect, optionForBtn.backgroundBrush);
+      return;
     }
-    case DisplayOnDetection: {
+
+    if (btnInfo->itemDisplayModes.testFlag(DisplayPermanent)) {
+      d->paintButton(btnInfo, painter, optionForBtn);
+    }
+    else if (btnInfo->itemDisplayModes.testFlag(DisplayOnDetection)) {
       if (mouseIsOver)
         d->paintButton(btnInfo, painter, optionForBtn);
       else
         painter->fillRect(optionForBtn.rect, optionForBtn.backgroundBrush);
-      break;
-    }
-    default:
-      break;
     }
   }
   else {
@@ -303,7 +342,7 @@ void ViewItemButtonMechanism::addButton(int btnId, const QIcon &icon, const QStr
   info.matchRole = Qt::UserRole + 1;
   info.displayColumn = -1;
   info.itemSide = ItemRightSide;
-  info.itemDisplayMode = DisplayOnDetection;
+  info.itemDisplayModes = DisplayOnDetection;
   d->m_btnInfos.insert(btnId, info);
 }
 
@@ -327,16 +366,30 @@ void ViewItemButtonMechanism::setButtonItemSide(int btnId, ItemSide side)
     d->mutableButtonInfo(btnId)->itemSide = side;
 }
 
-void ViewItemButtonMechanism::setButtonDisplayMode(int btnId, DisplayMode mode)
+void ViewItemButtonMechanism::setButtonDisplayModes(int btnId, DisplayModes modes)
 {
   if (d->m_btnInfos.contains(btnId))
-    d->mutableButtonInfo(btnId)->itemDisplayMode = mode;
+    d->mutableButtonInfo(btnId)->itemDisplayModes = modes;
 }
 
 void ViewItemButtonMechanism::setButtonIconSize(int btnId, const QSize &size)
 {
   if (d->m_btnInfos.contains(btnId))
     d->mutableButtonInfo(btnId)->iconSize = size;
+}
+
+void ViewItemButtonMechanism::installDefaultItemDelegate()
+{
+  if (d->m_view == NULL)
+    return;
+  d->m_view->setItemDelegate(this->createProxyItemDelegate(NULL));
+}
+
+QStyledItemDelegate*
+ViewItemButtonMechanism::createProxyItemDelegate(QStyledItemDelegate *sourceDelegate,
+                                                 QObject *parent) const
+{
+  return new Private::ProxyItemDelegate(this, sourceDelegate, parent);
 }
 
 int ViewItemButtonMechanism::buttonAtModelIndex(const QModelIndex &index) const

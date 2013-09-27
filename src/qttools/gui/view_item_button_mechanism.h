@@ -43,10 +43,12 @@
 #include <QtCore/QHash>
 #include <QtCore/QModelIndex>
 #include <QtCore/QObject>
+#include <QtCore/QFlags>
 #include <QtGui/QIcon>
 class QAbstractItemView;
 class QIcon;
 class QPainter;
+class QStyledItemDelegate;
 class QStyleOptionViewItem;
 
 namespace qttools {
@@ -64,9 +66,11 @@ public:
 
   enum DisplayMode
   {
-    DisplayOnDetection,
-    DisplayPermanent
+    DisplayOnDetection = 0x01,
+    DisplayPermanent = 0x02,
+    DisplayWhenItemSelected = 0x04
   };
+  Q_DECLARE_FLAGS(DisplayModes, DisplayMode)
 
   ViewItemButtonMechanism(QAbstractItemView* view, QObject* parent = NULL);
   ~ViewItemButtonMechanism();
@@ -74,14 +78,18 @@ public:
   QAbstractItemView* itemView() const;
 
   bool eventFilter(QObject *object, QEvent *event);
-  void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index);
+  void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
   void addButton(int btnId, const QIcon& icon, const QString& toolTip = QString());
   void setButtonDetection(int btnId, int matchRole, const QVariant& matchData);
   void setButtonDisplayColumn(int btnId, int col = -1);
   void setButtonItemSide(int btnId, ItemSide side);
-  void setButtonDisplayMode(int btnId, DisplayMode mode);
+  void setButtonDisplayModes(int btnId, DisplayModes modes);
   void setButtonIconSize(int btnId, const QSize& size);
+
+  void installDefaultItemDelegate();
+  QStyledItemDelegate* createProxyItemDelegate(QStyledItemDelegate *sourceDelegate,
+                                               QObject* parent = NULL) const;
 
 signals:
   void buttonClicked(int btnId, const QModelIndex& index);
@@ -99,5 +107,7 @@ private:
 };
 
 } // namespace qttools
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(qttools::ViewItemButtonMechanism::DisplayModes)
 
 #endif // QTTOOLS_VIEW_ITEM_BUTTON_MECHANISM_H

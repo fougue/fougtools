@@ -39,10 +39,14 @@
 
 namespace qttools {
 
-/*! \class Calculator
- *  \brief Provides evaluation of expressions
+/*!
+ * \class Calculator
+ * \brief Provides evaluation of expressions
  *
- *  \note Author of the evaluation script is Yves Bailly (kafka.fr@laposte.net)
+ * \note Author of the evaluation script is Yves Bailly (kafka DOT fr AT laposte DOT net)
+ *
+ * \headerfile calculator.h <qttools/script/calculator.h>
+ * \ingroup qttools_script
  */
 
 Calculator::Calculator()

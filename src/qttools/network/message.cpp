@@ -39,8 +39,12 @@
 
 namespace qttools {
 
-/*! \class Message
- *  \brief Provides a convenient interface for working with messages
+/*!
+ * \class Message
+ * \brief Provides a convenient interface for working with messages
+ *
+ * \headerfile message.h <qttools/network/message.h>
+ * \ingroup qttools_network
  */
 
 Message::Message()

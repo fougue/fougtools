@@ -44,7 +44,16 @@ namespace qttools {
 
 /*!
  * \class QStandardItemExplorer
- * \brief
+ * \brief Provides a BFS (breadth-first search) exploration of a QStandardItemModel object
+ *
+ * Example of use :
+ * \code
+ *   QStandardItemModel* model = ...;
+ *   for (QStandardItemExplorer explorer(model); !explorer.atEnd(); explorer.goNext()) {
+ *     QStandardItem* item = explorer.current();
+ *     // Do something with item ...
+ *   }
+ * \endcode
  *
  * \headerfile qstandard_item_explorer.h <qttools/gui/qstandard_item_explorer.h>
  * \ingroup qttools_gui

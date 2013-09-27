@@ -42,6 +42,14 @@
 
 namespace qttools {
 
+/*!
+ * \class CompositeTypeHelper
+ * \brief Provides helper services for the management of SQL composite types
+ *
+ * \headerfile composite_type_helper.h <qttools/sql/composite_type_helper.h>
+ * \ingroup qttools_sql
+ */
+
 QString CompositeTypeHelper::toRow(const QList<QVariant>& values)
 {
   QStringList valuesStr;

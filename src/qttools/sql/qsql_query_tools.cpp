@@ -41,6 +41,14 @@
 
 namespace qttools {
 
+/*!
+ * \class SqlQueryError
+ * \brief Provides a std::runtime_error that can convey a QSqlError object
+ *
+ * \headerfile qsql_query_tools.h <qttools/sql/qsql_query_tools.h>
+ * \ingroup qttools_sql
+ */
+
 SqlQueryError::SqlQueryError(const QSqlQuery& qry)
   : std::runtime_error(qry.lastError().text().toStdString()),
     m_sqlError(qry.lastError())
@@ -62,19 +70,30 @@ QSqlError SqlQueryError::sqlError() const
   return m_sqlError;
 }
 
+/*! \brief Execute SQL statements in \p code use databse connection \p db
+ *  \note Does nothing if \p sqlCode is empty
+ *  \throws SqlQueryError if no connection to database or if SQL exec fails (SQL query has error)
+ */
 QSqlQuery execSqlCode(const QString& sqlCode, const QSqlDatabase& db)
 {
   if (sqlCode.trimmed().isEmpty())
     return QSqlQuery(QString(), db);
 
-  if (!db.isValid() || !db.isOpen())
-    throw SqlQueryError(QSqlError("db is not valid or not open", "", QSqlError::ConnectionError));
+  if (!db.isValid() || !db.isOpen()) {
+    throw SqlQueryError(QSqlError(QLatin1String("db is not valid or not open"),
+                                  QLatin1String(""),
+                                  QSqlError::ConnectionError));
+  }
 
   QSqlQuery qry = db.exec(sqlCode);
   qttools::throwIfError(qry);
   return qry;
 }
 
+/*! \brief Same as qttools::execSqlCode() but execution performs inside a transaction
+ *  \note Any SqlQueryError exceptions thrown by qttools::execSqlCode() is catched (transaction
+ *        is rolled back then)
+ */
 QSqlQuery execSqlCodeInTransaction(const QString& sqlCode, QSqlDatabase db)
 {
   db.transaction();
@@ -92,6 +111,7 @@ QSqlQuery execSqlCodeInTransaction(const QString& sqlCode, QSqlDatabase db)
   return sqlQry;
 }
 
+//! Throw SqlQueryError if SQL query \p qry has error
 void throwIfError(const QSqlQuery& qry)
 {
   if (qry.lastError().type() != QSqlError::NoError)

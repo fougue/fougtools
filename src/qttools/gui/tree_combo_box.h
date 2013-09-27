@@ -59,7 +59,8 @@ public:
 
   QTreeView* treeView() const;
 
-  QModelIndex treeFindData(const QVariant& data, int role = Qt::UserRole,
+  QModelIndex treeFindData(const QVariant& data,
+                           int role = Qt::UserRole,
                            Qt::MatchFlags flags = Qt::MatchRecursive) const;
 
   QModelIndex currentModelIndex() const;

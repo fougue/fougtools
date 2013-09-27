@@ -74,6 +74,7 @@ void setHorizAndVertScrollValue(QAbstractScrollArea* area, const QPair<int, int>
 
 namespace qttools {
 
+//! Searches up in the direct parents of \p widget the first ancestor being of type \c PARENT_WIDGET
 template<typename PARENT_WIDGET>
 PARENT_WIDGET* findFirstParentWidget(QWidget* widget)
 {
@@ -86,6 +87,7 @@ PARENT_WIDGET* findFirstParentWidget(QWidget* widget)
   return foundParentWidget;
 }
 
+//! Searches up in the direct parents of \p widget the last ancestor being of type \c PARENT_WIDGET
 template<typename PARENT_WIDGET>
 PARENT_WIDGET* findLastParentWidget(QWidget* widget)
 {

@@ -121,8 +121,12 @@ private slots:
   }
 };
 
-/*! \class MailSend
- *  \brief Provides service to send messages through SMTP
+/*!
+ * \class MailSend
+ * \brief Provides service to send messages through SMTP
+ *
+ * \headerfile mail_send.h <qttools/network/mail_send.h>
+ * \ingroup qttools_network
  */
 
 MailSend::MailSend()

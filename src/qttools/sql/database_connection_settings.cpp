@@ -44,9 +44,12 @@
 
 namespace qttools {
 
-/*! \class DatabaseConnectionSettings
- *  \brief Settings to connect to a database. Settings can be loaded and saved from/to a QSettings
+/*!
+ * \class DatabaseConnectionSettings
+ * \brief Settings to connect to a database. Settings can be loaded and saved from/to a QSettings
  *
+ * \headerfile database_connection_settings.h <qttools/sql/database_connection_settings.h>
+ * \ingroup qttools_sql
  */
 
 DatabaseConnectionSettings::DatabaseConnectionSettings()

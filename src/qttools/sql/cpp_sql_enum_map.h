@@ -80,6 +80,13 @@ private:
 
 namespace qttools {
 
+/*! \class SqlCppEnumMap
+ *  \brief Provides C++ mapping of a SQL enumerated type
+ *
+ * \headerfile cpp_sql_enum_map.h <qttools/sql/cpp_sql_enum_map.h>
+ * \ingroup qttools_sql
+ */
+
 template<typename CPP_ENUM>
 SqlCppEnumMap<CPP_ENUM>::SqlCppEnumMap()
 {

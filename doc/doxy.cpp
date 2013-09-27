@@ -93,8 +93,11 @@ create a small test program that shows the problem when run.
 /*! \defgroup qttools_gui QtTools GUI
  */
 
-/*! \defgroup qttools_sql QtTools SQL
+/*! \defgroup qttools_network QtTools Network
  */
 
-/*! \defgroup qttools_network QtTools Network
+/*! \defgroup qttools_script QtTools Script
+ */
+
+/*! \defgroup qttools_sql QtTools SQL
  */

@@ -13,7 +13,10 @@ occtools:SUBDIRS += occtools
 utest:SUBDIRS += ../utest
 
 HEADERS += ../src/fougtools_global.h
-OTHER_FILES += configure.rb ../README
+OTHER_FILES += configure.rb \
+               ../README \
+               ../doc/Doxyfile \
+               ../doc/doxy.cpp
 
 # INSTALLS for globals
 globals_include.path  = $$PREFIX_DIR/include

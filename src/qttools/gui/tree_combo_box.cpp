@@ -71,11 +71,15 @@ void TreeComboBox::showPopup()
   QComboBox::showPopup();
 }
 
+//! The QTreeView used to display the attached tree model
 QTreeView *TreeComboBox::treeView() const
 {
   return qobject_cast<QTreeView*>(this->view());
 }
 
+/*! \brief Similar to QComboBox::findData() but searches recursively in the tree model (instead of
+ *         just root items)
+ */
 QModelIndex TreeComboBox::treeFindData(const QVariant &data, int role, Qt::MatchFlags flags) const
 {
   if (this->model() == NULL)
@@ -85,6 +89,8 @@ QModelIndex TreeComboBox::treeFindData(const QVariant &data, int role, Qt::Match
   return !matchIds.isEmpty() ? matchIds.first() : QModelIndex();
 }
 
+/*! \brief Holds the QModelIndex of the current item in the TreeComboBox
+ */
 QModelIndex TreeComboBox::currentModelIndex() const
 {
   if (this->model() == NULL)

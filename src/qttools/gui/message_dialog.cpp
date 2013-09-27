@@ -49,7 +49,7 @@ namespace qttools {
 
 /*!
  * \class MessageDialog
- * \brief
+ * \brief Alternative to QMessageBox providing a customizable "details" widget
  *
  * \headerfile message_dialog.h <qttools/gui/message_dialog.h>
  * \ingroup qttools_gui
@@ -99,6 +99,11 @@ MessageDialog::MessageDialog(Icon icon,
     connect(btn, SIGNAL(clicked()), sigMapper, SLOT(map()));
   }
   connect(sigMapper, SIGNAL(mapped(int)), this, SLOT(done(int)));
+}
+
+QWidget *MessageDialog::detailsWidget() const
+{
+  return m_detailsWidget;
 }
 
 void MessageDialog::setDetailsWidget(QWidget* widget)

@@ -70,10 +70,19 @@ public:
   QTextStream m_sqlOutStream;
 };
 
-/*! \class DatabaseManager
- *  \brief
+/*!
+ * \class DatabaseManager
+ * \brief Provides threading and SQL logging control over QSqlDatabase
+ *
+ * \headerfile database_manager.h <qttools/sql/database_manager.h>
+ * \ingroup qttools_sql
  */
 
+/*! \brief Construct a DatabaseManager object with \p refDb as reference database
+ *
+ * The reference database is used in createDatabase() when cloning the database for the needs of
+ * a new QThread
+ */
 DatabaseManager::DatabaseManager(const QSqlDatabase& refDb)
   : d(new Private(refDb))
 {
@@ -84,6 +93,7 @@ DatabaseManager::~DatabaseManager()
   delete d;
 }
 
+//! The reference database used when cloning QSqlDatabase in createDatabase()
 const QSqlDatabase& DatabaseManager::referenceDatabase() const
 {
   return d->m_refDatabase;

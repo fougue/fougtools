@@ -40,7 +40,7 @@
 
 namespace qttools {
 
-template<typename _CPP_ENUM_>
+template<typename CPP_ENUM>
 class SqlCppEnumMap;
 
 } // namespace qttools

@@ -41,39 +41,41 @@ QT *= gui
 isEqual(QT_MAJOR_VERSION, 5): QT *= widgets
 
 HEADERS += \
+    $$PWD/abstract_length_editor.h \
     $$PWD/code_editor.h \
+    $$PWD/gui.h \
+    $$PWD/indexed_selection_model.h \
+    $$PWD/item_view_tools.h \
     $$PWD/length_double_spinbox.h \
+    $$PWD/length_editor_manager.h \
     $$PWD/line_edit_with_auto_tool_tip.h \
     $$PWD/line_numbers_bar.h \
+    $$PWD/measurement_system_preferences.h \
+    $$PWD/message_dialog.h \
     $$PWD/qcombo_box_current_item_keeper.h \
     $$PWD/qstandard_item_explorer.h \
+    $$PWD/tree_combo_box.h \
+    $$PWD/view_item_button_mechanism.h \
     $$PWD/wait_dialog.h \
-    $$PWD/widget_tools.h \
-    $$PWD/gui.h \
-    $$PWD/measurement_system_preferences.h \
-    $$PWD/length_editor_manager.h \
-    $$PWD/abstract_length_editor.h \
-    $$PWD/item_view_tools.h \
-    $$PWD/indexed_selection_model.h \
-    $$PWD/message_dialog.h \
-    $$PWD/tree_combo_box.h
+    $$PWD/widget_tools.h
 
 SOURCES += \
+    $$PWD/abstract_length_editor.cpp \
     $$PWD/code_editor.cpp \
+    $$PWD/indexed_selection_model.cpp \
+    $$PWD/item_view_tools.cpp \
     $$PWD/length_double_spinbox.cpp \
+    $$PWD/length_editor_manager.cpp \
     $$PWD/line_edit_with_auto_tool_tip.cpp \
     $$PWD/line_numbers_bar.cpp \
+    $$PWD/measurement_system_preferences.cpp \
+    $$PWD/message_dialog.cpp \
     $$PWD/qcombo_box_current_item_keeper.cpp \
     $$PWD/qstandard_item_explorer.cpp \
+    $$PWD/tree_combo_box.cpp \
+    $$PWD/view_item_button_mechanism.cpp \
     $$PWD/wait_dialog.cpp \
-    $$PWD/widget_tools.cpp \
-    $$PWD/measurement_system_preferences.cpp \
-    $$PWD/length_editor_manager.cpp \
-    $$PWD/abstract_length_editor.cpp \
-    $$PWD/item_view_tools.cpp \
-    $$PWD/indexed_selection_model.cpp \
-    $$PWD/message_dialog.cpp \
-    $$PWD/tree_combo_box.cpp
+    $$PWD/widget_tools.cpp
 
 HEADERS += $$PWD/../core/task.h
 SOURCES += $$PWD/../core/task.cpp

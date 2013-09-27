@@ -52,6 +52,7 @@ HEADERS += \
     $$PWD/line_numbers_bar.h \
     $$PWD/measurement_system_preferences.h \
     $$PWD/message_dialog.h \
+    $$PWD/proxy_styled_item_delegate.h \
     $$PWD/qcombo_box_current_item_keeper.h \
     $$PWD/qstandard_item_explorer.h \
     $$PWD/tree_combo_box.h \
@@ -70,6 +71,7 @@ SOURCES += \
     $$PWD/line_numbers_bar.cpp \
     $$PWD/measurement_system_preferences.cpp \
     $$PWD/message_dialog.cpp \
+    $$PWD/proxy_styled_item_delegate.cpp \
     $$PWD/qcombo_box_current_item_keeper.cpp \
     $$PWD/qstandard_item_explorer.cpp \
     $$PWD/tree_combo_box.cpp \

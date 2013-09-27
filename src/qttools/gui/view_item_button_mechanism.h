@@ -68,7 +68,7 @@ public:
     DisplayPermanent
   };
 
-  ViewItemButtonMechanism(QAbstractItemView* view, QObject* parent = 0);
+  ViewItemButtonMechanism(QAbstractItemView* view, QObject* parent = NULL);
   ~ViewItemButtonMechanism();
 
   QAbstractItemView* itemView() const;
@@ -81,6 +81,7 @@ public:
   void setButtonDisplayColumn(int btnId, int col = -1);
   void setButtonItemSide(int btnId, ItemSide side);
   void setButtonDisplayMode(int btnId, DisplayMode mode);
+  void setButtonIconSize(int btnId, const QSize& size);
 
 signals:
   void buttonClicked(int btnId, const QModelIndex& index);
@@ -92,8 +93,9 @@ protected:
   virtual int buttonAtModelIndex(const QModelIndex& index) const;
 
 private:
-  friend class ViewItemButtonMechanismPrivate;
-  class ViewItemButtonMechanismPrivate* const d;
+  class Private;
+  friend class Private;
+  Private* const d;
 };
 
 } // namespace qttools

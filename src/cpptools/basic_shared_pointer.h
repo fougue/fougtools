@@ -40,6 +40,8 @@
 
 #include <cstddef>
 
+namespace cpp {
+
 template <typename T>
 class BasicSharedPointer
 {
@@ -157,5 +159,7 @@ void BasicSharedPointer<T>::releaseRef()
     delete m_refCount;
   }
 }
+
+} // namespace cpp
 
 #endif // CPPTOOLS_BASIC_SHARED_POINTER_H

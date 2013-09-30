@@ -39,6 +39,8 @@
 
 #include "length_editor_manager.h"
 
+namespace qttools {
+
 namespace internal {
 
 static QLocale::MeasurementSystem currMeasurementSys()
@@ -47,8 +49,6 @@ static QLocale::MeasurementSystem currMeasurementSys()
 }
 
 } // namespace internal
-
-namespace qttools {
 
 /*!
  * \class AbstractLengthEditor

@@ -57,6 +57,8 @@
 
 namespace occ {
 
+//! \cond INCLUDE_INTERNAL
+
 //! TODO From OCC Forum :
 //! try using DBRep_IsoBuilder to generate isolines representing your face.
 //! Load the isolines into a DBRep_Face. Then, you can query the isolines to get
@@ -68,7 +70,6 @@ namespace occ {
 //! It should be up to the user to give sample points for each face.
 
 namespace internal {
-namespace {
 
 typedef std::pair<int, Handle_Poly_Triangulation> NodeIndexInTriangulation_t;
 typedef NCollection_UBTree<NodeIndexInTriangulation_t, Bnd_Box> UBTreeOfNodeIndices_t;
@@ -135,8 +136,9 @@ private:
 
 static const TopoDS_Face dummyFace;
 
-} // Anonymous namespace
 } // namespace internal
+
+//! \endcond
 
 class PointOnFacesProjector::Private
 {

@@ -83,9 +83,9 @@ IMPLEMENT_STANDARD_TYPE_END(occ_AIS_Text)
 
 // --- Handle/Body Implementation
 
-namespace internal {
+//! \cond INCLUDE_INTERNAL
 
-namespace {
+namespace internal {
 
 class TextProperties
 {
@@ -99,9 +99,9 @@ public:
   {
     return
         m_font == other.m_font
-            && m_position.SquareDistance(other.m_position) < 1e-6
-            && m_text == other.m_text
-            && m_aspect == other.m_aspect;
+        && m_position.SquareDistance(other.m_position) < 1e-6
+        && m_text == other.m_text
+        && m_aspect == other.m_aspect;
   }
 
   const char* m_font;
@@ -110,9 +110,9 @@ public:
   Handle_Prs3d_TextAspect m_aspect;
 };
 
-} // Anonymous namespace
-
 } // namespace internal
+
+//! \endcond
 
 class occ_AIS_Text::Private
 {

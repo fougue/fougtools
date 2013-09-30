@@ -5,7 +5,7 @@
 
 namespace math {
 
-//! \cond include_internal_implementation
+//! \cond INCLUDE_INTERNAL
 namespace __impl
 {
 template<typename T>

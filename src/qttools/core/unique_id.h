@@ -40,7 +40,7 @@
 
 #include "core.h"
 
-#include <limits>
+#include <climits>
 
 namespace qttools {
 
@@ -52,7 +52,7 @@ public:
     int id;
     bool isValid;
   };
-  static RegisterResult registerId(int min, int max = std::numeric_limits<int>::max());
+  static RegisterResult registerId(int min, int max = INT_MAX);
   static bool isRegistered(int id);
 };
 

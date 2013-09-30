@@ -263,6 +263,7 @@ Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator/=(Num
 }
 
 // Operator <
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 bool operator<(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
@@ -273,6 +274,7 @@ bool operator<(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
 }
 
 // Operator >
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 bool operator>(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
@@ -284,6 +286,7 @@ bool operator>(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
 
 // Operator +
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator+(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
@@ -291,6 +294,7 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator+(const Quantity<NUMERIC_TRAITS, T
   return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) += rhs;
 }
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator+(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 typename NUMERIC_TRAITS::Type k)
@@ -298,6 +302,7 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator+(const Quantity<NUMERIC_TRAITS, T
   return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) += k;
 }
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator+(typename NUMERIC_TRAITS::Type k,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
@@ -307,6 +312,7 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator+(typename NUMERIC_TRAITS::Type k,
 
 // Operator -
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator-(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
@@ -314,6 +320,7 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator-(const Quantity<NUMERIC_TRAITS, T
   return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) -= rhs;
 }
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator-(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 typename NUMERIC_TRAITS::Type k)
@@ -321,6 +328,7 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator-(const Quantity<NUMERIC_TRAITS, T
   return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) -= k;
 }
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator-(typename NUMERIC_TRAITS::Type k,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
@@ -330,6 +338,7 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator-(typename NUMERIC_TRAITS::Type k,
 
 // Operator *
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator*(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
@@ -337,6 +346,7 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator*(const Quantity<NUMERIC_TRAITS, T
   return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) *= rhs;
 }
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator*(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 typename NUMERIC_TRAITS::Type k)
@@ -344,6 +354,7 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator*(const Quantity<NUMERIC_TRAITS, T
   return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) *= k;
 }
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator*(typename NUMERIC_TRAITS::Type k,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
@@ -353,6 +364,7 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator*(typename NUMERIC_TRAITS::Type k,
 
 // Operator /
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator/(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
@@ -360,6 +372,7 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator/(const Quantity<NUMERIC_TRAITS, T
   return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) /= rhs;
 }
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator/(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 typename NUMERIC_TRAITS::Type k)
@@ -367,6 +380,7 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator/(const Quantity<NUMERIC_TRAITS, T
   return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) /= k;
 }
 
+//! \relates Quantity
 template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator/(typename NUMERIC_TRAITS::Type k,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)

@@ -83,8 +83,6 @@ IMPLEMENT_STANDARD_TYPE_END(occ_AIS_Text)
 
 // --- Handle/Body Implementation
 
-//! \cond INCLUDE_INTERNAL
-
 namespace internal {
 
 class TextProperties
@@ -111,8 +109,6 @@ public:
 };
 
 } // namespace internal
-
-//! \endcond
 
 class occ_AIS_Text::Private
 {

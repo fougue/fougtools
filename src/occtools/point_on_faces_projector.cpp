@@ -57,8 +57,6 @@
 
 namespace occ {
 
-//! \cond INCLUDE_INTERNAL
-
 //! TODO From OCC Forum :
 //! try using DBRep_IsoBuilder to generate isolines representing your face.
 //! Load the isolines into a DBRep_Face. Then, you can query the isolines to get
@@ -137,8 +135,6 @@ private:
 static const TopoDS_Face dummyFace;
 
 } // namespace internal
-
-//! \endcond
 
 class PointOnFacesProjector::Private
 {

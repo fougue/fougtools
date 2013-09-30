@@ -61,8 +61,6 @@ namespace qttools {
  * length() and setLength() use values in millimeter (mm).
  */
 
-// -- Lifecycle
-
 AbstractLengthEditor::AbstractLengthEditor()
   : m_prefMetricUnit(MillimeterUnit),
     m_prefImperialUnit(InchUnit)
@@ -75,10 +73,12 @@ AbstractLengthEditor::~AbstractLengthEditor()
   LengthEditorManager::globalInstance()->detach(this);
 }
 
-// -- Query
-
 /*! \fn double AbstractLengthEditor::length() const
  *  \brief Length in millimeter (mm)
+ */
+
+/*! \fn void AbstractLengthEditor::setLength(double)
+ *  \brief Set the length in millimeter (mm) to be edited
  */
 
 /*! \brief Length unit used when the metric measurement system is currently active
@@ -110,12 +110,6 @@ void AbstractLengthEditor::setPreferredImperialUnit(ImperialUnit unit)
   m_prefImperialUnit = unit;
   this->updateEditor(internal::currMeasurementSys());
 }
-
-// -- Element change
-
-/*! \fn void AbstractLengthEditor::setLength(double)
- *  \brief Set the length (in millimeter (mm)) to be edited
- */
 
 /*! \brief Called by LengthEditorManager when the current measurement system was switched to another
  *         one

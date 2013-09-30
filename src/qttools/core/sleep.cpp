@@ -56,15 +56,29 @@ public:
 
 } // namespace internal
 
-/*! \brief Cause the current thread to sleep for \p msecs milliseconds
+/*!
+ * \brief Cause the current thread to sleep for \p msecs milliseconds
  *
  *  Internally based on QThread::msleep()
+ *
+ * \sa waitForMSec()
+ *
+ * \headerfile sleep.h <qttools/core/sleep.h>
  */
 void mSecSleep(unsigned msec)
 {
   internal::SleepTool::milliSleep(msec);
 }
 
+/*!
+ * \brief Waits until \p msec milliseconds have elapsed
+ *
+ * Internally a QEventLoop is used, so the Qt event system is not blocked while waiting
+ *
+ * \sa mSecSleep()
+ *
+ * \headerfile sleep.h <qttools/core/sleep.h>
+ */
 void waitForMSec(unsigned msec)
 {
   if (msec > 0) {

@@ -42,6 +42,7 @@ namespace qttools {
 /*!
  * \class QStringLocaleAwareEqual
  * \brief Functor wrapper around QString::localeAwareCompare(lhs, rhs) == 0
+ *
  * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
  * \ingroup qttools_core
  */
@@ -54,6 +55,7 @@ bool QStringLocaleAwareEqual::operator()(const QString &lhs, const QString &rhs)
 /*!
  * \class QStringLocaleAwareNotEqual
  * \brief Functor wrapper around QString::localeAwareCompare(lhs, rhs) != 0
+ *
  * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
  * \ingroup qttools_core
  */
@@ -66,6 +68,7 @@ bool QStringLocaleAwareNotEqual::operator()(const QString &lhs, const QString &r
 /*!
  * \class QStringLocaleAwareLess
  * \brief Functor wrapper around QString::localeAwareCompare(lhs, rhs) < 0
+ *
  * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
  * \ingroup qttools_core
  */
@@ -78,6 +81,7 @@ bool QStringLocaleAwareLess::operator()(const QString& lhs, const QString& rhs) 
 /*!
  * \class QStringLocaleAwareLessEqual
  * \brief Functor wrapper around QString::localeAwareCompare(lhs, rhs) <= 0
+ *
  * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
  * \ingroup qttools_core
  */
@@ -90,6 +94,7 @@ bool QStringLocaleAwareLessEqual::operator()(const QString &lhs, const QString &
 /*!
  * \class QStringLocaleAwareGreater
  * \brief Functor wrapper around QString::localeAwareCompare(lhs, rhs) > 0
+ *
  * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
  * \ingroup qttools_core
  */
@@ -102,6 +107,7 @@ bool QStringLocaleAwareGreater::operator()(const QString &lhs, const QString &rh
 /*!
  * \class QStringLocaleAwareGreaterEqual
  * \brief Functor wrapper around QString::localeAwareCompare(lhs, rhs) > 0
+ *
  * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
  * \ingroup qttools_core
  */

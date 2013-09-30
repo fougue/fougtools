@@ -60,6 +60,15 @@ CONTAINER<QVariant> toContainerOfVariants(const CONTAINER<T>& typeds);
 
 namespace qttools {
 
+/*! \brief Converts a container of QVariant to a container of typed data (\c T)
+ *
+ * The container can be of any type (std::list<>, QVector<>, ...) the only restriction is that it
+ * must satisfy the concept of Back Insertion Sequence (see http://www.sgi.com/tech/stl/BackInsertionSequence.html)
+ *
+ * \sa toContainerOfVariants()
+ *
+ * \headerfile qvariant_tools.h <qttools/core/qvariant_tools.h>
+ */
 template<typename T, template <typename> class CONTAINER>
 CONTAINER<T> toTypedContainer(const CONTAINER<QVariant>& variants)
 {
@@ -70,6 +79,15 @@ CONTAINER<T> toTypedContainer(const CONTAINER<QVariant>& variants)
   return typeds;
 }
 
+/*! \brief Converts a container of typed data (\c T) to a container of QVariant
+ *
+ * The container can be of any type (std::list<>, QVector<>, ...) the only restriction is that it
+ * must satisfy the concept of Back Insertion Sequence (see http://www.sgi.com/tech/stl/BackInsertionSequence.html)
+ *
+ * \sa toTypedContainer()
+ *
+ * \headerfile qvariant_tools.h <qttools/core/qvariant_tools.h>
+ */
 template<typename T, template <typename> class CONTAINER>
 CONTAINER<QVariant> toContainerOfVariants(const CONTAINER<T>& typeds)
 {

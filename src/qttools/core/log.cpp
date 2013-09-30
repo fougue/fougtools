@@ -84,6 +84,7 @@ Log::Stream::Stream(MessageType mType)
 /*!
  * \class Log
  * \brief Provides an easy-to-use output stream for logging
+ *
  * \headerfile log.h <qttools/core/log.h>
  * \ingroup qttools_core
  *
@@ -276,6 +277,7 @@ Log fatalLog()
 /*!
  * \class AbstractLogHandler
  * \brief Abstract base class of all logging message handlers
+ *
  * \headerfile log.h <qttools/core/log.h>
  * \ingroup qttools_core
  */
@@ -342,6 +344,7 @@ void detachGlobalLogHandler(AbstractLogHandler* handler)
 /*!
  * \class LogDispatcher
  * \brief Dispatches a logging message as a Qt signal
+ *
  * \headerfile log.h <qttools/core/log.h>
  * \ingroup qttools_core
  */

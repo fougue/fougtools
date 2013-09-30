@@ -58,10 +58,26 @@ Q_GLOBAL_STATIC(internal::UniqueIdRegistration, uniqueIdRegistrationHelper)
 
 /*!
  * \class UniqueId
- * \brief
+ * \brief Provides services around creation of (app execution scope) unique indexes
  *
  * \headerfile unique_id.h <qttools/core/unique_id.h>
  * \ingroup qttools_core
+ *
+ */
+
+/*!
+ * \struct UniqueId::RegisterResult
+ * \brief Stores the result of UniqueId::registerId()
+ */
+
+/*!
+ * \brief Registers a new unique index.
+ *
+ * Returns a value between \p min and \p max that has not yet been registered.
+ *
+ * This is a generalization of QEvent::registerEventType()
+ *
+ * \note This function is thread-safe.
  *
  */
 UniqueId::RegisterResult UniqueId::registerId(int min, int max)
@@ -91,6 +107,7 @@ UniqueId::RegisterResult UniqueId::registerId(int min, int max)
    return result;
 }
 
+//! Has \p id already been registered with UniqueId::registerId() ?
 bool UniqueId::isRegistered(int id)
 {
   internal::UniqueIdRegistration* reg = uniqueIdRegistrationHelper();

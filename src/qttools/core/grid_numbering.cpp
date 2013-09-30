@@ -98,6 +98,30 @@ void GridNumbering::setSweepMode(SweepMode sweepMode)
   m_sweepMode = sweepMode;
 }
 
+/*!
+ * \brief Computes all the indexes of a grid's cells
+ *
+ * The result is an array of grid rows (each row being of the same size).\n
+ * For example:
+ *   \li GridNumbering(Qt::TopRightCorner, Qt::Vertical, GridNumbering::OneWay)
+ *   \li rowCount = colCount = 4
+ *   \li startIndex = 0
+ *
+ * will output:
+ * \code
+ *   row[0] == { 12   8  4  0 }
+ *   row[1] == { 13   9  5  1 }
+ *   row[2] == { 14  10  6  2 }
+ *   row[3] == { 15  11  7  3 }
+ * \endcode
+ *
+ * \note: Let N = \p rowCount and M = \p colCount , complexity is O(NxM)
+ *
+ * \param gridNb How grid cells have to be numbered
+ * \param rowCount Count of rows in the grid
+ * \param colCount Count of columns in the grid
+ * \param startIndex The first index to start from (usually 0 or 1)
+ */
 QVector< QVector<int> > GridNumbering::gridIndexes(const GridNumbering& gridNb,
                                                    int rowCount, int colCount,
                                                    int startIndex)

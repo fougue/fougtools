@@ -68,6 +68,22 @@ Binder<FUNCTOR1> bind(FUNCTOR1 functor1, typename FUNCTOR1::argument_type arg);
 // -- Implementation
 // --
 
+/*! \class Binder
+ *  \brief Function object adaptor used to transform an adaptable unary function into an adaptable
+ *         parameterless function
+ *
+ *  Specifically, if \c f is an object of class \c Binder<AdaptableUnaryFunction>,
+ *  then \c f() returns \c F(c), where \c F is an object of class
+ *  \c AdaptableUnaryFunction and where \c c is a constant. Both \c F and \c c
+ *  are passed as arguments to binder's constructor.
+ *
+ *  The easiest way to create a cpp::Binder is not to call the constructor
+ *  explicitly, but instead to use the helper function cpp::bind.
+ *
+ * \headerfile functional.h <cpptools/functional.h>
+ * \ingroup cpptools
+ */
+
 template<typename FUNCTOR1>
 Binder<FUNCTOR1>::Binder(FUNCTOR1 functor1, functor_argument_type arg)
   : m_functor1(functor1), m_arg(arg)

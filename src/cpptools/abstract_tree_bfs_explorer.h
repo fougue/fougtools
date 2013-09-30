@@ -72,6 +72,14 @@ private:
 // -- Implementation
 // --
 
+/*!
+ * \class AbstractTreeBfsExplorer
+ * \brief Generic base class for the exploration of trees using BFS (breadt-first search) algorithm
+ *
+ * \headerfile abstract_tree_bfs_explorer.h <cpptools/abstract_tree_bfs_explorer.h>
+ * \ingroup cpptools
+ */
+
 template<class NODE>
 AbstractTreeBfsExplorer<NODE>::AbstractTreeBfsExplorer()
   : m_current(static_cast<NODE*>(NULL)),
@@ -84,6 +92,7 @@ AbstractTreeBfsExplorer<NODE>::~AbstractTreeBfsExplorer()
 {
 }
 
+//! Prepares exploration to start from tree \p node
 template<class NODE>
 void AbstractTreeBfsExplorer<NODE>::begin(NODE* node)
 {
@@ -100,6 +109,7 @@ void AbstractTreeBfsExplorer<NODE>::begin(NODE* node)
   this->goNext();
 }
 
+//! Move exploration to the next tree node
 template<class NODE>
 void AbstractTreeBfsExplorer<NODE>::goNext()
 {
@@ -113,7 +123,8 @@ void AbstractTreeBfsExplorer<NODE>::goNext()
   m_current = m_levelNodes.front();
   m_levelNodes.pop();
 
-  if (previous != static_cast<const NODE*>(NULL) && m_current != static_cast<const NODE*>(NULL)
+  if (previous != static_cast<const NODE*>(NULL)
+      && m_current != static_cast<const NODE*>(NULL)
       && this->isCurrentDeeper(previous))
   {
     ++m_depth;
@@ -123,18 +134,21 @@ void AbstractTreeBfsExplorer<NODE>::goNext()
     this->enqueueNodeChildren(m_current);
 }
 
+//! Is exploration beyond the last tree node (ended) ?
 template<class NODE>
 bool AbstractTreeBfsExplorer<NODE>::atEnd() const
 {
   return m_current == static_cast<const NODE*>(NULL);
 }
 
+//! Current explored tree node
 template<class NODE>
 NODE* AbstractTreeBfsExplorer<NODE>::current() const
 {
   return m_current;
 }
 
+//! Depth of the current tree node
 template<class NODE>
 unsigned AbstractTreeBfsExplorer<NODE>::depth() const
 {
@@ -146,6 +160,18 @@ void AbstractTreeBfsExplorer<NODE>::enqueueNode(NODE* node)
 {
   m_levelNodes.push(node);
 }
+
+/*!
+ * \fn bool AbstractTreeBfsExplorer::isCurrentDeeper(const NODE*) const
+ * \brief Is current tree node deeper (depth value) than tree node \p previous ?
+ */
+
+/*!
+ * \fn void AbstractTreeBfsExplorer::enqueueNodeChildren(NODE*)
+ * \brief Enqueue all first-level (direct) children of tree node \p parentNode
+ *
+ * Use enqueueNode() to enqueue each child tree node.
+ */
 
 } // namespace cpp
 

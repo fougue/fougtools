@@ -86,6 +86,8 @@ create a small test program that shows the problem when run.
  
  */
 
+/*! \defgroup cpptools CppTools
+ */
 
 /*! \defgroup qttools_core QtTools Core
  */

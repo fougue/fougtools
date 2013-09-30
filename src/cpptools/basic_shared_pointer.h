@@ -68,6 +68,23 @@ private:
 // Implementation
 //
 
+/*!
+ * \class BasicSharedPointer
+ * \brief Provides basic sharing of a pointer
+ *
+ * BasicSharedPointer is an automatic, shared pointer in C++. It behaves exactly like a normal
+ * pointer for normal purposes, including respect for constness.
+ *
+ * BasicSharedPointer will delete the pointer it is holding when it goes out of scope, provided no
+ * other BasicSharedPointer objects are referencing it.
+ *
+ * "Basic" means that there is no thread-safety or any sophisticated management. It aims to stay
+ * light for simple uses.
+ *
+ * \headerfile basic_shared_pointer.h <cpptools/basic_shared_pointer.h>
+ * \ingroup cpptools
+ */
+
 template<typename T>
 BasicSharedPointer<T>::BasicSharedPointer(T* data)
   : m_data(data),

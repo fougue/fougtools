@@ -45,10 +45,19 @@
 
 namespace cpp {
 
-// Based on "CALLBACKS IN C++ USING TEMPLATE FUNCTORS" by Rich Hickey
-// http://www.tutok.sk/fastgl/callback.html
+/*!
+ * \class FunctorBase
+ * \brief Typeless representation of a function and optional object
+ *
+ * Based on "CALLBACKS IN C++ USING TEMPLATE FUNCTORS" by Rich Hickey
+ * http://www.tutok.sk/fastgl/callback.html
+ *
+ * Don't use this class directly, use Functor0, Functor1 and Functor2 instead.
+ *
+ * \headerfile functor.h <cpptools/functor.h>
+ * \ingroup cpptools
+ */
 
-//! Typeless representation of a function and optional object
 class FunctorBase{
 public:
   typedef void (FunctorBase::*MemberFunctionPtr)();
@@ -89,7 +98,14 @@ public:
 };
 
 
-//! Functor1
+/*!
+ * \class Functor1
+ * \brief Unary (single argument) functors that can be called as f(x)
+ *
+ * \headerfile functor.h <cpptools/functor.h>
+ * \ingroup cpptools
+ */
+
 template <typename RESULT_TYPE, typename ARG_TYPE>
 class Functor1 : protected FunctorBase
 {
@@ -153,7 +169,14 @@ private:
   Thunk m_thunk;
 };
 
-//! Functor2
+/*!
+ * \class Functor2
+ * \brief Binary (two arguments) functors that can be called as f(x,y)
+ *
+ * \headerfile functor.h <cpptools/functor.h>
+ * \ingroup cpptools
+ */
+
 template <typename RESULT_TYPE, typename ARG1_TYPE, typename ARG2_TYPE>
 class Functor2 : protected FunctorBase
 {
@@ -219,6 +242,7 @@ private:
   Thunk m_thunk;
 };
 
+//! @cond INCLUDE_INTERNAL
 namespace internal {
 
 template<typename RESULT_TYPE>
@@ -270,8 +294,19 @@ private:
 };
 
 } // namespace internal
+//! @endcond
 
-//! Functor0
+/*!
+ * \class Functor0
+ * \brief Generator (no argument) functors that can be called as f()
+ *
+ * Functor0 also provides Functor1 and Functor2 arguments binding, e.g. a Functor1 can be
+ * transformed to a Functor0, its argument is considered then as a constant.
+ *
+ * \headerfile functor.h <cpptools/functor.h>
+ * \ingroup cpptools
+ */
+
 template <typename RESULT_TYPE>
 class Functor0 : protected FunctorBase
 {

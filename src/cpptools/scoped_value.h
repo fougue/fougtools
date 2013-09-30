@@ -59,6 +59,15 @@ typedef ScopedValue<bool> ScopedBool;
 // -- Implementation
 // --
 
+/*!
+ *\class ScopedValue
+ * \brief Allows to change the value of a variable during the current scope, upon destruction, the
+ *        original value is restored
+ *
+ * \headerfile scoped_value.h <cpptools/scoped_value.h>
+ * \ingroup cpptools
+ */
+
 template<typename T>
 ScopedValue<T>::ScopedValue(T &variable, T scopeValue)
   : m_orgValue(variable),

@@ -115,7 +115,7 @@ void GridNumbering::setSweepMode(SweepMode sweepMode)
  *   row[3] == { 15  11  7  3 }
  * \endcode
  *
- * \note: Let N = \p rowCount and M = \p colCount , complexity is O(NxM)
+ * \note Let N = \p rowCount and M = \p colCount , complexity is O(NxM)
  *
  * \param gridNb How grid cells have to be numbered
  * \param rowCount Count of rows in the grid

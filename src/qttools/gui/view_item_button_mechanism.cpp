@@ -47,6 +47,8 @@
 #include <QToolTip>
 #include <QStyledItemDelegate>
 
+#include "../../cpptools/memory_utils.h"
+
 namespace qttools {
 
 /*! \class ViewItemButtonMechanismPrivate
@@ -203,6 +205,36 @@ void ViewItemButtonMechanism::Private::resetButtonUnderMouseState()
  * \class ViewItemButtonMechanism
  * \brief Provides buttons integrated to items displayed by QAbstractItemView
  *
+ * Example:
+ * \code
+ *   // Let's suppose we have some demo tabular data with a "Customer" column
+ *   // We want to allow the user to delete customers through a button integrated to the view item
+ *   // that shows up when the mouse is over a "customer" model item
+ *
+ *   static const int customerItemTag = 100;
+ *
+ *   QStandardItemModel* model = ...;
+ *   QStandardItem* customerItem = new QStandardItem;
+ *   customerItem->setData(customerItemTag, Qt::UserRole + 1);
+ *   // Add more items ...
+ *
+ *   QTableView* tableView = ...;
+ *   tableView->setModel(model);
+ *
+ *   qttools::ViewItemButtonMechanism* tableBtns = new qttools::ViewItemButtonMechanism(tableView);
+ *
+ *   QIcon deleteCustomerIcon(":/images/delete.png");
+ *   deleteCustomerIcon.addPixmap(QPixmap(":/images/delete__active.png"), QIcon::Active);
+ *   tableBtns->addButton(1, deleteCustomerIcon, tr("Delete customer"));
+ *   tableBtns->setButtonDetection(1, Qt::UserRole + 1, customerItemTag);
+ *   tableBtns->setButtonDisplayColumn(1, 0); // If "Customer" is in column 0
+ *   tableBtns->setButtonDisplayModes(1, ViewItemButtonMechanism::DisplayOnDetection);
+ *   tableBtns->setButtonToolTip(1, tr("Delete this customer"));
+ *
+ *   tableBtns->installDefaultItemDelegate();
+ *
+ * \endcode
+ *
  * \headerfile view_item_button_mechanism.h <qttools/gui/view_item_button_mechanism.h>
  * \ingroup qttools_gui
  */
@@ -328,10 +360,19 @@ void ViewItemButtonMechanism::paint(QPainter *painter,
   }
 }
 
+/*!
+ * \brief Add a button to be furthered configured with setButtonXxx() functions
+ * \param btnId Index of the button (used later to reference the button)
+ * \param icon Icon of the button (ViewItemButtonMechanism supports QIcon:::Active which can be used
+ *             to display an highlighted pixmap when the mouse is hovering the button)
+ * \param toolTip Tool-tip to be displayed when the mouse stays over the button
+ *
+ *  Does nothing if button index \p btnId is already used by some other button.
+ */
 void ViewItemButtonMechanism::addButton(int btnId, const QIcon &icon, const QString &toolTip)
 {
   if (d->m_btnInfos.contains(btnId)) {
-    qWarning() << QString("%1 : there is already a button of index '%2'").arg(btnId);
+    qWarning() << QString("%1 : there is already a button of index '%2'").arg(Q_FUNC_INFO).arg(btnId);
     return;
   }
 
@@ -346,38 +387,162 @@ void ViewItemButtonMechanism::addButton(int btnId, const QIcon &icon, const QStr
   d->m_btnInfos.insert(btnId, info);
 }
 
+/*!
+ * \brief Copy all properties of a button into another
+ * \param srcBtnId Index of the source button
+ * \param dstBtnId Index of the destination button
+ */
+void ViewItemButtonMechanism::copyButtonProperties(int srcBtnId, int dstBtnId)
+{
+  if (srcBtnId == dstBtnId)
+    return;
+
+  const Private::ButtonInfo* srcBtnInfo = d->buttonInfo(srcBtnId);
+  Private::ButtonInfo* dstBtnInfo = d->mutableButtonInfo(dstBtnId);
+
+  if (srcBtnInfo == NULL) {
+    qWarning() << QString("%1 : no source button of index '%1'").arg(Q_FUNC_INFO).arg(srcBtnId);
+    return;
+  }
+  else if (dstBtnInfo == NULL) {
+    qWarning() << QString("%1 : no destination button of index '%1'").arg(Q_FUNC_INFO).arg(dstBtnId);
+    return;
+  }
+
+  *dstBtnInfo = *srcBtnInfo;
+  dstBtnInfo->index = dstBtnId; // Restore destination button index
+}
+
+/*!
+ * \brief The role used when matching item data for button detection
+ * \param btnId Index of the button
+ * \returns -1 If button does not exist
+ * \sa buttonDetectionMatchData()
+ */
+int ViewItemButtonMechanism::buttonDetectionMatchRole(int btnId) const
+{
+  const Private::ButtonInfo* btnInfo = d->buttonInfo(btnId);
+  return btnInfo != NULL ? btnInfo->matchRole : -1;
+}
+
+/*!
+ * \brief The data to be matched for button detection
+ * \param btnId Index of the button
+ * \returns QVariant() If button does not exist
+ */
+QVariant ViewItemButtonMechanism::buttonDetectionMatchData(int btnId) const
+{
+  const Private::ButtonInfo* btnInfo = d->buttonInfo(btnId);
+  return btnInfo != NULL ? btnInfo->matchData : QVariant();
+}
+
 void ViewItemButtonMechanism::setButtonDetection(int btnId, int matchRole, const QVariant &matchData)
 {
-  if (d->m_btnInfos.contains(btnId)) {
-    d->mutableButtonInfo(btnId)->matchRole = matchRole;
-    d->mutableButtonInfo(btnId)->matchData = matchData;
+  Private::ButtonInfo* btnInfo = d->mutableButtonInfo(btnId);
+  if (btnInfo != NULL) {
+    btnInfo->matchRole = matchRole;
+    btnInfo->matchData = matchData;
   }
+}
+
+/*!
+ * \brief Index of the view column where the button is displayed (when detected)
+ * \param btnId Index of the button
+ * \returns -1 If button does not exist
+ */
+int ViewItemButtonMechanism::buttonDisplayColumn(int btnId) const
+{
+  const Private::ButtonInfo* btnInfo = d->buttonInfo(btnId);
+  return btnInfo != NULL ? btnInfo->displayColumn : -1;
 }
 
 void ViewItemButtonMechanism::setButtonDisplayColumn(int btnId, int col)
 {
-  if (d->m_btnInfos.contains(btnId))
-    d->mutableButtonInfo(btnId)->displayColumn = col;
+  cpp::checkedAssign(&Private::ButtonInfo::displayColumn, d->mutableButtonInfo(btnId), col);
+}
+
+/*!
+ * \brief Side in the item's cell where the button is displayed
+ * \param btnId Index of the button
+ * \returns -1 If button does not exist
+ */
+int ViewItemButtonMechanism::buttonItemSide(int btnId) const
+{
+  const Private::ButtonInfo* btnInfo = d->buttonInfo(btnId);
+  return btnInfo != NULL ? btnInfo->itemSide : -1;
 }
 
 void ViewItemButtonMechanism::setButtonItemSide(int btnId, ItemSide side)
 {
-  if (d->m_btnInfos.contains(btnId))
-    d->mutableButtonInfo(btnId)->itemSide = side;
+  cpp::checkedAssign(&Private::ButtonInfo::itemSide, d->mutableButtonInfo(btnId), side);
+}
+
+/*!
+ * \brief Display modes of the button
+ * \param btnId Index of the button
+ * \returns DisplayModes() If button does not exist
+ */
+ViewItemButtonMechanism::DisplayModes ViewItemButtonMechanism::buttonDisplayModes(int btnId) const
+{
+  const Private::ButtonInfo* btnInfo = d->buttonInfo(btnId);
+  return btnInfo != NULL ? btnInfo->itemDisplayModes : DisplayModes();
 }
 
 void ViewItemButtonMechanism::setButtonDisplayModes(int btnId, DisplayModes modes)
 {
-  if (d->m_btnInfos.contains(btnId))
-    d->mutableButtonInfo(btnId)->itemDisplayModes = modes;
+  cpp::checkedAssign(&Private::ButtonInfo::itemDisplayModes, d->mutableButtonInfo(btnId), modes);
+}
+
+/*!
+ * \brief Icon of the button
+ * \param btnId Index of the button
+ * \returns QIcon() If button does not exist
+ */
+QIcon ViewItemButtonMechanism::buttonIcon(int btnId) const
+{
+  const Private::ButtonInfo* btnInfo = d->buttonInfo(btnId);
+  return btnInfo != NULL ? btnInfo->icon : QIcon();
+}
+
+void ViewItemButtonMechanism::setButtonIcon(int btnId, const QIcon &icon)
+{
+  cpp::checkedAssign(&Private::ButtonInfo::icon, d->mutableButtonInfo(btnId), icon);
+}
+
+/*!
+ * \brief Icon size of the button
+ * \param btnId Index of the button
+ * \returns QSize() If button does not exist
+ */
+QSize ViewItemButtonMechanism::buttonIconSize(int btnId) const
+{
+  const Private::ButtonInfo* btnInfo = d->buttonInfo(btnId);
+  return btnInfo != NULL ? btnInfo->iconSize : QSize();
 }
 
 void ViewItemButtonMechanism::setButtonIconSize(int btnId, const QSize &size)
 {
-  if (d->m_btnInfos.contains(btnId))
-    d->mutableButtonInfo(btnId)->iconSize = size;
+  cpp::checkedAssign(&Private::ButtonInfo::iconSize, d->mutableButtonInfo(btnId), size);
 }
 
+/*!
+ * \brief Tool-tip of the button
+ * \param btnId Index of the button
+ * \returns QString() If button does not exist
+ */
+QString ViewItemButtonMechanism::buttonToolTip(int btnId) const
+{
+  const Private::ButtonInfo* btnInfo = d->buttonInfo(btnId);
+  return btnInfo != NULL ? btnInfo->toolTip : QString();
+}
+
+void ViewItemButtonMechanism::setButtonToolTip(int btnId, const QString &toolTip)
+{
+  cpp::checkedAssign(&Private::ButtonInfo::toolTip, d->mutableButtonInfo(btnId), toolTip);
+}
+
+/*! \brief Install a delegate for the attached view item, allowing the button mechanism to work
+ */
 void ViewItemButtonMechanism::installDefaultItemDelegate()
 {
   if (d->m_view == NULL)
@@ -385,6 +550,13 @@ void ViewItemButtonMechanism::installDefaultItemDelegate()
   d->m_view->setItemDelegate(this->createProxyItemDelegate(NULL));
 }
 
+/*!
+ * \brief Create a proxy delegate around \p sourceDelegate to be further installed with
+ *        QAbstractItemView::setItemDelegate()
+ *
+ *  This is useful when you have a delegate for an item view but for some reason don't want to
+ *  modify it to integrate with ViewItemButtonMechanism
+ */
 QStyledItemDelegate*
 ViewItemButtonMechanism::createProxyItemDelegate(QStyledItemDelegate *sourceDelegate,
                                                  QObject *parent) const

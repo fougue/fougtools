@@ -58,6 +58,7 @@ class QTTOOLS_GUI_EXPORT ViewItemButtonMechanism : public QObject
   Q_OBJECT
 
 public:
+  // Types
   enum ItemSide
   {
     ItemLeftSide,
@@ -70,23 +71,45 @@ public:
     DisplayPermanent = 0x02,
     DisplayWhenItemSelected = 0x04
   };
-  Q_DECLARE_FLAGS(DisplayModes, DisplayMode)
+  typedef QFlags<DisplayMode> DisplayModes;
 
+  // Ctor & dtor
   ViewItemButtonMechanism(QAbstractItemView* view, QObject* parent = NULL);
   ~ViewItemButtonMechanism();
 
+  // View control
   QAbstractItemView* itemView() const;
 
   bool eventFilter(QObject *object, QEvent *event);
   void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
-  void addButton(int btnId, const QIcon& icon, const QString& toolTip = QString());
+  // Button management
+  void addButton(int btnId, const QIcon& icon = QIcon(), const QString& toolTip = QString());
+  void copyButtonProperties(int srcBtnId, int dstBtnId);
+
+  int buttonDetectionMatchRole(int btnId) const;
+  QVariant buttonDetectionMatchData(int btnId) const;
   void setButtonDetection(int btnId, int matchRole, const QVariant& matchData);
+
+  int buttonDisplayColumn(int btnId) const;
   void setButtonDisplayColumn(int btnId, int col = -1);
+
+  int buttonItemSide(int btnId) const;
   void setButtonItemSide(int btnId, ItemSide side);
+
+  DisplayModes buttonDisplayModes(int btnId) const;
   void setButtonDisplayModes(int btnId, DisplayModes modes);
+
+  QIcon buttonIcon(int btnId) const;
+  void setButtonIcon(int btnId, const QIcon& icon);
+
+  QSize buttonIconSize(int btnId) const;
   void setButtonIconSize(int btnId, const QSize& size);
 
+  QString buttonToolTip(int btnId) const;
+  void setButtonToolTip(int btnId, const QString& toolTip);
+
+  // Delegates
   void installDefaultItemDelegate();
   QStyledItemDelegate* createProxyItemDelegate(QStyledItemDelegate *sourceDelegate,
                                                QObject* parent = NULL) const;

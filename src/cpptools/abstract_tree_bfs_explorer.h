@@ -74,7 +74,7 @@ private:
 
 /*!
  * \class AbstractTreeBfsExplorer
- * \brief Generic base class for the exploration of trees using BFS (breadt-first search) algorithm
+ * \brief Generic base class for the exploration of trees using BFS (breadth-first search) algorithm
  *
  * \headerfile abstract_tree_bfs_explorer.h <cpptools/abstract_tree_bfs_explorer.h>
  * \ingroup cpptools

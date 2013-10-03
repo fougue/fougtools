@@ -64,6 +64,13 @@ void checkedAssign(T* pointer, T value)
     *pointer = value;
 }
 
+template<typename CALL_VALUE_TYPE, typename VALUE_TYPE, typename CLASS>
+void checkedAssign(VALUE_TYPE CLASS::*attrMember, CLASS* object, CALL_VALUE_TYPE value)
+{
+  if (object != NULL && attrMember != NULL)
+    object->*attrMember = value;
+}
+
 } // namespace cpp
 
 #endif // CPPTOOLS_MEMORY_UTILS_H

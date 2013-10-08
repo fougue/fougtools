@@ -82,8 +82,31 @@ your operating system; the version of FougTools you are using, and
 what configure options it was compiled with.
 
 If the problem you are reporting is only visible at run-time, try to
-create a small test program that shows the problem when run. 
- 
+create a small test program that shows the problem when run.
+
+\section codingstyle_sec CODING STYLE
+
+The coding style is borrowed from Qt-Creator:
+  http://doc-snapshot.qt-project.org/qtcreator-extending/coding-style.html
+
+With these exceptions:
+  \li Formatting/Whitespace: two spaces instead of four
+  \li Formatting/Capitalizing Identifiers: namespace names begin with a lower case letter
+  \li Use this pattern for pimpl class:
+       \code
+       class Foo
+       {
+       public:
+         Foo();
+         // API ...
+
+       private:
+         class Private;
+         Private* const d;
+       };
+       \endcode
+       This has the advantage to not have to forward declare the Private class outside Foo
+
  */
 
 /*! \defgroup cpptools CppTools

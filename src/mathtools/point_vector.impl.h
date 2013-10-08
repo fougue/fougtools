@@ -37,10 +37,6 @@
 
 #ifdef BITS_GEOM_POINT_VECTOR_H
 
-/*! \class Point
- *  \brief
- */
-
 // --- Construction
 
 template<typename T, unsigned S>
@@ -49,8 +45,8 @@ Point<T, S>::Point()
 }
 
 template<typename T, unsigned S>
-Point<T, S>::Point(const Self_t& other) :
-  Super_t(other)
+Point<T, S>::Point(const Self_t& other)
+  : Super_t(other)
 {
 }
 
@@ -89,9 +85,8 @@ template<typename T, unsigned S>
 T Point<T, S>::distL2Square(const Self_t& other) const
 {
   T result = static_cast<T>(0);
-  for (unsigned i = 0; i < S; i++)
-  {
-    T d = this->_vector[i] - other[i];
+  for (unsigned i = 0; i < S; i++) {
+    T d = Super_t::m_vector[i] - other[i];
     result += d * d;
   }
   assert(result >= 0 && "positive_distance");
@@ -124,13 +119,13 @@ Point2<T>::Point2()
 template<typename T>
 Point2<T>::Point2(const T& vx, const T& vy)
 {
-  this->_vector[0] = vx;
-  this->_vector[1] = vy;
+  Super_t::m_vector[0] = vx;
+  Super_t::m_vector[1] = vy;
 }
 
 template<typename T>
-Point2<T>::Point2(const Super_t& other) :
-  Super_t(other)
+Point2<T>::Point2(const Super_t& other)
+  : Super_t(other)
 {
 }
 
@@ -139,20 +134,20 @@ Point2<T>::Point2(const Super_t& other) :
 template<typename T>
 const T& Point2<T>::x() const
 {
-  return this->_vector[0];
+  return Super_t::m_vector[0];
 }
 
 
 template<typename T>
 const T& Point2<T>::y() const
 {
-  return this->_vector[1];
+  return Super_t::m_vector[1];
 }
 
 template<typename T>
 const T& Point2<T>::theta() const
 {
-  return this->_vector[1];
+  return Super_t::m_vector[1];
 }
 
 // --- Element change
@@ -167,26 +162,26 @@ Point2<T>& Point2<T>::operator=(const Self_t & other)
 template<typename T>
 void Point2<T>::setX(const T& v)
 {
-  this->_vector[0] = v;
+  Super_t::m_vector[0] = v;
 }
 
 template<typename T>
 void Point2<T>::setY(const T& v)
 {
-  this->_vector[1] = v;
+  Super_t::m_vector[1] = v;
 }
 
 template<typename T>
 void Point2<T>::setTheta(const T& v)
 {
-  this->_vector[1] = v;
+  Super_t::m_vector[1] = v;
 }
 
 template<typename T>
 void Point2<T>::setXy(const T& vx, const T& vy)
 {
-  this->_vector[0] = vx;
-  this->_vector[1] = vy;
+  Super_t::m_vector[0] = vx;
+  Super_t::m_vector[1] = vy;
 }
 
 /*! \class Point3
@@ -203,14 +198,14 @@ Point3<T>::Point3()
 template<typename T>
 Point3<T>::Point3(const T& vx, const T& vy, const T& vz)
 {
-  this->_vector[0] = vx;
-  this->_vector[1] = vy;
-  this->_vector[2] = vz;
+  Super_t::m_vector[0] = vx;
+  Super_t::m_vector[1] = vy;
+  Super_t::m_vector[2] = vz;
 }
 
 template<typename T>
-Point3<T>::Point3(const Super_t& other) :
-  Super_t(other)
+Point3<T>::Point3(const Super_t& other)
+  : Super_t(other)
 {
 }
 
@@ -219,19 +214,19 @@ Point3<T>::Point3(const Super_t& other) :
 template<typename T>
 const T& Point3<T>::x() const
 {
-  return this->_vector[0];
+  return Super_t::m_vector[0];
 }
 
 template<typename T>
 const T& Point3<T>::y() const
 {
-  return this->_vector[1];
+  return Super_t::m_vector[1];
 }
 
 template<typename T>
 const T& Point3<T>::z() const
 {
-  return this->_vector[2];
+  return Super_t::m_vector[2];
 }
 
 // --- Element change
@@ -246,27 +241,27 @@ Point3<T>& Point3<T>::operator=(const Self_t & other)
 template<typename T>
 void Point3<T>::setX(const T& v)
 {
-  this->_vector[0] = v;
+  Super_t::m_vector[0] = v;
 }
 
 template<typename T>
 void Point3<T>::setY(const T& v)
 {
-  this->_vector[1] = v;
+  Super_t::m_vector[1] = v;
 }
 
 template<typename T>
 void Point3<T>::setZ(const T& v)
 {
-  this->_vector[2] = v;
+  Super_t::m_vector[2] = v;
 }
 
 template<typename T>
 void Point3<T>::setXyz(const T& vx, const T& vy, const T& vz)
 {
-  this->_vector[0] = vx;
-  this->_vector[1] = vy;
-  this->_vector[2] = vz;
+  Super_t::m_vector[0] = vx;
+  Super_t::m_vector[1] = vy;
+  Super_t::m_vector[2] = vz;
 }
 
 /*! \class Vector
@@ -281,8 +276,8 @@ Vector<T, S>::Vector()
 }
 
 template<typename T, unsigned S>
-Vector<T, S>::Vector(const Self_t& other) :
-  Super_t(other)
+Vector<T, S>::Vector(const Self_t& other)
+  : Super_t(other)
 {
 }
 
@@ -311,7 +306,7 @@ T Vector<T, S>::squareNorm() const
 {
   T result = static_cast<T>(0);
   for (unsigned i = 0; i < S; ++i)
-    result += this->_vector[i] * this->_vector[i];
+    result += Super_t::m_vector[i] * Super_t::m_vector[i];
   return result;
 }
 
@@ -329,14 +324,14 @@ void Vector<T, S>::normalize()
 {
   const T n = this->norm();
   for (unsigned i = 0; i < S; ++i)
-    this->_vector[i] /= n;
+    Super_t::m_vector[i] /= n;
 }
 
 template<typename T, unsigned S>
 void Vector<T, S>::reverse()
 {
   for (unsigned i = 0; i < S; ++i)
-    this->_vector[i] = -this->_vector[i];
+    Super_t::m_vector[i] = -Super_t::m_vector[i];
 }
 
 
@@ -515,13 +510,13 @@ Vector2<T>::Vector2()
 template<typename T>
 Vector2<T>::Vector2(const T& vx, const T& vy)
 {
-  this->_vector[0] = vx;
-  this->_vector[1] = vy;
+  Super_t::m_vector[0] = vx;
+  Super_t::m_vector[1] = vy;
 }
 
 template<typename T>
-Vector2<T>::Vector2(const Super_t& other) :
-  Super_t(other)
+Vector2<T>::Vector2(const Super_t& other)
+  : Super_t(other)
 {
 }
 
@@ -530,20 +525,20 @@ Vector2<T>::Vector2(const Super_t& other) :
 template<typename T>
 const T& Vector2<T>::x() const
 {
-  return this->_vector[0];
+  return Super_t::m_vector[0];
 }
 
 
 template<typename T>
 const T& Vector2<T>::y() const
 {
-  return this->_vector[1];
+  return Super_t::m_vector[1];
 }
 
 template<typename T>
 const T& Vector2<T>::theta() const
 {
-  return this->_vector[1];
+  return Super_t::m_vector[1];
 }
 
 // --- Element change
@@ -558,26 +553,26 @@ Vector2<T>& Vector2<T>::operator=(const Self_t & other)
 template<typename T>
 void Vector2<T>::setX(const T& v)
 {
-  this->_vector[0] = v;
+  Super_t::m_vector[0] = v;
 }
 
 template<typename T>
 void Vector2<T>::setY(const T& v)
 {
-  this->_vector[1] = v;
+  Super_t::m_vector[1] = v;
 }
 
 template<typename T>
 void Vector2<T>::setTheta(const T& v)
 {
-  this->_vector[1] = v;
+  Super_t::m_vector[1] = v;
 }
 
 template<typename T>
 void Vector2<T>::setXy(const T& vx, const T& vy)
 {
-  this->_vector[0] = vx;
-  this->_vector[1] = vy;
+  Super_t::m_vector[0] = vx;
+  Super_t::m_vector[1] = vy;
 }
 
 template<typename T>
@@ -587,16 +582,14 @@ T angle2(const Vector<T, 2>& v1, const Vector<T, 2>& v2)
   const Vector<T, 2> nv2(v2.normalized());
   const double cosinus = nv1 * nv2;
   const double sinus = nv1[0] * nv2[1] - nv1[1] * nv2[0];
-  if (cosinus > -math::pi / 4. && cosinus < math::pi / 4.)
-  {
+  if (cosinus > -math::pi / 4. && cosinus < math::pi / 4.) {
     return sinus > 0. ? std::acos(cosinus) : -std::acos(cosinus);
   }
-  else
-  {
-    if (cosinus > 0.)
+  else {
+    if (cosinus > 0.) {
       return std::asin(sinus);
-    else
-    {
+    }
+    else {
       if (sinus > 0.)
         return math::pi - std::asin(sinus);
       else
@@ -619,14 +612,14 @@ Vector3<T>::Vector3()
 template<typename T>
 Vector3<T>::Vector3(const T& vx, const T& vy, const T& vz)
 {
-  this->_vector[0] = vx;
-  this->_vector[1] = vy;
-  this->_vector[2] = vz;
+  Super_t::m_vector[0] = vx;
+  Super_t::m_vector[1] = vy;
+  Super_t::m_vector[2] = vz;
 }
 
 template<typename T>
-Vector3<T>::Vector3(const Super_t& other) :
-  Super_t(other)
+Vector3<T>::Vector3(const Super_t& other)
+  : Super_t(other)
 {
 }
 
@@ -635,19 +628,19 @@ Vector3<T>::Vector3(const Super_t& other) :
 template<typename T>
 const T& Vector3<T>::x() const
 {
-  return this->_vector[0];
+  return Super_t::m_vector[0];
 }
 
 template<typename T>
 const T& Vector3<T>::y() const
 {
-  return this->_vector[1];
+  return Super_t::m_vector[1];
 }
 
 template<typename T>
 const T& Vector3<T>::z() const
 {
-  return this->_vector[2];
+  return Super_t::m_vector[2];
 }
 
 // --- Element change
@@ -662,27 +655,27 @@ Vector3<T>& Vector3<T>::operator=(const Self_t & other)
 template<typename T>
 void Vector3<T>::setX(const T& v)
 {
-  this->_vector[0] = v;
+  Super_t::m_vector[0] = v;
 }
 
 template<typename T>
 void Vector3<T>::setY(const T& v)
 {
-  this->_vector[1] = v;
+  Super_t::m_vector[1] = v;
 }
 
 template<typename T>
 void Vector3<T>::setZ(const T& v)
 {
-  this->_vector[2] = v;
+  Super_t::m_vector[2] = v;
 }
 
 template<typename T>
 void Vector3<T>::setXyz(const T& vx, const T& vy, const T& vz)
 {
-  this->_vector[0] = vx;
-  this->_vector[1] = vy;
-  this->_vector[2] = vz;
+  Super_t::m_vector[0] = vx;
+  Super_t::m_vector[1] = vy;
+  Super_t::m_vector[2] = vz;
 }
 
 template<typename T>
@@ -691,12 +684,10 @@ T angle3(const Vector<T, 3>& v1, const Vector<T, 3>& v2)
   const Vector<T, 3> nv1(v1.normalized());
   const Vector<T, 3> nv2(v2.normalized());
   const double cosinus = nv1 * nv2;
-  if (cosinus > -math::pi / 4. && cosinus < math::pi / 4.)
-  {
+  if (cosinus > -math::pi / 4. && cosinus < math::pi / 4.) {
     return std::acos(cosinus);
   }
-  else
-  {
+  else {
     const double sinus = (nv1 ^ nv2).norm();
     if (cosinus < 0.)
       return math::pi - std::asin(sinus);
@@ -723,51 +714,48 @@ Vector<T, 3> operator^(const Vector<T, 3>& v1, const Vector<T, 3>& v2)
 // ---
 
 template<typename T>
-void PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::normalize(
-    geom::Vector3<T>* v)
+void PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::normalize(geom::Vector3<T>* v)
 {
   assert(v != 0);
   v->normalize();
 }
 
 template<typename T>
-geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >
-::cross(const geom::Vector3<T>& u, const geom::Vector3<T>& v)
+geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::cross(const geom::Vector3<T>& u,
+                                                                          const geom::Vector3<T>& v)
 {
   return u ^ v;
 }
 
 template<typename T>
-T PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::dot(
-    const geom::Vector3<T>& u, const geom::Vector3<T>& v)
+T PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::dot(const geom::Vector3<T>& u,
+                                                         const geom::Vector3<T>& v)
 {
   return u * v;
 }
 
 template<typename T>
-geom::Point3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::
-translate(const geom::Point3<T>& p, const geom::Vector3<T>& v)
+geom::Point3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::translate(const geom::Point3<T>& p,
+                                                                             const geom::Vector3<T>& v)
 {
   return p + v;
 }
 
 template<typename T>
-geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::
-vector(const geom::Point3<T>& p1, const geom::Point3<T>& p2)
+geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::vector(const geom::Point3<T>& p1,
+                                                                           const geom::Point3<T>& p2)
 {
   return Vec_t(p2.x() - p1.x(), p2.y() - p1.y(), p2.z() - p1.z());
 }
 
 template<typename T>
-geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::
-vector(const Pnt_t& p)
+geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::vector(const Pnt_t& p)
 {
   return Vec_t(p.x(), p.y(), p.z());
 }
 
 template<typename T>
-geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::
-mult(Value_t k, const Vec_t& v)
+geom::Vector3<T> PntVecTraits< geom::Point3<T>, geom::Vector3<T> >::mult(Value_t k, const Vec_t& v)
 {
   return k * v;
 }

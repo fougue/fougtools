@@ -41,7 +41,7 @@
 #include "consts.h"
 #include "point_vector_fwd.h"
 #include "pnt_vec_traits_def.h"
-#include "fixed_array.h"
+#include "../cpptools/fixed_array.h"
 #include <cassert>
 #include <cmath>
 
@@ -51,11 +51,11 @@ namespace geom {
 // --- class Point<>
 // ---
 template<typename T, unsigned S>
-class Point : public structs::FixedArray<T, S>
+class Point : public cpp::FixedArray<T, S>
 {
 private:
   typedef Point<T, S> Self_t;
-  typedef structs::FixedArray<T, S> Super_t;
+  typedef cpp::FixedArray<T, S> Super_t;
 
 public:
   Point<T, S>();
@@ -128,11 +128,11 @@ public:
 // --- class Vector<>
 // ---
 template<typename T, unsigned S>
-class Vector : public structs::FixedArray<T, S>
+class Vector : public cpp::FixedArray<T, S>
 {
 private:
   typedef Vector<T, S> Self_t;
-  typedef structs::FixedArray<T, S> Super_t;
+  typedef cpp::FixedArray<T, S> Super_t;
 
 public:
   Vector<T, S>();

@@ -43,9 +43,9 @@
 namespace cpp {
 
 template <typename T>
-size_t scalarAddress(const T* pointer)
+std::size_t scalarAddress(const T* pointer)
 {
-  return reinterpret_cast<size_t>(pointer);
+  return reinterpret_cast<std::size_t>(pointer);
 }
 
 template<typename T>

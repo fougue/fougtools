@@ -9,7 +9,8 @@
 
 int main(int argc, char** argv)
 {
-  QCoreApplication app(argc, argv); Q_UNUSED(app);
+  QCoreApplication app(argc, argv);
+  Q_UNUSED(app);
 
   // Parse command line
   QStringList argList;
@@ -28,5 +29,4 @@ int main(int argc, char** argv)
     std::cout << exitCode << " failed" << std::endl;
   qDeleteAll(testObjects);
   return exitCode;
-
 }

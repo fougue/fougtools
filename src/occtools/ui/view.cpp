@@ -200,11 +200,12 @@ void View::Private::initialize()
     Handle_Aspect_DisplayConnection dispConnection = m_context->CurrentViewer()->Driver()->GetDisplayConnection();
     Handle_Xw_Window hWnd = new Xw_Window(dispConnection, winHandle);
 #endif
-    m_internalView->SetWindow(hWnd);
+    m_internalView->SetWindow(hWnd, NULL, &paintCallBack, this);
     if (!hWnd->IsMapped())
       hWnd->Map();
 
-    m_internalView->SetBgGradientColors(occ::rgbColor(128, 147, 255), occ::rgbColor(255, 255, 255),
+    m_internalView->SetBgGradientColors(occ::rgbColor(128, 147, 255),
+                                        occ::rgbColor(255, 255, 255),
                                         Aspect_GFM_VER);
 
     m_internalView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER,

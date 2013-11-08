@@ -78,6 +78,9 @@ public:
   Log& operator<<(const char*);
   Log& operator<<(const QString&);
 
+  template <typename T>
+  Log& operator<<(const T* ptr);
+
   static void registerMetaTypes();
 
 private:
@@ -130,6 +133,16 @@ public:
 signals:
   void log(qttools::Log::MessageType msgType, const QString& msg);
 };
+
+// --
+// -- Implementation
+// --
+
+template <typename T>
+Log& Log::operator<<(const T* ptr)
+{
+  return *this << QString("0x%1").arg(reinterpret_cast<std::size_t>(ptr), 0, 16);
+}
 
 } // namespace qttools
 

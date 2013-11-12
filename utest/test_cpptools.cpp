@@ -1,5 +1,6 @@
 #include "test_cpptools.h"
 
+#include "../src/cpptools/basic_shared_pointer.h"
 #include "../src/cpptools/functor.h"
 #include "../src/cpptools/quantity.h"
 #include <QtCore/QScopedPointer>
@@ -46,6 +47,44 @@ int func1(double v)
 
 int func2(float v, double w)
 { return qRound(v + w) * 2; }
+
+struct DeleteHook
+{
+  DeleteHook(int valOnDelete, int* spyInt)
+    : m_spyInt(spyInt),
+      m_valOnDelete(valOnDelete)
+  { }
+
+  ~DeleteHook()
+  { *m_spyInt = m_valOnDelete; }
+
+private:
+  int* m_spyInt;
+  const int m_valOnDelete;
+};
+
+void TestCppTools::BasicSharedPointer_test()
+{
+  int spyHint = 0;
+  {
+    DeleteHook* delHook = new DeleteHook(-1, &spyHint);
+    cpp::BasicSharedPointer<DeleteHook> sharedPtr(delHook);
+  }
+  QCOMPARE(spyHint, -1);
+
+  spyHint = 0;
+  {
+    DeleteHook* delHook = new DeleteHook(-1, &spyHint);
+    cpp::BasicSharedPointer<DeleteHook> sharedPtr(delHook);
+    QCOMPARE(sharedPtr.data(), delHook);
+
+    cpp::BasicSharedPointer<DeleteHook> sharedPtr1;
+    QVERIFY(sharedPtr1.isNull());
+    sharedPtr1 = sharedPtr;
+    QCOMPARE(sharedPtr1.data(), delHook);
+  }
+  QCOMPARE(spyHint, -1);
+}
 
 void TestCppTools::Functor_test()
 {

@@ -136,7 +136,6 @@ template<typename T>
 BasicSharedPointer<T>& BasicSharedPointer<T>::operator=(const BasicSharedPointer<T>& other)
 {
   if (this != &other) {
-    this->releaseRef();
     m_data = other.m_data;
     m_refCount = other.m_refCount;
     this->addRef();
@@ -157,6 +156,8 @@ void BasicSharedPointer<T>::releaseRef()
   if (*m_refCount == 0) {
     delete m_data;
     delete m_refCount;
+    m_data = NULL;
+    m_refCount = NULL;
   }
 }
 

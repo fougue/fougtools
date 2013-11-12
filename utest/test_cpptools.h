@@ -8,6 +8,7 @@ class TestCppTools : public QObject
   Q_OBJECT
 
 private slots:
+  void BasicSharedPointer_test();
   void Functor_test();
 
   void Quantity_test();

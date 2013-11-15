@@ -43,28 +43,29 @@ knowledge of the CeCILL-C license and that you accept its terms.
 
 
 \section install_sec INSTALLING FougTools
-
-Create a file named _local_config.pri in folder qmake.build and define
-the following variables, depending on your needs:
-  \code
+Create a file named _local_config.pri in the folder where FougTools will
+be built and define the following variables, depending on your needs:
+\code
   PREFIX_DIR = ../gcc-linux64  # Everything will be installed here
   CONFIG *= occtools  # If you want to build occtools (optional)
   CONFIG *= use_oce   # If you want OpenCascade Community edition (OCE)
   CASCADE_ROOT = /path/to/opencascade
-  \endcode
+\endcode
 
-Or use Ruby script qmake.build/configure.rb
-Type "ruby configure.rb -h" for help.
+Or use Ruby script qmake/configure.rb, print help with:
+\code
+  ruby $FOUGTOOLS/qmake/configure.rb -h
+\endcode
 
 Note that on Windows, qmake can complain about deprecated warnings for
 backslash '\' characters.
 So you may have to escape backslashes like C:\\path\\to\\opencascade
 
-Once configuration is done, then from within sub-folder qmake.build:
-  \code
-  qmake -r
+Once configuration is done, then type: 
+\code
+  qmake -r $FOUGTOOLS/qmake/fougtools.pro
   (n)make
-  \endcode
+\endcode
 
 
 \section reportbug_sec HOW TO REPORT A BUG

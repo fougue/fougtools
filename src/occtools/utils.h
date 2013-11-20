@@ -89,6 +89,14 @@ gp_Pnt toOccPoint3d(const geom::Point3<T>& p);
 template<typename T>
 gp_Vec toOccVector3d(const geom::Vector3<T>& p);
 
+OCCTOOLS_EXPORT Standard_Real euclideanNorm(const gp_Vec& vec);
+OCCTOOLS_EXPORT Standard_Real squaredEuclideanNorm(const gp_Vec& vec);
+OCCTOOLS_EXPORT Standard_Real manhattanNorm(const gp_Vec& vec);
+OCCTOOLS_EXPORT Standard_Real maximumNorm(const gp_Vec& vec);
+
+template<typename NORM>
+bool isNull(const gp_Vec& vec, const NORM& norm);
+
 // --- String conversion
 OCCTOOLS_EXPORT std::string shapeToString(const TopoDS_Shape& shape);
 OCCTOOLS_EXPORT TopoDS_Shape shapeFromString(const std::string& str);
@@ -140,5 +148,17 @@ template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d);
 
 #include "utils.impl.h"
+
+
+
+// --
+// -- Implementation
+// --
+
+template<typename NORM>
+bool isNull(const gp_Vec& vec, const NORM& norm)
+{
+  return norm(vec) <= 0.000000000001;
+}
 
 #endif // OCC_UTILS_H

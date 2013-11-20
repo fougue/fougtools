@@ -38,6 +38,7 @@
 #include "utils.h"
 
 #include <cassert>
+#include <cmath>
 #include <sstream>
 
 #include <AIS_InteractiveContext.hxx>
@@ -197,6 +198,26 @@ gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
     return v1.Crossed(v2);
   }
   return v1;
+}
+
+Standard_Real euclideanNorm(const gp_Vec &vec)
+{
+  return std::sqrt(squaredEuclideanNorm(vec));
+}
+
+Standard_Real squaredEuclideanNorm(const gp_Vec &vec)
+{
+  return vec.X() * vec.X() + vec.Y() * vec.Y() + vec.Z() * vec.Z();
+}
+
+Standard_Real manhattanNorm(const gp_Vec &vec)
+{
+  return std::fabs(vec.X()) + std::fabs(vec.Y()) + std::fabs(vec.Z());
+}
+
+Standard_Real maximumNorm(const gp_Vec &vec)
+{
+  return std::max(std::fabs(vec.X()), std::max(std::fabs(vec.Y()), std::fabs(vec.Z())));
 }
 
 } // namespace occ

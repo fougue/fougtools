@@ -86,14 +86,7 @@ public:
 private:
   Log& operator=(const Log& other); // disabled
 
-  struct Stream
-  {
-    Stream(MessageType mType);
-    MessageType msgType;
-    QString buffer;
-    QTextStream ts;
-    int refCount;
-  };
+  struct Stream;
   Stream* m_stream;
 };
 

@@ -69,13 +69,22 @@ static void handleLogMessage(qttools::Log::MessageType msgType, const QString& m
 
 } // namespace internal
 
-/*! \class Log::Stream
+/*! \struct Log::Stream
  *  \brief Encapsulates a reference-counted QTextStream so a Log object can be quickly copied
  */
 
-Log::Stream::Stream(MessageType mType)
+struct Log::Stream
+{
+  Stream(MessageType mType);
+  Log::MessageType msgType;
+  QString buffer;
+  QTextStream ts;
+  int refCount;
+};
+
+
+Log::Stream::Stream(Log::MessageType mType)
   : msgType(mType),
-    buffer(),
     ts(&buffer),
     refCount(1)
 {

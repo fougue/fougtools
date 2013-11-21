@@ -47,7 +47,7 @@ HEADERS += \
     $$PWD/indexed_selection_model.h \
     $$PWD/item_view_tools.h \
     $$PWD/length_double_spinbox.h \
-    $$PWD/length_editor_manager.h \
+    $$PWD/quantity_editor_manager.h \
     $$PWD/line_edit_with_auto_tool_tip.h \
     $$PWD/line_numbers_bar.h \
     $$PWD/measurement_system_preferences.h \
@@ -58,7 +58,8 @@ HEADERS += \
     $$PWD/tree_combo_box.h \
     $$PWD/view_item_button_mechanism.h \
     $$PWD/wait_dialog.h \
-    $$PWD/widget_tools.h
+    $$PWD/widget_tools.h \
+    $$PWD/abstract_quantity_editor.h
 
 SOURCES += \
     $$PWD/abstract_length_editor.cpp \
@@ -66,7 +67,7 @@ SOURCES += \
     $$PWD/indexed_selection_model.cpp \
     $$PWD/item_view_tools.cpp \
     $$PWD/length_double_spinbox.cpp \
-    $$PWD/length_editor_manager.cpp \
+    $$PWD/quantity_editor_manager.cpp \
     $$PWD/line_edit_with_auto_tool_tip.cpp \
     $$PWD/line_numbers_bar.cpp \
     $$PWD/measurement_system_preferences.cpp \
@@ -77,7 +78,8 @@ SOURCES += \
     $$PWD/tree_combo_box.cpp \
     $$PWD/view_item_button_mechanism.cpp \
     $$PWD/wait_dialog.cpp \
-    $$PWD/widget_tools.cpp
+    $$PWD/widget_tools.cpp \
+    $$PWD/abstract_quantity_editor.cpp
 
 HEADERS += $$PWD/../core/task.h
 SOURCES += $$PWD/../core/task.cpp

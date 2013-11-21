@@ -35,56 +35,29 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_ABSTRACT_LENGTH_EDITOR_H
-#define QTTOOLS_ABSTRACT_LENGTH_EDITOR_H
+#ifndef QTTOOLS_ABSTRACT_QUANTITY_EDITOR_H
+#define QTTOOLS_ABSTRACT_QUANTITY_EDITOR_H
 
 #include "gui.h"
-#include "abstract_quantity_editor.h"
+#include <QtCore/QLocale>
 
 namespace qttools {
 
-class QTTOOLS_GUI_EXPORT AbstractLengthEditor : public AbstractQuantityEditor
+class QTTOOLS_GUI_EXPORT AbstractQuantityEditor
 {
 public:
-  enum MetricUnit
-  {
-    MeterUnit,
-    CentimeterUnit,
-    MillimeterUnit
-  };
+  AbstractQuantityEditor();
+  virtual ~AbstractQuantityEditor();
 
-  enum ImperialUnit
-  {
-    InchUnit,
-    FootUnit,
-    YardUnit
-  };
+  virtual double qtyValue() const = 0;
+  virtual void setQtyValue(double v) = 0;
 
-  AbstractLengthEditor();
+  virtual void updateEditor(QLocale::MeasurementSystem newSys);
 
-  double qtyValue() const;
-  void setQtyValue(double v);
-
-  virtual double length() const = 0;
-  virtual void setLength(double v) = 0;
-
-  MetricUnit preferredMetricUnit() const;
-  virtual void setPreferredMetricUnit(MetricUnit unit);
-
-  ImperialUnit preferredImperialUnit() const;
-  virtual void setPreferredImperialUnit(ImperialUnit unit);
-
-  // -- Utilities
-  static QString unitText(MetricUnit unit);
-  static QString unitText(ImperialUnit unit);
-  static double asMetricLength(double len, MetricUnit unit);
-  static double asImperialLength(double len, ImperialUnit unit);
-
-private:
-  MetricUnit m_prefMetricUnit;
-  ImperialUnit m_prefImperialUnit;
+protected:
+  QLocale::MeasurementSystem measurementSystem() const;
 };
 
 } // namespace qttools
 
-#endif // QTTOOLS_ABSTRACT_LENGTH_EDITOR_H
+#endif // QTTOOLS_ABSTRACT_QUANTITY_EDITOR_H

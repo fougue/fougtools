@@ -37,18 +37,9 @@
 
 #include "abstract_length_editor.h"
 
-#include "length_editor_manager.h"
+#include "quantity_editor_manager.h"
 
 namespace qttools {
-
-namespace internal {
-
-static QLocale::MeasurementSystem currMeasurementSys()
-{
-  return qttools::LengthEditorManager::globalInstance()->measurementSytem();
-}
-
-} // namespace internal
 
 /*!
  * \class AbstractLengthEditor
@@ -65,12 +56,16 @@ AbstractLengthEditor::AbstractLengthEditor()
   : m_prefMetricUnit(MillimeterUnit),
     m_prefImperialUnit(InchUnit)
 {
-  LengthEditorManager::globalInstance()->attach(this);
 }
 
-AbstractLengthEditor::~AbstractLengthEditor()
+double AbstractLengthEditor::qtyValue() const
 {
-  LengthEditorManager::globalInstance()->detach(this);
+  return this->length();
+}
+
+void AbstractLengthEditor::setQtyValue(double v)
+{
+  this->setLength(v);
 }
 
 /*! \fn double AbstractLengthEditor::length() const
@@ -93,7 +88,7 @@ AbstractLengthEditor::MetricUnit AbstractLengthEditor::preferredMetricUnit() con
 void AbstractLengthEditor::setPreferredMetricUnit(MetricUnit unit)
 {
   m_prefMetricUnit = unit;
-  this->updateEditor(internal::currMeasurementSys());
+  this->updateEditor(this->measurementSystem());
 }
 
 /*! \brief Length unit used when the imperial measurement system is currently active
@@ -108,17 +103,7 @@ AbstractLengthEditor::ImperialUnit AbstractLengthEditor::preferredImperialUnit()
 void AbstractLengthEditor::setPreferredImperialUnit(ImperialUnit unit)
 {
   m_prefImperialUnit = unit;
-  this->updateEditor(internal::currMeasurementSys());
-}
-
-/*! \brief Called by LengthEditorManager when the current measurement system was switched to another
- *         one
- *
- *  Does nothing by default
- */
-void AbstractLengthEditor::updateEditor(QLocale::MeasurementSystem newSys)
-{
-  Q_UNUSED(newSys);
+  this->updateEditor(this->measurementSystem());
 }
 
 // -- Utilities

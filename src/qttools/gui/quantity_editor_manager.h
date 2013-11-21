@@ -35,8 +35,8 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_LENGTH_EDITOR_MANAGER_H
-#define QTTOOLS_LENGTH_EDITOR_MANAGER_H
+#ifndef QTTOOLS_QUANTITY_EDITOR_MANAGER_H
+#define QTTOOLS_QUANTITY_EDITOR_MANAGER_H
 
 #include "gui.h"
 #include <QtCore/QLocale>
@@ -44,20 +44,23 @@
 
 namespace qttools {
 
-class AbstractLengthEditor;
+class AbstractQuantityEditor;
 
-class QTTOOLS_GUI_EXPORT LengthEditorManager : public QObject
+namespace internal { class QuantityEditorManagerCreator; }
+
+class QTTOOLS_GUI_EXPORT QuantityEditorManager : public QObject
 {
   Q_OBJECT
 
 private:
-  LengthEditorManager();
+  QuantityEditorManager();
+  ~QuantityEditorManager();
 
-  void attach(AbstractLengthEditor* editor);
-  void detach(AbstractLengthEditor* editor);
+  void attach(AbstractQuantityEditor* editor);
+  void detach(AbstractQuantityEditor* editor);
 
 public:
-  static LengthEditorManager* globalInstance();
+  static QuantityEditorManager* globalInstance();
 
   QLocale::MeasurementSystem measurementSytem() const;
   void setMeasurementSystem(QLocale::MeasurementSystem sys);
@@ -66,11 +69,12 @@ signals:
   void currentMeasurementSytemChanged(QLocale::MeasurementSystem sys);
 
 private:
-  friend class AbstractLengthEditor;
-  QSet<AbstractLengthEditor*> m_lengthEditors;
+  friend class internal::QuantityEditorManagerCreator;
+  friend class AbstractQuantityEditor;
+  QSet<AbstractQuantityEditor*> m_qtyEditors;
   QLocale::MeasurementSystem m_measureSys;
 };
 
 } // namespace qttools
 
-#endif // QTTOOLS_LENGTH_EDITOR_MANAGER_H
+#endif // QTTOOLS_QUANTITY_EDITOR_MANAGER_H

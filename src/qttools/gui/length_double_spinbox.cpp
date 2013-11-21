@@ -38,16 +38,11 @@
 #include "length_double_spinbox.h"
 
 #include "../../cpptools/scoped_value.h"
-#include "length_editor_manager.h"
+#include "quantity_editor_manager.h"
 
 namespace qttools {
 
 namespace internal {
-
-static QLocale::MeasurementSystem currMeasurementSys()
-{
-  return qttools::LengthEditorManager::globalInstance()->measurementSytem();
-}
 
 static double toMmValue(double v, qttools::LengthDoubleSpinBox::MetricUnit unit)
 {
@@ -117,7 +112,7 @@ LengthDoubleSpinBox::LengthDoubleSpinBox(QWidget* parent)
   : QDoubleSpinBox(parent),
     d(new Private)
 {
-  this->updateEditor(internal::currMeasurementSys());
+  this->updateEditor(this->measurementSystem());
   connect(this, SIGNAL(valueChanged(double)), this, SLOT(onValueChanged(double)));
 }
 
@@ -131,8 +126,8 @@ double LengthDoubleSpinBox::length() const
   if (!d->m_valueHasChanged)
     return d->m_orgLengthMm;
 
-  const double v = this->value();
-  switch (internal::currMeasurementSys()) {
+  const double v = QDoubleSpinBox::value();
+  switch (this->measurementSystem()) {
   case QLocale::MetricSystem:   return internal::toMmValue(v, this->preferredMetricUnit());
 #if QT_VERSION >= 0x050000
   case QLocale::ImperialUKSystem:
@@ -147,8 +142,10 @@ void LengthDoubleSpinBox::setLength(double v)
   d->m_orgLengthMm = v;
   d->m_valueHasChanged = false;
 
-  cpp::ScopedBool sb(d->m_isInternalUpdateContext, true); Q_UNUSED(sb);
-  switch (internal::currMeasurementSys()) {
+  cpp::ScopedBool sb(d->m_isInternalUpdateContext, true);
+  Q_UNUSED(sb);
+
+  switch (this->measurementSystem()) {
   case QLocale::MetricSystem:
     this->setValue(AbstractLengthEditor::asMetricLength(v, this->preferredMetricUnit()));
     break;
@@ -163,7 +160,8 @@ void LengthDoubleSpinBox::setLength(double v)
 
 void LengthDoubleSpinBox::updateEditor(QLocale::MeasurementSystem newSys)
 {
-  cpp::ScopedBool sb(d->m_isInternalUpdateContext, true); Q_UNUSED(sb);
+  cpp::ScopedBool sb(d->m_isInternalUpdateContext, true);
+  Q_UNUSED(sb);
 
   const double oldLengthMm = this->length();
   double newLengthUnit = 0.;

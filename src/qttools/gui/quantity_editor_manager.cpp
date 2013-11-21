@@ -35,59 +35,75 @@
 **
 ****************************************************************************/
 
-#include "length_editor_manager.h"
+#include "quantity_editor_manager.h"
 
-#include "abstract_length_editor.h"
-#include <memory>
+#include "abstract_quantity_editor.h"
 
 namespace qttools {
 
+namespace internal {
+
+class QuantityEditorManagerCreator : public QuantityEditorManager
+{
+public:
+  QuantityEditorManagerCreator()
+  { }
+
+  ~QuantityEditorManagerCreator()
+  { }
+};
+
+} // namespace internal
+
 /*!
- * \class LengthEditorManager
- * \brief Manages a set of AbstractLengthEditor objects that will get notified when the current
+ * \class QuantityEditorManager
+ * \brief Manages a set of AbstractQuantityEditor objects that will get notified when the current
  *        measurement system is changed
  *
- * \headerfile length_editor_manager.h <qttools/gui/length_editor_manager.h>
+ * \headerfile quantity_editor_manager.h <qttools/gui/quantity_editor_manager.h>
  * \ingroup qttools_gui
  */
 
-LengthEditorManager::LengthEditorManager()
+QuantityEditorManager::QuantityEditorManager()
   : m_measureSys(QLocale::MetricSystem)
 {
 }
 
-void LengthEditorManager::attach(AbstractLengthEditor* editor)
+QuantityEditorManager::~QuantityEditorManager()
+{
+}
+
+void QuantityEditorManager::attach(AbstractQuantityEditor* editor)
 {
   if (editor != NULL)
-    m_lengthEditors.insert(editor);
+    m_qtyEditors.insert(editor);
 }
 
-void LengthEditorManager::detach(AbstractLengthEditor* editor)
+void QuantityEditorManager::detach(AbstractQuantityEditor* editor)
 {
   if (editor != NULL)
-    m_lengthEditors.remove(editor);
+    m_qtyEditors.remove(editor);
 }
 
-LengthEditorManager* LengthEditorManager::globalInstance()
+Q_GLOBAL_STATIC(internal::QuantityEditorManagerCreator, globalCoreInstance)
+
+QuantityEditorManager* QuantityEditorManager::globalInstance()
 {
-  static std::auto_ptr<LengthEditorManager> gManager;
-  if (gManager.get() == NULL)
-    gManager.reset(new LengthEditorManager);
-  return gManager.get();
+  return globalCoreInstance();
 }
 
-QLocale::MeasurementSystem LengthEditorManager::measurementSytem() const
+QLocale::MeasurementSystem QuantityEditorManager::measurementSytem() const
 {
   return m_measureSys;
 }
 
-void LengthEditorManager::setMeasurementSystem(QLocale::MeasurementSystem sys)
+void QuantityEditorManager::setMeasurementSystem(QLocale::MeasurementSystem sys)
 {
   if (sys == m_measureSys)
     return;
 
-  foreach (AbstractLengthEditor* lengthEditor, m_lengthEditors)
-    lengthEditor->updateEditor(sys);
+  foreach (AbstractQuantityEditor* qtyEditor, m_qtyEditors)
+    qtyEditor->updateEditor(sys);
   m_measureSys = sys;
   emit currentMeasurementSytemChanged(sys);
 }

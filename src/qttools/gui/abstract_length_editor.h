@@ -35,8 +35,8 @@
 **
 ****************************************************************************/
 
-#ifndef QTOOLS_ABSTRACT_LENGTH_EDITOR_H
-#define QTOOLS_ABSTRACT_LENGTH_EDITOR_H
+#ifndef QTTOOLS_ABSTRACT_LENGTH_EDITOR_H
+#define QTTOOLS_ABSTRACT_LENGTH_EDITOR_H
 
 #include "gui.h"
 #include <QtCore/QLocale>
@@ -89,4 +89,4 @@ private:
 
 } // namespace qttools
 
-#endif // QTOOLS_ABSTRACT_LENGTH_EDITOR_H
+#endif // QTTOOLS_ABSTRACT_LENGTH_EDITOR_H

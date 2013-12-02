@@ -155,10 +155,14 @@ TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d);
 // -- Implementation
 // --
 
+namespace occ {
+
 template<typename NORM>
 bool isNull(const gp_Vec& vec, const NORM& norm)
 {
   return norm(vec) <= 0.000000000001;
 }
+
+} // namespace occ
 
 #endif // OCC_UTILS_H

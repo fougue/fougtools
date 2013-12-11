@@ -40,8 +40,8 @@ QTTOOLS_LIB_PATH = $$PREFIX_DIR/lib
 OCCTOOLS_INC_PATH = $$PREFIX_DIR/include
 OCCTOOLS_LIB_PATH = $$PREFIX_DIR/lib
 CONFIG(debug, debug|release) {
-    TARGET_SUFFIX = .debug
+    TARGET_SUFFIX = _d
 } else {
-    TARGET_SUFFIX = .release
+    TARGET_SUFFIX =
 }
 CONFIG *= build_all debug_and_release

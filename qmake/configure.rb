@@ -69,8 +69,6 @@ def printHelp()
   puts "      *  --no-occtools .............. Do not compile occtools"
   puts "         --occtools ................. Compile occtools"
   puts "                                      Requires OpenCascade (see --occ-dir)"
-  puts "         --use-oce .................. Use OpenCascade community edition"
-  puts "                                      Useful only with --occtools"
   puts ""
 end
 
@@ -81,13 +79,11 @@ opts = GetoptLong.new(
   ['--prefix', GetoptLong::REQUIRED_ARGUMENT],
   ['--occ-dir', GetoptLong::REQUIRED_ARGUMENT],
   ['--no-occtools', GetoptLong::NO_ARGUMENT],
-  ['--occtools', GetoptLong::NO_ARGUMENT],
-  ['--use-oce', GetoptLong::NO_ARGUMENT])
+  ['--occtools', GetoptLong::NO_ARGUMENT])
 
 options = { :prefix=> "$$PWD/local",
             :occDir => "/opt/def/occ",
-            :occTools => false,
-            :useOce => false }
+            :occTools => false }
 opts.each do |opt, arg|
   case opt
     when '--help'
@@ -104,8 +100,6 @@ opts.each do |opt, arg|
       options[:occtools] = false
     when '--occtools'
       options[:occtools] = true
-    when '--use-oce'
-      options[:useOce] = true
   end
 end
 
@@ -113,11 +107,8 @@ File.open('_local_config.pri', 'w') do |f|
   f.puts("PREFIX_DIR = #{asQMakePath(File.expand_path(options[:prefix]))}")
   if options[:occtools] then
     checkFileExists(options[:occDir])
-    f.puts("CONFIG *= occtools")
+    f.puts("CONFIG += occtools")
     f.puts("CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occDir]))}")
-    if options[:useOce] then
-      f.puts("CONFIG *= use_oce")
-    end
   end
 end
 

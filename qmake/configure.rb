@@ -63,7 +63,9 @@ def printHelp()
   puts "         --prefix <dir> ............. This will install everything relative to <dir>"
   puts "                                      (default PWD/local)"
   puts ""
-  puts "         --occ-dir .................. Open Cascade root directory"
+  puts "         --occ-debug-dir ............ Open Cascade root directory, debug variant"
+  puts "                                      Useful only with --occtools"
+  puts "         --occ-release-dir .......... Open Cascade root directory, release variant"
   puts "                                      Useful only with --occtools"
   puts ""
   puts "      *  --no-occtools .............. Do not compile occtools"
@@ -77,12 +79,14 @@ configArgs = ARGV.join(' ')
 opts = GetoptLong.new(
   ['--help', '-h', GetoptLong::NO_ARGUMENT],
   ['--prefix', GetoptLong::REQUIRED_ARGUMENT],
-  ['--occ-dir', GetoptLong::REQUIRED_ARGUMENT],
+  ['--occ-debug-dir', GetoptLong::REQUIRED_ARGUMENT],
+  ['--occ-release-dir', GetoptLong::REQUIRED_ARGUMENT],
   ['--no-occtools', GetoptLong::NO_ARGUMENT],
   ['--occtools', GetoptLong::NO_ARGUMENT])
 
 options = { :prefix=> "$$PWD/local",
-            :occDir => "/opt/def/occ",
+            :occDebugDir => "/opt/def/occ_debug",
+            :occReleaseDir => "/opt/def/occ_release",
             :occTools => false }
 opts.each do |opt, arg|
   case opt
@@ -94,8 +98,10 @@ opts.each do |opt, arg|
       exit
     when '--prefix'
       options[:prefix] = arg
-    when '--occ-dir'
-      options[:occDir] = arg
+    when '--occ-debug-dir'
+      options[:occDebugDir] = arg
+    when '--occ-release-dir'
+      options[:occReleaseDir] = arg
     when '--no-occtools'
       options[:occtools] = false
     when '--occtools'
@@ -106,9 +112,14 @@ end
 File.open('_local_config.pri', 'w') do |f|
   f.puts("PREFIX_DIR = #{asQMakePath(File.expand_path(options[:prefix]))}")
   if options[:occtools] then
-    checkFileExists(options[:occDir])
+    checkFileExists(options[:occDebugDir])
+    checkFileExists(options[:occReleaseDir])
     f.puts("CONFIG += occtools")
-    f.puts("CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occDir]))}")
+    f.puts("CONFIG(debug, debug|release) {")
+    f.puts("  CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occDebugDir]))}")
+    f.puts("} else {")
+    f.puts("  CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occReleaseDir]))}")
+    f.puts("}")
   end
 end
 

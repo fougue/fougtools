@@ -67,28 +67,18 @@
 #elif defined(Q_OS_MAC) && !defined(MACOSX_USE_GLX)
 # include <Cocoa_Window.hxx>
 #else
-//#include <QX11Info>
-//#include <GL/glx.h>
-//#include <X11/Xutil.h>
-//#include <X11/Xatom.h>
-//#include <X11/Xmu/StdCmap.h>
-//#include <X11/Xlib.h>
-//#include <QtGui/QColormap>
 # include <Aspect_DisplayConnection.hxx>
 # include <Xw_Window.hxx> // OpenCascade
 # include <X11/X.h>
 #endif
 
-
-/*!
- * \class occ::View
- * \brief Qt wrapper around the V3d_View class
+/*! \class occ::View
+ *  \brief Qt wrapper around the V3d_View class
  *
- * occ::View widgets are explicitely bound to a context ie an AIS_InteractiveContext. The context
- * can be retrieved with context().
+ *  occ::View widgets are explicitely bound to a context ie an AIS_InteractiveContext. The context
+ *  can be retrieved with context().
  *
- * An occ::View does not handle input devices interaction like keyboard and mouse. It delegates this
- * responsability to an OccViewController.
+ *  An occ::View does not handle input devices interaction like keyboard and mouse.
  */
 
 namespace occ {
@@ -127,50 +117,6 @@ int paintCallBack(Aspect_Drawable drawable,
 
   d->m_callbackData = NULL;
 
-  /*    View* view = reinterpret_cast<View*>(pointer);
-
-        glDisable(GL_LIGHTING);
-        glMatrixMode(GL_MODELVIEW);
-        glPushMatrix();
-        glLoadIdentity();
-        glMatrixMode(GL_PROJECTION);
-        glPushMatrix();
-        glLoadIdentity();
-
-        GLfloat left   = -1.0f;
-        GLfloat right  =  1.0f;
-        GLfloat bottom = -1.0f;
-        GLfloat top    =  1.0f;
-        GLfloat depth  =  1.0f;
-
-        glOrtho(left, right, bottom, top, 1.0, -1.0);
-
-    #ifndef OCC_PATCHED
-        glEnable(GL_BLEND);
-        if (view->internalView()->ColorScaleIsDisplayed())
-        {
-          // Not needed on patched OCC 6.2 versions, but is the lowest
-          // common denominator working code on collaborators OpenGL
-          // graphics cards.
-          glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_COLOR);
-        }
-    #endif
-
-        glBegin(GL_QUADS);
-        {
-          glColor4f(0.1f, 0.1f, 0.1f, 1.0f);
-          glVertex3d(left, bottom, depth);
-          glVertex3d(right, bottom, depth);
-          glColor4f(0.8f, 0.8f, 0.9f, 1.0f);
-          glVertex3d(right,    top, depth);
-          glVertex3d(left,    top, depth);
-        }
-        glEnd();
-
-        glPopMatrix();
-        glMatrixMode(GL_MODELVIEW);
-        glPopMatrix();
-    */
   return 0;
 }
 
@@ -219,11 +165,11 @@ void View::Private::initialize()
   }
 }
 
-//! Construct an occ:View bound to the interactive context \p context3d, and
-//! having \p parent as its Qt widget parent
-View::View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent) :
-  QWidget(parent),
-  d(new Private(context3d, this))
+//! Construct an occ:View bound to the interactive context \p context3d, and having \p parent as its
+//! Qt widget parent
+View::View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent)
+  : QWidget(parent),
+    d(new Private(context3d, this))
 {
   this->setMouseTracking(true);
 
@@ -231,21 +177,15 @@ View::View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent) :
   this->setAutoFillBackground(false);
   this->setAttribute(Qt::WA_NoSystemBackground);
 
-  // This next attribute seems to be the secret of allowing OCC on Win32 to "own" the window, even
-  // though its only supposed to work on X11
   this->setAttribute(Qt::WA_PaintOnScreen);
-  this->setAttribute (Qt::WA_OpaquePaintEvent);
-#if (QT_VERSION >= QT_VERSION_CHECK(4, 4, 0))
+  this->setAttribute(Qt::WA_OpaquePaintEvent);
   this->setAttribute(Qt::WA_NativeWindow);
-#endif
 }
 
 View::~View()
 {
   delete d;
 }
-
-// --- Access
 
 //! Mutable bound interactive context
 Handle_AIS_InteractiveContext& View::context()
@@ -269,33 +209,20 @@ const Handle_V3d_View& View::internalView() const
   return d->m_internalView;
 }
 
-// --- Drawing
-
 //! Hack for Qt 4.5.x
 QPaintEngine* View::paintEngine() const
 {
   return NULL;
 }
 
-//! Force a redraw of the view (forcing depends on \p status )
-void View::redraw(RedrawStatus /*status*/)
+//! Force a redraw of the view
+void View::redraw()
 {
   if (!d->m_internalView.IsNull()) {
-    if (d->m_needsResize) {
+    if (d->m_needsResize)
       d->m_internalView->MustBeResized();
-      //this->viewPrecision( true );
-    }
-    else {
+    else
       d->m_internalView->Redraw();
-      /*        // Don't repaint if we are already redrawing
-        // elsewhere due to a keypress or mouse gesture
-        if (status != IsPaintingStatus ||
-            (status == IsPaintingStatus &&
-             QApplication::mouseButtons() == Qt::NoButton))
-        {
-          m_internalView->Redraw();
-        }*/
-    }
   }
   d->m_needsResize = false;
 }
@@ -323,8 +250,6 @@ Aspect_GraphicCallbackStruct *View::paintCallbackData() const
   return d->m_callbackData;
 }
 
-// --- Actions
-
 void View::fitAll()
 {
   if (!d->m_internalView.IsNull()) {
@@ -333,17 +258,14 @@ void View::fitAll()
   }
 }
 
-// --- Event handling
-
-/*! \brief Reimplemented from QWidget::paintEvent()
-   */
+//! Reimplemented from QWidget::paintEvent()
 void View::paintEvent(QPaintEvent* event)
 {
   Q_UNUSED(event);
 
   d->initialize();
   if (!d->m_context->CurrentViewer().IsNull())
-    this->redraw(IsPaintingStatus);
+    this->redraw();
 }
 
 /*! \brief Reimplemented from QWidget::resizeEvent()

@@ -58,12 +58,6 @@ class OCCTOOLS_EXPORT View : public QWidget
   Q_OBJECT
 
 public:
-  enum RedrawStatus
-  {
-    IsPaintingStatus,
-    NopStatus
-  };
-
   View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent = NULL);
   ~View();
 
@@ -73,16 +67,15 @@ public:
   Handle_V3d_View& internalView();
   const Handle_V3d_View& internalView() const;
 
-  QPaintEngine* paintEngine() const;
-
-  void redraw(RedrawStatus status = NopStatus);
-
   typedef cpp::Functor0<void> PaintCallback;
   int addPaintCallback(const PaintCallback& callback);
   void removePaintCallback(int callbackId);
   Aspect_GraphicCallbackStruct* paintCallbackData() const;
 
+  QPaintEngine* paintEngine() const;
+
 public slots:
+  void redraw();
   void fitAll();
 
 protected:

@@ -1,9 +1,9 @@
 TEMPLATE = app
 
 CONFIG(debug, debug|release) {
-  TARGET_SUFFIX = .debug
+  TARGET_SUFFIX = _d
 } else {
-  TARGET_SUFFIX = .release
+  TARGET_SUFFIX =
 }
 TARGET = utest$$TARGET_SUFFIX
 

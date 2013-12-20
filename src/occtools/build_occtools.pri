@@ -44,7 +44,8 @@ DESTDIR  = $$OCCTOOLS_LIB_PATH
 
 TARGET = occtools$$TARGET_SUFFIX
 
-QT *= gui
+QT += gui
+isEqual(QT_MAJOR_VERSION, 5): QT += widgets
 
 CONFIG(dll) {
   DEFINES *= OCCTOOLS_DLL OCCTOOLS_MAKE_DLL

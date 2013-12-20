@@ -1,5 +1,5 @@
 include(../config.pri)
-CONFIG *= dll
+CONFIG += dll
 include(../../src/occtools/build_occtools.pri)
 
 QMAKE_RPATHDIR += $$CASCADE_LIB_PATH

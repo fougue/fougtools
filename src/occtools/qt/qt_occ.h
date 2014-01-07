@@ -38,7 +38,7 @@
 #ifndef OCC_QT_OCC_H
 #define OCC_QT_OCC_H
 
-#include "occtools.h"
+#include "../occtools.h"
 
 #include <Quantity_Color.hxx>
 #include <Quantity_NameOfColor.hxx>

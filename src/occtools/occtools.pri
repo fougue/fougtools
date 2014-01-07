@@ -50,10 +50,10 @@ HEADERS += $$PWD/io.h \
            $$PWD/pnt_vec_traits.h \
            $$PWD/utils.h \
            $$PWD/utils.impl.h \
-           $$PWD/ui/view.h \
-           $$PWD/ui/view_controller.h \
-           $$PWD/ui/view_controller_delegate.h \
-           $$PWD/qt_occ.h
+           $$PWD/qt/view.h \
+           $$PWD/qt/view_controller.h \
+           $$PWD/qt/view_controller_delegate.h \
+           $$PWD/qt/qt_occ.h
 
 SOURCES += \
            $$PWD/io.cpp \
@@ -62,10 +62,10 @@ SOURCES += \
            $$PWD/gcpnts_uniform_abscissa_const_iterator.cpp \
            $$PWD/point_on_faces_projector.cpp \
            $$PWD/utils.cpp \
-           $$PWD/ui/view.cpp \
-           $$PWD/ui/view_controller.cpp \
-           $$PWD/ui/view_controller_delegate.cpp \
-           $$PWD/qt_occ.cpp
+           $$PWD/qt/view.cpp \
+           $$PWD/qt/view_controller.cpp \
+           $$PWD/qt/view_controller_delegate.cpp \
+           $$PWD/qt/qt_occ.cpp
 
 LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
         -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim  -lTKService \

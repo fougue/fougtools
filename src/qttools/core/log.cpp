@@ -105,21 +105,12 @@ Log::Stream::Stream(Log::MessageType mType)
 /*! \enum Log::MessageType
  *  \brief Types of logging message, with increasing severity
  */
-/*! \var Log::MessageType Log::DebugMessage
- *  \brief
- */
-/*! \var Log::MessageType Log::InfoMessage
- *  \brief
- */
-/*! \var Log::MessageType Log::WarningMessage
- *  \brief
- */
-/*! \var Log::MessageType Log::CriticalMessage
- *  \brief
- */
-/*! \var Log::MessageType Log::FatalMessage
- *  \brief
- */
+
+//! \brief Construct a null Log stream, ie. it won't print anything
+Log::Log()
+  : m_stream(NULL)
+{
+}
 
 /*! \brief Construct a Log stream for messages of a special type
  */
@@ -133,17 +124,20 @@ Log::Log(MessageType msgType)
 Log::Log(const Log& other)
   : m_stream(other.m_stream)
 {
-  ++(m_stream->refCount);
+  if (m_stream != NULL)
+    ++(m_stream->refCount);
 }
 
 /*! \brief Flush any pending data to be written and destroys the Log stream
  */
 Log::~Log()
 {
-  --(m_stream->refCount);
-  if (m_stream->refCount == 0) {
-    internal::handleLogMessage(m_stream->msgType, m_stream->buffer.toLocal8Bit().data());
-    delete m_stream;
+  if (m_stream != NULL) {
+    --(m_stream->refCount);
+    if (m_stream->refCount == 0) {
+      internal::handleLogMessage(m_stream->msgType, m_stream->buffer.toLocal8Bit().data());
+      delete m_stream;
+    }
   }
 }
 
@@ -151,7 +145,8 @@ Log::~Log()
  */
 Log& Log::space()
 {
-  m_stream->ts << ' ';
+  if (m_stream != NULL)
+    m_stream->ts << ' ';
   return *this;
 }
 
@@ -159,73 +154,85 @@ Log& Log::space()
  */
 Log& Log::operator<<(bool t)
 {
-  m_stream->ts << (t ? "true" : "false");
+  if (m_stream != NULL)
+    m_stream->ts << (t ? "true" : "false");
   return this->space();
 }
 
 Log& Log::operator<<(char t)
 {
-  m_stream->ts << t;
+  if (m_stream != NULL)
+    m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(short t)
 {
-  m_stream->ts << t;
+  if (m_stream != NULL)
+    m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(unsigned short t)
 {
-  m_stream->ts << t;
+  if (m_stream != NULL)
+    m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(int t)
 {
-  m_stream->ts << t;
+  if (m_stream != NULL)
+    m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(unsigned int t)
 {
-  m_stream->ts << t;
+  if (m_stream != NULL)
+    m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(long t)
 {
-  m_stream->ts << t;
+  if (m_stream != NULL)
+    m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(unsigned long t)
 {
-  m_stream->ts << t;
+  if (m_stream != NULL)
+    m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(float t)
 {
-  m_stream->ts << t;
+  if (m_stream != NULL)
+    m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(double t)
 {
-  m_stream->ts << t;
+  if (m_stream != NULL)
+    m_stream->ts << t;
   return this->space();
 }
 
 Log& Log::operator<<(const char* str)
 {
-  m_stream->ts << str;
+  if (m_stream != NULL)
+    m_stream->ts << str;
   return this->space();
 }
 
 Log& Log::operator<<(const QString& str)
 {
-  m_stream->ts << str;
+  if (m_stream != NULL)
+    m_stream->ts << str;
   return this->space();
 }
 

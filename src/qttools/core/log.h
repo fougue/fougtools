@@ -60,6 +60,7 @@ public:
     FatalMessage
   };
 
+  Log();
   Log(MessageType msgType);
   Log(const Log& other);
   ~Log();

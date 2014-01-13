@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "database_connection_settings.h"
+#include "database_settings.h"
 
 #include "../core/abstract_cipher.h"
 
@@ -45,84 +45,84 @@
 namespace qttools {
 
 /*!
- * \class DatabaseConnectionSettings
+ * \class DatabaseSettings
  * \brief Settings to connect to a database. Settings can be loaded and saved from/to a QSettings
  *
- * \headerfile database_connection_settings.h <qttools/sql/database_connection_settings.h>
+ * \headerfile database_settings.h <qttools/sql/database_settings.h>
  * \ingroup qttools_sql
  */
 
-DatabaseConnectionSettings::DatabaseConnectionSettings()
+DatabaseSettings::DatabaseSettings()
   : m_port(0)
 {
 }
 
 /*! \sa QSqlDatabase::setHostName()
  */
-void DatabaseConnectionSettings::setHost(const QString& host)
+void DatabaseSettings::setHost(const QString& host)
 {
   m_host = host;
 }
 
 /*! \sa QSqlDatabase::hostName()
  */
-QString DatabaseConnectionSettings::host() const
+QString DatabaseSettings::host() const
 {
   return m_host;
 }
 
 /*! \sa QSqlDatabase::setDatabaseName()
  */
-void DatabaseConnectionSettings::setDatabaseName(const QString& dbName)
+void DatabaseSettings::setDatabaseName(const QString& dbName)
 {
   m_dbName = dbName;
 }
 
 /*! \sa QSqlDatabase::databaseName()
  */
-QString DatabaseConnectionSettings::databaseName() const
+QString DatabaseSettings::databaseName() const
 {
   return m_dbName;
 }
 
 /*! \sa QSqlDatabase::setPort()
  */
-void DatabaseConnectionSettings::setPort(int port)
+void DatabaseSettings::setPort(int port)
 {
   m_port = port;
 }
 
 /*! \sa QSqlDatabase::port()
  */
-int DatabaseConnectionSettings::port() const
+int DatabaseSettings::port() const
 {
   return m_port;
 }
 
 /*! \sa QSqlDatabase::setUserName()
  */
-void DatabaseConnectionSettings::setUserName(const QString& userName)
+void DatabaseSettings::setUserName(const QString& userName)
 {
   m_userName = userName;
 }
 
 /*! \sa QSqlDatabase::userName()
  */
-QString DatabaseConnectionSettings::userName() const
+QString DatabaseSettings::userName() const
 {
   return m_userName;
 }
 
 /*! \sa QSqlDatabase::setPassword()
  */
-void DatabaseConnectionSettings::setPassword(const QString& password)
+void DatabaseSettings::setPassword(const QString& password)
 {
   m_password = password;
 }
 
 /*! \sa QSqlDatabase::password()
  */
-QString DatabaseConnectionSettings::password() const
+QString DatabaseSettings::password() const
 {
   return m_password;
 }
@@ -132,9 +132,9 @@ QString DatabaseConnectionSettings::password() const
  *         the default password is returned (see parameter \p defValues)
  *  \param defValues Default values when all or some persistent settings could not be retrieved
  */
-void DatabaseConnectionSettings::load(const QSettings* settings,
-                                      const AbstractCipher* passwordCipher,
-                                      const SettingsMap& defValues)
+void DatabaseSettings::load(const QSettings* settings,
+                            const AbstractCipher* passwordCipher,
+                            const ValuesHash& defValues)
 {
   if (settings == NULL)
     return;
@@ -165,8 +165,8 @@ void DatabaseConnectionSettings::load(const QSettings* settings,
  *         empty password is stored. Otherwise the password() is reprensented as a UTF-8 byte array
  *         and passed to AbstractCipher::encrypted()
  */
-void DatabaseConnectionSettings::write(QSettings* settings,
-                                       const AbstractCipher* passwordCipher) const
+void DatabaseSettings::write(QSettings* settings,
+                             const AbstractCipher* passwordCipher) const
 {
   if (settings == NULL)
     return;
@@ -188,16 +188,15 @@ void DatabaseConnectionSettings::write(QSettings* settings,
 /*! \brief Apply the current settings to a QSqlDatabase instance
  *  \note It does not close/open the connection of \p db
  */
-void DatabaseConnectionSettings::configureDatabase(QSqlDatabase* db) const
+void DatabaseSettings::configureDatabase(QSqlDatabase* db) const
 {
-  if (db == NULL)
-    return;
-
-  db->setDatabaseName(this->databaseName());
-  db->setHostName(this->host());
-  db->setPort(this->port());
-  db->setUserName(this->userName());
-  db->setPassword(this->password());
+  if (db != NULL) {
+    db->setDatabaseName(this->databaseName());
+    db->setHostName(this->host());
+    db->setPort(this->port());
+    db->setUserName(this->userName());
+    db->setPassword(this->password());
+  }
 }
 
 } // namespace qttools

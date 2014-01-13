@@ -1,5 +1,5 @@
 include(../config.pri)
-CONFIG *= dll
+CONFIG += dll
 include(../../src/qttools/sql/build_qttools_sql.pri)
 
 qttools_sql_include.path  = $$QTTOOLS_INC_PATH/qttools/sql

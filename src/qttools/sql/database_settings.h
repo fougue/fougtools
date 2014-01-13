@@ -35,8 +35,8 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_SQL_DATABASE_CONNECTION_SETTINGS_H
-#define QTTOOLS_SQL_DATABASE_CONNECTION_SETTINGS_H
+#ifndef QTTOOLS_SQL_DATABASE_SETTINGS_H
+#define QTTOOLS_SQL_DATABASE_SETTINGS_H
 
 #include "sql.h"
 #include <QtCore/QHash>
@@ -48,12 +48,12 @@ namespace qttools {
 
 class AbstractCipher;
 
-class QTTOOLS_SQL_EXPORT DatabaseConnectionSettings
+class QTTOOLS_SQL_EXPORT DatabaseSettings
 {
 public:
-  typedef QHash<QString, QVariant> SettingsMap;
+  typedef QHash<QString, QVariant> ValuesHash;
 
-  DatabaseConnectionSettings();
+  DatabaseSettings();
 
   QString host() const;
   void setHost(const QString& host);
@@ -74,7 +74,7 @@ public:
 
   void load(const QSettings* settings,
             const AbstractCipher* passwordCipher = NULL,
-            const SettingsMap& defValues = SettingsMap());
+            const ValuesHash& defValues = ValuesHash());
   void write(QSettings* settings,
              const AbstractCipher* passwordCipher = NULL) const;
 
@@ -88,4 +88,4 @@ private:
 
 } // namespace qttools
 
-#endif // QTTOOLS_SQL_DATABASE_CONNECTION_SETTINGS_H
+#endif // QTTOOLS_SQL_DATABASE_SETTINGS_H

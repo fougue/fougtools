@@ -35,19 +35,19 @@
 ##
 #############################################################################
 
-QT *= sql
+QT += sql
 
 HEADERS += \
     $$PWD/cpp_sql_enum_map.h \
     $$PWD/cpp_sql_enum_map_fwd.h \
-    $$PWD/database_connection_settings.h \
+    $$PWD/database_settings.h \
     $$PWD/database_manager.h \
     $$PWD/qsql_query_tools.h \
     $$PWD/sql.h \
     $$PWD/composite_type_helper.h
 
 SOURCES += \
-    $$PWD/database_connection_settings.cpp \
+    $$PWD/database_settings.cpp \
     $$PWD/database_manager.cpp \
     $$PWD/qsql_query_tools.cpp \
     $$PWD/composite_type_helper.cpp

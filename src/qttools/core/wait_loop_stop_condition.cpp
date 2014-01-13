@@ -35,39 +35,49 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_WAIT_LOOP_H
-#define QTTOOLS_WAIT_LOOP_H
-
-#include "core.h"
 #include "wait_loop_stop_condition.h"
-
-#include <QtCore/QEventLoop>
-#include <QtCore/QObject>
+#include "wait_loop.h"
+#include "internal/wait_loop_p.h"
 
 namespace qttools {
 
-class QTTOOLS_CORE_EXPORT WaitLoop : public QObject
+/*! \class WaitLoop_StopCondition
+ *  \brief Provides a base class for stop conditions to be used with WaitLoop
+ *
+ *  This class is considered as an inner-class of WaitLoop
+ *
+ *  \headerfile wait_loop.h <qttools/core/wait_loop.h>
+ *  \ingroup qttools_core
+ *
+ */
+
+WaitLoop_StopCondition::WaitLoop_StopCondition()
+  : m_waitLoop(NULL)
 {
-  Q_OBJECT
+}
 
-public:
-  typedef WaitLoop_StopCondition StopCondition;
+WaitLoop_StopCondition::~WaitLoop_StopCondition()
+{
+}
 
-  WaitLoop(QObject* parent = NULL);
-  ~WaitLoop();
+WaitLoop *WaitLoop_StopCondition::waitLoop() const
+{
+  return m_waitLoop;
+}
 
-  void addStopCondition(StopCondition* cond);
-  void removeStopCondition(StopCondition* cond);
-  bool exec(int msec = -1);
-  bool exec(QEventLoop::ProcessEventsFlags flags, int msec = -1);
-  StopCondition* exitStopCondition() const;
+void WaitLoop_StopCondition::beginWait()
+{
+}
 
-private:
-  friend class WaitLoop_StopCondition;
-  class Private;
-  Private* const d;
-};
+void WaitLoop_StopCondition::stopWait()
+{
+}
+
+void WaitLoop_StopCondition::endWaitLoop()
+{
+  this->stopWait();
+  if (m_waitLoop != NULL)
+    m_waitLoop->d->endWaitLoop(this);
+}
 
 } // namespace qttools
-
-#endif // QTTOOLS_WAIT_LOOP_H

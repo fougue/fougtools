@@ -55,7 +55,11 @@ HEADERS += \
     $$PWD/singleton.h \
     $$PWD/sleep.h \
     $$PWD/wait_loop.h \
-    $$PWD/unique_id.h
+    $$PWD/wait_loop_stop_condition.h \
+    $$PWD/unique_id.h \
+    \
+    $$PWD/internal/wait_loop_p.h \
+    $$PWD/internal/wait_loop_time_out_stop_condition.h
 
 SOURCES += \
     $$PWD/abstract_cipher.cpp \
@@ -73,4 +77,8 @@ SOURCES += \
     $$PWD/grid_numbering.cpp \
     $$PWD/grid_struct.cpp \
     $$PWD/wait_loop.cpp \
+    $$PWD/wait_loop_stop_condition.cpp \
     $$PWD/unique_id.cpp
+    \
+    $$PWD/internal/wait_loop_p.cpp \
+    $$PWD/internal/wait_loop_time_out_stop_condition.cpp

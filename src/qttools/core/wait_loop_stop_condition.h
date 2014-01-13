@@ -35,39 +35,33 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_WAIT_LOOP_H
-#define QTTOOLS_WAIT_LOOP_H
+#ifndef QTTOOLS_WAIT_LOOP_STOP_CONDITION_H
+#define QTTOOLS_WAIT_LOOP_STOP_CONDITION_H
 
 #include "core.h"
-#include "wait_loop_stop_condition.h"
-
-#include <QtCore/QEventLoop>
-#include <QtCore/QObject>
 
 namespace qttools {
 
-class QTTOOLS_CORE_EXPORT WaitLoop : public QObject
+class WaitLoop;
+
+class QTTOOLS_CORE_EXPORT WaitLoop_StopCondition
 {
-  Q_OBJECT
-
 public:
-  typedef WaitLoop_StopCondition StopCondition;
+  WaitLoop_StopCondition();
+  virtual ~WaitLoop_StopCondition();
 
-  WaitLoop(QObject* parent = NULL);
-  ~WaitLoop();
+  WaitLoop* waitLoop() const;
 
-  void addStopCondition(StopCondition* cond);
-  void removeStopCondition(StopCondition* cond);
-  bool exec(int msec = -1);
-  bool exec(QEventLoop::ProcessEventsFlags flags, int msec = -1);
-  StopCondition* exitStopCondition() const;
+protected:
+  virtual void beginWait();
+  virtual void stopWait();
+  void endWaitLoop();
 
 private:
-  friend class WaitLoop_StopCondition;
-  class Private;
-  Private* const d;
+  friend class WaitLoop;
+  WaitLoop* m_waitLoop;
 };
 
 } // namespace qttools
 
-#endif // QTTOOLS_WAIT_LOOP_H
+#endif // QTTOOLS_WAIT_LOOP_STOP_CONDITION_H

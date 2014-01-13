@@ -88,6 +88,7 @@ public:
  * loadPlugins()).
  *
  * AbstractPluginLoader cannot be used as is, function isPluginCompatible() must be redefined.
+ *
  */
 
 AbstractPluginLoader::AbstractPluginLoader()

@@ -35,10 +35,10 @@
 ##
 #############################################################################
 
-INCLUDEPATH *= $$PWD/.. $$PWD/../..
+INCLUDEPATH += $$PWD/.. $$PWD/../..
 
-QT *= gui
-isEqual(QT_MAJOR_VERSION, 5): QT *= widgets
+QT += gui
+isEqual(QT_MAJOR_VERSION, 5): QT += widgets
 
 HEADERS += \
     $$PWD/abstract_length_editor.h \
@@ -58,7 +58,7 @@ HEADERS += \
     $$PWD/tree_combo_box.h \
     $$PWD/view_item_button_mechanism.h \
     $$PWD/wait_dialog.h \
-    $$PWD/widget_tools.h \
+    $$PWD/qwidget_tools.h \
     $$PWD/abstract_quantity_editor.h
 
 SOURCES += \
@@ -78,5 +78,5 @@ SOURCES += \
     $$PWD/tree_combo_box.cpp \
     $$PWD/view_item_button_mechanism.cpp \
     $$PWD/wait_dialog.cpp \
-    $$PWD/widget_tools.cpp \
+    $$PWD/qwidget_tools.cpp \
     $$PWD/abstract_quantity_editor.cpp

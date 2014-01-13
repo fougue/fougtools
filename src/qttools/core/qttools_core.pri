@@ -54,7 +54,6 @@ HEADERS += \
     $$PWD/scoped_connection.h \
     $$PWD/singleton.h \
     $$PWD/sleep.h \
-    $$PWD/task.h \
     $$PWD/wait_loop.h \
     $$PWD/unique_id.h
 
@@ -70,7 +69,6 @@ SOURCES += \
     $$PWD/runtime_error.cpp \
     $$PWD/scoped_connection.cpp \
     $$PWD/sleep.cpp \
-    $$PWD/task.cpp \
     $$PWD/item_model_tools.cpp \
     $$PWD/grid_numbering.cpp \
     $$PWD/grid_struct.cpp \

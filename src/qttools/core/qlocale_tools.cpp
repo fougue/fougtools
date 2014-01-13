@@ -39,7 +39,14 @@
 
 namespace qttools {
 
-QLocale::MeasurementSystem toQLocaleMeasurementSystem(int measSys)
+/*! \class QLocaleTools
+ *  \brief
+ *  \headerfile qlocale_tools.h <qttools/core/qlocale_tools.h>
+ *  \ingroup qttools_core
+ *
+ */
+
+QLocale::MeasurementSystem QLocaleTools::toMeasurementSystem(int measSys)
 {
   switch (measSys) {
   case QLocale::MetricSystem : return QLocale::MetricSystem;
@@ -51,7 +58,7 @@ QLocale::MeasurementSystem toQLocaleMeasurementSystem(int measSys)
   }
 }
 
-QLocale::Country toQLocaleCountry(int code)
+QLocale::Country QLocaleTools::toCountry(int code)
 {
   switch (code) {
   case QLocale::AnyCountry : return QLocale::AnyCountry;
@@ -320,7 +327,7 @@ QLocale::Country toQLocaleCountry(int code)
   return QLocale::AnyCountry;
 }
 
-QList<QLocale::Country> allQLocaleCountries()
+QList<QLocale::Country> QLocaleTools::allCountries()
 {
   QList<QLocale::Country> countries;
   countries << QLocale::AnyCountry

@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "widget_tools.h"
+#include "qwidget_tools.h"
 
 // QtWidgets
 #include <QAbstractScrollArea>
@@ -44,9 +44,16 @@
 
 namespace qttools {
 
+/*! \class QWidgetTools
+ *  \brief
+ *
+ *  \headerfile qwidget_tools.h <qttools/gui/qwidget_tools.h>
+ *  \ingroup qttools_gui
+ */
+
 /*! \brief Move position of \p widget so it is displayed stuck to the right of \p nextTo
  */
-void moveWidgetRightTo(QWidget* widget, const QWidget* nextTo)
+void QWidgetTools::moveWidgetRightTo(QWidget* widget, const QWidget* nextTo)
 {
   const QRect frameGeom = nextTo->frameGeometry();
   widget->move(nextTo->mapToGlobal(QPoint(frameGeom.width(), 0)));
@@ -54,7 +61,7 @@ void moveWidgetRightTo(QWidget* widget, const QWidget* nextTo)
 
 /*! \brief Move position of \p widget so it is displayed stuck to the left of \p nextTo
  */
-void moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo)
+void QWidgetTools::moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo)
 {
   //const QRect nextToFrameGeom = nextTo->frameGeometry();
   const QRect widgetFrameGeom = widget->frameGeometry();
@@ -63,7 +70,7 @@ void moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo)
 
 /*! \brief Current slide positions of the horizontal and vertical scroll bars
  */
-QPair<int, int> horizAndVertScrollValue(const QAbstractScrollArea* area)
+QPair<int, int> QWidgetTools::horizAndVertScrollValue(const QAbstractScrollArea* area)
 {
   return qMakePair(area->horizontalScrollBar()->value(),
                    area->verticalScrollBar()->value());
@@ -71,7 +78,8 @@ QPair<int, int> horizAndVertScrollValue(const QAbstractScrollArea* area)
 
 /*! \brief Set the current slide positions of the horizontal and vertical scroll bars to \p values
  */
-void setHorizAndVertScrollValue(QAbstractScrollArea* area, const QPair<int, int>& values)
+void QWidgetTools::setHorizAndVertScrollValue(QAbstractScrollArea* area,
+                                              const QPair<int, int>& values)
 {
   area->horizontalScrollBar()->setValue(values.first);
   area->verticalScrollBar()->setValue(values.second);

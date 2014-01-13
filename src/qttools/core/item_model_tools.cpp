@@ -37,43 +37,51 @@
 
 #include "item_model_tools.h"
 
-#include <QtCore/QRegExp>
-#include "qobject_tools.h"
-
 namespace qttools {
 
-bool isValidRow(const QAbstractItemModel* model, int row, const QModelIndex& parent)
+/*! \class ItemModelTools
+ *  \brief
+ *  \headerfile item_model_tools.h <qttools/core/item_model_tools.h>
+ *  \ingroup qttools_core
+ *
+ */
+
+bool ItemModelTools::isValidRow(const QAbstractItemModel* model, int row, const QModelIndex& parent)
 {
-  if (model == NULL)
-    return false;
-  return 0 <= row && row < model->rowCount(parent);
+  if (model != NULL)
+    return 0 <= row && row < model->rowCount(parent);
+  return false;
 }
 
-bool isValidColumn(const QAbstractItemModel* model, int col, const QModelIndex& parent)
+bool ItemModelTools::isValidColumn(const QAbstractItemModel* model, int col, const QModelIndex& parent)
 {
-  if (model == NULL)
-    return false;
-  return 0 <= col && col < model->columnCount(parent);
+  if (model != NULL)
+    return 0 <= col && col < model->columnCount(parent);
+  return false;
 }
 
 /*! \brief Try to find a value in a given column of a model
  *  \return Index of the row where the first match of \p value could be found
  *  \retval -1 if \p value could not be found
  */
-int findDataInRow(const QAbstractItemModel* model, int col, const QVariant& value)
+int ItemModelTools::findDataInRow(const QAbstractItemModel* model, int col, const QVariant& value)
 {
-  for (int row = 0; row < model->rowCount(); ++row) {
-    if (model->data(model->index(row, col)) == value)
-      return row;
+  if (model != NULL) {
+    for (int row = 0; row < model->rowCount(); ++row) {
+      if (model->data(model->index(row, col)) == value)
+        return row;
+    }
   }
   return -1;
 }
 
 /*! \brief Same as QAbstractItemModel::data() but more concise
  */
-QVariant tableModelData(const QAbstractItemModel* model, int row, int col, int role)
+QVariant ItemModelTools::tableData(const QAbstractItemModel* model, int row, int col, int role)
 {
-  return model->data(model->index(row, col), role);
+  if (model != NULL)
+    return model->data(model->index(row, col), role);
+  return QVariant();
 }
 
 } // namespace qttools

@@ -35,8 +35,8 @@
 **
 ****************************************************************************/
 
-#ifndef QTOOLS_QLOCALE_TOOLS_H
-#define QTOOLS_QLOCALE_TOOLS_H
+#ifndef QTTOOLS_QLOCALE_TOOLS_H
+#define QTTOOLS_QLOCALE_TOOLS_H
 
 #include "core.h"
 #include <QtCore/QList>
@@ -44,15 +44,15 @@
 
 namespace qttools {
 
-QTTOOLS_CORE_EXPORT
-QLocale::MeasurementSystem toQLocaleMeasurementSystem(int measSys);
+class QTTOOLS_CORE_EXPORT QLocaleTools
+{
+public:
+  static QLocale::MeasurementSystem toMeasurementSystem(int measSys);
 
-QTTOOLS_CORE_EXPORT
-QLocale::Country toQLocaleCountry(int code);
-
-QTTOOLS_CORE_EXPORT
-QList<QLocale::Country> allQLocaleCountries();
+  static QLocale::Country toCountry(int code);
+  static QList<QLocale::Country> allCountries();
+};
 
 } // namespace qttools
 
-#endif // QTOOLS_QLOCALE_TOOLS_H
+#endif // QTTOOLS_QLOCALE_TOOLS_H

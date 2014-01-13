@@ -46,11 +46,18 @@
 
 namespace qttools {
 
+/*! \class ItemViewTools
+ *  \brief
+ *
+ *  \headerfile item_view_tools.h <qttools/gui/item_view_tools.h>
+ *  \ingroup qttools_gui
+ */
+
 /*! \brief Indexes, in the given column, of the rows selected in a view
  *  \param view View in which to find selected rows
  *  \param col Column index. If \p col == \c -1 then \p col is ignored
  */
-QVector<int> selectedRows(const QAbstractItemView* view, int col)
+QVector<int> ItemViewTools::selectedRows(const QAbstractItemView* view, int col)
 {
   const QItemSelectionModel* itemSelModel = view->selectionModel();
   if (itemSelModel == NULL || !itemSelModel->hasSelection())
@@ -68,7 +75,7 @@ QVector<int> selectedRows(const QAbstractItemView* view, int col)
   return result;
 }
 
-void selectRows(QAbstractItemView* view, const QVector<int>& rows)
+void ItemViewTools::selectRows(QAbstractItemView* view, const QVector<int>& rows)
 {
   const QAbstractItemModel* model = view->model();
   QItemSelectionModel* selModel = view->selectionModel();
@@ -83,14 +90,14 @@ void selectRows(QAbstractItemView* view, const QVector<int>& rows)
 
 /*! \brief Same as QSortFilterProxyModel::mapFromSource() but more concise
  */
-int mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow)
+int ItemViewTools::mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow)
 {
   return proxyModel->mapFromSource(proxyModel->sourceModel()->index(srcRow, 0)).row();
 }
 
 /*! \brief Same as QSortFilterProxyModel::mapToSource() but more concise
  */
-int mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow)
+int ItemViewTools::mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow)
 {
   return proxyModel->mapToSource(proxyModel->index(proxyRow, 0)).row();
 }

@@ -37,8 +37,6 @@
 
 #include "indexed_selection_model.h"
 
-#include <cassert>
-
 namespace qttools {
 
 /*!
@@ -117,7 +115,7 @@ void IndexedSelectionModel::clearItems()
     m_selectedItems.remove(id);
     emit itemToggled(id, false);
   }
-  assert(this->selectedItems().count() == 0);
+  Q_ASSERT(this->selectedItems().count() == 0);
 }
 
 void IndexedSelectionModel::endClear()

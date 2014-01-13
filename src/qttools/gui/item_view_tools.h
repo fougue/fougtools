@@ -45,17 +45,15 @@ class QSortFilterProxyModel;
 
 namespace qttools {
 
-QTTOOLS_GUI_EXPORT
-QVector<int> selectedRows(const QAbstractItemView* view, int col = -1);
+class QTTOOLS_GUI_EXPORT ItemViewTools
+{
+public:
+  static QVector<int> selectedRows(const QAbstractItemView* view, int col = -1);
+  static void selectRows(QAbstractItemView* view, const QVector<int>& rows);
 
-QTTOOLS_GUI_EXPORT
-void selectRows(QAbstractItemView* view, const QVector<int>& rows);
-
-QTTOOLS_GUI_EXPORT
-int mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow);
-
-QTTOOLS_GUI_EXPORT
-int mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow);
+  static int mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow);
+  static int mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow);
+};
 
 } // namespace qttools
 

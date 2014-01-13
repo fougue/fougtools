@@ -38,15 +38,25 @@
 #ifndef QTTOOLS_QVARIANT_TOOLS_H
 #define QTTOOLS_QVARIANT_TOOLS_H
 
+#include "core.h"
 #include <QtCore/QVariant>
 
 namespace qttools {
 
-template<typename T, template <typename> class CONTAINER>
-CONTAINER<T> toTypedContainer(const CONTAINER<QVariant>& variants);
+/*! \brief
+ *  \headerfile qvariant_tools.h <qttools/core/qvariant_tools.h>
+ *  \ingroup qttools_core
+ *
+ */
+class QTTOOLS_CORE_EXPORT QVariantTools
+{
+public:
+  template<typename T, template <typename> class CONTAINER>
+  static CONTAINER<T> toTypedContainer(const CONTAINER<QVariant>& variants);
 
-template<typename T, template <typename> class CONTAINER>
-CONTAINER<QVariant> toContainerOfVariants(const CONTAINER<T>& typeds);
+  template<typename T, template <typename> class CONTAINER>
+  static CONTAINER<QVariant> toContainerOfVariants(const CONTAINER<T>& typeds);
+};
 
 } // namespace qttools
 
@@ -66,11 +76,9 @@ namespace qttools {
  * must satisfy the concept of Back Insertion Sequence (see http://www.sgi.com/tech/stl/BackInsertionSequence.html)
  *
  * \sa toContainerOfVariants()
- *
- * \headerfile qvariant_tools.h <qttools/core/qvariant_tools.h>
  */
 template<typename T, template <typename> class CONTAINER>
-CONTAINER<T> toTypedContainer(const CONTAINER<QVariant>& variants)
+CONTAINER<T> QVariantTools::toTypedContainer(const CONTAINER<QVariant>& variants)
 {
   CONTAINER<T> typeds;
   std::transform(variants.begin(), variants.end(),
@@ -85,11 +93,9 @@ CONTAINER<T> toTypedContainer(const CONTAINER<QVariant>& variants)
  * must satisfy the concept of Back Insertion Sequence (see http://www.sgi.com/tech/stl/BackInsertionSequence.html)
  *
  * \sa toTypedContainer()
- *
- * \headerfile qvariant_tools.h <qttools/core/qvariant_tools.h>
  */
 template<typename T, template <typename> class CONTAINER>
-CONTAINER<QVariant> toContainerOfVariants(const CONTAINER<T>& typeds)
+CONTAINER<QVariant> QVariantTools::toContainerOfVariants(const CONTAINER<T>& typeds)
 {
   CONTAINER<QVariant> variants;
   std::transform(typeds.begin(), typeds.end(),

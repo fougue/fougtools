@@ -35,8 +35,8 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_WIDGET_TOOLS_H
-#define QTTOOLS_WIDGET_TOOLS_H
+#ifndef QTTOOLS_QWIDGET_TOOLS_H
+#define QTTOOLS_QWIDGET_TOOLS_H
 
 #include "gui.h"
 #include <QtCore/QPair>
@@ -45,23 +45,22 @@ class QWidget;
 
 namespace qttools {
 
-template<typename PARENT_WIDGET>
-PARENT_WIDGET* findFirstParentWidget(QWidget* widget);
+class QTTOOLS_GUI_EXPORT QWidgetTools
+{
+public:
+  template<typename PARENT_WIDGET>
+  static PARENT_WIDGET* findFirstParentWidget(QWidget* widget);
 
-template<typename PARENT_WIDGET>
-PARENT_WIDGET* findLastParentWidget(QWidget* widget);
+  template<typename PARENT_WIDGET>
+  static PARENT_WIDGET* findLastParentWidget(QWidget* widget);
 
-QTTOOLS_GUI_EXPORT
-void moveWidgetRightTo(QWidget* widget, const QWidget* nextTo);
+  static void moveWidgetRightTo(QWidget* widget, const QWidget* nextTo);
+  static void moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo);
 
-QTTOOLS_GUI_EXPORT
-void moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo);
-
-QTTOOLS_GUI_EXPORT
-QPair<int, int> horizAndVertScrollValue(const QAbstractScrollArea* area);
-
-QTTOOLS_GUI_EXPORT
-void setHorizAndVertScrollValue(QAbstractScrollArea* area, const QPair<int, int>& values);
+  static QPair<int, int> horizAndVertScrollValue(const QAbstractScrollArea* area);
+  static void setHorizAndVertScrollValue(QAbstractScrollArea* area,
+                                         const QPair<int, int>& values);
+};
 
 } // namespace qttools
 
@@ -76,7 +75,7 @@ namespace qttools {
 
 //! Searches up in the direct parents of \p widget the first ancestor being of type \c PARENT_WIDGET
 template<typename PARENT_WIDGET>
-PARENT_WIDGET* findFirstParentWidget(QWidget* widget)
+PARENT_WIDGET* QWidgetTools::findFirstParentWidget(QWidget* widget)
 {
   PARENT_WIDGET* foundParentWidget = NULL;
   QWidget* iteratorWidget = widget;
@@ -89,7 +88,7 @@ PARENT_WIDGET* findFirstParentWidget(QWidget* widget)
 
 //! Searches up in the direct parents of \p widget the last ancestor being of type \c PARENT_WIDGET
 template<typename PARENT_WIDGET>
-PARENT_WIDGET* findLastParentWidget(QWidget* widget)
+PARENT_WIDGET* QWidgetTools::findLastParentWidget(QWidget* widget)
 {
   PARENT_WIDGET* foundParentWidget = NULL;
   QWidget* iteratorWidget = widget;
@@ -104,4 +103,4 @@ PARENT_WIDGET* findLastParentWidget(QWidget* widget)
 
 } // namespace qttools
 
-#endif // QTTOOLS_WIDGET_TOOLS_H
+#endif // QTTOOLS_QWIDGET_TOOLS_H

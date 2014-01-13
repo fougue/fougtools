@@ -70,7 +70,7 @@ public:
   QString password() const;
   void setPassword(const QString& password);
 
-  void configureDatabase(QSqlDatabase* db) const;
+  void applyTo(QSqlDatabase* db) const;
 
   void load(const QSettings* settings,
             const AbstractCipher* passwordCipher = NULL,

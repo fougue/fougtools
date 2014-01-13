@@ -188,7 +188,7 @@ void DatabaseSettings::write(QSettings* settings,
 /*! \brief Apply the current settings to a QSqlDatabase instance
  *  \note It does not close/open the connection of \p db
  */
-void DatabaseSettings::configureDatabase(QSqlDatabase* db) const
+void DatabaseSettings::applyTo(QSqlDatabase* db) const
 {
   if (db != NULL) {
     db->setDatabaseName(this->databaseName());

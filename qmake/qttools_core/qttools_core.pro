@@ -1,5 +1,5 @@
 include(../config.pri)
-CONFIG *= dll
+CONFIG += dll
 #DEFINES *= DEBUG_ABSTRACT_PLUGIN_LOADER
 include(../../src/qttools/core/build_qttools_core.pri)
 

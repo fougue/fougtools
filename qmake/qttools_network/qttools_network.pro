@@ -1,5 +1,5 @@
 include(../config.pri)
-CONFIG *= dll
+CONFIG += dll
 include(../../src/qttools/network/build_qttools_network.pri)
 
 qttools_network_include.path  = $$QTTOOLS_INC_PATH/qttools/network

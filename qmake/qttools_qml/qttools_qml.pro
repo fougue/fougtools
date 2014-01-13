@@ -1,5 +1,5 @@
 include(../config.pri)
-CONFIG *= dll
+CONFIG += dll
 include(../../src/qttools/qml/build_qttools_qml.pri)
 
 qttools_qml_include.path  = $$QTTOOLS_INC_PATH/qttools/qml

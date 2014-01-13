@@ -43,19 +43,12 @@
 #include <QDialog>
 
 namespace qttools {
-class Task;
 
 class QTTOOLS_GUI_EXPORT WaitDialog : public QDialog
 {
   Q_OBJECT
 
 public:
-  enum WaitForOption
-  {
-    DeleteTaskOption,
-    NoOption
-  };
-
   WaitDialog(QWidget* parent = NULL);
   ~WaitDialog();
 
@@ -66,7 +59,6 @@ public slots:
   void setMinimumDuration(int msecs);
   void startWait();
   void stopWait();
-  void waitFor(qttools::Task* task, WaitForOption opt = DeleteTaskOption);
 
 private slots:
   void updateProgress();

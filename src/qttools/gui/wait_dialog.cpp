@@ -37,7 +37,6 @@
 
 #include "wait_dialog.h"
 
-#include "../core/task.h"
 #include <QtCore/QTimer>
 #include <QtCore/QThread>
 // QtWidgets
@@ -81,7 +80,6 @@ WaitDialog::WaitDialog(QWidget* parent)
   : QDialog(parent),
     d(new Private(this))
 {
-
   // Create the UI
   this->setObjectName("qttools__WaitDialog");
   this->setWindowTitle(tr("Waiting"));
@@ -140,21 +138,6 @@ void WaitDialog::stopWait()
 {
   d->m_updateTimer->stop();
   this->close();
-}
-
-void WaitDialog::waitFor(qttools::Task* task, WaitForOption opt)
-{
-  QThread* taskThread = new QThread;
-  task->bindToThread(taskThread);
-  QEventLoop eventLoop;
-  connect(taskThread, SIGNAL(started()), this, SLOT(startWait()));
-  connect(taskThread, SIGNAL(finished()), this, SLOT(stopWait()));
-  connect(taskThread, SIGNAL(finished()), &eventLoop, SLOT(quit()));
-  connect(d->m_btnBox, SIGNAL(rejected()), task, SLOT(stop()));
-  taskThread->start();
-  eventLoop.exec();
-  if (opt == WaitDialog::DeleteTaskOption)
-    delete task;
 }
 
 void WaitDialog::updateProgress()

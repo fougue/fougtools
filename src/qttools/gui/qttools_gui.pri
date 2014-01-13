@@ -80,6 +80,3 @@ SOURCES += \
     $$PWD/wait_dialog.cpp \
     $$PWD/widget_tools.cpp \
     $$PWD/abstract_quantity_editor.cpp
-
-HEADERS += $$PWD/../core/task.h
-SOURCES += $$PWD/../core/task.cpp

@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "view.h"
+#include "qt_view.h"
 
 #if defined(Q_OS_WIN32)
 # include <windows.h>
@@ -60,7 +60,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#include "../utils.h"
+#include "utils.h"
 
 #if defined(Q_OS_WIN32)
 # include <WNT_Window.hxx>
@@ -72,21 +72,21 @@
 # include <X11/X.h>
 #endif
 
-/*! \class occ::View
+/*! \class occ::QtView
  *  \brief Qt wrapper around the V3d_View class
  *
- *  occ::View widgets are explicitely bound to a context ie an AIS_InteractiveContext. The context
+ *  occ::QtView widgets are explicitely bound to a context ie an AIS_InteractiveContext. The context
  *  can be retrieved with context().
  *
- *  An occ::View does not handle input devices interaction like keyboard and mouse.
+ *  An occ::QtView does not handle input devices interaction like keyboard and mouse.
  */
 
 namespace occ {
 
-class View::Private
+class QtView::Private
 {
 public:
-  Private(const Handle_AIS_InteractiveContext& context3d, View* backPtr);
+  Private(const Handle_AIS_InteractiveContext& context3d, QtView *backPtr);
 
   void initialize();
 
@@ -94,12 +94,12 @@ public:
   Handle_V3d_View m_internalView;
   bool m_isInitialized;
   bool m_needsResize;
-  QList<View::PaintCallback> m_paintCallbacks;
-  QHash<int, QList<View::PaintCallback>::iterator> m_paintCallbackMapping;
+  QList<QtView::PaintCallback> m_paintCallbacks;
+  QHash<int, QList<QtView::PaintCallback>::iterator> m_paintCallbackMapping;
   int m_paintCallbackLastId;
   Aspect_GraphicCallbackStruct* m_callbackData;
 
-  View* m_backPtr;
+  QtView* m_backPtr;
 };
 
 //! Callback executed each time a paint is requested (on paintEvent())
@@ -109,10 +109,10 @@ int paintCallBack(Aspect_Drawable drawable,
 {
   Q_UNUSED(drawable);
 
-  View::Private* d = reinterpret_cast<View::Private*>(pointer);
+  QtView::Private* d = reinterpret_cast<QtView::Private*>(pointer);
   d->m_callbackData = data;
 
-  foreach (const View::PaintCallback& callback, d->m_paintCallbacks)
+  foreach (const QtView::PaintCallback& callback, d->m_paintCallbacks)
     callback.execute();
 
   d->m_callbackData = NULL;
@@ -120,7 +120,7 @@ int paintCallBack(Aspect_Drawable drawable,
   return 0;
 }
 
-View::Private::Private(const Handle_AIS_InteractiveContext &context3d, View* backPtr)
+QtView::Private::Private(const Handle_AIS_InteractiveContext &context3d, QtView* backPtr)
   : m_context(context3d),
     m_isInitialized(false),
     m_needsResize(false),
@@ -130,7 +130,7 @@ View::Private::Private(const Handle_AIS_InteractiveContext &context3d, View* bac
 {
 }
 
-void View::Private::initialize()
+void QtView::Private::initialize()
 {
   if (!m_isInitialized && m_backPtr->winId() != 0) {
     m_internalView = m_context->CurrentViewer()->CreateView();
@@ -167,7 +167,7 @@ void View::Private::initialize()
 
 //! Construct an occ:View bound to the interactive context \p context3d, and having \p parent as its
 //! Qt widget parent
-View::View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent)
+QtView::QtView(const Handle_AIS_InteractiveContext& context3d, QWidget* parent)
   : QWidget(parent),
     d(new Private(context3d, this))
 {
@@ -182,41 +182,41 @@ View::View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent)
   this->setAttribute(Qt::WA_NativeWindow);
 }
 
-View::~View()
+QtView::~QtView()
 {
   delete d;
 }
 
 //! Mutable bound interactive context
-Handle_AIS_InteractiveContext& View::context()
+Handle_AIS_InteractiveContext& QtView::context()
 {
   return d->m_context;
 }
 
 //! Read-only bound interactive context
-const Handle_AIS_InteractiveContext& View::context() const
+const Handle_AIS_InteractiveContext& QtView::context() const
 {
   return d->m_context;
 }
 
-Handle_V3d_View& View::internalView()
+Handle_V3d_View& QtView::internalView()
 {
   return d->m_internalView;
 }
 
-const Handle_V3d_View& View::internalView() const
+const Handle_V3d_View& QtView::internalView() const
 {
   return d->m_internalView;
 }
 
 //! Hack for Qt 4.5.x
-QPaintEngine* View::paintEngine() const
+QPaintEngine* QtView::paintEngine() const
 {
   return NULL;
 }
 
 //! Force a redraw of the view
-void View::redraw()
+void QtView::redraw()
 {
   if (!d->m_internalView.IsNull()) {
     if (d->m_needsResize)
@@ -227,7 +227,7 @@ void View::redraw()
   d->m_needsResize = false;
 }
 
-int View::addPaintCallback(const PaintCallback &callback)
+int QtView::addPaintCallback(const PaintCallback &callback)
 {
   if (callback.isValid()) {
     d->m_paintCallbacks.append(callback);
@@ -237,7 +237,7 @@ int View::addPaintCallback(const PaintCallback &callback)
   return -1;
 }
 
-void View::removePaintCallback(int callbackId)
+void QtView::removePaintCallback(int callbackId)
 {
   QList<PaintCallback>::iterator callbackIt =
       d->m_paintCallbackMapping.value(callbackId, d->m_paintCallbacks.end());
@@ -245,12 +245,12 @@ void View::removePaintCallback(int callbackId)
     d->m_paintCallbacks.erase(callbackIt);
 }
 
-Aspect_GraphicCallbackStruct *View::paintCallbackData() const
+Aspect_GraphicCallbackStruct *QtView::paintCallbackData() const
 {
   return d->m_callbackData;
 }
 
-void View::fitAll()
+void QtView::fitAll()
 {
   if (!d->m_internalView.IsNull()) {
     d->m_internalView->ZFitAll();
@@ -259,7 +259,7 @@ void View::fitAll()
 }
 
 //! Reimplemented from QWidget::paintEvent()
-void View::paintEvent(QPaintEvent* event)
+void QtView::paintEvent(QPaintEvent* event)
 {
   Q_UNUSED(event);
 
@@ -272,7 +272,7 @@ void View::paintEvent(QPaintEvent* event)
  *  Called when the Widget needs to resize itself, but seeing as a paint event always follows a
  *  resize event, we'll move the work into the paint event
  */
-void View::resizeEvent(QResizeEvent* event)
+void QtView::resizeEvent(QResizeEvent* event)
 {
   Q_UNUSED(event);
   d->m_needsResize = true;

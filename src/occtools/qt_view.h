@@ -35,11 +35,11 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_VIEW_H
-#define OCC_VIEW_H
+#ifndef OCC_QT_VIEW_H
+#define OCC_QT_VIEW_H
 
-#include "../../cpptools/functor.h"
-#include "../occtools.h"
+#include "occtools.h"
+#include "../cpptools/functor.h"
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 # include <QtWidgets/QWidget>
@@ -53,13 +53,13 @@
 
 namespace occ {
 
-class OCCTOOLS_EXPORT View : public QWidget
+class OCCTOOLS_EXPORT QtView : public QWidget
 {
   Q_OBJECT
 
 public:
-  View(const Handle_AIS_InteractiveContext& context3d, QWidget* parent = NULL);
-  ~View();
+  QtView(const Handle_AIS_InteractiveContext& context3d, QWidget* parent = NULL);
+  ~QtView();
 
   Handle_AIS_InteractiveContext& context();
   const Handle_AIS_InteractiveContext& context() const;
@@ -90,4 +90,4 @@ private:
 
 } // namespace occ
 
-#endif // OCC_VIEW_H
+#endif // OCC_QT_VIEW_H

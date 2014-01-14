@@ -35,10 +35,10 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_VIEW_CONTROLLER_H
-#define OCC_VIEW_CONTROLLER_H
+#ifndef OCC_QT_VIEW_CONTROLLER_H
+#define OCC_QT_VIEW_CONTROLLER_H
 
-#include "../occtools.h"
+#include "occtools.h"
 #include <Handle_AIS_InteractiveContext.hxx>
 #include <Handle_V3d_View.hxx>
 #include <QtCore/QObject>
@@ -48,56 +48,52 @@ class QRubberBand;
 
 namespace occ {
 
-class View;
+class QtView;
 class ViewControllerDelegate;
 
-class OCCTOOLS_EXPORT ViewController : public QObject
+class OCCTOOLS_EXPORT QtViewController : public QObject
 {
   Q_OBJECT
 
 public:
   friend class ViewControllerDelegate;
 
-  ViewController(View* view);
+  QtViewController(QtView* view);
+
+  bool eventFilter(QObject* object, QEvent* event);
 
 signals:
   void contextSelectionChanged();
   void escaped();
 
 protected:
-  // -- Rubber band handling
   virtual void beginRubberBandDraw(const QPoint& startPos);
   virtual void updateRubberBandDraw(const QPoint& currPos);
   virtual void endRubberBandDraw();
 
-  // --- Event handling
-  bool eventFilter(QObject* object, QEvent* event);
   void notifyContextSelectionChanged();
   void notifyEscaped();
 
 public:
-  // --- Access
   const Handle_V3d_View& internalOccView() const;
   Handle_V3d_View& internalOccView();
 
   const Handle_AIS_InteractiveContext& context() const;
   Handle_AIS_InteractiveContext& context();
 
-  const View* view() const;
-  View* view();
+  QtView* view() const;
 
 protected:
   const QRect rubberBandGeometry() const;
 
-  View* m_view;
-
 private:
   void createRubberBand();
 
+  QtView* m_view;
   QPoint m_startRubberBandPos;
   QRubberBand* m_rubberBand;
 };
 
 } // namespace occ
 
-#endif // OCC_VIEW_CONTROLLER_H
+#endif // OCC_QT_VIEW_CONTROLLER_H

@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "view_controller.h"
+#include "qt_view_controller.h"
 
 #include <QtGui/QKeyEvent>
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
@@ -45,11 +45,11 @@
 //# include <QtGui/QPlastiqueStyle>
 #endif
 
-#include "view.h"
+#include "qt_view.h"
 
 namespace occ {
 
-ViewController::ViewController(View* view)
+QtViewController::QtViewController(QtView* view)
   : QObject(view),
     m_view(view),
     m_rubberBand(NULL)
@@ -58,7 +58,7 @@ ViewController::ViewController(View* view)
 
 // -- Rubber band handling
 
-void ViewController::beginRubberBandDraw(const QPoint& startPos)
+void QtViewController::beginRubberBandDraw(const QPoint& startPos)
 {
   this->createRubberBand();
   m_startRubberBandPos = startPos;
@@ -66,7 +66,7 @@ void ViewController::beginRubberBandDraw(const QPoint& startPos)
   m_rubberBand->show();
 }
 
-void ViewController::updateRubberBandDraw(const QPoint& currPos)
+void QtViewController::updateRubberBandDraw(const QPoint& currPos)
 {
   this->createRubberBand();
   m_rubberBand->hide();
@@ -75,7 +75,7 @@ void ViewController::updateRubberBandDraw(const QPoint& currPos)
   m_rubberBand->show();
 }
 
-void ViewController::endRubberBandDraw()
+void QtViewController::endRubberBandDraw()
 {
   this->createRubberBand();
   m_rubberBand->hide();
@@ -83,54 +83,49 @@ void ViewController::endRubberBandDraw()
 
 // --- Event handling
 
-bool ViewController::eventFilter(QObject* object, QEvent* event)
+bool QtViewController::eventFilter(QObject* object, QEvent* event)
 {
   return QObject::eventFilter(object, event);
 }
 
-void ViewController::notifyContextSelectionChanged()
+void QtViewController::notifyContextSelectionChanged()
 {
   emit contextSelectionChanged();
 }
 
-void ViewController::notifyEscaped()
+void QtViewController::notifyEscaped()
 {
   emit escaped();
 }
 
 // --- Access
 
-const Handle_V3d_View& ViewController::internalOccView() const
+const Handle_V3d_View& QtViewController::internalOccView() const
 {
   return m_view->internalView();
 }
 
-Handle_V3d_View& ViewController::internalOccView()
+Handle_V3d_View& QtViewController::internalOccView()
 {
   return m_view->internalView();
 }
 
-const Handle_AIS_InteractiveContext& ViewController::context() const
+const Handle_AIS_InteractiveContext& QtViewController::context() const
 {
   return m_view->context();
 }
 
-Handle_AIS_InteractiveContext& ViewController::context()
+Handle_AIS_InteractiveContext& QtViewController::context()
 {
   return m_view->context();
 }
 
-const View* ViewController::view() const
+QtView* QtViewController::view() const
 {
   return m_view;
 }
 
-View* ViewController::view()
-{
-  return m_view;
-}
-
-const QRect ViewController::rubberBandGeometry() const
+const QRect QtViewController::rubberBandGeometry() const
 {
   if (m_rubberBand == NULL)
     return QRect();
@@ -139,7 +134,7 @@ const QRect ViewController::rubberBandGeometry() const
 
 // --- Implementation
 
-void ViewController::createRubberBand()
+void QtViewController::createRubberBand()
 {
   if (m_rubberBand == NULL) {
     m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this->view());

@@ -49,6 +49,11 @@
 
 namespace occ {
 
+/*! \class QtViewController
+ *
+ *  \ingroup occtools
+ */
+
 QtViewController::QtViewController(QtView* view)
   : QObject(view),
     m_view(view),

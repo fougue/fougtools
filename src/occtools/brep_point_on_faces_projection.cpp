@@ -93,6 +93,8 @@ bool BRepPointOnFacesProjection::Private::ProjectorCompare::operator()(const Pro
  *  is performed on each loaded TopoDS_Face with the help of GeomAPI_ProjectPointOnSurf.\n
  *  The minimal distance amongst all the projection candidates is computed to get the final
  *  projected point
+ *
+ * \ingroup occtools
  */
 
 //! Construct an uninitialized BRepPointOnFacesProjection

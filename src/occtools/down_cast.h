@@ -55,6 +55,8 @@ namespace occ {
  *    \code
  *      Handle_Geom_Circle gcircle = occ::down_cast<Handle_Geom_Circle>(gcurve);
  *    \endcode
+ *
+ *  \ingroup occtools
  */
 template<typename TYPE>
 class down_cast

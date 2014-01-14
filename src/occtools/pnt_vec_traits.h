@@ -45,6 +45,10 @@
 
 namespace geom {
 
+/*! \brief
+ *
+ *  \ingroup occtools
+ */
 template<>
 struct PntVecTraits<gp_Pnt, gp_Vec>
 {
@@ -93,7 +97,7 @@ struct PntVecTraits<gp_Pnt, gp_Vec>
 
 namespace occ {
 
-typedef geom::PntVecTraits<gp_Pnt, gp_Vec> PntVecTraits_t;
+typedef geom::PntVecTraits<gp_Pnt, gp_Vec> PntVecTraits;
 
 } // namespace occ
 

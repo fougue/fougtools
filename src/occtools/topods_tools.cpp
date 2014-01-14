@@ -48,6 +48,11 @@
 
 namespace occ {
 
+/*! \class TopoDsTools
+ *
+ *  \ingroup occtools
+ */
+
 gp_Vec TopoDsTools::normalToFaceAtUV(const TopoDS_Face &face, Standard_Real u, Standard_Real v)
 {
   BRepLProp_SLProps localSurfaceProps(1, 1e-6);

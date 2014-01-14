@@ -39,6 +39,11 @@
 
 namespace occ {
 
+/*! \class KernelTools
+ *
+ *  \ingroup occtools
+ */
+
 Quantity_Color KernelTools::rgbColor(int red, int blue, int green)
 {
   return Quantity_Color(red / 255., blue / 255., green / 255., Quantity_TOC_RGB);

@@ -44,6 +44,11 @@
 
 namespace occ {
 
+/*! \class GeomTools
+ *
+ *  \ingroup occtools
+ */
+
 gp_Pnt GeomTools::geomCurveD0(const Handle_Geom_Curve& curve, Standard_Real u)
 {
   gp_Pnt pnt;

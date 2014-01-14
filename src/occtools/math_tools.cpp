@@ -46,6 +46,11 @@
 
 namespace occ {
 
+/*! \class MathTools
+ *
+ *  \ingroup occtools
+ */
+
 Standard_Real MathTools::euclideanNorm(const gp_Vec &vec)
 {
   return std::sqrt(MathTools::squaredEuclideanNorm(vec));

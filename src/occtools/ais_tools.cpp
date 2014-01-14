@@ -43,6 +43,11 @@
 
 namespace occ {
 
+/*! \class AisTools
+ *
+ * \ingroup occtools
+ */
+
 void AisTools::eraseObjectFromContext(const Handle_AIS_InteractiveObject &object,
                                       const Handle_AIS_InteractiveContext &context)
 {

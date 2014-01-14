@@ -181,6 +181,11 @@ void PointOnFacesProjector::Private::insertMapping(const Handle_Poly_Triangulati
   m_faceMap[tri.operator->()] = face;
 }
 
+/*! \class PointOnFacesProjector
+ *
+ *  \ingroup occtools
+ */
+
 // --- PointOnFacesProjector::Result implementation
 
 PointOnFacesProjector::Result::Result()
@@ -280,8 +285,10 @@ PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& poi
     t.Get(n1, n2, n3);
     if (minNodeId == n1 || minNodeId == n2 || minNodeId == n3) {
       const std::pair<gp_Pnt, bool> projPntInfo =
-          geom::projectPointOnTriangle<occ::PntVecTraits_t>(
-            point, nodes(t(1)), nodes(t(2)), nodes(t(3)));
+          geom::projectPointOnTriangle<occ::PntVecTraits>(point,
+                                                          nodes(t(1)),
+                                                          nodes(t(2)),
+                                                          nodes(t(3)));
       const double dist = point.SquareDistance(projPntInfo.first);
       if (dist < minDist) {
         minTriangle = &t;

@@ -43,6 +43,11 @@
 
 namespace occ {
 
+/*! \class GCPnts_UniformAbscissaConstIterator
+ *
+ *  \ingroup occtools
+ */
+
 GCPnts_UniformAbscissaConstIterator::GCPnts_UniformAbscissaConstIterator()
   : m_ua(NULL),
     m_index(1)

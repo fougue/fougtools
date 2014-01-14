@@ -116,6 +116,11 @@ TopoDS_Shape loadFile(const QString& fileName, Handle_Message_ProgressIndicator 
 
 namespace occ {
 
+/*! \class IO
+ *
+ *  \ingroup occtools
+ */
+
 IO::Format IO::partFormat(const QString& filename)
 {
   QFile file(filename);

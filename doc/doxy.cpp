@@ -127,3 +127,6 @@ With these exceptions:
 
 /*! \defgroup qttools_sql QtTools SQL
  */
+
+/*! \defgroup occtools OpenCascade Tools
+ */

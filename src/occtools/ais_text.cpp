@@ -153,6 +153,7 @@ public:
  *
  * \var occ_AIS_Text::TextStyle AIS_Text::AnnotationStyle
  *
+ * \ingroup occtools
  */
 
 //! Construct a default occ_AIS_Text

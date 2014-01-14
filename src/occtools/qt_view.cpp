@@ -60,7 +60,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#include "utils.h"
+#include "kernel_tools.h"
 
 #if defined(Q_OS_WIN32)
 # include <WNT_Window.hxx>
@@ -79,6 +79,8 @@
  *  can be retrieved with context().
  *
  *  An occ::QtView does not handle input devices interaction like keyboard and mouse.
+ *
+ *  \ingroup occtools
  */
 
 namespace occ {
@@ -150,12 +152,12 @@ void QtView::Private::initialize()
     if (!hWnd->IsMapped())
       hWnd->Map();
 
-    m_internalView->SetBgGradientColors(occ::rgbColor(128, 147, 255),
-                                        occ::rgbColor(255, 255, 255),
+    m_internalView->SetBgGradientColors(KernelTools::rgbColor(128, 147, 255),
+                                        KernelTools::rgbColor(255, 255, 255),
                                         Aspect_GFM_VER);
 
     m_internalView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER,
-                                    occ::rgbColor(100, 100, 100).Name(),
+                                    KernelTools::rgbColor(100, 100, 100).Name(),
                                     0.1,
                                     V3d_ZBUFFER);
 

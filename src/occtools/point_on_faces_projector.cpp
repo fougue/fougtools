@@ -38,7 +38,7 @@
 #include "point_on_faces_projector.h"
 
 #include "pnt_vec_traits.h"
-#include "utils.h"
+#include "math_tools.h"
 #include "../mathtools/project_point_on_triangle.h"
 
 #include <BRep_Tool.hxx>
@@ -52,6 +52,7 @@
 #include <TopoDS_Face.hxx>
 #include <TopoDS_Shape.hxx>
 
+#include <cmath>
 #include <limits>
 #include <map>
 
@@ -293,9 +294,10 @@ PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& poi
     return PointOnFacesProjector::Result();
   const TopoDS_Face* face = d->triangulationToFace(triangulation);
   const TopAbs_Orientation faceOrientation = face != NULL ? face->Orientation() : TopAbs_FORWARD;
+  const gp_Vec triNormal = occ::MathTools::triangleNormal(nodes, *minTriangle, faceOrientation);
   return PointOnFacesProjector::Result(face != NULL ? *face : TopoDS_Face(),
                                        projectedPnt,
-                                       occ::triangleNormal(nodes, *minTriangle, faceOrientation));
+                                       triNormal);
 }
 
 /*! \brief Syntactic sugar around projected()

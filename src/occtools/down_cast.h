@@ -35,61 +35,14 @@
 **
 ****************************************************************************/
 
-#ifdef OCC_UTILS_H
+#ifndef OCC_DOWN_CAST_H
+#define OCC_DOWN_CAST_H
 
-#include "../mathtools/point_vector.h"
+#include <Handle_Standard_Transient.hxx>
 
 namespace occ {
-//
-// --- Creation
-//
 
-//! Topologic compound of shapes denoted between the begin and end iterators
-//! \p iBegin and \p iEnd
-template<typename FWD_ITERATOR>
-TopoDS_Compound makeCompound(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
-{
-  TopoDS_Compound cmpd;
-  BRep_Builder builder;
-  builder.MakeCompound(cmpd);
-
-  while (iBegin != iEnd) {
-    builder.Add(cmpd, *iBegin);
-    ++iBegin;
-  }
-
-  return cmpd;
-}
-
-//! Shorthand to occ::makeCompound(cnter.begin(), cnter.end())
-template<typename CONTAINER>
-TopoDS_Compound makeCompound(CONTAINER cnter)
-{
-  return makeCompound(cnter.begin(), cnter.end());
-}
-
-// --- Geometry conversion
-
-//! Conversion of the Point3 \p p to a gp_Pnt
-template<typename T>
-gp_Pnt toOccPoint3d(const geom::Point3<T>& p)
-{
-  return gp_Pnt(static_cast<double>(p.x()),
-                static_cast<double>(p.y()),
-                static_cast<double>(p.z()));
-}
-
-//! Conversion of the Vector3 \p v to a gp_Vec.
-template<typename T>
-gp_Vec toOccVector3d(const geom::Vector3<T>& v)
-{
-  return gp_Vec(static_cast<double>(v.x()),
-                static_cast<double>(v.y()),
-                static_cast<double>(v.z()));
-}
-
-/*! \class occ::down_cast
- *  \brief Downcasting operator for OpenCascade handles
+/*! \brief Downcasting operator for OpenCascade handles
  *
  *  It wraps up into a syntactic C++ sugar the way casting of handles is supported in OpenCascade
  *
@@ -103,6 +56,22 @@ gp_Vec toOccVector3d(const geom::Vector3<T>& v)
  *      Handle_Geom_Circle gcircle = occ::down_cast<Handle_Geom_Circle>(gcurve);
  *    \endcode
  */
+template<typename TYPE>
+class down_cast
+{
+public:
+  explicit down_cast<TYPE>(const Handle_Standard_Transient& handle);
+  operator TYPE() const;
+  const TYPE operator->() const;
+private:
+  const Handle_Standard_Transient& m_handle;
+};
+
+
+
+// --
+// -- Implementation
+// --
 
 //! Construct the operator that will down cast \p object to an handle of type TYPE
 template<typename TYPE>
@@ -124,40 +93,6 @@ const TYPE down_cast<TYPE>::operator->() const
 {
   return TYPE::DownCast(m_handle);
 }
-
 } // namespace occ
 
-// --- Related functions
-
-namespace occ_utils_internal {
-
-template<typename OCC_PT_VEC, typename TEXT_STREAM>
-TEXT_STREAM& dumpOccPtVec(TEXT_STREAM& ts, const OCC_PT_VEC& v)
-{
-  return ts << "(" << v.X() << ", " << v.Y() << ", " << v.Z() << ")";
-}
-
-} // namespace occ_utils_internal
-
-//! Print (dump) in the text stream \p ts the point \p p
-template<typename TEXT_STREAM>
-TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Pnt& p)
-{
-  return occ_utils_internal::dumpOccPtVec(ts, p);
-}
-
-//! Print (dump) in the text stream \p ts the vector \p v
-template<typename TEXT_STREAM>
-TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Vec& v)
-{
-  return occ_utils_internal::dumpOccPtVec(ts, v);
-}
-
-//! Print (dump) in the text stream \p ts the direction \p d
-template<typename TEXT_STREAM>
-TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d)
-{
-  return occ_utils_internal::dumpOccPtVec(ts, d);
-}
-
-#endif // OCC_UTILS_H
+#endif // OCC_DOWN_CAST_H

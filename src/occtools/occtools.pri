@@ -37,22 +37,23 @@
 
 include(../../3rdparty/occ.pri)
 
-INCLUDEPATH *= $$BOOST_ROOT
-
 HEADERS += $$PWD/io.h \
            $$PWD/occtools.h \
            $$PWD/ais_text.h \
            $$PWD/handle_ais_text.h \
            $$PWD/brep_point_on_faces_projection.h \
            $$PWD/gcpnts_uniform_abscissa_const_iterator.h \
-           $$PWD/make_wire_from_edges.h \
            $$PWD/point_on_faces_projector.h \
            $$PWD/pnt_vec_traits.h \
-           $$PWD/utils.h \
-           $$PWD/utils.impl.h \
            $$PWD/qt_view.h \
            $$PWD/qt_view_controller.h \
-           $$PWD/qt_occ.h
+           $$PWD/qt_occ.h \
+           $$PWD/topods_tools.h \
+           $$PWD/geom_tools.h \
+           $$PWD/down_cast.h \
+           $$PWD/ais_tools.h \
+           $$PWD/math_tools.h \
+           $$PWD/kernel_tools.h
 
 SOURCES += \
            $$PWD/io.cpp \
@@ -60,10 +61,14 @@ SOURCES += \
            $$PWD/brep_point_on_faces_projection.cpp \
            $$PWD/gcpnts_uniform_abscissa_const_iterator.cpp \
            $$PWD/point_on_faces_projector.cpp \
-           $$PWD/utils.cpp \
            $$PWD/qt_view.cpp \
            $$PWD/qt_view_controller.cpp \
-           $$PWD/qt_occ.cpp
+           $$PWD/qt_occ.cpp \
+           $$PWD/topods_tools.cpp \
+           $$PWD/geom_tools.cpp \
+           $$PWD/ais_tools.cpp \
+           $$PWD/math_tools.cpp \
+           $$PWD/kernel_tools.cpp
 
 LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
         -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim  -lTKService \

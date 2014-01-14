@@ -1,5 +1,6 @@
 #include "../wait_loop.h"
 #include "wait_loop_p.h"
+#include "wait_loop_time_out_stop_condition.h"
 
 namespace qttools {
 
@@ -30,9 +31,9 @@ void WaitLoop::Private::endWaitLoop(WaitLoop_StopCondition* endCond)
 
 internal::WaitLoopTimeOutStopCondition *WaitLoop::Private::timeOutStopCondition() const
 {
-  if (m_stopConditions.isEmpty())
-    return NULL;
-  return static_cast<internal::WaitLoopTimeOutStopCondition*>(m_stopConditions.first());
+  if (!m_stopConditions.isEmpty())
+    return static_cast<internal::WaitLoopTimeOutStopCondition*>(m_stopConditions.first());
+  return NULL;
 }
 
 } // namespace qttools

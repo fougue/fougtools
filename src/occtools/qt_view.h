@@ -39,15 +39,14 @@
 #define OCC_QT_VIEW_H
 
 #include "occtools.h"
-#include "../cpptools/functor.h"
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-# include <QtWidgets/QWidget>
-#else
-# include <QtGui/QWidget>
+#ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
+# include "../cpptools/functor.h"
+# include <Aspect_GraphicCallbackProc.hxx>
 #endif
 
-#include <Aspect_GraphicCallbackProc.hxx>
+#include <QWidget>
+
 #include <Handle_AIS_InteractiveContext.hxx>
 #include <Handle_V3d_View.hxx>
 
@@ -67,10 +66,12 @@ public:
   Handle_V3d_View& internalView();
   const Handle_V3d_View& internalView() const;
 
+#ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
   typedef cpp::Functor0<void> PaintCallback;
   int addPaintCallback(const PaintCallback& callback);
   void removePaintCallback(int callbackId);
   Aspect_GraphicCallbackStruct* paintCallbackData() const;
+#endif
 
   QPaintEngine* paintEngine() const;
 
@@ -83,7 +84,7 @@ protected:
   void resizeEvent(QResizeEvent* event);
 
 private:
-  friend int paintCallBack(Aspect_Drawable, void*, Aspect_GraphicCallbackStruct*);
+  friend int occ_QtView_paintCallBack(Aspect_Drawable, void*, Aspect_GraphicCallbackStruct*);
   class Private;
   Private* const d;
 };

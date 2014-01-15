@@ -48,12 +48,7 @@
 #include <QtCore/QtDebug>
 #include <QtCore/QHash>
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-# include <QtWidgets/QApplication>
-#else
-# include <QtGui/QApplication>
-#endif
-
+#include <QApplication>
 #include <QtGui/QLinearGradient>
 #include <QtGui/QPainter>
 #include <QtGui/QPixmap>
@@ -96,8 +91,10 @@ public:
   Handle_V3d_View m_internalView;
   bool m_isInitialized;
   bool m_needsResize;
+#ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
   QList<QtView::PaintCallback> m_paintCallbacks;
   QHash<int, QList<QtView::PaintCallback>::iterator> m_paintCallbackMapping;
+#endif
   int m_paintCallbackLastId;
   Aspect_GraphicCallbackStruct* m_callbackData;
 
@@ -105,12 +102,13 @@ public:
 };
 
 //! Callback executed each time a paint is requested (on paintEvent())
-int paintCallBack(Aspect_Drawable drawable,
-                  void* pointer,
-                  Aspect_GraphicCallbackStruct* data)
+int occ_QtView_paintCallBack(Aspect_Drawable drawable,
+                             void* pointer,
+                             Aspect_GraphicCallbackStruct* data)
 {
   Q_UNUSED(drawable);
 
+#ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
   QtView::Private* d = reinterpret_cast<QtView::Private*>(pointer);
   d->m_callbackData = data;
 
@@ -118,6 +116,7 @@ int paintCallBack(Aspect_Drawable drawable,
     callback.execute();
 
   d->m_callbackData = NULL;
+#endif // !OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
 
   return 0;
 }
@@ -148,7 +147,7 @@ void QtView::Private::initialize()
     Handle_Aspect_DisplayConnection dispConnection = m_context->CurrentViewer()->Driver()->GetDisplayConnection();
     Handle_Xw_Window hWnd = new Xw_Window(dispConnection, winHandle);
 #endif
-    m_internalView->SetWindow(hWnd, NULL, &paintCallBack, this);
+    m_internalView->SetWindow(hWnd, NULL, &occ_QtView_paintCallBack, this);
     if (!hWnd->IsMapped())
       hWnd->Map();
 
@@ -229,6 +228,7 @@ void QtView::redraw()
   d->m_needsResize = false;
 }
 
+#ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
 int QtView::addPaintCallback(const PaintCallback &callback)
 {
   if (callback.isValid()) {
@@ -251,6 +251,8 @@ Aspect_GraphicCallbackStruct *QtView::paintCallbackData() const
 {
   return d->m_callbackData;
 }
+
+#endif // !OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
 
 void QtView::fitAll()
 {

@@ -48,7 +48,6 @@ HEADERS += \
     $$PWD/item_view_tools.h \
     $$PWD/length_double_spinbox.h \
     $$PWD/quantity_editor_manager.h \
-    $$PWD/line_edit_with_auto_tool_tip.h \
     $$PWD/line_numbers_bar.h \
     $$PWD/measurement_system_preferences.h \
     $$PWD/message_dialog.h \
@@ -68,7 +67,6 @@ SOURCES += \
     $$PWD/item_view_tools.cpp \
     $$PWD/length_double_spinbox.cpp \
     $$PWD/quantity_editor_manager.cpp \
-    $$PWD/line_edit_with_auto_tool_tip.cpp \
     $$PWD/line_numbers_bar.cpp \
     $$PWD/measurement_system_preferences.cpp \
     $$PWD/message_dialog.cpp \

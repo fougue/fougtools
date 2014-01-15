@@ -1,7 +1,7 @@
 include(config.pri)
 
 TEMPLATE = subdirs
-CONFIG *= ordered
+CONFIG += ordered
 SUBDIRS += qttools_core \
            qttools_gui \
            qttools_qml \
@@ -38,7 +38,6 @@ scripts.path  = $$PREFIX_DIR/scripts
 scripts.files = ../scripts/*.rb
 INSTALLS += scripts
 
-
 # Automatic generation of version infos
 VER_MAJ = 0
 VER_MIN = 4
@@ -46,5 +45,17 @@ VER_PAT = 0
 _REV_NUM = $$system(ruby ../scripts/rev_num.rb  --rcs git  --workdir $$PWD)
 _FOUGTOOLS_VERSION = "$$VER_MAJ"."$$VER_MIN"."$$VER_PAT"dev-$$_REV_NUM
 
-# Automatic generation of doxygen PROJECT_NUMBER value
-system(echo PROJECT_NUMBER = $$_FOUGTOOLS_VERSION > ../doc/_project_number.dox)
+# Add custom "doc" target
+_CMD_SEP = ;
+win32:_CMD_SEP = &
+gendoc.target   = doc
+gendoc.commands = \
+  $$QMAKE_COPY $$[QT_INSTALL_DOCS]/qtcore/qtcore.tags $$PWD/../doc $$_CMD_SEP \
+  $$QMAKE_COPY $$[QT_INSTALL_DOCS]/qtgui/qtgui.tags $$PWD/../doc $$_CMD_SEP \
+  $$QMAKE_COPY $$[QT_INSTALL_DOCS]/qtwidgets/qtwidgets.tags $$PWD/../doc $$_CMD_SEP \
+  $$QMAKE_COPY $$[QT_INSTALL_DOCS]/qtsql/qtsql.tags $$PWD/../doc $$_CMD_SEP \
+  echo PROJECT_NUMBER = $$_FOUGTOOLS_VERSION > $$PWD/../doc/_project_number.dox $$_CMD_SEP \
+  cd $$PWD/../doc $$_CMD_SEP \
+  doxygen Doxyfile $$_CMD_SEP \
+  cd $$PWD
+QMAKE_EXTRA_TARGETS += gendoc

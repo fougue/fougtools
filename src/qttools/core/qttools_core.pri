@@ -68,7 +68,6 @@ SOURCES += \
     $$PWD/log.cpp \
     $$PWD/qlocale_tools.cpp \
     $$PWD/qobject_tools.cpp \
-    $$PWD/qobject_wrap.cpp \
     $$PWD/qstring_tools.cpp \
     $$PWD/runtime_error.cpp \
     $$PWD/scoped_connection.cpp \

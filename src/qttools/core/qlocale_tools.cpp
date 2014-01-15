@@ -40,12 +40,13 @@
 namespace qttools {
 
 /*! \class QLocaleTools
- *  \brief
+ *  \brief Provides a collection of tools around QLocale
  *  \headerfile qlocale_tools.h <qttools/core/qlocale_tools.h>
  *  \ingroup qttools_core
  *
  */
 
+//! Safe cast of an integer to QLocale::MeasurementSystem
 QLocale::MeasurementSystem QLocaleTools::toMeasurementSystem(int measSys)
 {
   switch (measSys) {
@@ -58,6 +59,7 @@ QLocale::MeasurementSystem QLocaleTools::toMeasurementSystem(int measSys)
   }
 }
 
+//! Safe cast of an integer to QLocale::Country
 QLocale::Country QLocaleTools::toCountry(int code)
 {
   switch (code) {

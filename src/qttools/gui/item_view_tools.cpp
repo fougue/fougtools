@@ -47,7 +47,7 @@
 namespace qttools {
 
 /*! \class ItemViewTools
- *  \brief
+ *  \brief Provides a collection of tools around QAbstractItemView
  *
  *  \headerfile item_view_tools.h <qttools/gui/item_view_tools.h>
  *  \ingroup qttools_gui

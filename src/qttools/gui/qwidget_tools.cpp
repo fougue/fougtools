@@ -45,7 +45,7 @@
 namespace qttools {
 
 /*! \class QWidgetTools
- *  \brief
+ *  \brief Provides a collection of tools around QWidget
  *
  *  \headerfile qwidget_tools.h <qttools/gui/qwidget_tools.h>
  *  \ingroup qttools_gui

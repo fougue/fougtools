@@ -47,6 +47,7 @@ namespace qttools {
  *
  */
 
+//! Constructs an invalid grid having no items, ie. itemCount() == 0
 GridStruct::GridStruct()
   : m_rowCount(0),
     m_colCount(0)

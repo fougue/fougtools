@@ -40,7 +40,7 @@
 namespace qttools {
 
 /*! \class ItemModelTools
- *  \brief
+ *  \brief Provides a collection of tools around QAbstractItemModel
  *  \headerfile item_model_tools.h <qttools/core/item_model_tools.h>
  *  \ingroup qttools_core
  *

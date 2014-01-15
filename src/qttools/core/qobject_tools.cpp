@@ -42,7 +42,7 @@
 namespace qttools {
 
 /*! \class QObjectTools
- *  \brief
+ *  \brief Provides a collection of tools around QObject
  *  \headerfile qobject_tools.h <qttools/core/qobject_tools.h>
  *  \ingroup qttools_core
  *

@@ -69,7 +69,7 @@ public:
 
 /*!
  * \class WaitDialog
- * \brief
+ * \brief Provides a dialog for long background operations
  *
  * \headerfile wait_dialog.h <qttools/gui/wait_dialog.h>
  * \ingroup qttools_gui

@@ -43,7 +43,7 @@
 
 namespace qttools {
 
-/*! \brief
+/*! \brief Provides a collection of tools around QVariant
  *  \headerfile qvariant_tools.h <qttools/core/qvariant_tools.h>
  *  \ingroup qttools_core
  *

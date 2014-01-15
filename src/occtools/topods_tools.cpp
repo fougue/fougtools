@@ -49,6 +49,7 @@
 namespace occ {
 
 /*! \class TopoDsTools
+ *  \brief Collection of tools for the TopoDS package
  *
  *  \ingroup occtools
  */

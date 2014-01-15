@@ -45,6 +45,7 @@
 namespace occ {
 
 /*! \class GeomTools
+ *  \brief Collection of tools for the Geom package
  *
  *  \ingroup occtools
  */

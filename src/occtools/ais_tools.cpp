@@ -44,8 +44,9 @@
 namespace occ {
 
 /*! \class AisTools
+ *  \brief Collection of tools for the AIS package
  *
- * \ingroup occtools
+ *  \ingroup occtools
  */
 
 void AisTools::eraseObjectFromContext(const Handle_AIS_InteractiveObject &object,

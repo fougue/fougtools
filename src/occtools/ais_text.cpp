@@ -133,19 +133,24 @@ public:
 
 /*!
  * \class occ_AIS_Text
- * \brief Interactive items specialized in the displaying of texts
+ * \brief Interactive items specialized in text display
  *
  *
  * \enum occ_AIS_Text::TextDisplayMode
  *       Various types to distinguish the way texts are displayed
+ *
  * \var occ_AIS_Text::TextDisplayMode AIS_Text::TextOnlyDisplay
  *      Display only text(default mode)
+ *
  * \var occ_AIS_Text::TextDisplayMode AIS_Text::BackgroundDisplay
  *      Window background under the text
+ *
  * \var occ_AIS_Text::TextDisplayMode AIS_Text::Style3dDisplay
  *      Text displayed with a 3D style
+ *
  * \var occ_AIS_Text::TextDisplayMode AIS_Text::Style3dDisplay
  *      Text is displayed in XOR mode
+ *
  *
  * \enum occ_AIS_Text::TextStyle
  *

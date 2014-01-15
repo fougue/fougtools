@@ -47,7 +47,7 @@
 namespace occ {
 
 /*! \class MathTools
- *
+ *  \brief Collection of tools for the Math toolkit
  *  \ingroup occtools
  */
 

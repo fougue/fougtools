@@ -40,6 +40,7 @@
 namespace occ {
 
 /*! \class KernelTools
+ *  \brief Collection of tools for the Kernel toolkit
  *
  *  \ingroup occtools
  */

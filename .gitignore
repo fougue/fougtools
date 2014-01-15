@@ -10,3 +10,4 @@ bin
 *.obj
 moc_*
 object_script.*
+doc/*.tags

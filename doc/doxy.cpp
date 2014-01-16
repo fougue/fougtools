@@ -13,43 +13,18 @@ FougTools is a collection of utility tools for the C++ language, Qt and
 Open Cascade toolkits.
 
 
-\section license_sec LICENSE
-
-This software is governed by the CeCILL-C license under French law and
-abiding by the rules of distribution of free software.  You can  use,
-modify and/ or redistribute the software under the terms of the CeCILL-C
-license as circulated by CEA, CNRS and INRIA at the following URL
-http://www.cecill.info
-
-As a counterpart to the access to the source code and  rights to copy,
-modify and redistribute granted by the license, users are provided only
-with a limited warranty  and the software's author,  the holder of the
-economic rights,  and the successive licensors  have only  limited
-liability.
-
-In this respect, the user's attention is drawn to the risks associated
-with loading,  using,  modifying and/or developing or reproducing the
-software by the user in light of its specific status of free software,
-that may mean  that it is complicated to manipulate,  and  that  also
-therefore means  that it is reserved for developers  and  experienced
-professionals having in-depth computer knowledge. Users are therefore
-encouraged to load and test the software's suitability as regards their
-requirements in conditions enabling the security of their systems and/or
-data to be ensured and,  more generally, to use and operate it in the
-same conditions as regards security.
-
-The fact that you are presently reading this means that you have had
-knowledge of the CeCILL-C license and that you accept its terms.
-
-
-\section install_sec INSTALLING FougTools
+\section build_sec BUILDING FougTools
 Create a file named _local_config.pri in the folder where FougTools will
 be built and define the following variables, depending on your needs:
 \code
-  PREFIX_DIR = ../gcc-linux64  # Everything will be installed here
-  CONFIG *= occtools  # If you want to build occtools (optional)
-  CONFIG *= use_oce   # If you want OpenCascade Community edition (OCE)
-  CASCADE_ROOT = /path/to/opencascade
+  # Everything will be installed here :
+  PREFIX_DIR = /opt/lib/fougtools/qt5-build
+
+  # If you want to build occtools (optional)
+  CONFIG += occtools  
+
+  # Path to root directory of OpenCascade
+  CASCADE_ROOT = /path/to/opencascade/build
 \endcode
 
 Or use Ruby script qmake/configure.rb, print help with:
@@ -57,14 +32,16 @@ Or use Ruby script qmake/configure.rb, print help with:
   ruby $FOUGTOOLS/qmake/configure.rb -h
 \endcode
 
-Note that on Windows, qmake can complain about deprecated warnings for
+Note that on Windows, qmake complains about deprecated support of
 backslash '\' characters.
 So you may have to escape backslashes like C:\\path\\to\\opencascade
+or simply use Unix separators instead C:/path/to/opencascade
 
 Once configuration is done, then type: 
 \code
   qmake -r $FOUGTOOLS/qmake/fougtools.pro
   (n)make
+  (n)make install
 \endcode
 
 
@@ -107,6 +84,35 @@ With these exceptions:
        };
        \endcode
        This has the advantage to not have to forward declare the Private class outside Foo
+
+       
+\section license_sec LICENSE
+
+This software is governed by the CeCILL-C license under French law and
+abiding by the rules of distribution of free software.  You can  use,
+modify and/ or redistribute the software under the terms of the CeCILL-C
+license as circulated by CEA, CNRS and INRIA at the following URL
+http://www.cecill.info
+
+As a counterpart to the access to the source code and  rights to copy,
+modify and redistribute granted by the license, users are provided only
+with a limited warranty  and the software's author,  the holder of the
+economic rights,  and the successive licensors  have only  limited
+liability.
+
+In this respect, the user's attention is drawn to the risks associated
+with loading,  using,  modifying and/or developing or reproducing the
+software by the user in light of its specific status of free software,
+that may mean  that it is complicated to manipulate,  and  that  also
+therefore means  that it is reserved for developers  and  experienced
+professionals having in-depth computer knowledge. Users are therefore
+encouraged to load and test the software's suitability as regards their
+requirements in conditions enabling the security of their systems and/or
+data to be ensured and,  more generally, to use and operate it in the
+same conditions as regards security.
+
+The fact that you are presently reading this means that you have had
+knowledge of the CeCILL-C license and that you accept its terms.
 
  */
 

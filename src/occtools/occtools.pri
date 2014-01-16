@@ -71,6 +71,6 @@ SOURCES += \
            $$PWD/kernel_tools.cpp
 
 LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
-        -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim  -lTKService \
+        -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim -lTKService -lTKShHealing \
         -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -l$$OCC_TKSTEP -lTKSTL -lTKTopAlgo \
         -lTKV3d -lTKXSBase

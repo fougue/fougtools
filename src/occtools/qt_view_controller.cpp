@@ -105,22 +105,12 @@ void QtViewController::notifyEscaped()
 
 // --- Access
 
-const Handle_V3d_View& QtViewController::internalOccView() const
+Handle_V3d_View QtViewController::internalOccView() const
 {
   return m_view->internalView();
 }
 
-Handle_V3d_View& QtViewController::internalOccView()
-{
-  return m_view->internalView();
-}
-
-const Handle_AIS_InteractiveContext& QtViewController::context() const
-{
-  return m_view->context();
-}
-
-Handle_AIS_InteractiveContext& QtViewController::context()
+Handle_AIS_InteractiveContext QtViewController::context() const
 {
   return m_view->context();
 }

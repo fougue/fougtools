@@ -75,12 +75,8 @@ protected:
   void notifyEscaped();
 
 public:
-  const Handle_V3d_View& internalOccView() const;
-  Handle_V3d_View& internalOccView();
-
-  const Handle_AIS_InteractiveContext& context() const;
-  Handle_AIS_InteractiveContext& context();
-
+  Handle_V3d_View internalOccView() const;
+  Handle_AIS_InteractiveContext context() const;
   QtView* view() const;
 
 protected:

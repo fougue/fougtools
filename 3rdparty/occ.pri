@@ -5,16 +5,7 @@ defineReplace(sysPath) {
   return($$result)
 }
 
-use_oce {
-  CASCADE_INC_PATH = $$CASCADE_ROOT/include/oce
-  !isEmpty(OCE_VERSION) {
-    CASCADE_LIB_PATH += -$CASCADE_ROOT/lib/$$OCE_VERSION
-  }
-}
-else {
-  CASCADE_INC_PATH = $$CASCADE_ROOT/inc
-}
-INCLUDEPATH += $$CASCADE_INC_PATH
+INCLUDEPATH += $$CASCADE_ROOT/inc
 
 linux-*:DEFINES *= HAVE_CONFIG_H \
                    HAVE_FSTREAM \

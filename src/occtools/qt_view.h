@@ -42,11 +42,11 @@
 
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
 # include "../cpptools/functor.h"
-# include <Aspect_GraphicCallbackProc.hxx>
 #endif
 
 #include <QWidget>
 
+#include <Aspect_GraphicCallbackProc.hxx>
 #include <Handle_AIS_InteractiveContext.hxx>
 #include <Handle_V3d_View.hxx>
 
@@ -60,11 +60,8 @@ public:
   QtView(const Handle_AIS_InteractiveContext& context3d, QWidget* parent = NULL);
   ~QtView();
 
-  Handle_AIS_InteractiveContext& context();
-  const Handle_AIS_InteractiveContext& context() const;
-
-  Handle_V3d_View& internalView();
-  const Handle_V3d_View& internalView() const;
+  Handle_AIS_InteractiveContext context() const;
+  Handle_V3d_View internalView() const;
 
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
   typedef cpp::Functor0<void> PaintCallback;

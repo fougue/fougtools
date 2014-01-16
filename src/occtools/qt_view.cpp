@@ -55,8 +55,6 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
-#include "kernel_tools.h"
-
 #if defined(Q_OS_WIN32)
 # include <WNT_Window.hxx>
 #elif defined(Q_OS_MAC) && !defined(MACOSX_USE_GLX)
@@ -67,19 +65,9 @@
 # include <X11/X.h>
 #endif
 
-/*! \class occ::QtView
- *  \brief Qt wrapper around the V3d_View class
- *
- *  occ::QtView widgets are explicitely bound to a context ie an AIS_InteractiveContext. The context
- *  can be retrieved with context().
- *
- *  An occ::QtView does not handle input devices interaction like keyboard and mouse.
- *
- *  \ingroup occtools
- */
-
 namespace occ {
 
+//! QtView's pimpl
 class QtView::Private
 {
 public:
@@ -91,6 +79,7 @@ public:
   Handle_V3d_View m_internalView;
   bool m_isInitialized;
   bool m_needsResize;
+
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
   QList<QtView::PaintCallback> m_paintCallbacks;
   QHash<int, QList<QtView::PaintCallback>::iterator> m_paintCallbackMapping;
@@ -98,6 +87,7 @@ public:
   int m_paintCallbackLastId;
   Aspect_GraphicCallbackStruct* m_callbackData;
 
+private:
   QtView* m_backPtr;
 };
 
@@ -151,12 +141,12 @@ void QtView::Private::initialize()
     if (!hWnd->IsMapped())
       hWnd->Map();
 
-    m_internalView->SetBgGradientColors(KernelTools::rgbColor(128, 147, 255),
-                                        KernelTools::rgbColor(255, 255, 255),
+    m_internalView->SetBgGradientColors(Quantity_Color(0.5, 0.58, 1., Quantity_TOC_RGB),
+                                        Quantity_NOC_WHITE,
                                         Aspect_GFM_VER);
 
     m_internalView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER,
-                                    KernelTools::rgbColor(100, 100, 100).Name(),
+                                    Quantity_NOC_GRAY50,
                                     0.1,
                                     V3d_ZBUFFER);
 
@@ -166,7 +156,18 @@ void QtView::Private::initialize()
   }
 }
 
-//! Construct an occ:View bound to the interactive context \p context3d, and having \p parent as its
+/*! \class QtView
+ *  \brief Qt wrapper around the V3d_View class
+ *
+ *  QtView widgets are explicitely bound to a context ie an AIS_InteractiveContext. The context
+ *  can be retrieved with context().
+ *
+ *  QtView does not handle input devices interaction like keyboard and mouse.
+ *
+ *  \ingroup occtools
+ */
+
+//! Construct a QtView bound to the interactive context \p context3d, and having \p parent as its
 //! Qt widget parent
 QtView::QtView(const Handle_AIS_InteractiveContext& context3d, QWidget* parent)
   : QWidget(parent),
@@ -188,24 +189,12 @@ QtView::~QtView()
   delete d;
 }
 
-//! Mutable bound interactive context
-Handle_AIS_InteractiveContext& QtView::context()
+Handle_AIS_InteractiveContext QtView::context() const
 {
   return d->m_context;
 }
 
-//! Read-only bound interactive context
-const Handle_AIS_InteractiveContext& QtView::context() const
-{
-  return d->m_context;
-}
-
-Handle_V3d_View& QtView::internalView()
-{
-  return d->m_internalView;
-}
-
-const Handle_V3d_View& QtView::internalView() const
+Handle_V3d_View QtView::internalView() const
 {
   return d->m_internalView;
 }
@@ -273,7 +262,7 @@ void QtView::paintEvent(QPaintEvent* event)
 }
 
 /*! \brief Reimplemented from QWidget::resizeEvent()
- *  Called when the Widget needs to resize itself, but seeing as a paint event always follows a
+ *  Called when the widget needs to resize itself, but seeing as a paint event always follows a
  *  resize event, we'll move the work into the paint event
  */
 void QtView::resizeEvent(QResizeEvent* event)

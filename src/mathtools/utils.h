@@ -73,18 +73,6 @@ bool equalByIntDiff(const T& a, const T& b,
                     ComparisonCheckFlags checkFlags = NoCheck);
 
 template<typename T>
-const T& minimum(const T& a, const T& b);
-
-template<typename T>
-const T& maximum(const T& a, const T& b);
-
-template<typename T, typename _LESS_THAN_>
-const T& minimum(const T& a, const T& b, _LESS_THAN_ lessThan);
-
-template<typename T, typename _LESS_THAN_>
-const T& maximum(const T& a, const T& b, _LESS_THAN_ lessThan);
-
-template<typename T>
 T clamped(const T& v, const T& min, const T& max);
 
 // ---- Conversion

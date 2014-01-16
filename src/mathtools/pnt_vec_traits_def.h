@@ -35,29 +35,29 @@
 **
 ****************************************************************************/
 
-#ifndef GEOM_PNT_VEC_TRAITS_DEF_H
-#define GEOM_PNT_VEC_TRAITS_DEF_H
+#ifndef MATHTOOLS_PNT_VEC_TRAITS_DEF_H
+#define MATHTOOLS_PNT_VEC_TRAITS_DEF_H
 
-namespace geom {
+namespace math {
 
 template<typename POINT, typename VECTOR>
 struct PntVecTraits
 {
 # ifndef _MSC_VER
-  typedef POINT Pnt_t;
-  typedef VECTOR Vec_t;
-  typedef double Value_t;
+  typedef POINT  Point;
+  typedef VECTOR Vector;
+  typedef double Value;
 
-  static void normalize(Vec_t* v);
-  static Vec_t cross(const Vec_t& u, const Vec_t& v);
-  static Value_t dot(const Vec_t& u, const Vec_t& v);
-  static Pnt_t translate(const Pnt_t& p, const Vec_t& v);
-  static Vec_t vector(const Pnt_t& p1, const Pnt_t& p2);
-  static Vec_t vector(const Pnt_t& p);
-  static Vec_t mult(Value_t k, const Vec_t& v);
+  static void normalize(Vector* v);
+  static Vector cross(const Vector& u, const Vector& v);
+  static Value dot(const Vector& u, const Vector& v);
+  static Point translate(const Point& p, const Vector& v);
+  static Vector vector(const Point& p1, const Point& p2);
+  static Vector vector(const Point& p);
+  static Vector mult(Value k, const Vector& v);
 # endif // _MSC_VER
 };
 
-} // namespace geom
+} // namespace math
 
-#endif // GEOM_PNT_VEC_TRAITS_DEF_H
+#endif // MATHTOOLS_PNT_VEC_TRAITS_DEF_H

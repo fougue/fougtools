@@ -35,23 +35,23 @@
 **
 ****************************************************************************/
 
-#ifdef GEOM_PROJECT_POINT_ON_TRIANGLE_H
+#ifdef MATHTOOLS_PROJECT_POINT_ON_TRIANGLE_H
 
-namespace geom {
+namespace math {
 
 template<typename PNT_VEC_TRAITS>
-const std::pair<typename PNT_VEC_TRAITS::Pnt_t, bool>
-projectPointOnTriangle(const typename PNT_VEC_TRAITS::Pnt_t& p,
-                       const typename PNT_VEC_TRAITS::Pnt_t& v0,
-                       const typename PNT_VEC_TRAITS::Pnt_t& v1,
-                       const typename PNT_VEC_TRAITS::Pnt_t& v2)
+const std::pair<typename PNT_VEC_TRAITS::Point, bool>
+projectPointOnTriangle(const typename PNT_VEC_TRAITS::Point& p,
+                       const typename PNT_VEC_TRAITS::Point& v0,
+                       const typename PNT_VEC_TRAITS::Point& v1,
+                       const typename PNT_VEC_TRAITS::Point& v2)
 {
-  typedef typename PNT_VEC_TRAITS::Pnt_t Pnt_t;
-  typedef typename PNT_VEC_TRAITS::Vec_t Vec_t;
+  typedef typename PNT_VEC_TRAITS::Point Point;
+  typedef typename PNT_VEC_TRAITS::Vector Vector;
 
-  const Vec_t e0(PNT_VEC_TRAITS::vector(v0, v1));
-  const Vec_t e1(PNT_VEC_TRAITS::vector(v0, v2));
-  const Vec_t D(PNT_VEC_TRAITS::vector(p, v0));
+  const Vector e0(PNT_VEC_TRAITS::vector(v0, v1));
+  const Vector e1(PNT_VEC_TRAITS::vector(v0, v2));
+  const Vector D(PNT_VEC_TRAITS::vector(p, v0));
 
   const double a = PNT_VEC_TRAITS::dot(e0, e0);
   const double b = PNT_VEC_TRAITS::dot(e0, e1);
@@ -141,20 +141,20 @@ projectPointOnTriangle(const typename PNT_VEC_TRAITS::Pnt_t& p,
 //! triangle to project points to.
 template<typename PNT_VEC_TRAITS>
 project_point_on_triangle<PNT_VEC_TRAITS>::project_point_on_triangle(
-    const typename PNT_VEC_TRAITS::Pnt_t& v0,
-    const typename PNT_VEC_TRAITS::Pnt_t& v1,
-    const typename PNT_VEC_TRAITS::Pnt_t& v2) :
-  _v0(v0), _v1(v1), _v2(v2)
+    const typename PNT_VEC_TRAITS::Point& v0,
+    const typename PNT_VEC_TRAITS::Point& v1,
+    const typename PNT_VEC_TRAITS::Point& v2) :
+  m_v0(v0), m_v1(v1), m_v2(v2)
 {
 }
 
 template<typename PNT_VEC_TRAITS>
-const std::pair<typename PNT_VEC_TRAITS::Pnt_t, bool>
-project_point_on_triangle<PNT_VEC_TRAITS>::operator()(const typename PNT_VEC_TRAITS::Pnt_t pnt)
+const std::pair<typename PNT_VEC_TRAITS::Point, bool>
+project_point_on_triangle<PNT_VEC_TRAITS>::operator()(const typename PNT_VEC_TRAITS::Point pnt)
 {
-  return projectPointOnTriangle<PNT_VEC_TRAITS>(pnt, this->_v0, this->_v1, this->_v2);
+  return projectPointOnTriangle<PNT_VEC_TRAITS>(pnt, m_v0, m_v1, m_v2);
 }
 
-} // namespace geom
+} // namespace math
 
-#endif // GEOM_PROJECT_POINT_ON_TRIANGLE_H
+#endif // MATHTOOLS_PROJECT_POINT_ON_TRIANGLE_H

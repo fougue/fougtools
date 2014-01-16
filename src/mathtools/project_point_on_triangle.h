@@ -35,37 +35,37 @@
 **
 ****************************************************************************/
 
-#ifndef GEOM_PROJECT_POINT_ON_TRIANGLE_H
-#define GEOM_PROJECT_POINT_ON_TRIANGLE_H
+#ifndef MATHTOOLS_PROJECT_POINT_ON_TRIANGLE_H
+#define MATHTOOLS_PROJECT_POINT_ON_TRIANGLE_H
 
 #include <utility>
 
-namespace geom {
+namespace math {
 
 template<typename PNT_VEC_TRAITS>
-const std::pair<typename PNT_VEC_TRAITS::Pnt_t, bool>
-projectPointOnTriangle(const typename PNT_VEC_TRAITS::Pnt_t& p,
-                       const typename PNT_VEC_TRAITS::Pnt_t& v0,
-                       const typename PNT_VEC_TRAITS::Pnt_t& v1,
-                       const typename PNT_VEC_TRAITS::Pnt_t& v2);
+const std::pair<typename PNT_VEC_TRAITS::Point, bool>
+projectPointOnTriangle(const typename PNT_VEC_TRAITS::Point& p,
+                       const typename PNT_VEC_TRAITS::Point& v0,
+                       const typename PNT_VEC_TRAITS::Point& v1,
+                       const typename PNT_VEC_TRAITS::Point& v2);
 
 template<typename PNT_VEC_TRAITS>
 struct project_point_on_triangle
 {
-  project_point_on_triangle(const typename PNT_VEC_TRAITS::Pnt_t& v0,
-                            const typename PNT_VEC_TRAITS::Pnt_t& v1,
-                            const typename PNT_VEC_TRAITS::Pnt_t& v2);
-  const std::pair<typename PNT_VEC_TRAITS::Pnt_t, bool>
-  operator()(const typename PNT_VEC_TRAITS::Pnt_t pnt);
+  project_point_on_triangle(const typename PNT_VEC_TRAITS::Point& v0,
+                            const typename PNT_VEC_TRAITS::Point& v1,
+                            const typename PNT_VEC_TRAITS::Point& v2);
+  const std::pair<typename PNT_VEC_TRAITS::Point, bool>
+  operator()(const typename PNT_VEC_TRAITS::Point pnt);
 
 private:
-  const typename PNT_VEC_TRAITS::Pnt_t& _v0;
-  const typename PNT_VEC_TRAITS::Pnt_t& _v1;
-  const typename PNT_VEC_TRAITS::Pnt_t& _v2;
+  const typename PNT_VEC_TRAITS::Point& m_v0;
+  const typename PNT_VEC_TRAITS::Point& m_v1;
+  const typename PNT_VEC_TRAITS::Point& m_v2;
 }; // struct project_point_on_triangle
 
-} // namespace geom
+} // namespace math
 
 #include "project_point_on_triangle.impl.h"
 
-#endif // GEOM_PROJECT_POINT_ON_TRIANGLE_H
+#endif // MATHTOOLS_PROJECT_POINT_ON_TRIANGLE_H

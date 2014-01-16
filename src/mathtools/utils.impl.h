@@ -116,30 +116,6 @@ bool equalByIntDiff(const T& a, const T& b,
 }
 
 template<typename T>
-const T& minimum(const T& a, const T& b)
-{
-  return (b < a ? b : a);
-}
-
-template<typename T>
-const T& maximum(const T& a, const T& b)
-{
-  return (b < a ? a : b);
-}
-
-template<typename T, typename _LESS_THAN_>
-const T& minimum(const T& a, const T& b, _LESS_THAN_ lessThan)
-{
-  return (lessThan(b, a) ? b : a);
-}
-
-template<typename T, typename _LESS_THAN_>
-const T& maximum(const T& a, const T& b, _LESS_THAN_ lessThan)
-{
-  return (lessThan(b, a) ? a : b);
-}
-
-template<typename T>
 T clamped(const T& v, const T& min, const T& max)
 {
   return v < min ? min : (v > max ? max : v);

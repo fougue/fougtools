@@ -285,7 +285,7 @@ PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& poi
     t.Get(n1, n2, n3);
     if (minNodeId == n1 || minNodeId == n2 || minNodeId == n3) {
       const std::pair<gp_Pnt, bool> projPntInfo =
-          geom::projectPointOnTriangle<occ::PntVecTraits>(point,
+          math::projectPointOnTriangle<occ::PntVecTraits>(point,
                                                           nodes(t(1)),
                                                           nodes(t(2)),
                                                           nodes(t(3)));

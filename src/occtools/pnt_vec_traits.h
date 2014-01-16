@@ -43,61 +43,61 @@
 #include <gp_Vec.hxx>
 #include "../mathtools/pnt_vec_traits_def.h"
 
-namespace geom {
+namespace math {
 
-/*! \brief
+/*! \brief Point/Vector OpenCascade traits
  *
  *  \ingroup occtools
  */
 template<>
 struct PntVecTraits<gp_Pnt, gp_Vec>
 {
-  typedef gp_Pnt Pnt_t;
-  typedef gp_Vec Vec_t;
-  typedef Standard_Real Value_t;
+  typedef gp_Pnt Point;
+  typedef gp_Vec Vector;
+  typedef Standard_Real Value;
 
-  static void normalize(Vec_t* v)
+  static void normalize(Vector* v)
   {
     assert(v != NULL);
     v->Normalize();
   }
 
-  static Vec_t cross(const Vec_t& u, const Vec_t& v)
+  static Vector cross(const Vector& u, const Vector& v)
   {
     return u.Crossed(v);
   }
 
-  static Value_t dot(const Vec_t& u, const Vec_t& v)
+  static Value dot(const Vector& u, const Vector& v)
   {
     return u.Dot(v);
   }
 
-  static Pnt_t translate(const Pnt_t& p, const Vec_t& v)
+  static Point translate(const Point& p, const Vector& v)
   {
     return p.Translated(v);
   }
 
-  static Vec_t vector(const Pnt_t& p1, const Pnt_t& p2)
+  static Vector vector(const Point& p1, const Point& p2)
   {
-    return Vec_t(p1, p2);
+    return Vector(p1, p2);
   }
 
-  static Vec_t vector(const Pnt_t& p)
+  static Vector vector(const Point& p)
   {
-    return Vec_t(p.X(), p.Y(), p.Z());
+    return Vector(p.X(), p.Y(), p.Z());
   }
 
-  static Vec_t mult(Value_t k, const Vec_t& v)
+  static Vector mult(Value k, const Vector& v)
   {
     return k * v;
   }
 };
 
-} // namespace geom
+} // namespace math
 
 namespace occ {
 
-typedef geom::PntVecTraits<gp_Pnt, gp_Vec> PntVecTraits;
+typedef math::PntVecTraits<gp_Pnt, gp_Vec> PntVecTraits;
 
 } // namespace occ
 

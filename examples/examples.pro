@@ -1,2 +1,4 @@
 TEMPLATE = subdirs
-SUBDIRS  = occtools/qtviewer
+SUBDIRS  = \
+    qttools/tree_combo_box \
+    occtools/qtviewer

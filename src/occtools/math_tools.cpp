@@ -48,6 +48,8 @@ namespace occ {
 
 /*! \class MathTools
  *  \brief Collection of tools for the Math toolkit
+ *
+ *  \headerfile math_tools.h <occtools/math_tools.h>
  *  \ingroup occtools
  */
 

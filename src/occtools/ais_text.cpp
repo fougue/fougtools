@@ -135,7 +135,11 @@ public:
  * \class occ_AIS_Text
  * \brief Interactive items specialized in text display
  *
- *
+ * \headerfile ais_text.h <occtools/ais_text.h>
+ * \ingroup occtools
+ */
+
+/*!
  * \enum occ_AIS_Text::TextDisplayMode
  *       Various types to distinguish the way texts are displayed
  *
@@ -150,15 +154,14 @@ public:
  *
  * \var occ_AIS_Text::TextDisplayMode AIS_Text::Style3dDisplay
  *      Text is displayed in XOR mode
- *
- *
+ */
+
+/*!
  * \enum occ_AIS_Text::TextStyle
  *
  * \var occ_AIS_Text::TextStyle AIS_Text::NormalStyle
  *
  * \var occ_AIS_Text::TextStyle AIS_Text::AnnotationStyle
- *
- * \ingroup occtools
  */
 
 //! Construct a default occ_AIS_Text

@@ -118,6 +118,7 @@ namespace occ {
 
 /*! \class IO
  *
+ *  \headerfile io.h <occtools/io.h>
  *  \ingroup occtools
  */
 

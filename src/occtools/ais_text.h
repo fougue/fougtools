@@ -111,4 +111,4 @@ private:
   Private* const d;
 };
 
-#endif // AIS_TEXT_H
+#endif // OCC_AIS_TEXT_H

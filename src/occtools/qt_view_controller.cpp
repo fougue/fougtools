@@ -51,6 +51,7 @@ namespace occ {
 
 /*! \class QtViewController
  *
+ *  \headerfile qt_view_controller.h <occtools/qt_view_controller.h>
  *  \ingroup occtools
  */
 

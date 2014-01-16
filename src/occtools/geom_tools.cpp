@@ -47,6 +47,7 @@ namespace occ {
 /*! \class GeomTools
  *  \brief Collection of tools for the Geom package
  *
+ *  \headerfile geom_tools.h <occtools/geom_tools.h>
  *  \ingroup occtools
  */
 

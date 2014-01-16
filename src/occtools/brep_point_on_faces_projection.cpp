@@ -94,7 +94,8 @@ bool BRepPointOnFacesProjection::Private::ProjectorCompare::operator()(const Pro
  *  The minimal distance amongst all the projection candidates is computed to get the final
  *  projected point
  *
- * \ingroup occtools
+ *  \headerfile brep_point_on_faces_projection.h <occtools/brep_point_on_faces_projection.h>
+ *  \ingroup occtools
  */
 
 //! Construct an uninitialized BRepPointOnFacesProjection

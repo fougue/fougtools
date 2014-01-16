@@ -164,6 +164,7 @@ void QtView::Private::initialize()
  *
  *  QtView does not handle input devices interaction like keyboard and mouse.
  *
+ *  \headerfile qt_view.h <occtools/qt_view.h>
  *  \ingroup occtools
  */
 

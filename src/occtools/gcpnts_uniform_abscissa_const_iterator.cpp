@@ -45,6 +45,7 @@ namespace occ {
 
 /*! \class GCPnts_UniformAbscissaConstIterator
  *
+ *  \headerfile gcpnts_uniform_abscissa_const_iterator.h <occtools/gcpnts_uniform_abscissa_const_iterator.h>
  *  \ingroup occtools
  */
 

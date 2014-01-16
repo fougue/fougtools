@@ -51,6 +51,7 @@ namespace occ {
 /*! \class TopoDsTools
  *  \brief Collection of tools for the TopoDS package
  *
+ *  \headerfile topods_tools.h <occtools/topods_tools.h>
  *  \ingroup occtools
  */
 

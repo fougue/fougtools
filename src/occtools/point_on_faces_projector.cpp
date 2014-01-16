@@ -183,6 +183,8 @@ void PointOnFacesProjector::Private::insertMapping(const Handle_Poly_Triangulati
 
 /*! \class PointOnFacesProjector
  *  \brief Provides projection of a point on a soup of faces
+ *
+ *  \headerfile point_on_faces_projector.h <occtools/point_on_faces_projector.h>
  *  \ingroup occtools
  */
 

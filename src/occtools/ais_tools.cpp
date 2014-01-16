@@ -46,6 +46,7 @@ namespace occ {
 /*! \class AisTools
  *  \brief Collection of tools for the AIS package
  *
+ *  \headerfile ais_tools.h <occtools/ais_tools.h>
  *  \ingroup occtools
  */
 

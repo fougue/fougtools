@@ -42,6 +42,7 @@ namespace occ {
 /*! \class KernelTools
  *  \brief Collection of tools for the Kernel toolkit
  *
+ *  \headerfile kernel_tools.h <occtools/kernel_tools.h>
  *  \ingroup occtools
  */
 

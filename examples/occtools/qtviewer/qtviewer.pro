@@ -17,7 +17,6 @@ HEADERS += \
 
 SOURCES += \
     $$FOUGTOOLS_SRCDIR/occtools/qt_view.cpp \
-    $$FOUGTOOLS_SRCDIR/occtools/kernel_tools.cpp \
     main.cpp \
     qt_view_controller.cpp
 

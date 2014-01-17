@@ -37,7 +37,7 @@
 
 HEADERS += \
     $$PWD/abstract_cipher.h \
-    $$PWD/abstract_plugin_loader.h \
+    $$PWD/plugins_loader.h \
     $$PWD/abstract_signal_dispatch.h \
     $$PWD/core.h \
     $$PWD/grid_numbering.h \
@@ -57,13 +57,15 @@ HEADERS += \
     $$PWD/wait_loop.h \
     $$PWD/wait_loop_stop_condition.h \
     $$PWD/unique_id.h \
+    $$PWD/plugins_loader_instance_filter.h \
+    $$PWD/plugins_loader_instance_iface_filter.h \
     \
     $$PWD/internal/wait_loop_p.h \
     $$PWD/internal/wait_loop_time_out_stop_condition.h
 
 SOURCES += \
     $$PWD/abstract_cipher.cpp \
-    $$PWD/abstract_plugin_loader.cpp \
+    $$PWD/plugins_loader.cpp \
     $$PWD/abstract_signal_dispatch.cpp \
     $$PWD/log.cpp \
     $$PWD/qlocale_tools.cpp \
@@ -78,6 +80,8 @@ SOURCES += \
     $$PWD/wait_loop.cpp \
     $$PWD/wait_loop_stop_condition.cpp \
     $$PWD/unique_id.cpp \
+    $$PWD/plugins_loader_instance_filter.cpp \
+    $$PWD/plugins_loader_instance_iface_filter.cpp \
     \
     $$PWD/internal/wait_loop_p.cpp \
     $$PWD/internal/wait_loop_time_out_stop_condition.cpp

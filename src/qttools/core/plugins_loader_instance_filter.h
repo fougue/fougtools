@@ -35,44 +35,20 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_ABSTRACT_PLUGIN_LOADER_H
-#define QTTOOLS_ABSTRACT_PLUGIN_LOADER_H
+#ifndef QTTOOLS_PLUGINS_LOADER_INSTANCE_FILTER_H
+#define QTTOOLS_PLUGINS_LOADER_INSTANCE_FILTER_H
 
 #include "core.h"
-#include <QtCore/QString>
-#include <QtCore/QVector>
-class QObject;
-class QRegExp;
+class QPluginLoader;
 
 namespace qttools {
 
-class QTTOOLS_CORE_EXPORT AbstractPluginLoader
+class QTTOOLS_CORE_EXPORT PluginsLoader_InstanceFilter
 {
 public:
-  AbstractPluginLoader();
-  virtual ~AbstractPluginLoader();
-
-  bool autoDeletePlugins() const;
-  void setAutoDeletePlugins(bool on);
-
-  QString loadingFolder() const;
-  void setLoadingFolder(const QString& folder);
-
-  QString filename(const QObject* plugin) const;
-
-  QVector<QObject*> plugins();
-  const QVector<QObject*>& plugins() const;
-
-protected:
-  void loadPlugins(const QRegExp& fileRx, QVector<QString>* errors = NULL);
-  void discardPlugin(QObject* plugin);
-  virtual bool isPluginCompatible(const QObject* plugin) const = 0;
-
-private:
-  class Private;
-  Private* const d;
+  virtual bool accepts(QPluginLoader* loader, QString* error = NULL) const;
 };
 
 } // namespace qttools
 
-#endif // QTTOOLS_ABSTRACT_PLUGIN_LOADER_H
+#endif // QTTOOLS_PLUGINS_LOADER_INSTANCE_FILTER_H

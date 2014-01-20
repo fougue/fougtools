@@ -1,5 +1,5 @@
 CONFIG += debug_and_release
-CONFIG += warn_on stl rtti exceptions
+CONFIG += c++11 warn_on stl rtti exceptions
 
 CONFIG(debug, debug|release) {
   DEFINES *= _DEBUG_CONFIG_

@@ -103,7 +103,7 @@ int occ_QtView_paintCallBack(Aspect_Drawable drawable,
   d->m_callbackData = data;
 
   foreach (const QtView::PaintCallback& callback, d->m_paintCallbacks)
-    callback.execute();
+    callback();
 
   d->m_callbackData = NULL;
 #endif // !OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
@@ -221,7 +221,7 @@ void QtView::redraw()
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
 int QtView::addPaintCallback(const PaintCallback &callback)
 {
-  if (callback.isValid()) {
+  if (callback) {
     d->m_paintCallbacks.append(callback);
     d->m_paintCallbackMapping.insert(d->m_paintCallbackLastId, --(d->m_paintCallbacks.end()));
     return ++(d->m_paintCallbackLastId);

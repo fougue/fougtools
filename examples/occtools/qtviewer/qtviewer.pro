@@ -1,15 +1,13 @@
 TEMPLATE = app
 TARGET   = qtviewer
 
-CONFIG += console
+CONFIG += console c++11
 
 QT += gui
 isEqual(QT_MAJOR_VERSION, 5): QT += widgets
 
 FOUGTOOLS_SRCDIR = ../../../src
 INCLUDEPATH += $$FOUGTOOLS_SRCDIR
-
-DEFINES += OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
 
 HEADERS += \
     $$FOUGTOOLS_SRCDIR/occtools/qt_view.h \

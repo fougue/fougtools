@@ -41,7 +41,7 @@
 #include "occtools.h"
 
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
-# include "../cpptools/functor.h"
+# include <functional>
 #endif
 
 #include <QWidget>
@@ -64,7 +64,7 @@ public:
   Handle_V3d_View internalView() const;
 
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
-  typedef cpp::Functor0<void> PaintCallback;
+  typedef std::function<void()> PaintCallback;
   int addPaintCallback(const PaintCallback& callback);
   void removePaintCallback(int callbackId);
   Aspect_GraphicCallbackStruct* paintCallbackData() const;

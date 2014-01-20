@@ -47,7 +47,7 @@ namespace qttools {
 /*! \brief Helper class for PluginsLoader_InstanceIFaceFilter only
  *  \ingroup qttools_core
  */
-class PluginsLoader_InstanceIFaceFilter_Helper
+class QTTOOLS_CORE_EXPORT PluginsLoader_InstanceIFaceFilter_Helper
 {
 protected:
   static void setRootComponentNullError(QString* error);

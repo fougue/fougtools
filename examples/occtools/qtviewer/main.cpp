@@ -3,6 +3,7 @@
 #include <QtCore/QObject>
 #include <QtGui/QMouseEvent>
 
+#include <Standard_Version.hxx>
 #include <BRep_Builder.hxx>
 #include <BRepTools.hxx>
 #include <AIS_InteractiveContext.hxx>
@@ -21,22 +22,6 @@
 #include "qt_view_controller.h"
 
 namespace internal {
-
-class TestQtView : public occ::QtView
-{
-public:
-  TestQtView(const Handle_AIS_InteractiveContext& context3d, QWidget* parent = NULL)
-    : occ::QtView(context3d, parent)
-  {
-  }
-
-protected:
-  void mouseMoveEvent(QMouseEvent* event)
-  {
-    qDebug() << Q_FUNC_INFO;
-    occ::QtView::mouseMoveEvent(event);
-  }
-};
 
 static Handle_V3d_Viewer createOccViewer()
 {
@@ -62,11 +47,13 @@ static Handle_V3d_Viewer createOccViewer()
   occViewer->SetDefaultSurfaceDetail(V3d_TEX_NONE);
 
   // Initialize the OCC 3d viewer
-   occViewer->Init();
-   occViewer->SetDefaultLights();
-   occViewer->SetLightOn();
+#if OCC_VERSION_HEX < 0x60700
+  occViewer->Init();
+#endif
+  occViewer->SetDefaultLights();
+  occViewer->SetLightOn();
 
-   return occViewer;
+  return occViewer;
 }
 
 } // namespace internal
@@ -87,13 +74,12 @@ int main(int argc, char** argv)
     Handle_AIS_Shape aisShape = new AIS_Shape(shape);
     aisShape->SetMaterial(Graphic3d_NOM_PLASTIC);
     aisShape->SetDisplayMode(AIS_Shaded);
-    aisShape->SetColor(Quantity_Color(0.33, 0.33, 0.33, Quantity_TOC_RGB));
+    aisShape->SetColor(Quantity_NOC_GRAY50);
     aisShape->Attributes()->SetFaceBoundaryDraw(Standard_True);
 
     occContext->Display(aisShape, i == (argc - 1));
   }
 
-//  internal::TestQtView qtView(occContext);
   occ::QtView qtView(occContext);
   new QtViewController(&qtView);
   qtView.show();

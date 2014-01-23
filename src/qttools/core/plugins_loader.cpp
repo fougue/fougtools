@@ -113,7 +113,7 @@ bool PluginsLoader::Private::isLibrary(const QString &path)
  * \class PluginsLoader
  * \brief Provides run-time loading of Qt-based plugins located into search paths
  *
- * \headerfile plugin_loader.h <qttools/core/plugin_loader.h>
+ * \headerfile plugins_loader.h <qttools/core/plugins_loader.h>
  * \ingroup qttools_core
  *
  */
@@ -153,14 +153,23 @@ void PluginsLoader::setAutoDeletePlugins(bool on)
   d->m_autoDeletePlugins = on;
 }
 
+/*!
+ * \brief Appends path to the plugins path list
+ *
+ * If \p path is empty or already in the path list, the path list is not changed.
+ */
 void PluginsLoader::addPath(const QString &path)
 {
-  d->m_pluginPaths.append(path);
+  if (!path.trimmed().isEmpty() || !d->m_pluginPaths.contains(path))
+    d->m_pluginPaths.append(path);
 }
 
+/*!
+ * \brief Removes \p path from the list of plugin paths
+ */
 void PluginsLoader::removePath(const QString &path)
 {
-  d->m_pluginPaths.removeAll(path);
+  d->m_pluginPaths.removeOne(path);
 }
 
 /*!
@@ -172,11 +181,20 @@ QStringList PluginsLoader::paths() const
   return d->m_pluginPaths;
 }
 
+/*!
+ * \brief Sets the list of directories to search when loading plugins to \p paths
+ *
+ * All existing paths will be deleted and the path list will consist of the paths given in \p paths.
+ * \sa addPath(), removePath(), paths()
+ */
 void PluginsLoader::setPaths(const QStringList &paths)
 {
   d->m_pluginPaths = paths;
 }
 
+/*!
+ * \brief Returns the list set with setFileNameFilters()
+ */
 QStringList PluginsLoader::fileNameFilters() const
 {
   return d->m_fileNameFilters;

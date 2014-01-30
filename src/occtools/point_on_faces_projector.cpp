@@ -165,7 +165,7 @@ void PointOnFacesProjector::Private::clear()
 
 const TopoDS_Face *PointOnFacesProjector::Private::triangulationToFace(Poly_Triangulation *tri) const
 {
-  std::map<const Poly_Triangulation*, TopoDS_Face>::const_iterator it = m_faceMap.find(tri);
+  auto it = m_faceMap.find(tri);
   return it != m_faceMap.end() ? &(it->second) : NULL;
 }
 

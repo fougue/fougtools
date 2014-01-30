@@ -182,8 +182,8 @@ void LengthDoubleSpinBox::updateEditor(QLocale::MeasurementSystem newSys)
   }
   }
 
-  this->setSuffix(unitStr);
-  this->setValue(newLengthUnit);
+  QDoubleSpinBox::setSuffix(unitStr);
+  QDoubleSpinBox::setValue(newLengthUnit);
 }
 
 } // namespace qttools

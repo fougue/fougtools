@@ -35,7 +35,7 @@
 ##
 #############################################################################
 
-include(../../3rdparty/occ.pri)
+include(occ.pri)
 
 HEADERS += $$PWD/io.h \
            $$PWD/occtools.h \

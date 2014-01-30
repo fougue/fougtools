@@ -1,7 +1,9 @@
+include(../../../qmake/compiler_config.pri)
+
 TEMPLATE = app
 TARGET   = qtviewer
 
-CONFIG += console c++11
+CONFIG += console
 
 QT += gui
 isEqual(QT_MAJOR_VERSION, 5): QT += widgets
@@ -19,6 +21,6 @@ SOURCES += \
     qt_view_controller.cpp
 
 # CASCADE_ROOT must be defined when invoking qmake (eg. qmake CASCADE_ROOT=/opt/lib/occ/build)
-include(../../../3rdparty/occ.pri)
+include(../../../src/occtools/occ.pri)
 
 LIBS += -lTKernel -lTKMath -lTKBRep -lTKService -lTKV3d

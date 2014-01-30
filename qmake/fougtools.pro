@@ -10,7 +10,8 @@ SUBDIRS += qttools_core \
            qttools_sql
 
 occtools:SUBDIRS += occtools
-utest:SUBDIRS += ../utest
+build_utest:SUBDIRS += ../utest
+build_examples:SUBDIRS += ../examples
 
 HEADERS += ../src/fougtools_global.h
 OTHER_FILES += configure.rb \
@@ -19,9 +20,13 @@ OTHER_FILES += configure.rb \
                ../doc/doxy.cpp
 
 # INSTALLS for globals
+globals_qmake.path  = $$PREFIX_DIR/qmake
+globals_qmake.files = compiler_config.pri
+
 globals_include.path  = $$PREFIX_DIR/include
 globals_include.files = ../src/*.h
-INSTALLS += globals_include
+
+INSTALLS += globals_qmake globals_include
 
 # INSTALLS for cpptools
 cpptools_include.path  = $$PREFIX_DIR/include/cpptools

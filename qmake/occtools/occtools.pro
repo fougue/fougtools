@@ -4,8 +4,8 @@ include(../../src/occtools/build_occtools.pri)
 
 QMAKE_RPATHDIR += $$CASCADE_LIB_PATH
 
-occtools_occpri.path  = $$PREFIX_DIR/3rdparty
-occtools_occpri.files = ../../3rdparty/occ.pri
+occtools_occpri.path  = $$PREFIX_DIR/qmake
+occtools_occpri.files = ../../src/occtools/occ.pri
 occtools_include.path   = $$OCCTOOLS_INC_PATH/occtools
 occtools_include.files  = ../../src/occtools/*.h
 INSTALLS += occtools_occpri \

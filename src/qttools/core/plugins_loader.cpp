@@ -61,7 +61,6 @@ public:
   static bool filterAccepts(const QList<InstanceFilter*>& filters,
                             QPluginLoader* pluginLoader,
                             QString* filterError);
-  static bool isLibrary(const QString& path);
 
   QVector<QObject*> m_plugins;
   QVector<QPluginLoader*> m_pluginLoaders;
@@ -102,11 +101,6 @@ bool PluginsLoader::Private::filterAccepts(const QList<InstanceFilter *> &filter
       return false;
   }
   return true;
-}
-
-bool PluginsLoader::Private::isLibrary(const QString &path)
-{
-  return path.endsWith(QLatin1String(".so")) || path.endsWith(QLatin1String(".dll"));
 }
 
 /*!
@@ -250,7 +244,7 @@ void PluginsLoader::loadPlugins(const QList<InstanceFilter *> &filters, QStringL
     QDir pluginDir(path);
     const QStringList entryList(pluginDir.entryList(d->m_fileNameFilters, QDir::Files));
     foreach (const QString& entry, entryList) {
-      if (!Private::isLibrary(entry))
+      if (!QLibrary::isLibrary(entry))
         continue;
 
       // Test plugin loader against filters

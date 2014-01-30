@@ -1,5 +1,12 @@
 CONFIG += debug_and_release
-CONFIG += c++11 warn_on stl rtti exceptions
+CONFIG += warn_on stl rtti exceptions
+
+# Enable C++11
+isEqual(QT_MAJOR_VERSION, 5) {
+ CONFIG += c++11
+} else {
+  *-g++*:QMAKE_CXXFLAGS +=-std=c++0x
+}
 
 CONFIG(debug, debug|release) {
   DEFINES += _DEBUG_CONFIG_
@@ -7,7 +14,7 @@ CONFIG(debug, debug|release) {
 }
 else {
   CONFIG  -= console
-  DEFINES *= QT_NO_DEBUG_OUTPUT
+  DEFINES += QT_NO_DEBUG_OUTPUT
 }
 
 CONFIG(warn_on) {

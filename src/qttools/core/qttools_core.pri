@@ -50,6 +50,7 @@ HEADERS += \
     $$PWD/qobject_wrap.h \
     $$PWD/qstring_tools.h \
     $$PWD/qvariant_tools.h \
+    $$PWD/qt_plugin_def.h \
     $$PWD/runtime_error.h \
     $$PWD/scoped_connection.h \
     $$PWD/singleton.h \

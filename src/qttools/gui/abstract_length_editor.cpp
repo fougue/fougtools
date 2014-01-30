@@ -44,13 +44,23 @@ namespace qttools {
 /*!
  * \class AbstractLengthEditor
  * \brief Abstract base class for all length (\c [L]) editors that are aware of the current
- *         measurement system (metric or imperial)
+ *        measurement system (metric or imperial)
  *
  * \headerfile abstract_length_editor.h <qttools/gui/abstract_length_editor.h>
  * \ingroup qttools_gui
  *
  * length() and setLength() use values in millimeter (mm).
  */
+
+QVector<AbstractLengthEditor::MetricUnit> AbstractLengthEditor::allMetricUnits()
+{
+  return QVector<MetricUnit>() << MeterUnit << CentimeterUnit << MillimeterUnit;
+}
+
+QVector<AbstractLengthEditor::ImperialUnit> AbstractLengthEditor::allImperialUnits()
+{
+  return QVector<ImperialUnit>() << InchUnit << FootUnit << YardUnit;
+}
 
 AbstractLengthEditor::AbstractLengthEditor()
   : m_prefMetricUnit(MillimeterUnit),
@@ -87,7 +97,9 @@ AbstractLengthEditor::MetricUnit AbstractLengthEditor::preferredMetricUnit() con
  */
 void AbstractLengthEditor::setPreferredMetricUnit(MetricUnit unit)
 {
+  const double lengthMm = this->length();
   m_prefMetricUnit = unit;
+  this->setLength(lengthMm);
   this->updateEditor(this->measurementSystem());
 }
 

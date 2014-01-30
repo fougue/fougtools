@@ -40,6 +40,7 @@
 
 #include "gui.h"
 #include "abstract_quantity_editor.h"
+#include <QtCore/QVector>
 
 namespace qttools {
 
@@ -52,6 +53,7 @@ public:
     CentimeterUnit,
     MillimeterUnit
   };
+  static QVector<MetricUnit> allMetricUnits();
 
   enum ImperialUnit
   {
@@ -59,6 +61,7 @@ public:
     FootUnit,
     YardUnit
   };
+  static QVector<ImperialUnit> allImperialUnits();
 
   AbstractLengthEditor();
 
@@ -86,5 +89,9 @@ private:
 };
 
 } // namespace qttools
+
+#include <QtCore/QMetaType>
+Q_DECLARE_METATYPE(qttools::AbstractLengthEditor::MetricUnit)
+Q_DECLARE_METATYPE(qttools::AbstractLengthEditor::ImperialUnit)
 
 #endif // QTTOOLS_ABSTRACT_LENGTH_EDITOR_H

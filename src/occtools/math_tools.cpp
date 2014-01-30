@@ -106,6 +106,8 @@ gp_Vec MathTools::triangleNormal(const TColgp_Array1OfPnt &nodes,
   return v1;
 }
 
+} // namespace occ
+
 //! \relates MathTools
 gp_Vec operator-(const gp_Pnt& p1, const gp_Pnt& p2)
 {
@@ -123,5 +125,3 @@ gp_Pnt operator+(const gp_Pnt& p, const gp_Vec& v)
 {
   return gp_Pnt(p.X() + v.X(), p.Y() + v.Y(), p.Z() + v.Z());
 }
-
-} // namespace occ

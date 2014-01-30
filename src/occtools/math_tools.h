@@ -66,6 +66,17 @@ public:
   static TEXT_STREAM& printOccPntVec(TEXT_STREAM& ts, const OCC_PNT_VEC& v);
 };
 
+const gp_Pnt2d origin2d(0, 0);
+const gp_Dir2d xDir2d(1, 0);
+const gp_Dir2d yDir2d(0, 1);
+
+const gp_Pnt origin3d(0, 0, 0);
+const gp_Dir xDir3d(1, 0, 0);
+const gp_Dir yDir3d(0, 1, 0);
+const gp_Dir zDir3d(0, 0, 1);
+
+} // namespace occ
+
 OCCTOOLS_EXPORT gp_Vec operator-(const gp_Pnt& p1, const gp_Pnt& p2);
 OCCTOOLS_EXPORT gp_Pnt operator-(const gp_Pnt& p, const gp_Vec& v);
 OCCTOOLS_EXPORT gp_Pnt operator+(const gp_Pnt& p, const gp_Vec& v);
@@ -79,27 +90,18 @@ TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Vec& v);
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d);
 
-const gp_Pnt2d origin2d(0, 0);
-const gp_Dir2d xDir2d(1, 0);
-const gp_Dir2d yDir2d(0, 1);
-
-const gp_Pnt origin3d(0, 0, 0);
-const gp_Dir xDir3d(1, 0, 0);
-const gp_Dir yDir3d(0, 1, 0);
-const gp_Dir zDir3d(0, 0, 1);
-
 //--
 //-- Implementation
 //--
 
 template<typename NORM>
-bool MathTools::isNull(const gp_Vec& vec, const NORM& norm)
+bool occ::MathTools::isNull(const gp_Vec& vec, const NORM& norm)
 {
   return norm(vec) <= 0.000000000001;
 }
 
 template<typename OCC_PNT_VEC, typename TEXT_STREAM>
-TEXT_STREAM &MathTools::printOccPntVec(TEXT_STREAM &ts, const OCC_PNT_VEC &v)
+TEXT_STREAM &occ::MathTools::printOccPntVec(TEXT_STREAM &ts, const OCC_PNT_VEC &v)
 {
   return ts << "(" << v.X() << ", " << v.Y() << ", " << v.Z() << ")";
 }
@@ -108,23 +110,21 @@ TEXT_STREAM &MathTools::printOccPntVec(TEXT_STREAM &ts, const OCC_PNT_VEC &v)
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Pnt& p)
 {
-  return MathTools::printOccPntVec(ts, p);
+  return occ::MathTools::printOccPntVec(ts, p);
 }
 
 //! Print (dump) in the text stream \p ts the vector \p v
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Vec& v)
 {
-  return MathTools::printOccPntVec(ts, v);
+  return occ::MathTools::printOccPntVec(ts, v);
 }
 
 //! Print (dump) in the text stream \p ts the direction \p d
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d)
 {
-  return MathTools::printOccPntVec(ts, d);
+  return occ::MathTools::printOccPntVec(ts, d);
 }
-
-} // namespace occ
 
 #endif // OCC_MATH_TOOLS_H

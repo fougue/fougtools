@@ -42,12 +42,18 @@
 
 namespace cpp {
 
+/*! \brief Gives the address in \p pointer as a numeric(scalar) value
+ *  \ingroup cpptools
+ */
 template <typename T>
 std::size_t scalarAddress(const T* pointer)
 {
   return reinterpret_cast<std::size_t>(pointer);
 }
 
+/*! \brief Frees memory in \p pointer, and sets pointer to NULL
+ *  \ingroup cpptools
+ */
 template<typename T>
 void checkedReset(T*& pointer)
 {
@@ -57,6 +63,9 @@ void checkedReset(T*& pointer)
   }
 }
 
+/*! \brief Assigns \p value at memory in \p pointer if valid (ie. non-NULL)
+ *  \ingroup cpptools
+ */
 template<typename T>
 void checkedAssign(T* pointer, T value)
 {
@@ -64,11 +73,26 @@ void checkedAssign(T* pointer, T value)
     *pointer = value;
 }
 
+/*! \brief Assigns \p value to object member attribute \p attrMember if valid (ie. non-NULL)
+ *  \ingroup cpptools
+ */
 template<typename CALL_VALUE_TYPE, typename VALUE_TYPE, typename CLASS>
 void checkedAssign(VALUE_TYPE CLASS::*attrMember, CLASS* object, CALL_VALUE_TYPE value)
 {
   if (object != NULL && attrMember != NULL)
     object->*attrMember = value;
+}
+
+/*! \brief Returns a heap-allocated instance of T, created with the default constructor
+ *
+ *  \tparam T Must be default constructible
+ *          (see http://www.sgi.com/tech/stl/DefaultConstructible.html)
+ *  \ingroup cpptools
+ */
+template<typename T>
+T* newObject()
+{
+  return new T;
 }
 
 } // namespace cpp

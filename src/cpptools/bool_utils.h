@@ -40,12 +40,18 @@
 
 namespace cpp {
 
+/*! \brief Returns "eXclusive OR" evaluation of expressions in \p lhs and \p rhs
+ *  \ingroup cpptools
+ */
 template <typename T>
 bool boolXor(T lhs, T rhs)
 {
   return (!lhs && rhs) || (lhs && !rhs);
 }
 
+/*! \brief Returns "boolean implies" evaluation of expressions in \p lhs and \p rhs
+ *  \ingroup cpptools
+ */
 template <typename T>
 bool boolImplies(T lhs, T rhs)
 {

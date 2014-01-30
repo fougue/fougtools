@@ -42,18 +42,27 @@
 
 namespace cpp {
 
+/*! \brief Returns the item count in a C array (eg. "char str[128]" -> 128)
+ *  \ingroup cpptools
+ */
 template <typename T, std::size_t N>
 std::size_t cArraySize(const T (&/*array*/)[N])
 {
   return N;
 }
 
+/*! \brief Returns an iterator pointing to the end of C \p array (eg. "char str[128]" -> str + 128)
+ *  \ingroup cpptools
+ */
 template <typename T, std::size_t N>
 T* cArrayEnd(T (&array)[N])
 {
   return array + N;
 }
 
+/*! \brief Returns a const iterator pointing to the end of C \p array (eg. "char str[128]" -> str + 128)
+ *  \ingroup cpptools
+ */
 template <typename T, std::size_t N>
 const T* cArrayEnd(const T (&array)[N])
 {

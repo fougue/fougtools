@@ -44,6 +44,8 @@ namespace cpp {
  *
  *  \retval ++iCurr when \p iCurr \c != \p iEnd
  *  \retval iBegin when \p iCurr \c == \p iEnd
+ *
+ *  \ingroup cpptools
  */
 template<typename BI_ITERATOR>
 BI_ITERATOR circularNext(BI_ITERATOR iBegin, BI_ITERATOR iEnd, BI_ITERATOR iCurr)
@@ -57,6 +59,8 @@ BI_ITERATOR circularNext(BI_ITERATOR iBegin, BI_ITERATOR iEnd, BI_ITERATOR iCurr
  *
  *  \retval --iCurr when \p iCurr \c != \p iBegin
  *  \retval iEnd when \p iCurr \c == \p iBegin
+ *
+ *  \ingroup cpptools
  */
 template<typename BI_ITERATOR>
 BI_ITERATOR circularPrior(BI_ITERATOR iBegin, BI_ITERATOR iEnd, BI_ITERATOR iCurr)
@@ -69,6 +73,8 @@ BI_ITERATOR circularPrior(BI_ITERATOR iBegin, BI_ITERATOR iEnd, BI_ITERATOR iCur
 /*! \brief Iterator advanced by \p d bounded between \p iBegin and \p iEnd
  *
  *  \todo Improve performance (direct calculation instead of a \c for loop)
+ *
+ *  \ingroup cpptools
  */
 template<typename BI_ITERATOR, typename DISTANCE>
 BI_ITERATOR circularAdvance(BI_ITERATOR iBegin, BI_ITERATOR iEnd,

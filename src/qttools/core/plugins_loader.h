@@ -41,9 +41,9 @@
 #include "core.h"
 #include "plugins_loader_instance_filter.h"
 
+#include <QtCore/QObject>
 #include <QtCore/QString>
 #include <QtCore/QVector>
-class QObject;
 
 namespace qttools {
 
@@ -72,11 +72,36 @@ public:
 
   QString pluginFileName(const QObject* plugin) const;
   QVector<QObject*> plugins() const;
+  template<typename INTERFACE> QVector<INTERFACE*> castPlugins() const;
 
 private:
   class Private;
   Private* const d;
 };
+
+
+
+// --
+// -- Implementation
+// --
+
+/*!
+ * \brief Returns all loaded plugin root components casted (with qobject_cast<>) to INTERFACE*
+ * \tparam INTERFACE Interface type used with qobject_cast<>
+ *
+ * NULL plugins are not added to the result vector
+ */
+template<typename INTERFACE>
+QVector<INTERFACE *> PluginsLoader::castPlugins() const
+{
+  QVector<INTERFACE *> typPlugins;
+  foreach (QObject* plugin, this->plugins()) {
+    INTERFACE* typPlugin = qobject_cast<INTERFACE*>(plugin);
+    if (typPlugin != NULL)
+      typPlugins.append(typPlugin);
+  }
+  return typPlugins;
+}
 
 } // namespace qttools
 

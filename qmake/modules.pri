@@ -1,5 +1,3 @@
-message($$PWD  modules: $$FOUGTOOLS)
-
 INCLUDEPATH += $$PWD/../include
 LIBS += -L$$PWD/../lib
 QMAKE_RPATHDIR += -L$$PWD/../lib
@@ -10,8 +8,6 @@ for(fouglib, FOUGTOOLS) {
   DEFINES += $$upper($${fouglib})_DLL
   LIBS += -l$${fouglib}$$TARGET_SUFFIX
 }
-message($$DEFINES)
-message($$LIBS)
 contains(FOUGTOOLS, qttools_core): QT += core
 
 contains(FOUGTOOLS, qttools_gui) {

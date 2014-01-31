@@ -1,10 +1,10 @@
 #include "qt_view_controller.h"
 
 #include <QtCore/QDebug>
-#include <QApplication>
 #include <QtGui/QMouseEvent>
 #include <QtGui/QWheelEvent>
-#include <QtWidgets/QMenu>
+#include <QApplication>
+#include <QMenu>
 
 #include <V3d_View.hxx>
 

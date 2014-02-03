@@ -43,6 +43,7 @@
 
 #if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
 # define Q_PLUGIN_METADATA(def)
+# define QTTOOLS_QT4_EXPORT_PLUGIN2(target, className)  Q_EXPORT_PLUGIN2(target, className)
 #else
 # define QTTOOLS_QT4_EXPORT_PLUGIN2(target, className)
 #endif

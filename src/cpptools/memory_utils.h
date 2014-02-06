@@ -95,6 +95,12 @@ T* newObject()
   return new T;
 }
 
+template<typename T, typename ARG>
+T* newObject(ARG arg)
+{
+  return new T(arg);
+}
+
 } // namespace cpp
 
 #endif // CPPTOOLS_MEMORY_UTILS_H

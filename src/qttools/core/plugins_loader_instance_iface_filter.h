@@ -50,7 +50,7 @@ namespace qttools {
 class QTTOOLS_CORE_EXPORT PluginsLoader_InstanceIFaceFilter_Helper
 {
 protected:
-  static void setRootComponentNullError(QString* error);
+  static void setRootComponentNullError(QString* error, const QPluginLoader* loader);
   static void setRootComponentIncompatibleError(QString* error, const char* iid);
   static QObject* rootComponent(QPluginLoader* loader);
 };
@@ -76,7 +76,7 @@ public:
         setRootComponentIncompatibleError(error, qobject_interface_iid<INTERFACE>());
     }
     else {
-      setRootComponentNullError(error);
+      setRootComponentNullError(error, loader);
     }
     return false;
   }

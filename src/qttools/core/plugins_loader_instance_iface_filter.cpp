@@ -44,10 +44,10 @@
 
 namespace qttools {
 
-void PluginsLoader_InstanceIFaceFilter_Helper::setRootComponentNullError(QString *error)
+void PluginsLoader_InstanceIFaceFilter_Helper::setRootComponentNullError(QString *error,
+                                                                         const QPluginLoader *loader)
 {
-  cpp::checkedAssign(error, QCoreApplication::translate("qttools::PluginsLoader",
-                                                        "Root component is NULL"));
+  cpp::checkedAssign(error, loader->errorString());
 }
 
 void PluginsLoader_InstanceIFaceFilter_Helper::setRootComponentIncompatibleError(QString *error,

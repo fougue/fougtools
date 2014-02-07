@@ -39,6 +39,9 @@
 
 // QtWidgets
 #include <QAbstractScrollArea>
+#include <QBoxLayout>
+#include <QDialog>
+#include <QDialogButtonBox>
 #include <QScrollBar>
 #include <QWidget>
 
@@ -50,6 +53,50 @@ namespace qttools {
  *  \headerfile qwidget_tools.h <qttools/gui/qwidget_tools.h>
  *  \ingroup qttools_gui
  */
+
+/*! \brief Make \p widget the central widget of \p dialog
+ *
+ *  \p dialog should be empty for this function to work.\n
+ *  wrapWidgetInDialog() will try to find if \p widget contains a QDialogButtonBox, if this is the
+ *  case then it connects to \p dialog 's accept()/reject() slots.
+ */
+void QWidgetTools::wrapWidgetInDialog(QWidget *widget, QDialog *dialog)
+{
+  if (widget != NULL && dialog != NULL) {
+    dialog->setWindowTitle(widget->windowTitle());
+    widget->setParent(dialog);
+    if (dialog->layout() != NULL) {
+      dialog->layout()->addWidget(widget);
+    }
+    else {
+      QBoxLayout* layout = new QVBoxLayout;
+      layout->addWidget(widget);
+      dialog->setLayout(layout);
+    }
+
+    QDialogButtonBox* btnBox = widget->findChild<QDialogButtonBox*>();
+    if (btnBox != NULL) {
+      QObject::connect(btnBox, SIGNAL(accepted()), dialog, SLOT(accept()));
+      QObject::connect(btnBox, SIGNAL(rejected()), dialog, SLOT(reject()));
+    }
+  }
+}
+
+/*! \brief Add \p contentsWidget to \p containerWidget
+ *
+ *  If \p containerWidget is empty, a QBoxLayout is created to receive \p contentsWidget
+ */
+void QWidgetTools::addContentsWidget(QWidget *containerWidget, QWidget *contentsWidget)
+{
+  if (containerWidget != NULL && contentsWidget != NULL) {
+    if (containerWidget->layout() == NULL) {
+      containerWidget->setLayout(new QVBoxLayout);
+      containerWidget->layout()->setContentsMargins(0, 0, 0, 0);
+    }
+    contentsWidget->setParent(containerWidget);
+    containerWidget->layout()->addWidget(contentsWidget);
+  }
+}
 
 /*! \brief Move position of \p widget so it is displayed stuck to the right of \p nextTo
  */

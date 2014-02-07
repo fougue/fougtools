@@ -68,18 +68,19 @@ Standard_Real MathTools::manhattanNorm(const gp_Vec &vec)
   return std::fabs(vec.X()) + std::fabs(vec.Y()) + std::fabs(vec.Z());
 }
 
+/*! \brief Returns the component of \p vec having the maximum absolute value */
 Standard_Real MathTools::maximumNorm(const gp_Vec &vec)
 {
   return std::max(std::fabs(vec.X()), std::max(std::fabs(vec.Y()), std::fabs(vec.Z())));
 }
 
-/*! \brief Non-normalized vector to a triangle
- *  \param nodes
- *         Vertices of the triangulation that \p triangle belongs to
- *  \param triangle
- *         Triangle whose normal has to be computed
- *  \param ori
- *         Orientation of the triangle (generally inherited from the triangulated face)
+/*! \brief Returns the oriented normal of a triangle
+ *
+ *  \warning The returned vector is not normalized
+ *
+ *  \param nodes  Vertices of the triangulation that \p triangle belongs to
+ *  \param triangle  Triangle whose normal has to be computed
+ *  \param ori  Orientation of the triangle (generally inherited from the triangulated face)
  */
 gp_Vec MathTools::triangleNormal(const TColgp_Array1OfPnt &nodes,
                                  const Poly_Triangle &triangle,

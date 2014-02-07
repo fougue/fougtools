@@ -58,6 +58,7 @@ HEADERS += \
     $$PWD/view_item_button_mechanism.h \
     $$PWD/wait_dialog.h \
     $$PWD/qwidget_tools.h \
+    $$PWD/strict_stack_widget.h \
     $$PWD/abstract_quantity_editor.h
 
 SOURCES += \
@@ -77,4 +78,5 @@ SOURCES += \
     $$PWD/view_item_button_mechanism.cpp \
     $$PWD/wait_dialog.cpp \
     $$PWD/qwidget_tools.cpp \
+    $$PWD/strict_stack_widget.cpp \
     $$PWD/abstract_quantity_editor.cpp

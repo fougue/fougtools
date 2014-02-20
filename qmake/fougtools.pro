@@ -21,7 +21,9 @@ OTHER_FILES += configure.rb \
 
 # INSTALLS for globals
 globals_qmake.path  = $$PREFIX_DIR/qmake
-globals_qmake.files = compiler_config.pri  fougtools.pri
+globals_qmake.files = compiler_config.pri \
+                      fougtools.pri \
+                      func_cleanpath.pri
 
 globals_include.path  = $$PREFIX_DIR/include
 globals_include.files = ../src/*.h

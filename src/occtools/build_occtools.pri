@@ -36,12 +36,9 @@
 #############################################################################
 
 # Parameters (input variables) :
-#   OCCTOOLS_LIB_PATH
 #   TARGET_SUFFIX
 
 TEMPLATE = lib
-DESTDIR  = $$OCCTOOLS_LIB_PATH
-
 TARGET = occtools$$TARGET_SUFFIX
 
 QT += gui

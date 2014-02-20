@@ -36,18 +36,16 @@
 #############################################################################
 
 # Parameters (input variables) :
-#   QTTOOLS_LIB_PATH
 #   TARGET_SUFFIX
 
 TEMPLATE = lib
-DESTDIR  = $$QTTOOLS_LIB_PATH
 
 TARGET = qttools_sql$$TARGET_SUFFIX
 
 QT -= gui
 
 CONFIG(dll) {
-  DEFINES *= QTTOOLS_SQL_DLL QTTOOLS_SQL_MAKE_DLL
+  DEFINES += QTTOOLS_SQL_DLL QTTOOLS_SQL_MAKE_DLL
 }
 
 include(qttools_sql.pri)

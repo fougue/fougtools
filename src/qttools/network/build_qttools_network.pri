@@ -36,15 +36,13 @@
 #############################################################################
 
 # Parameters (input variables) :
-#   QTTOOLS_LIB_PATH
 #   TARGET_SUFFIX
 
 TEMPLATE = lib
-DESTDIR  = $$QTTOOLS_LIB_PATH
 TARGET = qttools_network$$TARGET_SUFFIX
 
 CONFIG(dll) {
-  DEFINES *= QTTOOLS_NETWORK_DLL QTTOOLS_NETWORK_MAKE_DLL
+  DEFINES += QTTOOLS_NETWORK_DLL QTTOOLS_NETWORK_MAKE_DLL
 }
 
 QT -= gui

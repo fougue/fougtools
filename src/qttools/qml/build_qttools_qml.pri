@@ -36,16 +36,14 @@
 #############################################################################
 
 # Parameters (input variables) :
-#   QTTOOLS_LIB_PATH
 #   TARGET_SUFFIX
 
 TEMPLATE = lib
-DESTDIR  = $$QTTOOLS_LIB_PATH
 
 TARGET = qttools_qml$$TARGET_SUFFIX
 
 CONFIG(dll) {
-  DEFINES *= QTTOOLS_QML_DLL QTTOOLS_QML_MAKE_DLL
+  DEFINES += QTTOOLS_QML_DLL QTTOOLS_QML_MAKE_DLL
 }
 
 include(qttools_qml.pri)

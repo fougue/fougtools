@@ -36,18 +36,16 @@
 #############################################################################
 
 # Parameters (input variables) :
-#   QTTOOLS_LIB_PATH
 #   TARGET_SUFFIX
 
 TEMPLATE = lib
-DESTDIR  = $$QTTOOLS_LIB_PATH
 
 TARGET = qttools_core$$TARGET_SUFFIX
 
 QT -= gui
 
 CONFIG(dll) {
-  DEFINES *= QTTOOLS_CORE_DLL QTTOOLS_CORE_MAKE_DLL
+  DEFINES += QTTOOLS_CORE_DLL QTTOOLS_CORE_MAKE_DLL
 }
 
 include(qttools_core.pri)

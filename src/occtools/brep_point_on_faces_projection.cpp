@@ -145,13 +145,6 @@ void BRepPointOnFacesProjection::releaseMemory()
 
 BRepPointOnFacesProjection& BRepPointOnFacesProjection::compute(const gp_Pnt& point)
 {
-  //QtConcurrent::map(m_projectors, projection_perform(point));
-  /*        QFutureWatcher<void> futureWatcher;
-            futureWatcher.setFuture(
-              QtConcurrent::map(m_projectors,
-                          boost::bind(&Projector::Perform,
-                                 boost::bind(&ProjectorInfo::first, _1), point)));
-            futureWatcher.waitForFinished();*/
   for (unsigned i = 0; i < d->m_projectors.size(); ++i)
     d->m_projectors.at(i).first->Perform(point);
 

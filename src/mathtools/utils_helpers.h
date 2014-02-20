@@ -1,7 +1,8 @@
 #ifndef BITS_MATH_UTILS_HELPERS_H
 # define BITS_MATH_UTILS_HELPERS_H
 
-# include <boost/cstdint.hpp>
+// Requires at least Visual C++ 2010
+//# include <cstdint>
 
 namespace math {
 
@@ -25,12 +26,12 @@ public:
     return 0x1;
   }
 }; // class TypeTraits
-
+/*
 template<>
 class TypeTraits<float>
 {
 public:
-  typedef boost::int32_t IntegralType_t;
+  typedef std::int32_t IntegralType_t;
 
   static IntegralType_t twoComplementValue()
   {
@@ -52,7 +53,7 @@ template<>
 class TypeTraits<double>
 {
 public:
-  typedef boost::int64_t IntegralType_t;
+  typedef std::int64_t IntegralType_t;
 
   static IntegralType_t twoComplementValue()
   {
@@ -69,7 +70,7 @@ public:
     return false;
   }
 }; // class TypeTraits<double>
-
+*/
 } // namespace __impl
 //! \endcond
 } // namespace math

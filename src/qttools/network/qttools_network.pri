@@ -37,7 +37,7 @@
 
 INCLUDEPATH *= $$PWD/.. $$PWD/../..
 
-QT *= network
+QT += network
 
 HEADERS += \
     $$PWD/mail_send.h \

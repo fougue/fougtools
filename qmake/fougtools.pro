@@ -48,7 +48,7 @@ INSTALLS += scripts
 
 # Automatic generation of version infos
 VER_MAJ = 0
-VER_MIN = 4
+VER_MIN = 5
 VER_PAT = 0
 _REV_NUM = $$system(ruby ../scripts/rev_num.rb  --rcs git  --workdir $$PWD)
 _FOUGTOOLS_VERSION = "$$VER_MAJ"."$$VER_MIN"."$$VER_PAT"dev-$$_REV_NUM

@@ -1537,7 +1537,9 @@ SKIP_FUNCTION_MACROS   = YES
 TAGFILES               = qtcore.tags=http://qt-project.org/doc/qt-5 \
                          qtgui.tags=http://qt-project.org/doc/qt-5 \
                          qtwidgets.tags=http://qt-project.org/doc/qt-5 \
-                         qtsql.tags=http://qt-project.org/doc/qt-5
+                         qtsql.tags=http://qt-project.org/doc/qt-5 \
+                         \
+                         OCCT.tag=http://dev.opencascade.org/doc/refman/html
 
 # When a file name is specified after GENERATE_TAGFILE, doxygen will create 
 # a tag file that is based on the input files it reads.

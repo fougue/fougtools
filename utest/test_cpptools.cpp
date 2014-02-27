@@ -1,8 +1,13 @@
 #include "test_cpptools.h"
 
+#include "../src/cpptools/c_array_utils.h"
+#include "../src/cpptools/circular_iterator.h"
+#include "../src/cpptools/memory_utils.h"
+#include "../src/cpptools/scoped_value.h"
 #include "../src/cpptools/basic_shared_pointer.h"
 #include "../src/cpptools/functor.h"
 #include "../src/cpptools/quantity.h"
+
 #include <QtCore/QScopedPointer>
 #include <QtCore/QtDebug>
 
@@ -141,6 +146,110 @@ void TestCppTools::Functor_test()
 
   ftor2 = cpp::Functor2<int, float, double>(&func2);
   QCOMPARE(ftor2(5.1, 7.2), (5 + 7) * 2);
+}
+
+void TestCppTools::cArrayUtils_test()
+{
+  int array1[1];
+  int array5[5];
+  QCOMPARE(cpp::cArraySize(array1), static_cast<size_t>(1));
+  QCOMPARE(cpp::cArraySize(array5), static_cast<size_t>(5));
+
+  QCOMPARE(cpp::cArrayEnd(array1), array1 + 1);
+  QCOMPARE(cpp::cArrayEnd(array5), array5 + 5);
+}
+
+void TestCppTools::ScopedValue_test()
+{
+  bool b = true;
+  {
+    cpp::ScopedBool sb(b, true); Q_UNUSED(sb);
+    QCOMPARE(b, true);
+  }
+  QCOMPARE(b, true);
+  b = true;
+  {
+    cpp::ScopedBool sb(b, false); Q_UNUSED(sb);
+    QCOMPARE(b, false);
+  }
+  QCOMPARE(b, true);
+
+  b = false;
+  {
+    cpp::ScopedBool sb(b, true); Q_UNUSED(sb);
+    QCOMPARE(b, true);
+  }
+  QCOMPARE(b, false);
+  b = false;
+  {
+    cpp::ScopedBool sb(b, false); Q_UNUSED(sb);
+    QCOMPARE(b, false);
+  }
+  QCOMPARE(b, false);
+}
+
+void TestCppTools::circularIterator_test()
+{
+  QCOMPARE(cpp::circularNext(0, 5, 1), 2);
+  QCOMPARE(cpp::circularNext(0, 5, 0), 1);
+  QCOMPARE(cpp::circularNext(0, 5, 4), 0);
+  QCOMPARE(cpp::circularNext(0, 1, 0), 0);
+
+  QCOMPARE(cpp::circularPrior(0, 5, 1), 0);
+  QCOMPARE(cpp::circularPrior(0, 5, 0), 4);
+  QCOMPARE(cpp::circularPrior(0, 5, 4), 3);
+  QCOMPARE(cpp::circularPrior(0, 1, 0), 0);
+
+  QCOMPARE(cpp::circularAdvance(0, 5, 1, -1), cpp::circularPrior(0, 5, 1));
+  QCOMPARE(cpp::circularAdvance(0, 5, 0, -1), cpp::circularPrior(0, 5, 0));
+  QCOMPARE(cpp::circularAdvance(0, 5, 4, -1), cpp::circularPrior(0, 5, 4));
+  QCOMPARE(cpp::circularAdvance(0, 1, 0, -1), cpp::circularPrior(0, 1, 0));
+
+  QCOMPARE(cpp::circularAdvance(0, 5, 1, 1), cpp::circularNext(0, 5, 1));
+  QCOMPARE(cpp::circularAdvance(0, 5, 0, 1), cpp::circularNext(0, 5, 0));
+  QCOMPARE(cpp::circularAdvance(0, 5, 4, 1), cpp::circularNext(0, 5, 4));
+  QCOMPARE(cpp::circularAdvance(0, 1, 0, 1), cpp::circularNext(0, 1, 0));
+
+  QCOMPARE(cpp::circularAdvance(0, 5, 0, 3), 3);
+  QCOMPARE(cpp::circularAdvance(0, 5, 0, -3), 2);
+  QCOMPARE(cpp::circularAdvance(0, 5, 0, 6), 1);
+}
+
+namespace memoryUtils_test {
+
+struct DummyObserver
+{
+  bool isDummyDeleted;
+}; // struct DummyObserver
+
+struct Dummy
+{
+  Dummy(DummyObserver* obs) :
+    observer(obs)
+  {
+    obs->isDummyDeleted = false;
+  }
+
+  ~Dummy()
+  {
+    this->observer->isDummyDeleted = true;
+  }
+
+  int a;
+  double b;
+  DummyObserver* observer;
+};
+
+} // namespace memoryUtils_test
+
+void TestCppTools::memoryUtils_test()
+{
+  memoryUtils_test::DummyObserver observer;
+  memoryUtils_test::Dummy* dummy = new memoryUtils_test::Dummy(&observer);
+  QVERIFY(!observer.isDummyDeleted);
+  cpp::checkedReset(dummy);
+  QVERIFY(dummy == NULL);
+  QVERIFY(observer.isDummyDeleted);
 }
 
 

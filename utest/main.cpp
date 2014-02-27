@@ -4,6 +4,7 @@
 
 #include "test_cpptools.h"
 #include "test_qttools_core.h"
+#include "test_qttools_script.h"
 
 #include <iostream>
 
@@ -20,7 +21,8 @@ int main(int argc, char** argv)
   // Run tests
   QList<QObject*> testObjects;
   testObjects << new TestCppTools
-              << new TestQtToolsCore;
+              << new TestQtToolsCore
+              << new TestQtToolsScript;
   int exitCode = 0;
   foreach (QObject* iTestObject, testObjects)
     exitCode += QTest::qExec(iTestObject, argList);

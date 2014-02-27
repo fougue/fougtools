@@ -5,7 +5,7 @@
 
 \section intro_sec INTRODUCTION
 
-This is FougTools v0.4
+This is FougTools v0.4.0
 
 Check source code at : https://github.com/fougsys/fougtools
 

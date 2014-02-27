@@ -7,18 +7,24 @@ CONFIG(debug, debug|release) {
 }
 TARGET = utest$$TARGET_SUFFIX
 
-CONFIG *= console
-QT *= testlib
+CONFIG += console
+QT += testlib
 
 HEADERS += \
     test_cpptools.h \
     test_qttools_core.h \
     \
-    ../src/qttools/core/wait_loop.h
+    ../src/qttools/core/wait_loop.h \
+    ../src/qttools/core/wait_loop_stop_condition.h \
+    ../src/qttools/core/internal/wait_loop_p.h \
+    ../src/qttools/core/internal/wait_loop_time_out_stop_condition.h
 
 SOURCES += \
     main.cpp \
     test_cpptools.cpp \
     test_qttools_core.cpp \
     \
-    ../src/qttools/core/wait_loop.cpp
+    ../src/qttools/core/wait_loop.cpp \
+    ../src/qttools/core/wait_loop_stop_condition.cpp \
+    ../src/qttools/core/internal/wait_loop_p.cpp \
+    ../src/qttools/core/internal/wait_loop_time_out_stop_condition.cpp

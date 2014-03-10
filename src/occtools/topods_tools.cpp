@@ -55,6 +55,11 @@ namespace occ {
  *  \ingroup occtools
  */
 
+/*! \brief Returns the oriented normal of \p face at parametric coords (\p u, \p v )
+ *
+ *  \note This function is slow if called many successive times on the same face (because it
+ *        constructs internally a BRepLProp_SLProps and BRepAdaptor_Surface instance)
+ */
 gp_Vec TopoDsTools::normalToFaceAtUV(const TopoDS_Face &face, Standard_Real u, Standard_Real v)
 {
   BRepLProp_SLProps localSurfaceProps(1, 1e-6);
@@ -70,7 +75,7 @@ gp_Vec TopoDsTools::normalToFaceAtUV(const TopoDS_Face &face, Standard_Real u, S
   return gp_Vec(0, 0, 1);
 }
 
-/*! String representation of a TopoDS_Shape
+/*! \brief Returns the string representation of a TopoDS_Shape
  *
  *  Uses BRepTools::Write() internally
  */
@@ -81,8 +86,8 @@ std::string TopoDsTools::shapeToString(const TopoDS_Shape &shape)
   return oss.str();
 }
 
-/*! Construct the TopoDS_Shape from the string representation \p str (previously generated with
- *  shapeToString())
+/*! \brief Constructs the TopoDS_Shape from the string representation \p str (previously generated
+ *         with shapeToString())
  *
  *  Uses BRepTools::Read() internally
  */

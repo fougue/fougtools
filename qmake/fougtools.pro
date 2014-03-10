@@ -10,8 +10,8 @@ SUBDIRS += qttools_core \
            qttools_sql
 
 occtools:SUBDIRS += occtools
-build_utest:SUBDIRS += ../utest
-build_examples:SUBDIRS += ../examples
+build_utest:SUBDIRS += utest
+build_examples:SUBDIRS += examples
 
 HEADERS += ../src/fougtools_global.h
 OTHER_FILES += configure.rb \

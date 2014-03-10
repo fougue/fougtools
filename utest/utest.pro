@@ -1,3 +1,5 @@
+include(../qmake/config.pri)
+
 TEMPLATE = app
 
 CONFIG(debug, debug|release) {
@@ -11,26 +13,26 @@ CONFIG += console
 QT += testlib  script
 
 HEADERS += \
-    test_cpptools.h \
-    test_qttools_core.h \
-    test_qttools_script.h \
+    $$PWD/test_cpptools.h \
+    $$PWD/test_qttools_core.h \
+    $$PWD/test_qttools_script.h \
     \
-    ../src/qttools/core/wait_loop.h \
-    ../src/qttools/core/wait_loop_stop_condition.h \
-    ../src/qttools/core/internal/wait_loop_p.h \
-    ../src/qttools/core/internal/wait_loop_time_out_stop_condition.h \
+    $$PWD/../src/qttools/core/wait_loop.h \
+    $$PWD/../src/qttools/core/wait_loop_stop_condition.h \
+    $$PWD/../src/qttools/core/internal/wait_loop_p.h \
+    $$PWD/../src/qttools/core/internal/wait_loop_time_out_stop_condition.h \
     \
-    ../src/qttools/script/calculator.h
+    $$PWD/../src/qttools/script/calculator.h
 
 SOURCES += \
-    main.cpp \
-    test_cpptools.cpp \
-    test_qttools_core.cpp \
-    test_qttools_script.cpp \
+    $$PWD/main.cpp \
+    $$PWD/test_cpptools.cpp \
+    $$PWD/test_qttools_core.cpp \
+    $$PWD/test_qttools_script.cpp \
     \
-    ../src/qttools/core/wait_loop.cpp \
-    ../src/qttools/core/wait_loop_stop_condition.cpp \
-    ../src/qttools/core/internal/wait_loop_p.cpp \
-    ../src/qttools/core/internal/wait_loop_time_out_stop_condition.cpp \
+    $$PWD/../src/qttools/core/wait_loop.cpp \
+    $$PWD/../src/qttools/core/wait_loop_stop_condition.cpp \
+    $$PWD/../src/qttools/core/internal/wait_loop_p.cpp \
+    $$PWD/../src/qttools/core/internal/wait_loop_time_out_stop_condition.cpp \
     \
-    ../src/qttools/script/calculator.cpp
+    $$PWD/../src/qttools/script/calculator.cpp

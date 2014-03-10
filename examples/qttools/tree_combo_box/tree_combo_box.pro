@@ -1,12 +1,12 @@
-TEMPLATE = app
-TARGET   = tree_combo_box
+include(../../../qmake/config.pri)
 
-CONFIG += console
+TEMPLATE = app
+TARGET   = tree_combo_box$$TARGET_SUFFIX
 
 QT += gui
 isEqual(QT_MAJOR_VERSION, 5): QT += widgets
 
-FOUGTOOLS_SRCDIR = ../../../src
+FOUGTOOLS_SRCDIR = $$PWD/../../../src
 INCLUDEPATH += $$FOUGTOOLS_SRCDIR
 
 HEADERS += \
@@ -14,4 +14,4 @@ HEADERS += \
 
 SOURCES += \
     $$FOUGTOOLS_SRCDIR/qttools/gui/tree_combo_box.cpp \
-    main.cpp
+    $$PWD/main.cpp

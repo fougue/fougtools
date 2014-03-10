@@ -55,13 +55,13 @@ class OCCTOOLS_EXPORT TopoDsTools
 {
 public:
   template<typename FWD_ITERATOR>
-  static TopoDS_Compound makeCompound(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
+  static TopoDS_Compound makeCompoundFromShapeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
 
   template<typename CONTAINER>
-  static TopoDS_Compound makeCompound(CONTAINER cnter);
+  static TopoDS_Compound makeCompoundFromShapeContainer(CONTAINER cnter);
 
   template<typename FWD_ITERATOR>
-  static TopoDS_Wire makeWireFromEdgeRange(FWD_ITERATOR beginEdge, FWD_ITERATOR endEdge);
+  static TopoDS_Wire makeWireFromEdgeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
 
   static gp_Vec normalToFaceAtUV(const TopoDS_Face& face, Standard_Real u, Standard_Real v);
 
@@ -80,9 +80,13 @@ private:
 // -- Implementation
 // --
 
-//! Topologic compound of shapes denoted between the begin and end iterators \p iBegin and \p iEnd
+/*! \brief Builds a topologic compound of shapes denoted between the begin and end iterators
+ *         \p iBegin and \p iEnd
+ *
+ *  \note The value type of \p iBegin and \p iEnd (accessed with operator*) must be TopoDS_Shape
+ */
 template<typename FWD_ITERATOR>
-TopoDS_Compound TopoDsTools::makeCompound(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
+TopoDS_Compound TopoDsTools::makeCompoundFromShapeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
 {
   TopoDS_Compound cmpd;
   BRep_Builder builder;
@@ -96,20 +100,25 @@ TopoDS_Compound TopoDsTools::makeCompound(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd
   return cmpd;
 }
 
-//! Shorthand to occ::makeCompound(cnter.begin(), cnter.end())
+//! Same as occ::makeCompoundFromShapeRange(cnter.begin(), cnter.end())
 template<typename CONTAINER>
-TopoDS_Compound TopoDsTools::makeCompound(CONTAINER cnter)
+TopoDS_Compound TopoDsTools::makeCompoundFromShapeContainer(CONTAINER cnter)
 {
-  return TopoDsTools::makeCompound(cnter.begin(), cnter.end());
+  return TopoDsTools::makeCompoundFromShapeRange(cnter.begin(), cnter.end());
 }
 
+/*! \brief Build a topologic wire of edges denoted between the begin and end iterators \p iBegin
+ *         and \p iEnd
+ *
+ * \note The value type of \p iBegin and \p iEnd (accessed with operator*) must be TopoDS_Edge
+ */
 template<typename FWD_ITERATOR>
-TopoDS_Wire TopoDsTools::makeWireFromEdgeRange(FWD_ITERATOR beginEdge, FWD_ITERATOR endEdge)
+TopoDS_Wire TopoDsTools::makeWireFromEdgeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
 {
   Handle_ShapeExtend_WireData wireData = TopoDsTools::createShapeExtendWireData();
-  while (beginEdge != endEdge) {
-    TopoDsTools::addEdge(wireData, *beginEdge);
-    ++beginEdge;
+  while (iBegin != iEnd) {
+    TopoDsTools::addEdge(wireData, *iBegin);
+    ++iBegin;
   }
   return TopoDsTools::fixedWire(wireData);
 }

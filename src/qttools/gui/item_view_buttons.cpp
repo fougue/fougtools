@@ -269,10 +269,15 @@ void ItemViewButtons::reset()
 bool ItemViewButtons::eventFilter(QObject *object, QEvent *event)
 {
   if (object == this->itemView()->viewport()) {
-    const QMouseEvent* mouseEvent = dynamic_cast<const QMouseEvent*>(event);
+    // If mouse event, retrieve item's model index under mouse
+    const QMouseEvent* mouseEvent = NULL;
+    if (event->type() == QEvent::MouseMove || event->type() == QEvent::MouseButtonRelease)
+      mouseEvent = static_cast<const QMouseEvent*>(event);
     const QModelIndex modelIndexUnderMouse =
         mouseEvent != NULL ? this->itemView()->indexAt(mouseEvent->pos()) :
                              QModelIndex();
+
+    // Process input event
     switch (event->type()) {
     case QEvent::Leave:
     case QEvent::MouseMove: {
@@ -284,10 +289,7 @@ bool ItemViewButtons::eventFilter(QObject *object, QEvent *event)
       return true;
     }
     case QEvent::MouseButtonRelease: {
-      if (mouseEvent->button() != Qt::LeftButton)
-        return false;
-
-      if (d->m_buttonUnderMouse != NULL) {
+      if (mouseEvent->button() == Qt::LeftButton && d->m_buttonUnderMouse != NULL) {
         emit buttonClicked(d->m_buttonUnderMouse->index, modelIndexUnderMouse);
         return true;
       }
@@ -316,8 +318,11 @@ void ItemViewButtons::paint(QPainter *painter,
                             const QModelIndex &index) const
 {
   bool mouseIsOver = false;
-  if (painter != NULL) {
-    QWidget* w = dynamic_cast<QWidget*>(painter->device());
+  if (painter != NULL
+      && painter->device() != NULL
+      && painter->device()->devType() == QInternal::Widget)
+  {
+    QWidget* w = static_cast<QWidget*>(painter->device());
     if (w != NULL) {
       QPoint mousePos = QCursor::pos();
       QPoint wMousePos = w->mapFromGlobal(mousePos);
@@ -370,20 +375,20 @@ void ItemViewButtons::paint(QPainter *painter,
  */
 void ItemViewButtons::addButton(int btnId, const QIcon &icon, const QString &toolTip)
 {
-  if (d->m_btnInfos.contains(btnId)) {
-    qWarning() << QString("%1 : there is already a button of index '%2'").arg(Q_FUNC_INFO).arg(btnId);
-    return;
+  if (!d->m_btnInfos.contains(btnId)) {
+    Private::ButtonInfo info;
+    info.index = btnId;
+    info.icon = icon;
+    info.toolTip = toolTip;
+    info.matchRole = Qt::UserRole + 1;
+    info.displayColumn = -1;
+    info.itemSide = ItemRightSide;
+    info.itemDisplayModes = DisplayOnDetection;
+    d->m_btnInfos.insert(btnId, info);
   }
-
-  Private::ButtonInfo info;
-  info.index = btnId;
-  info.icon = icon;
-  info.toolTip = toolTip;
-  info.matchRole = Qt::UserRole + 1;
-  info.displayColumn = -1;
-  info.itemSide = ItemRightSide;
-  info.itemDisplayModes = DisplayOnDetection;
-  d->m_btnInfos.insert(btnId, info);
+  else {
+    qWarning() << QString("%1 : there is already a button of index '%2'").arg(Q_FUNC_INFO).arg(btnId);
+  }
 }
 
 /*!

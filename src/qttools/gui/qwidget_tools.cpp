@@ -57,8 +57,8 @@ namespace qttools {
 /*! \brief Make \p widget the central widget of \p dialog
  *
  *  \p dialog should be empty for this function to work.\n
- *  wrapWidgetInDialog() will try to find if \p widget contains a QDialogButtonBox, if this is the
- *  case then it connects to \p dialog 's accept()/reject() slots.
+ *  wrapWidgetInDialog() will try to find if \p widget contains a QDialogButtonBox, if so
+ *  then it connects to \p dialog 's accept()/reject() slots.
  */
 void QWidgetTools::wrapWidgetInDialog(QWidget *widget, QDialog *dialog)
 {
@@ -98,8 +98,26 @@ void QWidgetTools::addContentsWidget(QWidget *containerWidget, QWidget *contents
   }
 }
 
-/*! \brief Move position of \p widget so it is displayed stuck to the right of \p nextTo
+/*! \brief Returns the global position of a widget corner
+ *
+ *  \returns Null point (ie. with coordinates (0, 0)) if \p widget is null
  */
+QPoint QWidgetTools::globalPos(const QWidget *widget, Qt::Corner widgetCorner)
+{
+  if (widget != NULL) {
+    const QRect geom = widget->frameGeometry();
+    switch (widgetCorner) {
+    case Qt::TopLeftCorner: return widget->mapToGlobal(QPoint(-geom.width(), 0));
+    case Qt::TopRightCorner: return widget->mapToGlobal(QPoint(geom.width(), 0));
+    case Qt::BottomLeftCorner: return widget->mapToGlobal(QPoint(-geom.width(), geom.height()));
+    case Qt::BottomRightCorner: return widget->mapToGlobal(QPoint(geom.width(), geom.height()));
+    }
+  }
+  return QPoint(0, 0);
+}
+
+/*! \brief Move position of \p widget so it is displayed stuck to the right of \p nextTo
+  */
 void QWidgetTools::moveWidgetRightTo(QWidget* widget, const QWidget* nextTo)
 {
   const QRect frameGeom = nextTo->frameGeometry();

@@ -40,6 +40,7 @@
 
 #include "gui.h"
 #include <QtCore/QPair>
+#include <QtCore/QPoint>
 class QAbstractScrollArea;
 class QDialog;
 class QWidget;
@@ -58,6 +59,7 @@ public:
   static void wrapWidgetInDialog(QWidget* widget, QDialog* dialog);
   static void addContentsWidget(QWidget* containerWidget, QWidget* contentsWidget);
 
+  static QPoint globalPos(const QWidget* widget, Qt::Corner widgetCorner);
   static void moveWidgetRightTo(QWidget* widget, const QWidget* nextTo);
   static void moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo);
 

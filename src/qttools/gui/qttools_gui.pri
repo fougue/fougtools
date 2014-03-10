@@ -55,7 +55,7 @@ HEADERS += \
     $$PWD/qcombo_box_current_item_keeper.h \
     $$PWD/qstandard_item_explorer.h \
     $$PWD/tree_combo_box.h \
-    $$PWD/view_item_button_mechanism.h \
+    $$PWD/item_view_buttons.h \
     $$PWD/wait_dialog.h \
     $$PWD/qwidget_tools.h \
     $$PWD/strict_stack_widget.h \
@@ -75,7 +75,7 @@ SOURCES += \
     $$PWD/qcombo_box_current_item_keeper.cpp \
     $$PWD/qstandard_item_explorer.cpp \
     $$PWD/tree_combo_box.cpp \
-    $$PWD/view_item_button_mechanism.cpp \
+    $$PWD/item_view_buttons.cpp \
     $$PWD/wait_dialog.cpp \
     $$PWD/qwidget_tools.cpp \
     $$PWD/strict_stack_widget.cpp \

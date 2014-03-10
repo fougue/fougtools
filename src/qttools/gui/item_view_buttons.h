@@ -35,8 +35,8 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_VIEW_ITEM_BUTTON_MECHANISM_H
-#define QTTOOLS_VIEW_ITEM_BUTTON_MECHANISM_H
+#ifndef QTTOOLS_ITEM_VIEW_BUTTONS_H
+#define QTTOOLS_ITEM_VIEW_BUTTONS_H
 
 #include "gui.h"
 
@@ -53,7 +53,7 @@ class QStyleOptionViewItem;
 
 namespace qttools {
 
-class QTTOOLS_GUI_EXPORT ViewItemButtonMechanism : public QObject
+class QTTOOLS_GUI_EXPORT ItemViewButtons : public QObject
 {
   Q_OBJECT
 
@@ -74,8 +74,8 @@ public:
   typedef QFlags<DisplayMode> DisplayModes;
 
   // Ctor & dtor
-  ViewItemButtonMechanism(QAbstractItemView* view, QObject* parent = NULL);
-  ~ViewItemButtonMechanism();
+  ItemViewButtons(QAbstractItemView* view, QObject* parent = NULL);
+  ~ItemViewButtons();
 
   // View control
   QAbstractItemView* itemView() const;
@@ -131,6 +131,6 @@ private:
 
 } // namespace qttools
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(qttools::ViewItemButtonMechanism::DisplayModes)
+Q_DECLARE_OPERATORS_FOR_FLAGS(qttools::ItemViewButtons::DisplayModes)
 
-#endif // QTTOOLS_VIEW_ITEM_BUTTON_MECHANISM_H
+#endif // QTTOOLS_ITEM_VIEW_BUTTONS_H

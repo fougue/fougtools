@@ -53,6 +53,10 @@ namespace qttools {
  *
  */
 
+/*! \example qttools/tree_combo_box/main.cpp
+ *  Example of how to use class qttools::TreeComboBox
+ */
+
 TreeComboBox::TreeComboBox(QWidget *parent)
   : QComboBox(parent)
 {

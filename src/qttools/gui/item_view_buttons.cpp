@@ -205,38 +205,44 @@ void ItemViewButtons::Private::resetButtonUnderMouseState()
  * \class ItemViewButtons
  * \brief Provides buttons integrated to items displayed by QAbstractItemView
  *
- * Example:
+ * qttools::ItemViewButtons allows to add buttons inside any QAbstractItemView without subclassing
+ * the item-view class.
+ *
+ * It only requires that its paint() method is called whenever any view item has to be drawn. If
+ * you have a custom delegate (eg. a subclass of QStyledItemDelegate) then just call at some point
+ * qttools::ItemViewButtons::paint() inside the delegate's paint() method :
  * \code
- *   // Let's suppose we have some demo tabular data with a "Customer" column
- *   // We want to allow the user to delete customers through a button integrated to the view item
- *   // that shows up when the mouse is over a "customer" model item
+ * void MyCustomDeleagate::paint(QPainter* painter,
+ *                               const QStyleOptionViewItem& option,
+ *                               const QModelIndex& index) const
+ * {
+ *   QStyledItemDelegate::paint(painter, option, index);
+ *   // Specific paint operations ...
  *
- *   static const int customerItemTag = 100;
- *
- *   QStandardItemModel* model = ...;
- *   QStandardItem* customerItem = new QStandardItem;
- *   customerItem->setData(customerItemTag, Qt::UserRole + 1);
- *   // Add more items ...
- *
- *   QTableView* tableView = ...;
- *   tableView->setModel(model);
- *
- *   qttools::ItemViewButtons* tableBtns = new qttools::ItemViewButtons(tableView);
- *
- *   QIcon deleteCustomerIcon(":/images/delete.png");
- *   deleteCustomerIcon.addPixmap(QPixmap(":/images/delete__active.png"), QIcon::Active);
- *   tableBtns->addButton(1, deleteCustomerIcon, tr("Delete customer"));
- *   tableBtns->setButtonDetection(1, Qt::UserRole + 1, customerItemTag);
- *   tableBtns->setButtonDisplayColumn(1, 0); // If "Customer" is in column 0
- *   tableBtns->setButtonDisplayModes(1, ItemViewButtons::DisplayOnDetection);
- *   tableBtns->setButtonToolTip(1, tr("Delete this customer"));
- *
- *   tableBtns->installDefaultItemDelegate();
- *
+ *   m_itemViewBtns->paint(painter, option, index);
+ * }
  * \endcode
+ *
+ * If you do not want to modify your delegate class then createProxyItemDelegate() might be the
+ * right option : this will create a new delegate around yours with the paint() method correctly
+ * called.
+ *
+ * If the item-view does not use any delegate then just call installDefaultItemDelegate()
+ *
+ * ItemViewButtons notifies any button click with signal buttonClicked()
+ *
+ * \example qttools/item_view_buttons/main.cpp
  *
  * \headerfile item_view_buttons.h <qttools/gui/item_view_buttons.h>
  * \ingroup qttools_gui
+ */
+
+/*! \fn void ItemViewButtons::buttonClicked(int btnId, const QModelIndex& index)
+ *  \brief This signal is emitted when a button previously added with addButton() is clicked (i.e.
+ *          pressed down then released while the mouse cursor is inside the button)
+ *
+ *  \param btnId Identifier of the button clicked (this is the id that was passed to addButton())
+ *  \param index Index of the item model where the button click occured
  */
 
 ItemViewButtons::ItemViewButtons(QAbstractItemView* view, QObject *parent)

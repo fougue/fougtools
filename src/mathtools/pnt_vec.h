@@ -35,29 +35,38 @@
 **
 ****************************************************************************/
 
-#ifndef MATHTOOLS_PNT_VEC_TRAITS_DEF_H
-#define MATHTOOLS_PNT_VEC_TRAITS_DEF_H
+#ifndef MATHTOOLS_PNT_VEC_H
+#define MATHTOOLS_PNT_VEC_H
 
 namespace math {
 
+template<typename PNT_VEC>
+struct PntVecCoords
+{
+//  static double x(const PNT_VEC& p); //! X coordinate of point-vector \p
+//  static double y(const PNT_VEC& p); //! Y coordinate of point-vector \p
+//  static double z(const PNT_VEC& p); //! Z coordinate of point-vector \p
+};
+
 template<typename POINT, typename VECTOR>
+struct PntVecOperations
+{
+//  static void normalize(VECTOR* v);
+//  static VECTOR cross(const VECTOR& u, const VECTOR& v);
+//  static double dot(const VECTOR& u, const VECTOR& v);
+//  static POINT translate(const POINT& p, const VECTOR& v);
+//  static VECTOR vector(const POINT& p1, const POINT& p2);
+//  static VECTOR vector(const POINT& p);
+//  static VECTOR mult(double k, const VECTOR& v);
+};
+
+template<typename PNT_VEC>
 struct PntVecTraits
 {
-# ifndef _MSC_VER
-  typedef POINT  Point;
-  typedef VECTOR Vector;
-  typedef double Value;
-
-  static void normalize(Vector* v);
-  static Vector cross(const Vector& u, const Vector& v);
-  static Value dot(const Vector& u, const Vector& v);
-  static Point translate(const Point& p, const Vector& v);
-  static Vector vector(const Point& p1, const Point& p2);
-  static Vector vector(const Point& p);
-  static Vector mult(Value k, const Vector& v);
-# endif // _MSC_VER
+  typedef PNT_VEC Point;
+  typedef PNT_VEC Vector;
 };
 
 } // namespace math
 
-#endif // MATHTOOLS_PNT_VEC_TRAITS_DEF_H
+#endif // MATHTOOLS_PNT_VEC_H

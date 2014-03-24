@@ -42,9 +42,8 @@
 
 namespace math {
 
-template<typename PNT_VEC_TRAITS>
-typename PNT_VEC_TRAITS::Point projectPointOnPlane(const typename PNT_VEC_TRAITS::Point& p,
-                                                   const typename PNT_VEC_TRAITS::Vector& n);
+template<typename POINT, typename VECTOR>
+typename POINT projectPointOnPlane(const POINT& p, const VECTOR& n);
 
 } // namespace math
 
@@ -60,15 +59,12 @@ namespace math {
  *  \param p Point to project
  *  \param n Normal vector of the plane (assumed to be normalized).
  */
-template<typename PNT_VEC_TRAITS>
-typename PNT_VEC_TRAITS::Point projectPointOnPlane(const typename PNT_VEC_TRAITS::Point& p,
-                                                   const typename PNT_VEC_TRAITS::Vector& n)
+template<typename POINT, typename VECTOR>
+typename POINT projectPointOnPlane(const POINT& p, const VECTOR& n)
 {
-  typedef typename PNT_VEC_TRAITS::Value Value;
-  const typename PNT_VEC_TRAITS::Vector v(PNT_VEC_TRAITS::vector(p));
-  const Value dotVN(PNT_VEC_TRAITS::dot(v, n));
-  return PNT_VEC_TRAITS::translate(p, PNT_VEC_TRAITS::mult(static_cast<Value>(-1),
-                                                           PNT_VEC_TRAITS::mult(dotVN, n)));
+  typedef typename PntVecOperations<POINT, VECTOR> PntVecOps;
+  const auto dotVN = PntVecOps::dot(PntVecOps::vector(p), n);
+  return PntVecOps::translate(p, PntVecOps::mult(-1, PntVecOps::mult(dotVN, n)));
 }
 
 } // namespace math

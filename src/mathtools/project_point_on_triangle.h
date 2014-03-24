@@ -42,26 +42,22 @@
 
 namespace math {
 
-template<typename PNT_VEC_TRAITS>
-const std::pair<typename PNT_VEC_TRAITS::Point, bool>
-projectPointOnTriangle(const typename PNT_VEC_TRAITS::Point& p,
-                       const typename PNT_VEC_TRAITS::Point& v0,
-                       const typename PNT_VEC_TRAITS::Point& v1,
-                       const typename PNT_VEC_TRAITS::Point& v2);
+template<typename POINT>
+const std::pair<POINT, bool> projectPointOnTriangle(const POINT& p,
+                                                    const POINT& v0,
+                                                    const POINT& v1,
+                                                    const POINT& v2);
 
-template<typename PNT_VEC_TRAITS>
+template<typename POINT>
 struct project_point_on_triangle
 {
-  project_point_on_triangle(const typename PNT_VEC_TRAITS::Point& v0,
-                            const typename PNT_VEC_TRAITS::Point& v1,
-                            const typename PNT_VEC_TRAITS::Point& v2);
-  const std::pair<typename PNT_VEC_TRAITS::Point, bool>
-  operator()(const typename PNT_VEC_TRAITS::Point pnt);
+  project_point_on_triangle(const POINT& v0, const POINT& v1, const POINT& v2);
+  const std::pair<POINT, bool> operator()(const POINT& pnt);
 
 private:
-  const typename PNT_VEC_TRAITS::Point& m_v0;
-  const typename PNT_VEC_TRAITS::Point& m_v1;
-  const typename PNT_VEC_TRAITS::Point& m_v2;
+  const POINT& m_v0;
+  const POINT& m_v1;
+  const POINT& m_v2;
 }; // struct project_point_on_triangle
 
 } // namespace math

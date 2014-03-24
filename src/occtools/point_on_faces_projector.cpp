@@ -259,10 +259,11 @@ const TopoDS_Face* PointOnFacesProjector::faceOfProjection(const gp_Pnt& point) 
 {
   // Find the closest node in the triangulations
   internal::NodeBndBoxSelector selector(point);
-  if (d->m_ubTree.Select(selector) <= 0)
-    return NULL;
-  const Handle_Poly_Triangulation& triangulation = selector.minDistanceNodeIndex().second;
-  return d->triangulationToFace(triangulation);
+  if (d->m_ubTree.Select(selector) > 0) {
+    const Handle_Poly_Triangulation& triangulation = selector.minDistanceNodeIndex().second;
+    return d->triangulationToFace(triangulation);
+  }
+  return NULL;
 }
 
 PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& point) const
@@ -286,11 +287,10 @@ PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& poi
     int n1, n2, n3;
     t.Get(n1, n2, n3);
     if (minNodeId == n1 || minNodeId == n2 || minNodeId == n3) {
-      const std::pair<gp_Pnt, bool> projPntInfo =
-          math::projectPointOnTriangle<occ::PntVecTraits>(point,
-                                                          nodes(t(1)),
-                                                          nodes(t(2)),
-                                                          nodes(t(3)));
+      const std::pair<gp_Pnt, bool> projPntInfo = math::projectPointOnTriangle(point,
+                                                                               nodes(t(1)),
+                                                                               nodes(t(2)),
+                                                                               nodes(t(3)));
       const double dist = point.SquareDistance(projPntInfo.first);
       if (dist < minDist) {
         minTriangle = &t;
@@ -299,14 +299,16 @@ PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& poi
       }
     }
   }
-  if (minTriangle == NULL)
-    return PointOnFacesProjector::Result();
-  const TopoDS_Face* face = d->triangulationToFace(triangulation);
-  const TopAbs_Orientation faceOrientation = face != NULL ? face->Orientation() : TopAbs_FORWARD;
-  const gp_Vec triNormal = occ::MathTools::triangleNormal(nodes, *minTriangle, faceOrientation);
-  return PointOnFacesProjector::Result(face != NULL ? *face : TopoDS_Face(),
-                                       projectedPnt,
-                                       triNormal);
+
+  if (minTriangle != NULL) {
+    const TopoDS_Face* face = d->triangulationToFace(triangulation);
+    const TopAbs_Orientation faceOrientation = face != NULL ? face->Orientation() : TopAbs_FORWARD;
+    const gp_Vec triNormal = occ::MathTools::triangleNormal(nodes, *minTriangle, faceOrientation);
+    return PointOnFacesProjector::Result(face != NULL ? *face : TopoDS_Face(),
+                                         projectedPnt,
+                                         triNormal);
+  }
+  return PointOnFacesProjector::Result();
 }
 
 /*! \brief Syntactic sugar around projected()

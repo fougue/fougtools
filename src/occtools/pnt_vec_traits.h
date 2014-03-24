@@ -41,64 +41,75 @@
 #include <cassert>
 #include <gp_Pnt.hxx>
 #include <gp_Vec.hxx>
-#include "../mathtools/pnt_vec_traits_def.h"
+#include "../mathtools/pnt_vec.h"
 
 namespace math {
 
-/*! \brief Point/Vector OpenCascade traits
- *
- *  \ingroup occtools
- */
-template<>
-struct PntVecTraits<gp_Pnt, gp_Vec>
+namespace internal_occtools {
+
+template<typename OCC_PNT_VEC>
+struct PntVecCoords
+{
+  static double x(const OCC_PNT_VEC& pv)
+  { return pv.X(); }
+
+  static double y(const OCC_PNT_VEC& pv)
+  { return pv.Y(); }
+
+  static double z(const OCC_PNT_VEC& pv)
+  { return pv.Z(); }
+};
+
+struct PntVecTraits
 {
   typedef gp_Pnt Point;
   typedef gp_Vec Vector;
-  typedef Standard_Real Value;
-
-  static void normalize(Vector* v)
-  {
-    assert(v != NULL);
-    v->Normalize();
-  }
-
-  static Vector cross(const Vector& u, const Vector& v)
-  {
-    return u.Crossed(v);
-  }
-
-  static Value dot(const Vector& u, const Vector& v)
-  {
-    return u.Dot(v);
-  }
-
-  static Point translate(const Point& p, const Vector& v)
-  {
-    return p.Translated(v);
-  }
-
-  static Vector vector(const Point& p1, const Point& p2)
-  {
-    return Vector(p1, p2);
-  }
-
-  static Vector vector(const Point& p)
-  {
-    return Vector(p.X(), p.Y(), p.Z());
-  }
-
-  static Vector mult(Value k, const Vector& v)
-  {
-    return k * v;
-  }
+  typedef Standard_Real CoordValue;
 };
 
+} // namespace internal_occtools
+
+template<>
+struct PntVecCoords<gp_Pnt> : public internal_occtools::PntVecCoords<gp_Pnt>
+{ };
+
+template<>
+struct PntVecCoords<gp_Vec> : public internal_occtools::PntVecCoords<gp_Pnt>
+{ };
+
+template<>
+struct PntVecOperations<gp_Pnt, gp_Vec>
+{
+  static void normalize(gp_Vec* v)
+  { v->Normalize(); }
+
+  static gp_Vec cross(const gp_Vec& u, const gp_Vec& v)
+  { return u.Crossed(v); }
+
+  static Standard_Real dot(const gp_Vec& u, const gp_Vec& v)
+  { return u.Dot(v); }
+
+  static gp_Pnt translate(const gp_Pnt& p, const gp_Vec& v)
+  { return p.Translated(v); }
+
+  static gp_Vec vector(const gp_Pnt& p1, const gp_Pnt& p2)
+  { return gp_Vec(p1, p2); }
+
+  static gp_Vec vector(const gp_Pnt& p)
+  { return gp_Vec(p.X(), p.Y(), p.Z()); }
+
+  static gp_Vec mult(Standard_Real k, const gp_Vec& v)
+  { return k * v; }
+};
+
+template<>
+struct PntVecTraits<gp_Pnt> : public internal_occtools::PntVecTraits
+{ };
+
+template<>
+struct PntVecTraits<gp_Vec> : public internal_occtools::PntVecTraits
+{ };
+
 } // namespace math
-
-namespace occ {
-
-typedef math::PntVecTraits<gp_Pnt, gp_Vec> PntVecTraits;
-
-} // namespace occ
 
 #endif // OCC_PNT_VEC_TRAITS_H

@@ -37,31 +37,33 @@
 
 #ifdef MATHTOOLS_PROJECT_POINT_ON_TRIANGLE_H
 
+#include "pnt_vec.h"
+
 namespace math {
 
-template<typename PNT_VEC_TRAITS>
-const std::pair<typename PNT_VEC_TRAITS::Point, bool>
-projectPointOnTriangle(const typename PNT_VEC_TRAITS::Point& p,
-                       const typename PNT_VEC_TRAITS::Point& v0,
-                       const typename PNT_VEC_TRAITS::Point& v1,
-                       const typename PNT_VEC_TRAITS::Point& v2)
+template<typename POINT>
+const std::pair<POINT, bool> projectPointOnTriangle(const POINT& p,
+                                                    const POINT& v0,
+                                                    const POINT& v1,
+                                                    const POINT& v2)
 {
-  typedef typename PNT_VEC_TRAITS::Point Point;
-  typedef typename PNT_VEC_TRAITS::Vector Vector;
+  typedef typename PntVecTraits<POINT>::CoordValue CoordValue;
+  typedef typename PntVecTraits<POINT>::Vector Vector;
+  typedef PntVecOperations<POINT, Vector> PntVecOps;
 
-  const Vector e0(PNT_VEC_TRAITS::vector(v0, v1));
-  const Vector e1(PNT_VEC_TRAITS::vector(v0, v2));
-  const Vector D(PNT_VEC_TRAITS::vector(p, v0));
+  const Vector e0(PntVecOps::vector(v0, v1));
+  const Vector e1(PntVecOps::vector(v0, v2));
+  const Vector D(PntVecOps::vector(p, v0));
 
-  const double a = PNT_VEC_TRAITS::dot(e0, e0);
-  const double b = PNT_VEC_TRAITS::dot(e0, e1);
-  const double c = PNT_VEC_TRAITS::dot(e1, e1);
-  const double d = PNT_VEC_TRAITS::dot(e0, D);
-  const double e = PNT_VEC_TRAITS::dot(e1, D);
+  const CoordValue a = PntVecOps::dot(e0, e0);
+  const CoordValue b = PntVecOps::dot(e0, e1);
+  const CoordValue c = PntVecOps::dot(e1, e1);
+  const CoordValue d = PntVecOps::dot(e0, D);
+  const CoordValue e = PntVecOps::dot(e1, D);
 
-  const double det = a * c - b * b;
-  double s = b * e - c * d;
-  double t = b * d - a * e;
+  const CoordValue det = a * c - b * b;
+  CoordValue s = b * e - c * d;
+  CoordValue t = b * d - a * e;
 
   int region = 0;
   if (s + t <= det) {
@@ -85,18 +87,18 @@ projectPointOnTriangle(const typename PNT_VEC_TRAITS::Point& p,
 
   switch (region) {
   case 0: {
-    const double invDet = 1. / det;
+    const CoordValue invDet = 1. / det;
     s *= invDet;
     t *= invDet;
     break;
   }
   case 1: {
-    const double numer = c + e - b - d;
+    const CoordValue numer = c + e - b - d;
     if (numer <= 0.) {
       s = 0.;
     }
     else {
-      const double denom = a - 2. * b + c;
+      const CoordValue denom = a - 2. * b + c;
       s = (numer >= denom ? 1. : numer / denom);
     }
     t = 1. - s;
@@ -129,30 +131,28 @@ projectPointOnTriangle(const typename PNT_VEC_TRAITS::Point& p,
   }
   }
 
-  return std::make_pair(PNT_VEC_TRAITS::translate(PNT_VEC_TRAITS::translate(v0, e0 * s), e1 * t),
+  return std::make_pair(PntVecOps::translate(PntVecOps::translate(v0, e0 * s), e1 * t),
                         region == 0);
 }
 
 /*! \struct project_point_on_triangle
-   *  \brief  Wraps projectPointOnTriangle() as a unary functor.
-   */
+ *  \brief  Wraps projectPointOnTriangle() as a unary functor
+ */
 
 //! Construct the functor : \p v0 , \p v1 , \p v2 are the vertices of the
 //! triangle to project points to.
-template<typename PNT_VEC_TRAITS>
-project_point_on_triangle<PNT_VEC_TRAITS>::project_point_on_triangle(
-    const typename PNT_VEC_TRAITS::Point& v0,
-    const typename PNT_VEC_TRAITS::Point& v1,
-    const typename PNT_VEC_TRAITS::Point& v2) :
-  m_v0(v0), m_v1(v1), m_v2(v2)
+template<typename POINT>
+project_point_on_triangle<POINT>::project_point_on_triangle(const POINT& v0,
+                                                            const POINT& v1,
+                                                            const POINT& v2)
+  : m_v0(v0), m_v1(v1), m_v2(v2)
 {
 }
 
-template<typename PNT_VEC_TRAITS>
-const std::pair<typename PNT_VEC_TRAITS::Point, bool>
-project_point_on_triangle<PNT_VEC_TRAITS>::operator()(const typename PNT_VEC_TRAITS::Point pnt)
+template<typename POINT>
+const std::pair<POINT, bool> project_point_on_triangle<POINT>::operator()(const POINT& pnt)
 {
-  return projectPointOnTriangle<PNT_VEC_TRAITS>(pnt, m_v0, m_v1, m_v2);
+  return projectPointOnTriangle<POINT>(pnt, m_v0, m_v1, m_v2);
 }
 
 } // namespace math

@@ -45,6 +45,7 @@ HEADERS += \
     $$PWD/item_model_tools.h \
     $$PWD/log.h \
     $$PWD/log_unqualified.h \
+    $$PWD/qatomic_tools.h \
     $$PWD/qlocale_tools.h \
     $$PWD/qobject_tools.h \
     $$PWD/qobject_wrap.h \
@@ -69,6 +70,7 @@ SOURCES += \
     $$PWD/plugins_loader.cpp \
     $$PWD/abstract_signal_dispatch.cpp \
     $$PWD/log.cpp \
+    $$PWD/qatomic_tools.cpp \
     $$PWD/qlocale_tools.cpp \
     $$PWD/qobject_tools.cpp \
     $$PWD/qstring_tools.cpp \

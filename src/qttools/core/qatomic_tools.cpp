@@ -38,9 +38,21 @@
 #include "qatomic_tools.h"
 
 #include <QtCore/QAtomicInt>
+#include <QtCore/QAtomicPointer>
 #include <QtCore/QtDebug>
 
 namespace qttools {
+
+/*! \class QAtomicTools
+ *  \brief Provides a collection of tools around QAtomicInt and QAtomicPointer
+ *
+ *  QAtomicTools mainly provides common operations for QAtomicInt and QAtomicPointer. It is useful
+ *  when portability for Qt4 / Qt5 is required because the API of these two classes have changed.
+ *
+ *  \headerfile qatomic_tools.h <qttools/core/qatomic_tools.h>
+ *  \ingroup qttools_core
+ *
+ */
 
 int QAtomicTools::loadRelaxed(const QAtomicInt &atomInt)
 {

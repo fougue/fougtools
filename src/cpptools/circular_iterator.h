@@ -81,9 +81,10 @@ BI_ITERATOR circularAdvance(BI_ITERATOR iBegin, BI_ITERATOR iEnd,
                             BI_ITERATOR iCurr, DISTANCE d)
 {
   const DISTANCE absD = d < 0 ? -d : d;
-  for (DISTANCE i = 0; i < absD; ++i)
+  for (DISTANCE i = 0; i < absD; ++i) {
     iCurr = d < 0 ? circularPrior(iBegin, iEnd, iCurr) :
                     circularNext(iBegin, iEnd, iCurr);
+  }
   return iCurr;
 }
 

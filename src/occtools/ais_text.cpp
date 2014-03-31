@@ -85,28 +85,28 @@ IMPLEMENT_STANDARD_TYPE_END(occ_AIS_Text)
 
 namespace internal {
 
-class TextProperties
-{
-public:
-  TextProperties()
+  class TextProperties
   {
-    m_aspect = new Prs3d_TextAspect;
-  }
+  public:
+    TextProperties()
+    {
+      m_aspect = new Prs3d_TextAspect;
+    }
 
-  bool operator==(const TextProperties& other) const
-  {
-    return
-        m_font == other.m_font
-        && m_position.SquareDistance(other.m_position) < 1e-6
-        && m_text == other.m_text
-        && m_aspect == other.m_aspect;
-  }
+    bool operator==(const TextProperties& other) const
+    {
+      return
+          m_font == other.m_font
+          && m_position.SquareDistance(other.m_position) < 1e-6
+          && m_text == other.m_text
+          && m_aspect == other.m_aspect;
+    }
 
-  const char* m_font;
-  gp_Pnt m_position;
-  TCollection_ExtendedString m_text;
-  Handle_Prs3d_TextAspect m_aspect;
-};
+    const char* m_font;
+    gp_Pnt m_position;
+    TCollection_ExtendedString m_text;
+    Handle_Prs3d_TextAspect m_aspect;
+  };
 
 } // namespace internal
 
@@ -114,7 +114,7 @@ class occ_AIS_Text::Private
 {
 public:
   Private()
-    : m_defaultFont("Courrier"/*Graphic3d_NOF_ASCII_MONO*/),
+    : m_defaultFont("Courrier" /*Graphic3d_NOF_ASCII_MONO*/),
       m_defaultColor(Quantity_NOC_YELLOW),
       m_defaultTextBackgroundColor(Quantity_NOC_GREEN),
       m_defaultTextDisplayMode(occ_AIS_Text::TextOnlyDisplay),
@@ -139,38 +139,13 @@ public:
  * \ingroup occtools
  */
 
-/*!
- * \enum occ_AIS_Text::TextDisplayMode
- *       Various types to distinguish the way texts are displayed
- *
- * \var occ_AIS_Text::TextDisplayMode AIS_Text::TextOnlyDisplay
- *      Display only text(default mode)
- *
- * \var occ_AIS_Text::TextDisplayMode AIS_Text::BackgroundDisplay
- *      Window background under the text
- *
- * \var occ_AIS_Text::TextDisplayMode AIS_Text::Style3dDisplay
- *      Text displayed with a 3D style
- *
- * \var occ_AIS_Text::TextDisplayMode AIS_Text::Style3dDisplay
- *      Text is displayed in XOR mode
- */
-
-/*!
- * \enum occ_AIS_Text::TextStyle
- *
- * \var occ_AIS_Text::TextStyle AIS_Text::NormalStyle
- *
- * \var occ_AIS_Text::TextStyle AIS_Text::AnnotationStyle
- */
-
-//! Construct a default occ_AIS_Text
+//! Constructs a default occ_AIS_Text
 occ_AIS_Text::occ_AIS_Text()
   : d(new Private)
 {
 }
 
-//! Construct a fully initialized occ_AIS_Text
+//! Constructs a fully initialized occ_AIS_Text
 occ_AIS_Text::occ_AIS_Text(const TCollection_ExtendedString &text, const gp_Pnt& pos)
   : d(new Private)
 {
@@ -180,10 +155,10 @@ occ_AIS_Text::occ_AIS_Text(const TCollection_ExtendedString &text, const gp_Pnt&
   this->setPosition(pos);
 }
 
-//! Destruct the instance and free any allocated resources
+//! Destructs the instance and free any allocated resources
 occ_AIS_Text::~occ_AIS_Text()
 {
-    delete d;
+  delete d;
 }
 
 Handle_Prs3d_TextAspect occ_AIS_Text::presentationTextAspect(unsigned i) const
@@ -200,21 +175,17 @@ Handle_Graphic3d_AspectText3d occ_AIS_Text::graphicTextAspect(unsigned i) const
   return Handle_Graphic3d_AspectText3d();
 }
 
-// --- Access
-
-//! Position of the \p i-th text displayed
+//! Returns the position of the \p i-th text displayed
 gp_Pnt occ_AIS_Text::position(unsigned i) const
 {
   return this->isValidTextIndex(i) ? d->m_textProps.at(i).m_position : gp_Pnt();
 }
 
-//! \p i-th text displayed
+//! Returns the \p i-th text displayed
 TCollection_ExtendedString occ_AIS_Text::text(unsigned i) const
 {
   return this->isValidTextIndex(i) ? d->m_textProps.at(i).m_text : TCollection_ExtendedString();
 }
-
-// --- Status report
 
 //! Is \p i a valid index to query some text ?
 bool occ_AIS_Text::isValidTextIndex(unsigned i) const
@@ -222,18 +193,16 @@ bool occ_AIS_Text::isValidTextIndex(unsigned i) const
   return i < this->textsCount();
 }
 
-// --- Measurement
-
-//! Count of texts displayed
+//! Returns the count of texts displayed
 unsigned occ_AIS_Text::textsCount() const
 {
   return static_cast<unsigned>(d->m_textProps.size());
 }
 
-// --- Element change
-
-//! Add a new item text item to be displayed at position \p pos
-//!   Other text attributes are defaulted
+/*! \brief Adds a new item text item to be displayed at position \p pos
+ *
+ *   Other text attributes are defaulted
+ */
 void occ_AIS_Text::addText(const TCollection_ExtendedString &text, const gp_Pnt& pos)
 {
   internal::TextProperties newProps;
@@ -250,22 +219,24 @@ void occ_AIS_Text::addText(const TCollection_ExtendedString &text, const gp_Pnt&
   this->setTextBackgroundColor(d->m_defaultTextBackgroundColor, i);
 }
 
-//! Set the 3d position of the \p i-th displayed text to \p pos
+//! Sets the position of the \p i-th displayed text to \p pos
 void occ_AIS_Text::setPosition(const gp_Pnt& pos, unsigned i)
 {
   if (this->isValidTextIndex(i))
     d->m_textProps[i].m_position = pos;
 }
 
-//! Set the \p i-th displayed text to \p v
+//! Sets the \p i-th displayed text to \p v
 void occ_AIS_Text::setText(const TCollection_ExtendedString &v, unsigned i)
 {
   if (this->isValidTextIndex(i))
     d->m_textProps[i].m_text = v;
 }
 
-//! Set the color of the \p i-th text background to \p color
-//!   Only works when the \p i-th text display mode is set to BackgroundDisplay
+/*! \brief Sets the color of the \p i-th text background to \p color
+ *
+ *  Only works when the \p i-th text display mode is set to BackgroundDisplay
+ */
 void occ_AIS_Text::setTextBackgroundColor(const Quantity_Color& color, unsigned i)
 {
   if (this->isValidTextIndex(i))
@@ -345,8 +316,8 @@ void occ_AIS_Text::setDefaultTextStyle(TextStyle style)
 
 //! -- from PrsMgr_PresentableObject
 void occ_AIS_Text::Compute(const Handle_PrsMgr_PresentationManager3d& /*pm*/,
-                       const Handle_Prs3d_Presentation& pres,
-                       const Standard_Integer /*mode*/)
+                           const Handle_Prs3d_Presentation& pres,
+                           const Standard_Integer /*mode*/)
 {
   for (unsigned i = 0; i < this->textsCount(); ++i)
     Prs3d_Text::Draw(pres, this->presentationTextAspect(i), this->text(i), this->position(i));
@@ -354,12 +325,12 @@ void occ_AIS_Text::Compute(const Handle_PrsMgr_PresentationManager3d& /*pm*/,
 
 //! -- from PrsMgr_PresentableObject
 void occ_AIS_Text::Compute(const Handle_Prs3d_Projector& /*proj*/,
-                       const Handle_Prs3d_Presentation& /*pres*/)
+                           const Handle_Prs3d_Presentation& /*pres*/)
 {
 }
 
 //! -- from SelectMgr_SelectableObject
 void occ_AIS_Text::ComputeSelection(const Handle_SelectMgr_Selection& /*sel*/,
-                                const Standard_Integer /*mode*/)
+                                    const Standard_Integer /*mode*/)
 {
 }

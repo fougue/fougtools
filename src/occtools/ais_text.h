@@ -55,12 +55,13 @@
 class OCCTOOLS_EXPORT occ_AIS_Text : public AIS_InteractiveObject
 {
 public:
+  //! Various types to distinguish the way texts are displayed
   enum TextDisplayMode
   {
-    TextOnlyDisplay,
-    BackgroundDisplay,
-    Style3dDisplay,
-    XorTextDisplay
+    TextOnlyDisplay,   //!< Display only text(default mode)
+    BackgroundDisplay, //!< Window background under the text
+    Style3dDisplay,    //!< Text displayed with a 3D style
+    XorTextDisplay     //! Text is displayed in XOR mode
   };
 
   enum TextStyle

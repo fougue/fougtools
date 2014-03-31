@@ -43,6 +43,7 @@
 #include "../../cpptools/memory_utils.h"
 
 namespace qttools {
+namespace internal {
 
 void PluginsLoader_InstanceIFaceFilter_Helper::setRootComponentNullError(QString *error,
                                                                          const QPluginLoader *loader)
@@ -63,4 +64,5 @@ QObject *PluginsLoader_InstanceIFaceFilter_Helper::rootComponent(QPluginLoader *
   return loader != NULL ? loader->instance() : NULL;
 }
 
+} // namespace internal
 } // namespace qttools

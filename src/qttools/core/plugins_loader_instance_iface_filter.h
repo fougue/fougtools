@@ -44,6 +44,8 @@
 
 namespace qttools {
 
+namespace internal {
+
 /*! \brief Helper class for PluginsLoader_InstanceIFaceFilter only
  *  \ingroup qttools_core
  */
@@ -55,6 +57,8 @@ protected:
   static QObject* rootComponent(QPluginLoader* loader);
 };
 
+} // namespace internal
+
 /*! \brief Generic plugin filter that keeps only root components satisfying an interface
  *
  *  \tparam INTERFACE Type of the interface (declared with Q_DECLARE_INTERFACE())
@@ -64,7 +68,7 @@ protected:
 template<typename INTERFACE>
 class PluginsLoader_InstanceIFaceFilter :
     public PluginsLoader_InstanceFilter,
-    protected PluginsLoader_InstanceIFaceFilter_Helper
+    protected internal::PluginsLoader_InstanceIFaceFilter_Helper
 {
 public:
   bool accepts(QPluginLoader *loader, QString* error = NULL) const

@@ -42,6 +42,8 @@
 #include "handle_ais_text.h"
 
 #include <AIS_InteractiveObject.hxx>
+#include <Aspect_TypeOfDisplayText.hxx>
+#include <Aspect_TypeOfStyleText.hxx>
 #include <gp_Pnt.hxx>
 #include <Handle_Graphic3d_AspectText3d.hxx>
 #include <Handle_Prs3d_Presentation.hxx>
@@ -55,21 +57,6 @@
 class OCCTOOLS_EXPORT occ_AIS_Text : public AIS_InteractiveObject
 {
 public:
-  //! Various types to distinguish the way texts are displayed
-  enum TextDisplayMode
-  {
-    TextOnlyDisplay,   //!< Display only text(default mode)
-    BackgroundDisplay, //!< Window background under the text
-    Style3dDisplay,    //!< Text displayed with a 3D style
-    XorTextDisplay     //! Text is displayed in XOR mode
-  };
-
-  enum TextStyle
-  {
-    NormalStyle,
-    AnnotationStyle
-  };
-
   occ_AIS_Text();
   occ_AIS_Text(const TCollection_ExtendedString& text, const gp_Pnt& pos);
   virtual ~occ_AIS_Text();
@@ -82,8 +69,8 @@ public:
   void setDefaultColor(const Quantity_Color& c);
   void setDefaultFont(const char* fontName);
   void setDefaultTextBackgroundColor(const Quantity_Color& c);
-  void setDefaultTextDisplayMode(TextDisplayMode mode);
-  void setDefaultTextStyle(TextStyle style);
+  void setDefaultTextDisplayMode(Aspect_TypeOfDisplayText mode);
+  void setDefaultTextStyle(Aspect_TypeOfStyleText style);
 
   gp_Pnt position(unsigned i = 0) const;
   void setPosition(const gp_Pnt& pos, unsigned i = 0);
@@ -93,8 +80,8 @@ public:
   bool isValidTextIndex(unsigned i) const;
 
   void setTextBackgroundColor(const Quantity_Color& color, unsigned i = 0);
-  void setTextDisplayMode(TextDisplayMode mode, unsigned i = 0);
-  void setTextStyle(TextStyle style, unsigned i = 0);
+  void setTextDisplayMode(Aspect_TypeOfDisplayText mode, unsigned i = 0);
+  void setTextStyle(Aspect_TypeOfStyleText style, unsigned i = 0);
 
   unsigned textsCount() const;
   void addText(const TCollection_ExtendedString& text, const gp_Pnt& pos);

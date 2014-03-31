@@ -117,8 +117,8 @@ public:
     : m_defaultFont("Courrier" /*Graphic3d_NOF_ASCII_MONO*/),
       m_defaultColor(Quantity_NOC_YELLOW),
       m_defaultTextBackgroundColor(Quantity_NOC_GREEN),
-      m_defaultTextDisplayMode(occ_AIS_Text::TextOnlyDisplay),
-      m_defaultTextStyle(occ_AIS_Text::NormalStyle)
+      m_defaultTextDisplayMode(Aspect_TODT_NORMAL),
+      m_defaultTextStyle(Aspect_TOST_NORMAL)
   {
     //Graphic3d_AspectText3d::TexFontDisable();
   }
@@ -126,8 +126,8 @@ public:
   const char* m_defaultFont;
   Quantity_Color m_defaultColor;
   Quantity_Color m_defaultTextBackgroundColor;
-  occ_AIS_Text::TextDisplayMode m_defaultTextDisplayMode;
-  occ_AIS_Text::TextStyle m_defaultTextStyle;
+  Aspect_TypeOfDisplayText m_defaultTextDisplayMode;
+  Aspect_TypeOfStyleText m_defaultTextStyle;
   std::vector<internal::TextProperties> m_textProps;
 };
 
@@ -235,7 +235,7 @@ void occ_AIS_Text::setText(const TCollection_ExtendedString &v, unsigned i)
 
 /*! \brief Sets the color of the \p i-th text background to \p color
  *
- *  Only works when the \p i-th text display mode is set to BackgroundDisplay
+ *  Only works when the \p i-th text display mode is set to Aspect_TODT_SUBTITLE
  */
 void occ_AIS_Text::setTextBackgroundColor(const Quantity_Color& color, unsigned i)
 {
@@ -243,48 +243,16 @@ void occ_AIS_Text::setTextBackgroundColor(const Quantity_Color& color, unsigned 
     this->graphicTextAspect(i)->SetColorSubTitle(color);
 }
 
-void occ_AIS_Text::setTextDisplayMode(TextDisplayMode mode, unsigned i)
+void occ_AIS_Text::setTextDisplayMode(Aspect_TypeOfDisplayText mode, unsigned i)
 {
-  Aspect_TypeOfDisplayText occMode;
-  switch (mode) {
-  case TextOnlyDisplay:
-    occMode = Aspect_TODT_NORMAL;
-    break;
-  case BackgroundDisplay:
-    occMode = Aspect_TODT_SUBTITLE;
-    break;
-  case Style3dDisplay:
-    occMode = Aspect_TODT_DEKALE;
-    break;
-  case XorTextDisplay:
-    occMode = Aspect_TODT_BLEND;
-    break;
-  default:
-    occMode = Aspect_TODT_NORMAL;
-    break;
-  }
-
   if (this->isValidTextIndex(i))
-    this->graphicTextAspect(i)->SetDisplayType(occMode);
+    this->graphicTextAspect(i)->SetDisplayType(mode);
 }
 
-void occ_AIS_Text::setTextStyle(TextStyle style, unsigned i)
+void occ_AIS_Text::setTextStyle(Aspect_TypeOfStyleText style, unsigned i)
 {
-  Aspect_TypeOfStyleText occStyle;
-  switch (style) {
-  case NormalStyle:
-    occStyle = Aspect_TOST_NORMAL;
-    break;
-  case AnnotationStyle:
-    occStyle = Aspect_TOST_ANNOTATION;
-    break;
-  default:
-    occStyle = Aspect_TOST_NORMAL;
-    break;
-  }
-
   if (this->isValidTextIndex(i))
-    this->graphicTextAspect(i)->SetStyle(occStyle);
+    this->graphicTextAspect(i)->SetStyle(style);
 }
 
 void occ_AIS_Text::setDefaultColor(const Quantity_Color &c)
@@ -302,12 +270,12 @@ void occ_AIS_Text::setDefaultTextBackgroundColor(const Quantity_Color& c)
   d->m_defaultTextBackgroundColor = c;
 }
 
-void occ_AIS_Text::setDefaultTextDisplayMode(TextDisplayMode mode)
+void occ_AIS_Text::setDefaultTextDisplayMode(Aspect_TypeOfDisplayText mode)
 {
   d->m_defaultTextDisplayMode = mode;
 }
 
-void occ_AIS_Text::setDefaultTextStyle(TextStyle style)
+void occ_AIS_Text::setDefaultTextStyle(Aspect_TypeOfStyleText style)
 {
   d->m_defaultTextStyle = style;
 }

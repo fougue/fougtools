@@ -80,6 +80,7 @@ public:
 // --
 
 #include <algorithm>
+#include <functional>
 #include <QtCore/QAbstractItemModel>
 
 namespace qttools {

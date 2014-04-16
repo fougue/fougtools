@@ -426,9 +426,13 @@ void ItemViewButtons::copyButtonProperties(int srcBtnId, int dstBtnId)
 
 /*!
  * \brief The role used when matching item data for button detection
+ *
  * \param btnId Index of the button
- * \returns -1 If button does not exist
+ * \returns -1 If button does not exist or if no matching role was set
+ *
  * \sa buttonDetectionMatchData()
+ * \sa QModelIndex::data()
+ * \sa Qt::ItemDataRole
  */
 int ItemViewButtons::buttonDetectionMatchRole(int btnId) const
 {
@@ -438,8 +442,11 @@ int ItemViewButtons::buttonDetectionMatchRole(int btnId) const
 
 /*!
  * \brief The data to be matched for button detection
+ *
  * \param btnId Index of the button
  * \returns QVariant() If button does not exist
+ *
+ * \sa buttonDetectionMatchRole()
  */
 QVariant ItemViewButtons::buttonDetectionMatchData(int btnId) const
 {
@@ -447,6 +454,19 @@ QVariant ItemViewButtons::buttonDetectionMatchData(int btnId) const
   return btnInfo != NULL ? btnInfo->matchData : QVariant();
 }
 
+/*!
+ * \brief ItemViewButtons::setButtonDetection
+ *
+ * \param btnId Index of the button
+ * \param matchRole The role used when matching item data for button detection. In case the button
+ *                  has to be displayed no matter the item, then set \p matchRole to -1
+ * \param matchData The data to be matched for button detection
+ *
+ * \sa buttonDetectionMatchData()
+ * \sa buttonDetectionMatchRole()
+ * \sa QModelIndex::data()
+ * \sa Qt::ItemDataRole
+ */
 void ItemViewButtons::setButtonDetection(int btnId, int matchRole, const QVariant &matchData)
 {
   Private::ButtonInfo* btnInfo = d->mutableButtonInfo(btnId);
@@ -578,6 +598,8 @@ int ItemViewButtons::buttonAtModelIndex(const QModelIndex &index) const
 {
   foreach (int id, d->m_btnInfos.keys()) {
     const Private::ButtonInfo* btnInfo = d->buttonInfo(id);
+    if (btnInfo->matchRole < 0)
+      return id;
     const QVariant modelItemData = index.data(btnInfo->matchRole);
     if ((!btnInfo->matchData.isNull() && btnInfo->matchData.isValid())
         && (!modelItemData.isNull() && modelItemData.isValid())

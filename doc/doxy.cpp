@@ -119,6 +119,9 @@ knowledge of the CeCILL-C license and that you accept its terms.
 /*! \defgroup cpptools CppTools
  */
 
+/*! \defgroup mathtools Math Tools
+ */
+
 /*! \defgroup qttools_core QtTools Core
  */
 

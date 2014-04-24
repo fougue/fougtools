@@ -5,7 +5,6 @@
 #include "../src/cpptools/memory_utils.h"
 #include "../src/cpptools/scoped_value.h"
 #include "../src/cpptools/basic_shared_pointer.h"
-#include "../src/cpptools/functor.h"
 #include "../src/cpptools/quantity.h"
 
 #include <QtCore/QScopedPointer>
@@ -89,63 +88,6 @@ void TestCppTools::BasicSharedPointer_test()
     QCOMPARE(sharedPtr1.data(), delHook);
   }
   QCOMPARE(spyHint, -1);
-}
-
-void TestCppTools::Functor_test()
-{
-  Foo foo;
-  FooHeir fooHeir;
-
-  // Functor0<>
-  cpp::Functor0<int> ftor0 = cpp::Functor0<int>(&foo, &Foo::bar);
-  QCOMPARE(ftor0(), 1);
-
-  ftor0 = cpp::Functor0<int>(&func0);
-  QCOMPARE(ftor0(), 4);
-
-  ftor0 = cpp::Functor0<int>(&foo, &Foo::constBar);
-  QCOMPARE(ftor0(), 2);
-
-  ftor0 = cpp::Functor0<int>(&fooHeir, &Foo::bar);
-  QCOMPARE(ftor0(), 3);
-
-  ftor0 = cpp::Functor0<int>(&func0);
-  QCOMPARE(ftor0(), 4);
-
-  ftor0 = cpp::Functor0<int>(&func1, 5.);
-  QCOMPARE(ftor0(), 5 * 2);
-  ftor0 = cpp::Functor0<int>(&func2, 5.1, 7.2);
-  QCOMPARE(ftor0(), (5 + 7) * 2);
-
-  ftor0 = cpp::Functor0<int>(&foo, &Foo::bar1, 5.2);
-  QCOMPARE(ftor0(), 5);
-  ftor0 = cpp::Functor0<int>(&foo, &Foo::constBar1, 5.3);
-  QCOMPARE(ftor0(), 6);
-
-  ftor0 = cpp::Functor0<int>(&foo, &Foo::bar2, 5.1, 7.2);
-  QCOMPARE(ftor0(), 5 + 7);
-  ftor0 = cpp::Functor0<int>(&foo, &Foo::constBar2, 5.1, 7.2);
-  QCOMPARE(ftor0(), 5 + 7 + 1);
-
-  // Functor1<>
-  cpp::Functor1<int, double> ftor1 = cpp::Functor1<int, double>(&foo, &Foo::bar1);
-  QCOMPARE(ftor1(5.1), 5);
-
-  ftor1 = cpp::Functor1<int, double>(&foo, &Foo::constBar1);
-  QCOMPARE(ftor1(5.1), 5 + 1);
-
-  ftor1 = cpp::Functor1<int, double>(&func1);
-  QCOMPARE(ftor1(7.2), 7 * 2);
-
-  // Functor2<>
-  cpp::Functor2<int, float, double> ftor2 = cpp::Functor2<int, float, double>(&foo, &Foo::bar2);
-  QCOMPARE(ftor2(5.1, 7.2), 5 + 7);
-
-  ftor2 = cpp::Functor2<int, float, double>(&foo, &Foo::constBar2);
-  QCOMPARE(ftor2(5.1, 7.2), 5 + 7 + 1);
-
-  ftor2 = cpp::Functor2<int, float, double>(&func2);
-  QCOMPARE(ftor2(5.1, 7.2), (5 + 7) * 2);
 }
 
 void TestCppTools::cArrayUtils_test()

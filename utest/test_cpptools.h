@@ -9,7 +9,6 @@ class TestCppTools : public QObject
 
 private slots:
   void BasicSharedPointer_test();
-  void Functor_test();
 
   void cArrayUtils_test();
   void ScopedValue_test();

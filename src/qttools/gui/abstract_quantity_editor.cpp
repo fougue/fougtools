@@ -46,7 +46,7 @@ namespace qttools {
  *         with QuantityEditorManager
  *
  *  \headerfile abstract_quantity_editor.h <qttools/gui/abstract_qantity_editor.h>
- *  \ingroup
+ *  \ingroup qttools_gui
  */
 
 /*! Construct and auto-attach this editor with QuantityEditorManager::attach()

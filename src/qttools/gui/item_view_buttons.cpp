@@ -373,7 +373,7 @@ void ItemViewButtons::paint(QPainter *painter,
 /*!
  * \brief Add a button to be furthered configured with setButtonXxx() functions
  * \param btnId Index of the button (used later to reference the button)
- * \param icon Icon of the button (ItemViewButtons supports QIcon:::Active which can be used
+ * \param icon Icon of the button (ItemViewButtons supports QIcon::Active which can be used
  *             to display an highlighted pixmap when the mouse is hovering the button)
  * \param toolTip Tool-tip to be displayed when the mouse stays over the button
  *

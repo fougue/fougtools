@@ -56,6 +56,25 @@ template<typename VEC> struct VecTraitsHelper
  *
  *  \tparam FUNC Class providing the concrete computation functions
  *
+ *  Example:
+ *  \code
+ *  #include <mathtools/manhattan_norm.h>
+ *  #include <mathtools/euclidean_norm.h>
+ *  #include <mathtools/maximum_norm.h>
+ *  #include <mathtools/sqr_euclidean_norm.h>
+ *  #include <iostream>
+ *
+ *  int main()
+ *  {
+ *    const double vec3[] = { 0, 1.5, 15 };
+ *    std::cout << "Euclidean norm: " << math::EuclideanNorm::fromArray(vec3) << std::endl;
+ *    std::cout << "Manhattan norm: " << math::ManhattanNorm::fromArray(vec3) << std::endl;
+ *    std::cout << "Maximum   norm: " << math::MaximumNorm::fromArray(vec3)   << std::endl;
+ *    std::cout << "Squared euclidenan norm: " << math::SqrEuclideanNorm::fromArray(vec3) << std::endl;
+ *    return 0;
+ *  }
+ *  \endcode
+ *
  *  \headerfile norm.h <mathtools/norm.h>
  *  \ingroup mathtools
  */

@@ -89,6 +89,13 @@ template<> struct NormTraits<internal::ManhattanFunc>
 
 } // namespace internal
 
+/*! \brief Provides computation of the
+ *         <a href="http://en.wikipedia.org/wiki/Norm_%28mathematics%29#Taxicab_norm_or_Manhattan_norm">
+ *         manhattan(or taxicab) norm</a>
+ *
+ *  \headerfile manhattan_norm.h <mathtools/manhattan_norm.h>
+ *  \ingroup mathtools
+ */
 typedef Norm<internal::ManhattanFunc> ManhattanNorm;
 
 } // namespace math

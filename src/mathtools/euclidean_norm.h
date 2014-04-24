@@ -62,6 +62,13 @@ template<> struct NormTraits<internal::EuclideanFunc>
 
 } // namespace internal
 
+/*! \brief Provides computation of the
+ *         <a href="http://en.wikipedia.org/wiki/Norm_%28mathematics%29#Euclidean_norm">
+ *         euclidean norm</a>
+ *
+ *  \headerfile euclidean_norm.h <mathtools/euclidean_norm.h>
+ *  \ingroup mathtools
+ */
 typedef Norm<math::internal::EuclideanFunc> EuclideanNorm;
 
 } // namespace math

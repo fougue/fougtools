@@ -89,6 +89,11 @@ template<> struct NormTraits<internal::SqrEuclideanFunc>
 
 } // namespace internal
 
+/*! \brief Provides computation of the squared euclidean norm
+ *
+ *  \headerfile sqr_euclidean_norm.h <mathtools/sqr_euclidean_norm.h>
+ *  \ingroup mathtools
+ */
 typedef Norm<internal::SqrEuclideanFunc> SqrEuclideanNorm;
 
 } // namespace math

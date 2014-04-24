@@ -84,6 +84,13 @@ template<> struct NormTraits<internal::MaximumFunc>
 
 } // namespace internal
 
+/*! \brief Provides computation of the
+ *         <a href="http://en.wikipedia.org/wiki/Norm_%28mathematics%29#Maximum_norm_.28special_case_of:_infinity_norm.2C_uniform_norm.2C_or_supremum_norm.29">
+ *         maximum norm</a>
+ *
+ *  \headerfile euclidean_norm.h <mathtools/euclidean_norm.h>
+ *  \ingroup mathtools
+ */
 typedef Norm<internal::MaximumFunc> MaximumNorm;
 
 } // namespace math

@@ -40,6 +40,7 @@
 
 #include "occtools.h"
 
+#include <utility>
 #include <gp_Vec.hxx>
 #include <TopAbs_Orientation.hxx>
 class Poly_Triangle;
@@ -50,6 +51,12 @@ namespace occ {
 class OCCTOOLS_EXPORT MathTools
 {
 public:
+  static gp_Pnt projectPointOnPlane(const gp_Pnt& p, const gp_Vec& n);
+  static std::pair<gp_Pnt, bool> projectPointOnTriangle(const gp_Pnt& p,
+                                                        const gp_Pnt& v0,
+                                                        const gp_Pnt& v1,
+                                                        const gp_Pnt& v2);
+
   static Standard_Real euclideanNorm(const gp_Vec& vec);
   static Standard_Real squaredEuclideanNorm(const gp_Vec& vec);
   static Standard_Real manhattanNorm(const gp_Vec& vec);

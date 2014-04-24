@@ -53,6 +53,102 @@ namespace occ {
  *  \ingroup occtools
  */
 
+gp_Pnt MathTools::projectPointOnPlane(const gp_Pnt &p, const gp_Vec &n)
+{
+  const gp_Vec pVec(p.X(), p.Y(), p.Z());
+  const Standard_Real dotVN = pVec.Dot(n);
+  return p.Translated(-dotVN * n);
+}
+
+std::pair<gp_Pnt, bool> MathTools::projectPointOnTriangle(const gp_Pnt &p,
+                                                          const gp_Pnt &v0,
+                                                          const gp_Pnt &v1,
+                                                          const gp_Pnt &v2)
+{
+  const gp_Vec e0(v0, v1);
+  const gp_Vec e1(v0, v2);
+  const gp_Vec D(p, v0);
+
+  const Standard_Real a = e0.Dot(e0);
+  const Standard_Real b = e0.Dot(e1);
+  const Standard_Real c = e1.Dot(e1);
+  const Standard_Real d = e0.Dot(D);
+  const Standard_Real e = e1.Dot(D);
+
+  const Standard_Real det = a * c - b * b;
+  Standard_Real s = b * e - c * d;
+  Standard_Real t = b * d - a * e;
+
+  int region = 0;
+  if (s + t <= det) {
+    if (s < 0.) {
+      if (t < 0.)
+        region = 4;
+      else
+        region = 3;
+    }
+    else if (t < 0.)
+      region = 5;
+  }
+  else {
+    if (s < 0.)
+      region = 2;
+    else if (t < 0.)
+      region = 6;
+    else
+      region = 1;
+  }
+
+  switch (region) {
+  case 0: {
+    const Standard_Real invDet = 1. / det;
+    s *= invDet;
+    t *= invDet;
+    break;
+  }
+  case 1: {
+    const Standard_Real numer = c + e - b - d;
+    if (numer <= 0.) {
+      s = 0.;
+    }
+    else {
+      const Standard_Real denom = a - 2. * b + c;
+      s = (numer >= denom ? 1. : numer / denom);
+    }
+    t = 1. - s;
+    break;
+  }
+  case 2: {
+    s = 0.;
+    t = 1.;
+    break;
+  }
+  case 3: {
+    s = 0.;
+    t = (e >= 0. ? 0. : (-e >= c ? 1. : -e / c));
+    break;
+  }
+  case 4: {
+    s = 0.;
+    t = 0.;
+    break;
+  }
+  case 5: {
+    t = 0.;
+    s = (d >= 0. ? 0. : (-d >= a ? 1. : -d / a));
+    break;
+  }
+  case 6: {
+    s = 1.;
+    t = 0.;
+    break;
+  }
+  } // end switch
+
+  return std::make_pair(v0.Translated(e0 * s).Translated(e1 * t),
+                        region == 0);
+}
+
 Standard_Real MathTools::euclideanNorm(const gp_Vec &vec)
 {
   return std::sqrt(MathTools::squaredEuclideanNorm(vec));

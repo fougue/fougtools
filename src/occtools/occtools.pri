@@ -44,7 +44,6 @@ HEADERS += $$PWD/io.h \
            $$PWD/brep_point_on_faces_projection.h \
            $$PWD/gcpnts_uniform_abscissa_const_iterator.h \
            $$PWD/point_on_faces_projector.h \
-           $$PWD/pnt_vec_traits.h \
            $$PWD/qt_view.h \
            $$PWD/qt_view_controller.h \
            $$PWD/qt_occ.h \

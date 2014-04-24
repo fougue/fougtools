@@ -37,9 +37,7 @@
 
 #include "point_on_faces_projector.h"
 
-#include "pnt_vec_traits.h"
 #include "math_tools.h"
-#include "../mathtools/project_point_on_triangle.h"
 
 #include <BRep_Tool.hxx>
 #include <Bnd_Box.hxx>
@@ -287,10 +285,10 @@ PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& poi
     int n1, n2, n3;
     t.Get(n1, n2, n3);
     if (minNodeId == n1 || minNodeId == n2 || minNodeId == n3) {
-      const std::pair<gp_Pnt, bool> projPntInfo = math::projectPointOnTriangle(point,
-                                                                               nodes(t(1)),
-                                                                               nodes(t(2)),
-                                                                               nodes(t(3)));
+      const std::pair<gp_Pnt, bool> projPntInfo = MathTools::projectPointOnTriangle(point,
+                                                                                    nodes(t(1)),
+                                                                                    nodes(t(2)),
+                                                                                    nodes(t(3)));
       const double dist = point.SquareDistance(projPntInfo.first);
       if (dist < minDist) {
         minTriangle = &t;

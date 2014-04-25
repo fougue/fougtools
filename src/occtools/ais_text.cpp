@@ -89,9 +89,9 @@ namespace internal {
   {
   public:
     TextProperties()
-    {
-      m_aspect = new Prs3d_TextAspect;
-    }
+      : m_font(nullptr),
+        m_aspect(new Prs3d_TextAspect)
+    { }
 
     bool operator==(const TextProperties& other) const
     {

@@ -106,9 +106,10 @@ void QComboBoxCurrentItemKeeper::onModelReset()
   else  {
     // Case when the old index does not match the (new) current index
     const QAbstractItemModel* model = this->comboBox()->model();
-    for (int iRow = 0; iRow < model->rowCount() && newCurrIndex != -1; ++iRow)
+    for (int iRow = 0; iRow < model->rowCount() && newCurrIndex == -1; ++iRow) {
       if (m_oldIdentifierValue == this->identifierValue(iRow))
         newCurrIndex = iRow;
+    }
 #ifdef _TRACE_QComboBoxCurrentItemKeeper_
     qDebug() << "   else() newCurrIndex :" << newCurrIndex;
 #endif // _TRACE_QComboBoxCurrentItemKeeper_

@@ -295,7 +295,10 @@ bool ItemViewButtons::eventFilter(QObject *object, QEvent *event)
       return true;
     }
     case QEvent::MouseButtonRelease: {
-      if (mouseEvent->button() == Qt::LeftButton && d->m_buttonUnderMouse != NULL) {
+      if (mouseEvent != NULL
+          && mouseEvent->button() == Qt::LeftButton
+          && d->m_buttonUnderMouse != NULL)
+      {
         emit buttonClicked(d->m_buttonUnderMouse->index, modelIndexUnderMouse);
         return true;
       }

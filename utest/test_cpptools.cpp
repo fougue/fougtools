@@ -167,19 +167,21 @@ struct DummyObserver
 struct Dummy
 {
   Dummy(DummyObserver* obs) :
-    observer(obs)
+    m_a(0),
+    m_b(0),
+    m_observer(obs)
   {
     obs->isDummyDeleted = false;
   }
 
   ~Dummy()
   {
-    this->observer->isDummyDeleted = true;
+    m_observer->isDummyDeleted = true;
   }
 
-  int a;
-  double b;
-  DummyObserver* observer;
+  int m_a;
+  double m_b;
+  DummyObserver* m_observer;
 };
 
 } // namespace memoryUtils_test
@@ -188,8 +190,9 @@ void TestCppTools::memoryUtils_test()
 {
   memoryUtils_test::DummyObserver observer;
   memoryUtils_test::Dummy* dummy = new memoryUtils_test::Dummy(&observer);
-  QVERIFY(!observer.isDummyDeleted);
+  const bool oldIsDeletedTag = observer.isDummyDeleted;
   cpp::checkedReset(dummy);
+  QVERIFY(!oldIsDeletedTag);
   QVERIFY(dummy == NULL);
   QVERIFY(observer.isDummyDeleted);
 }

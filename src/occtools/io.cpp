@@ -171,7 +171,6 @@ TopoDS_Shape IO::loadPartFile(const QString& filename, Handle_Message_ProgressIn
   default:
     return TopoDS_Shape();
   }
-  return TopoDS_Shape();
 }
 
 Handle_StlMesh_Mesh IO::loadStlFile(const QString& filename, Handle_Message_ProgressIndicator indicator)

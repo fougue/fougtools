@@ -41,7 +41,18 @@
 #include "smtp_account.h"
 #include <QtCore/QRegExp>
 #include <QtNetwork/QNetworkProxy>
-#include <QtNetwork/QSslSocket>
+#ifndef QT_NO_SSL
+# include <QtNetwork/QSslSocket>
+#else
+# define QTTOOLS_MAILSEND_SSL_WARNING \
+         __FILE__": SSL is disabled in Qt, qttools::MailSend will use regular QTcpSocket"
+# if defined(Q_CC_GNU)
+#  warning QTTOOLS_MAILSEND_SSL_WARNING
+# elif defined(Q_CC_MSVC)
+#  pragma message(QTTOOLS_MAILSEND_SSL_WARNING)
+# endif
+# include <QtNetwork/QTcpSocket>
+#endif // !QT_NO_SSL
 
 #ifdef QTTOOLS_MAILSEND_TRACE
 # include <QtCore/QtDebug>
@@ -59,7 +70,11 @@ class MailSend::Private : public QObject
 
 public:
   Private()
+#ifndef QT_NO_SSL
     : m_socket(new QSslSocket(this)),
+#else
+    : m_socket(new QTcpSocket(this)),
+#endif // !QT_NO_SSL
       m_timeout(30000)
   {
   }
@@ -108,7 +123,12 @@ public:
     return this->sendSmtpCommand(QByteArray(cmd), expectedCode);
   }
 
+#ifndef QT_NO_SSL
   QSslSocket* m_socket;
+#else
+  QTcpSocket* m_socket;
+#endif // !QT_NO_SSL
+
   SmtpAccount m_smtpAccount;
   int m_timeout;
   QString m_error;
@@ -177,8 +197,13 @@ bool MailSend::connectToSmtpServer(const SmtpAccount& account)
 
   // Start client-side encryption if SSL required
   if (account.connectionSecurity() == SmtpAccount::SslTlsSecurity) {
+#ifndef QT_NO_SSL
     d->m_socket->setProtocol(QSsl::AnyProtocol);
     d->m_socket->startClientEncryption();
+#else
+    d->m_error = Private::tr("SSL support is disabled in Qt");
+    return false;
+#endif // !QT_NO_SSL
   }
 
   // Read initial server response
@@ -200,14 +225,19 @@ bool MailSend::connectToSmtpServer(const SmtpAccount& account)
 
   // Initiate TLS if required
   if (account.connectionSecurity() == SmtpAccount::StartTlsSecurity) {
-#if QT_VERSION > 0x050000
+#ifndef QT_NO_SSL
+# if QT_VERSION > 0x050000
     d->m_socket->setProtocol(QSsl::TlsV1_0);
-#else
+# else
     d->m_socket->setProtocol(QSsl::TlsV1);
-#endif // QT_VERSION
+# endif // QT_VERSION
     if (!d->sendSmtpCommand("STARTTLS", 220))
       return false;
     d->m_socket->startClientEncryption();
+#else
+    d->m_error = Private::tr("SSL support is disabled in Qt");
+    return false;
+#endif // !QT_NO_SSL
   }
 
   // User authentication

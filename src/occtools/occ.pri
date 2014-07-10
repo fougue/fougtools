@@ -15,19 +15,24 @@ linux-*:DEFINES *= HAVE_CONFIG_H \
 
 win32-*:DEFINES *= WNT
 linux-*:DEFINES *= LIN LININTEL OCC_CONVERT_SIGNALS
-*-64:DEFINES *= _OCC64
 
-CASCADE_LIB_PATH += $$CASCADE_ROOT/lib
-LIBS += $$sysPath($$join(CASCADE_LIB_PATH, " -L", -L))
-QMAKE_RPATHDIR += $$CASCADE_LIB_PATH
+MSVC_VERSION = xx
+win32-msvc2005:MSVC_VERSION = 8
+win32-msvc2008:MSVC_VERSION = 9
+win32-msvc2010:MSVC_VERSION = 10
+win32-msvc2012:MSVC_VERSION = 11
+win32-msvc2013:MSVC_VERSION = 12
 
-# There is a weird bug with qmake on windows : it fails to correctly link with TKSTEP209 due to the
-# name of library mixing characters and digits.
-#   Or maybe nmake is the problem ?
-#   Note : you have to rename TKSTEP209 to TKSTEP_tzn in $$CASCADE_ROOT/win32/lib
-win32-msvc* {
-  OCC_TKSTEP = TKSTEP_tzn
+equals(QT_ARCH, i386) {
+  CASCADE_SUB_LIB_PATH = win32/vc$$MSVC_VERSION/lib
+} else:equals(QT_ARCH, x86_64) {
+  CASCADE_SUB_LIB_PATH = win64/vc$$MSVC_VERSION/lib
+  DEFINES += _OCC64
 }
 else {
-  OCC_TKSTEP = TKSTEP209
+  error(Platform architecture not supported (QT_ARCH = $$QT_ARCH))
 }
+
+CASCADE_LIB_PATH += $$CASCADE_ROOT/$$CASCADE_SUB_LIB_PATH
+LIBS += $$sysPath($$join(CASCADE_LIB_PATH, " -L", -L))
+QMAKE_RPATHDIR += $$CASCADE_LIB_PATH

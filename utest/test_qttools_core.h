@@ -9,6 +9,7 @@ class TestQtToolsCore : public QObject
 
 private slots:
   void WaitLoop_test();
+  void QLocaleTools_test();
 };
 
 #endif // TEST_QTTOOLS_CORE_H

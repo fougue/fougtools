@@ -1,7 +1,9 @@
 #include "test_qttools_core.h"
 
+#include "../src/qttools/core/qlocale_tools.h"
 #include "../src/qttools/core/wait_loop.h"
 
+#include <QtCore/QtDebug>
 #include <QtCore/QTime>
 
 namespace {
@@ -76,4 +78,13 @@ void TestQtToolsCore::WaitLoop_test()
 
   waitLoop.removeStopCondition(&timeStopCond1);
   waitLoop.removeStopCondition(&timeStopCond2);
+}
+
+void TestQtToolsCore::QLocaleTools_test()
+{
+  QCOMPARE(static_cast<int>(QLocale::France), 74);
+  QCOMPARE(qttools::QLocaleTools::toCountry(74), QLocale::France);
+//  foreach (auto country, qttools::QLocaleTools::allCountries()) {
+//    qDebug() << QLocale::countryToString(country);
+//  }
 }

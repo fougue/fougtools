@@ -200,6 +200,16 @@ Log& Log::operator<<(unsigned long t)
   return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
+Log& Log::operator<<(qlonglong t)
+{
+  return Log::Stream::defaultQTextStreamOutput(*this, t);
+}
+
+Log& Log::operator<<(qulonglong t)
+{
+  return Log::Stream::defaultQTextStreamOutput(*this, t);
+}
+
 Log& Log::operator<<(float t)
 {
   return Log::Stream::defaultQTextStreamOutput(*this, t);

@@ -74,6 +74,8 @@ public:
   Log& operator<<(unsigned int);
   Log& operator<<(long);
   Log& operator<<(unsigned long);
+  Log& operator<<(qlonglong);
+  Log& operator<<(qulonglong);
   Log& operator<<(float);
   Log& operator<<(double);
   Log& operator<<(const char*);

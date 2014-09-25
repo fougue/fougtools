@@ -80,6 +80,14 @@ struct Log::Stream
   QString buffer;
   QTextStream ts;
   int refCount;
+
+  template<typename T>
+  static Log& defaultQTextStreamOutput(Log& log, T value)
+  {
+      if (log.m_stream != NULL)
+        log.m_stream->ts << value;
+      return log.space();
+  }
 };
 
 
@@ -154,86 +162,62 @@ Log& Log::space()
  */
 Log& Log::operator<<(bool t)
 {
-  if (m_stream != NULL)
-    m_stream->ts << (t ? "true" : "false");
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, t ? "true" : "false");
 }
 
 Log& Log::operator<<(char t)
 {
-  if (m_stream != NULL)
-    m_stream->ts << t;
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(short t)
 {
-  if (m_stream != NULL)
-    m_stream->ts << t;
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(unsigned short t)
 {
-  if (m_stream != NULL)
-    m_stream->ts << t;
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(int t)
 {
-  if (m_stream != NULL)
-    m_stream->ts << t;
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(unsigned int t)
 {
-  if (m_stream != NULL)
-    m_stream->ts << t;
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(long t)
 {
-  if (m_stream != NULL)
-    m_stream->ts << t;
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(unsigned long t)
 {
-  if (m_stream != NULL)
-    m_stream->ts << t;
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(float t)
 {
-  if (m_stream != NULL)
-    m_stream->ts << t;
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(double t)
 {
-  if (m_stream != NULL)
-    m_stream->ts << t;
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(const char* str)
 {
-  if (m_stream != NULL)
-    m_stream->ts << str;
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, str);
 }
 
 Log& Log::operator<<(const QString& str)
 {
-  if (m_stream != NULL)
-    m_stream->ts << str;
-  return this->space();
+  return Log::Stream::defaultQTextStreamOutput(*this, str);
 }
 
 void Log::registerMetaTypes()

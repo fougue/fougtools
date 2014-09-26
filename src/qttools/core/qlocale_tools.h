@@ -39,7 +39,7 @@
 #define QTTOOLS_QLOCALE_TOOLS_H
 
 #include "core.h"
-#include <QtCore/QList>
+#include <QtCore/QVector>
 #include <QtCore/QLocale>
 
 namespace qttools {
@@ -50,7 +50,7 @@ public:
   static QLocale::MeasurementSystem toMeasurementSystem(int measSys);
 
   static QLocale::Country toCountry(int code);
-  static QList<QLocale::Country> allCountries();
+  static QVector<QLocale::Country> allCountries();
 };
 
 } // namespace qttools

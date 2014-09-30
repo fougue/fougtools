@@ -2,7 +2,14 @@ INCLUDEPATH += $$PWD/../include
 LIBS += -L$$PWD/../lib
 QMAKE_RPATHDIR += $$PWD/../lib
 
-FOUGTOOLS_LIBLIST = qttools_core qttools_gui qttools_qml qttools_network qttools_script qttools_sql occtools
+FOUGTOOLS_LIBLIST = qttools_core \
+                    qttools_gui \
+                    qttools_qml \
+                    qttools_network \
+                    qttools_script \
+                    qttools_sql \
+                    occtools
+
 for(fouglib, FOUGTOOLS) {
   !contains(FOUGTOOLS_LIBLIST, $${fouglib}): error(Invalid FougTools module name : $${fouglib})
   DEFINES += $$upper($${fouglib})_DLL

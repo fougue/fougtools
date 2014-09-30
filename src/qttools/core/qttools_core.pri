@@ -49,6 +49,7 @@ HEADERS += \
     $$PWD/qlocale_tools.h \
     $$PWD/qobject_tools.h \
     $$PWD/qobject_wrap.h \
+    $$PWD/qsignal_mapper_tools.h \
     $$PWD/qstring_tools.h \
     $$PWD/qvariant_tools.h \
     $$PWD/qt_plugin_def.h \
@@ -73,6 +74,7 @@ SOURCES += \
     $$PWD/qatomic_tools.cpp \
     $$PWD/qlocale_tools.cpp \
     $$PWD/qobject_tools.cpp \
+    $$PWD/qsignal_mapper_tools.cpp \
     $$PWD/qstring_tools.cpp \
     $$PWD/runtime_error.cpp \
     $$PWD/scoped_connection.cpp \

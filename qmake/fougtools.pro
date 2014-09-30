@@ -50,7 +50,11 @@ INSTALLS += scripts
 VER_MAJ = 0
 VER_MIN = 6
 VER_PAT = 0
-_REV_NUM = $$system(ruby ../scripts/rev_num.rb  --rcs git  --workdir $$PWD)
+!isActiveConfig(no_ruby) {
+    _REV_NUM = $$system(ruby ../scripts/rev_num.rb  --rcs git  --workdir $$PWD)
+} else {
+    _REV_NUM = norev
+}
 _FOUGTOOLS_VERSION = "$$VER_MAJ"."$$VER_MIN"."$$VER_PAT"dev-$$_REV_NUM
 
 # Add custom "doc" target

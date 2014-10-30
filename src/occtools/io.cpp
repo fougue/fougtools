@@ -59,6 +59,7 @@
 #include <Message_ProgressIndicator.hxx>
 #include <Transfer_FinderProcess.hxx>
 #include <Transfer_TransientProcess.hxx>
+#include <XSControl_TransferWriter.hxx>
 #include <XSControl_WorkSession.hxx>
 
 #include "../cpptools/memory_utils.h"
@@ -256,10 +257,10 @@ void IO::writeStepFile(const TopoDS_Shape& shape,
   IFSelect_ReturnStatus status;
   STEPControl_Writer writer;
   if (!indicator.IsNull())
-    writer.WS()->MapReader()->SetProgress(indicator);
+    writer.WS()->TransferWriter()->FinderProcess()->SetProgress(indicator);
   status = writer.Transfer(shape, STEPControl_AsIs);
   status = writer.Write(fileName.toLatin1().data());
-  writer.WS()->MapReader()->SetProgress(NULL);
+  writer.WS()->TransferWriter()->FinderProcess()->SetProgress(NULL);
 }
 
 /*! \brief Write a topologic shape to a file (ASCII STL format)

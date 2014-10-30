@@ -176,7 +176,7 @@ TopoDS_Shape IO::loadPartFile(const QString& filename, Handle_Message_ProgressIn
 
 Handle_StlMesh_Mesh IO::loadStlFile(const QString& filename, Handle_Message_ProgressIndicator indicator)
 {
-  return RWStl::ReadFile(OSD_Path(filename.toLatin1().constData()), indicator);
+  return RWStl::ReadFile(OSD_Path(filename.toLocal8Bit().constData()), indicator);
 }
 
 /*! \brief Topologic shape read from a file (OCC's internal BREP format)
@@ -189,7 +189,7 @@ TopoDS_Shape IO::loadBrepFile(const QString& fileName,
 {
   TopoDS_Shape result;
   BRep_Builder brepBuilder;
-  BRepTools::Read(result, fileName.toLatin1().constData(), brepBuilder, indicator);
+  BRepTools::Read(result, fileName.toLocal8Bit().constData(), brepBuilder, indicator);
   return result;
 }
 
@@ -222,7 +222,7 @@ void IO::writeBrepFile(const TopoDS_Shape& shape,
                        const QString& fileName,
                        Handle_Message_ProgressIndicator indicator)
 {
-  BRepTools::Write(shape, fileName.toLatin1().data(), indicator);
+  BRepTools::Write(shape, fileName.toLocal8Bit().constData(), indicator);
 }
 
 /*! \brief Write a topologic shape to a file (IGES format)
@@ -241,7 +241,7 @@ void IO::writeIgesFile(const TopoDS_Shape& shape,
     writer.TransferProcess()->SetProgress(indicator);
   writer.AddShape(shape);
   writer.ComputeModel();
-  writer.Write(fileName.toLatin1().data());
+  writer.Write(fileName.toLocal8Bit().constData());
   writer.TransferProcess()->SetProgress(NULL);
 }
 
@@ -259,7 +259,7 @@ void IO::writeStepFile(const TopoDS_Shape& shape,
   if (!indicator.IsNull())
     writer.WS()->TransferWriter()->FinderProcess()->SetProgress(indicator);
   status = writer.Transfer(shape, STEPControl_AsIs);
-  status = writer.Write(fileName.toLatin1().data());
+  status = writer.Write(fileName.toLocal8Bit().constData());
   writer.WS()->TransferWriter()->FinderProcess()->SetProgress(NULL);
 }
 
@@ -271,7 +271,7 @@ void IO::writeAsciiStlFile(const TopoDS_Shape& shape, const QString& fileName)
 {
   StlAPI_Writer writer;
   writer.ASCIIMode() = Standard_True;
-  writer.Write(shape, fileName.toLatin1().data());
+  writer.Write(shape, fileName.toLocal8Bit().constData());
 }
 
 /*! \brief Write a topologic shape to a file (binary STL format)
@@ -282,7 +282,7 @@ void IO::writeBinaryStlFile(const TopoDS_Shape& shape, const QString& fileName)
 {
   StlAPI_Writer writer;
   writer.ASCIIMode() = Standard_False;
-  writer.Write(shape, fileName.toLatin1().data());
+  writer.Write(shape, fileName.toLocal8Bit().constData());
 }
 
 } // namespace occ

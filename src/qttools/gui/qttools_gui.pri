@@ -53,6 +53,7 @@ HEADERS += \
     $$PWD/message_dialog.h \
     $$PWD/proxy_styled_item_delegate.h \
     $$PWD/qcombo_box_current_item_keeper.h \
+    $$PWD/qcombo_box_tools.h \
     $$PWD/qstandard_item_explorer.h \
     $$PWD/tree_combo_box.h \
     $$PWD/item_view_buttons.h \
@@ -73,6 +74,7 @@ SOURCES += \
     $$PWD/message_dialog.cpp \
     $$PWD/proxy_styled_item_delegate.cpp \
     $$PWD/qcombo_box_current_item_keeper.cpp \
+    $$PWD/qcombo_box_tools.cpp \
     $$PWD/qstandard_item_explorer.cpp \
     $$PWD/tree_combo_box.cpp \
     $$PWD/item_view_buttons.cpp \

@@ -41,11 +41,11 @@
 /*! Expands to a numeric value of the form 0xMMNNPP (MM = major, NN = minor, PP = patch) that
  *  specifies FougTools's version number.
  */
-#define FOUGTOOLS_VERSION      0x040000
+#define FOUGTOOLS_VERSION      0x040001
 
 /*! Expands to a string that specifies FougTools's version number (for example, "0.4.0"). This is
  *  the version against which the application is compiled.
  */
-#define FOUGTOOLS_VERSION_STR  "0.4.0"
+#define FOUGTOOLS_VERSION_STR  "0.4.1"
 
 #endif // FOUGTOOLS_GLOBAL_H

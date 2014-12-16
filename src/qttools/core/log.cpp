@@ -135,7 +135,7 @@ Log::~Log()
   if (m_stream != NULL) {
     --(m_stream->refCount);
     if (m_stream->refCount == 0) {
-      internal::handleLogMessage(m_stream->msgType, m_stream->buffer.toLocal8Bit().data());
+      internal::handleLogMessage(m_stream->msgType, m_stream->buffer);
       delete m_stream;
     }
   }

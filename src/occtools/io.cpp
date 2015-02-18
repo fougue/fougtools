@@ -37,12 +37,6 @@
 
 #include "io.h"
 
-#include <QtCore/QBuffer>
-#include <QtCore/QFile>
-#include <QtCore/QFileInfo>
-#include <QtCore/QObject>
-#include <QtCore/QRegExp>
-
 #include <BRep_Builder.hxx>
 #include <BRepTools.hxx>
 #include <OSD_Path.hxx>
@@ -62,39 +56,28 @@
 #include <XSControl_TransferWriter.hxx>
 #include <XSControl_WorkSession.hxx>
 
+#include <algorithm>
+#include <array>
+#include <cctype>
+#include <cstdint>
+#include <cstdlib>
+#include <fstream>
+
+#include "../cpptools/c_array_utils.h"
 #include "../cpptools/memory_utils.h"
 
 namespace {
 
-float readLittleEndianReal32b(QFile* file)
-{
-  union Real32
-  {
-    qint32 asInteger;
-    float asFloat;
-  };
-
-  char floatBytes[4];
-  file->read(&floatBytes[0], 4);
-
-  Real32 result;
-  result.asInteger = floatBytes[0] & 0xff;
-  result.asInteger |= (floatBytes[1] & 0xff) << 0x08;
-  result.asInteger |= (floatBytes[2] & 0xff) << 0x10;
-  result.asInteger |= (floatBytes[3] & 0xff) << 0x18;
-
-  return result.asFloat;
-}
-
 template<typename _READER_>
-TopoDS_Shape loadFile(const QString& fileName, Handle_Message_ProgressIndicator indicator)
+TopoDS_Shape loadFile(occ::IO::FileNameLocal8Bit fileName,
+                      Handle_Message_ProgressIndicator indicator)
 {
   TopoDS_Shape result;
 
   if (!indicator.IsNull())
     indicator->NewScope(30, "Loading file");
   _READER_ reader;
-  const int status = reader.ReadFile(const_cast<Standard_CString>(qPrintable(fileName)));
+  const int status = reader.ReadFile(const_cast<Standard_CString>(fileName));
   if (!indicator.IsNull())
     indicator->EndScope();
   if (status == IFSelect_RetDone) {
@@ -113,6 +96,26 @@ TopoDS_Shape loadFile(const QString& fileName, Handle_Message_ProgressIndicator 
   return result;
 }
 
+const char* skipWhiteSpaces(const char* str, std::size_t len)
+{
+    std::size_t pos = 0;
+    while (std::isspace(str[pos]) && pos < len)
+        ++pos;
+    return str + pos;
+}
+
+//bool matchToken(const char* buffer, const char* token)
+//{
+//    const auto tokenLen = std::strlen(token);
+//    return std::strncmp(buffer, token, tokenLen) == 0;
+//}
+
+template <std::size_t N>
+bool matchToken(const char* buffer, const char (&token)[N])
+{
+    return std::strncmp(buffer, token, N - 1) == 0;
+}
+
 } // Anonymous namespace
 
 namespace occ {
@@ -123,60 +126,127 @@ namespace occ {
  *  \ingroup occtools
  */
 
-IO::Format IO::partFormat(const QString& filename)
+IO::Format IO::partFormat(FileNameLocal8Bit fileName)
 {
-  QFile file(filename);
-  if (!file.open(QIODevice::ReadOnly))
+    std::ifstream ifs(fileName, std::ios_base::in);
+    if (ifs) {
+        std::array<char, 2048> contentsBegin;
+        contentsBegin.fill(0);
+        ifs.read(contentsBegin.data(), contentsBegin.size());
+
+        // Compute input file size
+        ifs.seekg(0);
+        const auto pos = ifs.tellg();
+        ifs.seekg(0, std::ios::end);
+        const auto fileSize = ifs.tellg() - pos;
+
+        return IO::partFormatFromContents(contentsBegin.data(), contentsBegin.size(), fileSize);
+    }
     return UnknownFormat;
-  const QByteArray contentsBegin = file.read(2048);
-
-  // Assume a binary-based format
-  // -- Binary STL ?
-  const int binaryStlHeaderSize = 80 + sizeof(quint32);
-  if (contentsBegin.size() >= binaryStlHeaderSize) {
-    QBuffer buffer;
-    buffer.setData(contentsBegin);
-    buffer.open(QIODevice::ReadOnly);
-    buffer.seek(80); // Skip header
-    quint32 facetsCount = 0;
-    buffer.read(reinterpret_cast<char*>(&facetsCount), sizeof(quint32));
-    const unsigned facetSize = (sizeof(float) * 12) + sizeof(quint16);
-    if ((facetSize * facetsCount + binaryStlHeaderSize) == file.size())
-      return BinaryStlFormat;
-  }
-
-  // Assume a text-based format
-  const QString contentsBeginText(contentsBegin);
-  if (contentsBeginText.contains(QRegExp("^.{72}S\\s*[0-9]+\\s*[\\n\\r\\f]")))
-    return IgesFormat;
-  if (contentsBeginText.contains(QRegExp("^\\s*ISO-10303-21\\s*;\\s*HEADER")))
-    return StepFormat;
-  if (contentsBeginText.contains(QRegExp("^\\s*DBRep_DrawableShape")))
-    return OccBrepFormat;
-  if (contentsBeginText.contains(QRegExp("^\\s*solid")))
-    return AsciiStlFormat;
-
-  // Fallback case
-  return UnknownFormat;
 }
 
-TopoDS_Shape IO::loadPartFile(const QString& filename, Handle_Message_ProgressIndicator indicator)
+IO::Format IO::partFormatFromContents(const char* contentsBegin,
+                                      std::size_t contentsBeginSize,
+                                      std::size_t fullContentsSizeHint)
 {
-  switch (partFormat(filename)) {
+    // Assume a binary-based format (little-endian format)
+    // -- Binary STL ?
+    const std::size_t binaryStlHeaderSize = 80 + sizeof(std::uint32_t);
+    if (contentsBeginSize >= binaryStlHeaderSize) {
+      const std::uint32_t offset = 80; // Skip header
+      const std::uint32_t facetsCount =
+              (static_cast<std::uint32_t>(contentsBegin[offset + 0]) << 24)
+              | (static_cast<std::uint32_t>(contentsBegin[offset + 1]) << 16)
+              | (static_cast<std::uint32_t>(contentsBegin[offset + 2]) << 8)
+              | (static_cast<std::uint32_t>(contentsBegin[offset + 3]));
+      const unsigned facetSize = (sizeof(float) * 12) + sizeof(std::uint16_t);
+
+      if ((facetSize * facetsCount + binaryStlHeaderSize) == fullContentsSizeHint)
+        return BinaryStlFormat;
+    }
+
+    // Assume a text-based format
+
+    // -- IGES ?
+    {
+        // regex : ^.{72}S\s*[0-9]+\s*[\n\r\f]
+        bool isIges = true;
+        if (contentsBeginSize >= 80 && contentsBegin[72] == 'S') {
+            for (int i = 73; i < 80 && isIges; ++i) {
+                if (contentsBegin[i] != ' ' && !std::isdigit(contentsBegin[i]))
+                    isIges = false;
+            }
+            if (isIges && (contentsBegin[80] == '\n'
+                           || contentsBegin[80] == '\r'
+                           || contentsBegin[80] == '\f'))
+            {
+                const int sVal = std::atoi(contentsBegin + 73);
+                if (sVal == 1)
+                    return IO::IgesFormat;
+            }
+        }
+    } // IGES
+
+    contentsBegin = skipWhiteSpaces(contentsBegin, contentsBeginSize);
+
+    // -- STEP ?
+    {
+        // regex : ^\s*ISO-10303-21\s*;\s*HEADER
+        const char stepIsoId[] = "ISO-10303-21";
+        const auto stepIsoIdLen = cpp::cArraySize(stepIsoId) - 1;
+        const char stepHeaderToken[] = "HEADER";
+        const auto stepHeaderTokenLen = cpp::cArraySize(stepHeaderToken) - 1;
+        if (std::strncmp(contentsBegin, stepIsoId, stepIsoIdLen) == 0) {
+            auto charIt = skipWhiteSpaces(contentsBegin + stepIsoIdLen,
+                                          contentsBeginSize - stepIsoIdLen);
+            if (*charIt == ';' && (charIt - contentsBegin) < contentsBeginSize) {
+                charIt = skipWhiteSpaces(charIt + 1,
+                                         contentsBeginSize - (charIt - contentsBegin));
+                if (std::strncmp(charIt, stepHeaderToken, stepHeaderTokenLen) == 0)
+                    return IO::StepFormat;
+            }
+        }
+    } // STEP
+
+    // -- OpenCascade BREP ?
+    {
+        // regex : ^\s*DBRep_DrawableShape
+        const char occBRepToken[] = "DBRep_DrawableShape";
+        if (matchToken(contentsBegin, occBRepToken))
+            return IO::OccBrepFormat;
+    }
+
+    // -- ASCII STL ?
+    {
+        // regex : ^\s*solid
+        const char asciiStlToken[] = "solid";
+        if (matchToken(contentsBegin, asciiStlToken))
+            return IO::AsciiStlFormat;
+    }
+
+    // Fallback case
+    return UnknownFormat;
+}
+
+TopoDS_Shape IO::loadPartFile(
+        FileNameLocal8Bit fileName, Handle_Message_ProgressIndicator indicator)
+{
+  switch (partFormat(fileName)) {
   case StepFormat:
-    return IO::loadStepFile(filename, indicator);
+    return IO::loadStepFile(fileName, indicator);
   case IgesFormat:
-    return IO::loadIgesFile(filename, indicator);
+    return IO::loadIgesFile(fileName, indicator);
   case OccBrepFormat:
-    return IO::loadBrepFile(filename, indicator);
+    return IO::loadBrepFile(fileName, indicator);
   default:
     return TopoDS_Shape();
   }
 }
 
-Handle_StlMesh_Mesh IO::loadStlFile(const QString& filename, Handle_Message_ProgressIndicator indicator)
+Handle_StlMesh_Mesh IO::loadStlFile(
+        FileNameLocal8Bit fileName, Handle_Message_ProgressIndicator indicator)
 {
-  return RWStl::ReadFile(OSD_Path(filename.toLocal8Bit().constData()), indicator);
+  return RWStl::ReadFile(OSD_Path(fileName), indicator);
 }
 
 /*! \brief Topologic shape read from a file (OCC's internal BREP format)
@@ -184,12 +254,12 @@ Handle_StlMesh_Mesh IO::loadStlFile(const QString& filename, Handle_Message_Prog
  *  \param indicator Indicator to notify the loading progress
  *  \return The part as a whole topologic shape
  */
-TopoDS_Shape IO::loadBrepFile(const QString& fileName,
-                              Handle_Message_ProgressIndicator indicator)
+TopoDS_Shape IO::loadBrepFile(
+        FileNameLocal8Bit fileName, Handle_Message_ProgressIndicator indicator)
 {
   TopoDS_Shape result;
   BRep_Builder brepBuilder;
-  BRepTools::Read(result, fileName.toLocal8Bit().constData(), brepBuilder, indicator);
+  BRepTools::Read(result, fileName, brepBuilder, indicator);
   return result;
 }
 
@@ -198,7 +268,7 @@ TopoDS_Shape IO::loadBrepFile(const QString& fileName,
  *  \param indicator Indicator to notify the loading progress
  *  \return The part as a whole topologic shape
  */
-TopoDS_Shape IO::loadIgesFile(const QString& fileName, Handle_Message_ProgressIndicator indicator)
+TopoDS_Shape IO::loadIgesFile(FileNameLocal8Bit fileName, Handle_Message_ProgressIndicator indicator)
 {
   return ::loadFile<IGESControl_Reader>(fileName, indicator);
 }
@@ -208,7 +278,7 @@ TopoDS_Shape IO::loadIgesFile(const QString& fileName, Handle_Message_ProgressIn
  *  \param indicator Indicator to notify the loading progress
  *  \return The part as a whole topologic shape
  */
-TopoDS_Shape IO::loadStepFile(const QString& fileName, Handle_Message_ProgressIndicator indicator)
+TopoDS_Shape IO::loadStepFile(FileNameLocal8Bit fileName, Handle_Message_ProgressIndicator indicator)
 {
   return ::loadFile<STEPControl_Reader>(fileName, indicator);
 }
@@ -219,10 +289,10 @@ TopoDS_Shape IO::loadStepFile(const QString& fileName, Handle_Message_ProgressIn
  *  \param indicator Indicator to notify the writing progress
  */
 void IO::writeBrepFile(const TopoDS_Shape& shape,
-                       const QString& fileName,
+                       FileNameLocal8Bit fileName,
                        Handle_Message_ProgressIndicator indicator)
 {
-  BRepTools::Write(shape, fileName.toLocal8Bit().constData(), indicator);
+  BRepTools::Write(shape, fileName, indicator);
 }
 
 /*! \brief Write a topologic shape to a file (IGES format)
@@ -231,7 +301,7 @@ void IO::writeBrepFile(const TopoDS_Shape& shape,
  *  \param indicator Indicator to notify the writing progress
  */
 void IO::writeIgesFile(const TopoDS_Shape& shape,
-                       const QString& fileName,
+                       FileNameLocal8Bit fileName,
                        Handle_Message_ProgressIndicator indicator)
 {
   IGESControl_Controller::Init();
@@ -241,7 +311,7 @@ void IO::writeIgesFile(const TopoDS_Shape& shape,
     writer.TransferProcess()->SetProgress(indicator);
   writer.AddShape(shape);
   writer.ComputeModel();
-  writer.Write(fileName.toLocal8Bit().constData());
+  writer.Write(fileName);
   writer.TransferProcess()->SetProgress(NULL);
 }
 
@@ -251,7 +321,7 @@ void IO::writeIgesFile(const TopoDS_Shape& shape,
  *  \param indicator Indicator to notify the writing progress
  */
 void IO::writeStepFile(const TopoDS_Shape& shape,
-                       const QString& fileName,
+                       FileNameLocal8Bit fileName,
                        Handle_Message_ProgressIndicator indicator)
 {
   IFSelect_ReturnStatus status;
@@ -259,7 +329,7 @@ void IO::writeStepFile(const TopoDS_Shape& shape,
   if (!indicator.IsNull())
     writer.WS()->TransferWriter()->FinderProcess()->SetProgress(indicator);
   status = writer.Transfer(shape, STEPControl_AsIs);
-  status = writer.Write(fileName.toLocal8Bit().constData());
+  status = writer.Write(fileName);
   writer.WS()->TransferWriter()->FinderProcess()->SetProgress(NULL);
 }
 
@@ -267,22 +337,22 @@ void IO::writeStepFile(const TopoDS_Shape& shape,
  *  \param shape Topologic shape to write
  *  \param fileName Path to the file to write
  */
-void IO::writeAsciiStlFile(const TopoDS_Shape& shape, const QString& fileName)
+void IO::writeAsciiStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName)
 {
   StlAPI_Writer writer;
   writer.ASCIIMode() = Standard_True;
-  writer.Write(shape, fileName.toLocal8Bit().constData());
+  writer.Write(shape, fileName);
 }
 
 /*! \brief Write a topologic shape to a file (binary STL format)
  *  \param shape Topologic shape to write
  *  \param fileName Path to the file to write
  */
-void IO::writeBinaryStlFile(const TopoDS_Shape& shape, const QString& fileName)
+void IO::writeBinaryStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName)
 {
   StlAPI_Writer writer;
   writer.ASCIIMode() = Standard_False;
-  writer.Write(shape, fileName.toLocal8Bit().constData());
+  writer.Write(shape, fileName);
 }
 
 } // namespace occ

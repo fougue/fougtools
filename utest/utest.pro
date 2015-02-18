@@ -38,3 +38,20 @@ SOURCES += \
     $$PWD/../src/qttools/core/internal/wait_loop_time_out_stop_condition.cpp \
     \
     $$PWD/../src/qttools/script/calculator.cpp
+
+occtools {
+    include(../src/occtools/occ.pri)
+
+    HEADERS += \
+        $$PWD/test_occtools.h \
+        $$PWD/../src/occtools/io.h
+
+    SOURCES += \
+        $$PWD/test_occtools.cpp \
+        $$PWD/../src/occtools/io.cpp
+
+    LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
+          -lTKIGES -lTKMath -lTKPrim -lTKService -lTKShHealing \
+          -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -lTKSTEP209 -lTKSTL -lTKTopAlgo \
+          -lTKXSBase
+}

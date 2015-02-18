@@ -42,13 +42,14 @@
 #include <Handle_Message_ProgressIndicator.hxx>
 #include <Handle_StlMesh_Mesh.hxx>
 #include <TopoDS_Shape.hxx>
-class QString;
 
 namespace occ {
 
 class OCCTOOLS_EXPORT IO
 {
 public:
+  typedef const char* FileNameLocal8Bit;
+
   enum Format
   {
     IgesFormat,
@@ -59,41 +60,44 @@ public:
     UnknownFormat
   };
 
-  static Format partFormat(const QString& fileName);
+  static Format partFormat(FileNameLocal8Bit fileName);
+  static Format partFormatFromContents(const char* contentsBegin,
+                                       std::size_t contentsBeginSize,
+                                       std::size_t fullContentsSizeHint = 0);
 
   static TopoDS_Shape loadPartFile(
-          const QString& fileName,
+          FileNameLocal8Bit fileName,
           Handle_Message_ProgressIndicator indicator = NULL);
 
   static Handle_StlMesh_Mesh loadStlFile(
-          const QString& fileName,
+          FileNameLocal8Bit fileName,
           Handle_Message_ProgressIndicator indicator = NULL);
 
   static TopoDS_Shape loadBrepFile(
-          const QString& fileName,
+          FileNameLocal8Bit fileName,
           Handle_Message_ProgressIndicator indicator = NULL);
   static TopoDS_Shape loadIgesFile(
-          const QString& fileName,
+          FileNameLocal8Bit fileName,
           Handle_Message_ProgressIndicator indicator = NULL);
   static TopoDS_Shape loadStepFile(
-          const QString& fileName,
+          FileNameLocal8Bit fileName,
           Handle_Message_ProgressIndicator indicator = NULL);
 
   static void writeBrepFile(
           const TopoDS_Shape& shape,
-          const QString& fileName,
+          FileNameLocal8Bit fileName,
           Handle_Message_ProgressIndicator indicator = NULL);
   static void writeIgesFile(
           const TopoDS_Shape& shape,
-          const QString& fileName,
+          FileNameLocal8Bit fileName,
           Handle_Message_ProgressIndicator indicator = NULL);
   static void writeStepFile(
           const TopoDS_Shape& shape,
-          const QString& fileName,
+          FileNameLocal8Bit fileName,
           Handle_Message_ProgressIndicator indicator = NULL);
 
-  static void writeAsciiStlFile(const TopoDS_Shape& shape, const QString& fileName);
-  static void writeBinaryStlFile(const TopoDS_Shape& shape, const QString& fileName);
+  static void writeAsciiStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName);
+  static void writeBinaryStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName);
 };
 
 } // namespace occ

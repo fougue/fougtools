@@ -48,10 +48,10 @@ namespace internal {
 class SleepTool : public QThread
 {
 public:
-  static void milliSleep(unsigned msec)
-  {
-    QThread::msleep(msec);
-  }
+    static void milliSleep(unsigned msec)
+    {
+        QThread::msleep(msec);
+    }
 };
 
 } // namespace internal
@@ -67,7 +67,7 @@ public:
  */
 void mSecSleep(unsigned msec)
 {
-  internal::SleepTool::milliSleep(msec);
+    internal::SleepTool::milliSleep(msec);
 }
 
 /*!
@@ -81,11 +81,11 @@ void mSecSleep(unsigned msec)
  */
 void waitForMSec(unsigned msec)
 {
-  if (msec > 0) {
-    QEventLoop eventLoop;
-    QTimer::singleShot(msec, &eventLoop, SLOT(quit()));
-    eventLoop.exec();
-  }
+    if (msec > 0) {
+        QEventLoop eventLoop;
+        QTimer::singleShot(msec, &eventLoop, SLOT(quit()));
+        eventLoop.exec();
+    }
 }
 
 } // namespace qttools

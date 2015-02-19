@@ -48,8 +48,8 @@ namespace internal {
 class UniqueIdRegistration
 {
 public:
-  QMutex m_mutex;
-  QSet<int> m_set;
+    QMutex m_mutex;
+    QSet<int> m_set;
 };
 
 } // namespace internal
@@ -82,38 +82,38 @@ Q_GLOBAL_STATIC(internal::UniqueIdRegistration, uniqueIdRegistrationHelper)
  */
 UniqueId::RegisterResult UniqueId::registerId(int min, int max)
 {
-  UniqueId::RegisterResult result;
-  result.isValid = false;
-  result.id = -1;
+    UniqueId::RegisterResult result;
+    result.isValid = false;
+    result.id = -1;
 
-  internal::UniqueIdRegistration* reg = uniqueIdRegistrationHelper();
-   if (reg == NULL || min > max)
-     return result;
+    internal::UniqueIdRegistration* reg = uniqueIdRegistrationHelper();
+    if (reg == NULL || min > max)
+        return result;
 
-   QMutexLocker locker(&reg->m_mutex);
-   Q_UNUSED(locker);
+    QMutexLocker locker(&reg->m_mutex);
+    Q_UNUSED(locker);
 
-   // Find a free id, starting at \p max and decreasing
-   int id = max;
-   while (reg->m_set.contains(id) && id >= min)
-     --id;
-   if (id >= min) {
-     reg->m_set.insert(id);
-     result.isValid = true;
-     result.id = id;
-     return result;
-   }
+    // Find a free id, starting at \p max and decreasing
+    int id = max;
+    while (reg->m_set.contains(id) && id >= min)
+        --id;
+    if (id >= min) {
+        reg->m_set.insert(id);
+        result.isValid = true;
+        result.id = id;
+        return result;
+    }
 
-   return result;
+    return result;
 }
 
 //! Has \p id already been registered with UniqueId::registerId() ?
 bool UniqueId::isRegistered(int id)
 {
-  internal::UniqueIdRegistration* reg = uniqueIdRegistrationHelper();
-   if (reg == NULL)
-     return false;
-   return reg->m_set.contains(id);
+    internal::UniqueIdRegistration* reg = uniqueIdRegistrationHelper();
+    if (reg == NULL)
+        return false;
+    return reg->m_set.contains(id);
 }
 
 } // namespace qttools

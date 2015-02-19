@@ -53,39 +53,39 @@ namespace occ {
 
 gp_Pnt GeomTools::geomCurveD0(const Handle_Geom_Curve& curve, Standard_Real u)
 {
-  gp_Pnt pnt;
-  curve->D0(u, pnt);
-  return pnt;
+    gp_Pnt pnt;
+    curve->D0(u, pnt);
+    return pnt;
 }
 
 Standard_Real GeomTools::curveLength(const Handle_Geom_Curve& curve)
 {
-  if (!curve.IsNull()) {
-    GeomAdaptor_Curve adaptor(curve);
-    return GCPnts_AbscissaPoint::Length(adaptor);
-  }
-  return 0;
+    if (!curve.IsNull()) {
+        GeomAdaptor_Curve adaptor(curve);
+        return GCPnts_AbscissaPoint::Length(adaptor);
+    }
+    return 0;
 }
 
 Standard_Real GeomTools::curveLengthBetweenParams(const Handle_Geom_Curve& curve,
                                                   Standard_Real firstU,
                                                   Standard_Real lastU)
 {
-  if (!curve.IsNull()) {
-    GeomAdaptor_Curve adaptor(curve);
-    return GCPnts_AbscissaPoint::Length(adaptor, firstU, lastU);
-  }
-  return 0;
+    if (!curve.IsNull()) {
+        GeomAdaptor_Curve adaptor(curve);
+        return GCPnts_AbscissaPoint::Length(adaptor, firstU, lastU);
+    }
+    return 0;
 }
 
 gp_Vec GeomTools::normalToSurfaceAtUV(const Handle_Geom_Surface& surface,
                                       Standard_Real u,
                                       Standard_Real v)
 {
-  gp_Pnt point;
-  gp_Vec d1u, d1v;
-  surface->D1(u, v, point, d1u, d1v);
-  return d1u ^ d1v;
+    gp_Pnt point;
+    gp_Vec d1u, d1v;
+    surface->D1(u, v, point, d1u, d1v);
+    return d1u ^ d1v;
 }
 
 } // namespace occ

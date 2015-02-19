@@ -48,20 +48,20 @@ namespace internal {
 void PluginsLoader_InstanceIFaceFilter_Helper::setRootComponentNullError(QString *error,
                                                                          const QPluginLoader *loader)
 {
-  cpp::checkedAssign(error, loader->errorString());
+    cpp::checkedAssign(error, loader->errorString());
 }
 
 void PluginsLoader_InstanceIFaceFilter_Helper::setRootComponentIncompatibleError(QString *error,
                                                                                  const char *iid)
 {
-  cpp::checkedAssign(error, QCoreApplication::translate("qttools::PluginsLoader",
-                                                        "Root component has incompatible interface"
-                                                        "(required: \"%1\"").arg(iid));
+    cpp::checkedAssign(error, QCoreApplication::translate("qttools::PluginsLoader",
+                                                          "Root component has incompatible interface"
+                                                          "(required: \"%1\"").arg(iid));
 }
 
 QObject *PluginsLoader_InstanceIFaceFilter_Helper::rootComponent(QPluginLoader *loader)
 {
-  return loader != NULL ? loader->instance() : NULL;
+    return loader != NULL ? loader->instance() : NULL;
 }
 
 } // namespace internal

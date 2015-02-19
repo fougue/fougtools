@@ -50,22 +50,22 @@ namespace qttools {
 class QTTOOLS_GUI_EXPORT QWidgetTools
 {
 public:
-  template<typename PARENT_WIDGET>
-  static PARENT_WIDGET* findFirstParentWidget(QWidget* widget);
+    template<typename PARENT_WIDGET>
+    static PARENT_WIDGET* findFirstParentWidget(QWidget* widget);
 
-  template<typename PARENT_WIDGET>
-  static PARENT_WIDGET* findLastParentWidget(QWidget* widget);
+    template<typename PARENT_WIDGET>
+    static PARENT_WIDGET* findLastParentWidget(QWidget* widget);
 
-  static void wrapWidgetInDialog(QWidget* widget, QDialog* dialog);
-  static void addContentsWidget(QWidget* containerWidget, QWidget* contentsWidget);
+    static void wrapWidgetInDialog(QWidget* widget, QDialog* dialog);
+    static void addContentsWidget(QWidget* containerWidget, QWidget* contentsWidget);
 
-  static QPoint globalPos(const QWidget* widget, Qt::Corner widgetCorner);
-  static void moveWidgetRightTo(QWidget* widget, const QWidget* nextTo);
-  static void moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo);
+    static QPoint globalPos(const QWidget* widget, Qt::Corner widgetCorner);
+    static void moveWidgetRightTo(QWidget* widget, const QWidget* nextTo);
+    static void moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo);
 
-  static QPair<int, int> horizAndVertScrollValue(const QAbstractScrollArea* area);
-  static void setHorizAndVertScrollValue(QAbstractScrollArea* area,
-                                         const QPair<int, int>& values);
+    static QPair<int, int> horizAndVertScrollValue(const QAbstractScrollArea* area);
+    static void setHorizAndVertScrollValue(QAbstractScrollArea* area,
+                                           const QPair<int, int>& values);
 };
 
 } // namespace qttools
@@ -83,28 +83,28 @@ namespace qttools {
 template<typename PARENT_WIDGET>
 PARENT_WIDGET* QWidgetTools::findFirstParentWidget(QWidget* widget)
 {
-  PARENT_WIDGET* foundParentWidget = NULL;
-  QWidget* iteratorWidget = widget;
-  while (iteratorWidget != NULL && foundParentWidget == NULL) {
-    iteratorWidget = iteratorWidget->parentWidget();
-    foundParentWidget = qobject_cast<PARENT_WIDGET*>(iteratorWidget);
-  }
-  return foundParentWidget;
+    PARENT_WIDGET* foundParentWidget = NULL;
+    QWidget* iteratorWidget = widget;
+    while (iteratorWidget != NULL && foundParentWidget == NULL) {
+        iteratorWidget = iteratorWidget->parentWidget();
+        foundParentWidget = qobject_cast<PARENT_WIDGET*>(iteratorWidget);
+    }
+    return foundParentWidget;
 }
 
 //! Searches up in the direct parents of \p widget the last ancestor being of type \c PARENT_WIDGET
 template<typename PARENT_WIDGET>
 PARENT_WIDGET* QWidgetTools::findLastParentWidget(QWidget* widget)
 {
-  PARENT_WIDGET* foundParentWidget = NULL;
-  QWidget* iteratorWidget = widget;
-  while (iteratorWidget != NULL) {
-    iteratorWidget = iteratorWidget->parentWidget();
-    PARENT_WIDGET* currParentWidget = qobject_cast<PARENT_WIDGET*>(iteratorWidget);
-    if (currParentWidget != NULL)
-      foundParentWidget = currParentWidget;
-  }
-  return foundParentWidget;
+    PARENT_WIDGET* foundParentWidget = NULL;
+    QWidget* iteratorWidget = widget;
+    while (iteratorWidget != NULL) {
+        iteratorWidget = iteratorWidget->parentWidget();
+        PARENT_WIDGET* currParentWidget = qobject_cast<PARENT_WIDGET*>(iteratorWidget);
+        if (currParentWidget != NULL)
+            foundParentWidget = currParentWidget;
+    }
+    return foundParentWidget;
 }
 
 } // namespace qttools

@@ -45,20 +45,20 @@ namespace qttools {
 
 class QTTOOLS_CORE_EXPORT AbstractSignalDispatch : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  AbstractSignalDispatch(QObject* parent = NULL);
-  void dispatch(const QObject* sender,
-                const char* paramLessSignal,
-                Qt::ConnectionType type = Qt::AutoConnection);
+    AbstractSignalDispatch(QObject* parent = NULL);
+    void dispatch(const QObject* sender,
+                  const char* paramLessSignal,
+                  Qt::ConnectionType type = Qt::AutoConnection);
 
 public slots:
-  virtual void action() = 0;
+    virtual void action() = 0;
 
 private:
-  const QObject* m_sender;
-  const char* m_signal;
+    const QObject* m_sender;
+    const char* m_signal;
 };
 
 } // namespace qttools

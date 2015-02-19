@@ -66,23 +66,23 @@ QStandardItemExplorer::QStandardItemExplorer()
 
 QStandardItemExplorer::QStandardItemExplorer(QStandardItem *rootItem)
 {
-  this->begin(rootItem);
+    this->begin(rootItem);
 }
 
 QStandardItemExplorer::QStandardItemExplorer(QStandardItemModel *model)
 {
-  this->begin(model->invisibleRootItem());
+    this->begin(model->invisibleRootItem());
 }
 
 bool QStandardItemExplorer::isCurrentDeeper(const QStandardItem *previous) const
 {
-  return this->current()->index().parent() != previous->index().parent();
+    return this->current()->index().parent() != previous->index().parent();
 }
 
 void QStandardItemExplorer::enqueueNodeChildren(QStandardItem *parentItem)
 {
-  for (int row = 0; row < parentItem->rowCount(); ++row)
-    this->enqueueNode(parentItem->child(row));
+    for (int row = 0; row < parentItem->rowCount(); ++row)
+        this->enqueueNode(parentItem->child(row));
 }
 
 } // namespace qttools

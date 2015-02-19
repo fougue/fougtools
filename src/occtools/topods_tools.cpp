@@ -62,17 +62,17 @@ namespace occ {
  */
 gp_Vec TopoDsTools::normalToFaceAtUV(const TopoDS_Face &face, Standard_Real u, Standard_Real v)
 {
-  BRepLProp_SLProps localSurfaceProps(1, 1e-6);
-  localSurfaceProps.SetSurface(BRepAdaptor_Surface(face));
-  localSurfaceProps.SetParameters(u, v);
-  if (localSurfaceProps.IsNormalDefined()) {
-    const gp_Dir& nc = localSurfaceProps.Normal();
-    if (face.Orientation() == TopAbs_REVERSED)
-      return gp_Vec(-nc.X(), -nc.Y(), -nc.Z());
-    else
-      return gp_Vec(nc.X(), nc.Y(), nc.Z());
-  }
-  return gp_Vec(0, 0, 1);
+    BRepLProp_SLProps localSurfaceProps(1, 1e-6);
+    localSurfaceProps.SetSurface(BRepAdaptor_Surface(face));
+    localSurfaceProps.SetParameters(u, v);
+    if (localSurfaceProps.IsNormalDefined()) {
+        const gp_Dir& nc = localSurfaceProps.Normal();
+        if (face.Orientation() == TopAbs_REVERSED)
+            return gp_Vec(-nc.X(), -nc.Y(), -nc.Z());
+        else
+            return gp_Vec(nc.X(), nc.Y(), nc.Z());
+    }
+    return gp_Vec(0, 0, 1);
 }
 
 /*! \brief Returns the string representation of a TopoDS_Shape
@@ -81,9 +81,9 @@ gp_Vec TopoDsTools::normalToFaceAtUV(const TopoDS_Face &face, Standard_Real u, S
  */
 std::string TopoDsTools::shapeToString(const TopoDS_Shape &shape)
 {
-  std::ostringstream oss(std::ios_base::out);
-  BRepTools::Write(shape, oss);
-  return oss.str();
+    std::ostringstream oss(std::ios_base::out);
+    BRepTools::Write(shape, oss);
+    return oss.str();
 }
 
 /*! \brief Constructs the TopoDS_Shape from the string representation \p str (previously generated
@@ -93,32 +93,32 @@ std::string TopoDsTools::shapeToString(const TopoDS_Shape &shape)
  */
 TopoDS_Shape TopoDsTools::shapeFromString(const std::string &str)
 {
-  TopoDS_Shape shape;
-  BRep_Builder brepBuilder;
+    TopoDS_Shape shape;
+    BRep_Builder brepBuilder;
 
-  std::istringstream iss(str, std::ios_base::in);
-  BRepTools::Read(shape, iss, brepBuilder);
-  return shape;
+    std::istringstream iss(str, std::ios_base::in);
+    BRepTools::Read(shape, iss, brepBuilder);
+    return shape;
 }
 
 Handle_ShapeExtend_WireData TopoDsTools::createShapeExtendWireData()
 {
-  return new ShapeExtend_WireData;
+    return new ShapeExtend_WireData;
 }
 
 void TopoDsTools::addEdge(const Handle_ShapeExtend_WireData &wireData, const TopoDS_Edge &edge)
 {
-  wireData->Add(edge);
+    wireData->Add(edge);
 }
 
 TopoDS_Wire TopoDsTools::fixedWire(const Handle_ShapeExtend_WireData &wireData)
 {
-  ShapeFix_Wire fix;
-  fix.Load(wireData);
-  fix.Perform();
-  fix.FixReorder();
-  fix.FixConnected();
-  return fix.WireAPIMake();
+    ShapeFix_Wire fix;
+    fix.Load(wireData);
+    fix.Perform();
+    fix.FixReorder();
+    fix.FixConnected();
+    return fix.WireAPIMake();
 }
 
 } // namespace occ

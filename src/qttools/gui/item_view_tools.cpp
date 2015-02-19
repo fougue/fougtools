@@ -59,47 +59,47 @@ namespace qttools {
  */
 QVector<int> ItemViewTools::selectedRows(const QAbstractItemView* view, int col)
 {
-  const QItemSelectionModel* itemSelModel = view->selectionModel();
-  if (itemSelModel == NULL || !itemSelModel->hasSelection())
-    return QVector<int>();
-  const QModelIndexList selIndexes = itemSelModel->selectedIndexes();
-  QVector<int> result;
-  result.reserve(selIndexes.size());
-  QSet<int> alreadyAddedRows;
-  foreach (const QModelIndex& modId, selIndexes) {
-    if (!alreadyAddedRows.contains(modId.row()) && (col == -1 || modId.column() == col)) {
-      result.append(modId.row());
-      alreadyAddedRows.insert(modId.row());
+    const QItemSelectionModel* itemSelModel = view->selectionModel();
+    if (itemSelModel == NULL || !itemSelModel->hasSelection())
+        return QVector<int>();
+    const QModelIndexList selIndexes = itemSelModel->selectedIndexes();
+    QVector<int> result;
+    result.reserve(selIndexes.size());
+    QSet<int> alreadyAddedRows;
+    foreach (const QModelIndex& modId, selIndexes) {
+        if (!alreadyAddedRows.contains(modId.row()) && (col == -1 || modId.column() == col)) {
+            result.append(modId.row());
+            alreadyAddedRows.insert(modId.row());
+        }
     }
-  }
-  return result;
+    return result;
 }
 
 void ItemViewTools::selectRows(QAbstractItemView* view, const QVector<int>& rows)
 {
-  const QAbstractItemModel* model = view->model();
-  QItemSelectionModel* selModel = view->selectionModel();
-  if (model == NULL || selModel == NULL)
-    return;
-  const QItemSelectionModel::SelectionFlags selFlags =
-      QItemSelectionModel::ToggleCurrent | QItemSelectionModel::Rows;
-  //        QItemSelectionModel::Select | QItemSelectionModel::Rows;
-  foreach (int iRow, rows)
-    selModel->select(model->index(iRow, 0), selFlags);
+    const QAbstractItemModel* model = view->model();
+    QItemSelectionModel* selModel = view->selectionModel();
+    if (model == NULL || selModel == NULL)
+        return;
+    const QItemSelectionModel::SelectionFlags selFlags =
+            QItemSelectionModel::ToggleCurrent | QItemSelectionModel::Rows;
+    //        QItemSelectionModel::Select | QItemSelectionModel::Rows;
+    foreach (int iRow, rows)
+        selModel->select(model->index(iRow, 0), selFlags);
 }
 
 /*! \brief Same as QSortFilterProxyModel::mapFromSource() but more concise
  */
 int ItemViewTools::mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow)
 {
-  return proxyModel->mapFromSource(proxyModel->sourceModel()->index(srcRow, 0)).row();
+    return proxyModel->mapFromSource(proxyModel->sourceModel()->index(srcRow, 0)).row();
 }
 
 /*! \brief Same as QSortFilterProxyModel::mapToSource() but more concise
  */
 int ItemViewTools::mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow)
 {
-  return proxyModel->mapToSource(proxyModel->index(proxyRow, 0)).row();
+    return proxyModel->mapToSource(proxyModel->index(proxyRow, 0)).row();
 }
 
 } // namespace qttools

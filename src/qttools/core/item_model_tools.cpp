@@ -48,16 +48,16 @@ namespace qttools {
 
 bool ItemModelTools::isValidRow(const QAbstractItemModel* model, int row, const QModelIndex& parent)
 {
-  if (model != NULL)
-    return 0 <= row && row < model->rowCount(parent);
-  return false;
+    if (model != NULL)
+        return 0 <= row && row < model->rowCount(parent);
+    return false;
 }
 
 bool ItemModelTools::isValidColumn(const QAbstractItemModel* model, int col, const QModelIndex& parent)
 {
-  if (model != NULL)
-    return 0 <= col && col < model->columnCount(parent);
-  return false;
+    if (model != NULL)
+        return 0 <= col && col < model->columnCount(parent);
+    return false;
 }
 
 /*! \brief Try to find a value in a given column of a model
@@ -66,22 +66,22 @@ bool ItemModelTools::isValidColumn(const QAbstractItemModel* model, int col, con
  */
 int ItemModelTools::findDataInRow(const QAbstractItemModel* model, int col, const QVariant& value)
 {
-  if (model != NULL) {
-    for (int row = 0; row < model->rowCount(); ++row) {
-      if (model->data(model->index(row, col)) == value)
-        return row;
+    if (model != NULL) {
+        for (int row = 0; row < model->rowCount(); ++row) {
+            if (model->data(model->index(row, col)) == value)
+                return row;
+        }
     }
-  }
-  return -1;
+    return -1;
 }
 
 /*! \brief Same as QAbstractItemModel::data() but more concise
  */
 QVariant ItemModelTools::tableData(const QAbstractItemModel* model, int row, int col, int role)
 {
-  if (model != NULL)
-    return model->data(model->index(row, col), role);
-  return QVariant();
+    if (model != NULL)
+        return model->data(model->index(row, col), role);
+    return QVariant();
 }
 
 } // namespace qttools

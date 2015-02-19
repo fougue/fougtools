@@ -48,58 +48,58 @@ namespace qttools {
  */
 
 Message::Message()
-  : m_dateTime(QDateTime::currentDateTime())
+    : m_dateTime(QDateTime::currentDateTime())
 {
 }
 
 QString Message::from() const
 {
-  return m_from;
+    return m_from;
 }
 
 void Message::setFrom(const QString& addr)
 {
-  m_from = addr;
+    m_from = addr;
 }
 
 QStringList Message::to() const
 {
-  return m_to;
+    return m_to;
 }
 
 void Message::setTo(const QStringList& recipients)
 {
-  m_to = recipients;
+    m_to = recipients;
 }
 
 QDateTime Message::dateTime() const
 {
-  return m_dateTime;
+    return m_dateTime;
 }
 
 void Message::setDateTime(const QDateTime& d)
 {
-  m_dateTime = d;
+    m_dateTime = d;
 }
 
 QString Message::subject() const
 {
-  return m_subject;
+    return m_subject;
 }
 
 void Message::setSubject(const QString& text)
 {
-  m_subject = text;
+    m_subject = text;
 }
 
 QString Message::body() const
 {
-  return m_body;
+    return m_body;
 }
 
 void Message::setBody(const QString& text)
 {
-  m_body = text;
+    m_body = text;
 }
 
 } // namespace qttools

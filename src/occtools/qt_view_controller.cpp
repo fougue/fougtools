@@ -56,9 +56,9 @@ namespace occ {
  */
 
 QtViewController::QtViewController(QtView* view)
-  : QObject(view),
-    m_view(view),
-    m_rubberBand(NULL)
+    : QObject(view),
+      m_view(view),
+      m_rubberBand(NULL)
 {
 }
 
@@ -66,78 +66,78 @@ QtViewController::QtViewController(QtView* view)
 
 void QtViewController::beginRubberBandDraw(const QPoint& startPos)
 {
-  this->createRubberBand();
-  m_startRubberBandPos = startPos;
-  m_rubberBand->setGeometry(QRect(startPos, QSize()));
-  m_rubberBand->show();
+    this->createRubberBand();
+    m_startRubberBandPos = startPos;
+    m_rubberBand->setGeometry(QRect(startPos, QSize()));
+    m_rubberBand->show();
 }
 
 void QtViewController::updateRubberBandDraw(const QPoint& currPos)
 {
-  this->createRubberBand();
-  m_rubberBand->hide();
-  QRect window(m_startRubberBandPos, currPos);
-  m_rubberBand->setGeometry(window.normalized());
-  m_rubberBand->show();
+    this->createRubberBand();
+    m_rubberBand->hide();
+    QRect window(m_startRubberBandPos, currPos);
+    m_rubberBand->setGeometry(window.normalized());
+    m_rubberBand->show();
 }
 
 void QtViewController::endRubberBandDraw()
 {
-  this->createRubberBand();
-  m_rubberBand->hide();
+    this->createRubberBand();
+    m_rubberBand->hide();
 }
 
 // --- Event handling
 
 bool QtViewController::eventFilter(QObject* object, QEvent* event)
 {
-  return QObject::eventFilter(object, event);
+    return QObject::eventFilter(object, event);
 }
 
 void QtViewController::notifyContextSelectionChanged()
 {
-  emit contextSelectionChanged();
+    emit contextSelectionChanged();
 }
 
 void QtViewController::notifyEscaped()
 {
-  emit escaped();
+    emit escaped();
 }
 
 // --- Access
 
 Handle_V3d_View QtViewController::internalOccView() const
 {
-  return m_view->internalView();
+    return m_view->internalView();
 }
 
 Handle_AIS_InteractiveContext QtViewController::context() const
 {
-  return m_view->context();
+    return m_view->context();
 }
 
 QtView* QtViewController::view() const
 {
-  return m_view;
+    return m_view;
 }
 
 const QRect QtViewController::rubberBandGeometry() const
 {
-  if (m_rubberBand == NULL)
-    return QRect();
-  return m_rubberBand->geometry();
+    if (m_rubberBand == NULL)
+        return QRect();
+    return m_rubberBand->geometry();
 }
 
 // --- Implementation
 
 void QtViewController::createRubberBand()
 {
-  if (m_rubberBand == NULL) {
-    m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this->view());
-    //_rubberBand->setWindowOpacity(0.7);
-    // TODO Is this instruction really needed ?
-    // m_rubberBand->setStyle(static_cast<QStyle*>(new QPlastiqueStyle()));
-  }
+    if (m_rubberBand == NULL) {
+        m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this->view());
+        //_rubberBand->setWindowOpacity(0.7);
+        // TODO Is this instruction really needed ?
+        // m_rubberBand->setStyle(static_cast<QStyle*>(new QPlastiqueStyle()));
+    }
 }
 
 } // namespace occ

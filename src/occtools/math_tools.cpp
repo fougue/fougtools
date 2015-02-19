@@ -55,9 +55,9 @@ namespace occ {
 
 gp_Pnt MathTools::projectPointOnPlane(const gp_Pnt &p, const gp_Vec &n)
 {
-  const gp_Vec pVec(p.X(), p.Y(), p.Z());
-  const Standard_Real dotVN = pVec.Dot(n);
-  return p.Translated(-dotVN * n);
+    const gp_Vec pVec(p.X(), p.Y(), p.Z());
+    const Standard_Real dotVN = pVec.Dot(n);
+    return p.Translated(-dotVN * n);
 }
 
 std::pair<gp_Pnt, bool> MathTools::projectPointOnTriangle(const gp_Pnt &p,
@@ -65,109 +65,109 @@ std::pair<gp_Pnt, bool> MathTools::projectPointOnTriangle(const gp_Pnt &p,
                                                           const gp_Pnt &v1,
                                                           const gp_Pnt &v2)
 {
-  const gp_Vec e0(v0, v1);
-  const gp_Vec e1(v0, v2);
-  const gp_Vec D(p, v0);
+    const gp_Vec e0(v0, v1);
+    const gp_Vec e1(v0, v2);
+    const gp_Vec D(p, v0);
 
-  const Standard_Real a = e0.Dot(e0);
-  const Standard_Real b = e0.Dot(e1);
-  const Standard_Real c = e1.Dot(e1);
-  const Standard_Real d = e0.Dot(D);
-  const Standard_Real e = e1.Dot(D);
+    const Standard_Real a = e0.Dot(e0);
+    const Standard_Real b = e0.Dot(e1);
+    const Standard_Real c = e1.Dot(e1);
+    const Standard_Real d = e0.Dot(D);
+    const Standard_Real e = e1.Dot(D);
 
-  const Standard_Real det = a * c - b * b;
-  Standard_Real s = b * e - c * d;
-  Standard_Real t = b * d - a * e;
+    const Standard_Real det = a * c - b * b;
+    Standard_Real s = b * e - c * d;
+    Standard_Real t = b * d - a * e;
 
-  int region = 0;
-  if (s + t <= det) {
-    if (s < 0.) {
-      if (t < 0.)
-        region = 4;
-      else
-        region = 3;
-    }
-    else if (t < 0.)
-      region = 5;
-  }
-  else {
-    if (s < 0.)
-      region = 2;
-    else if (t < 0.)
-      region = 6;
-    else
-      region = 1;
-  }
-
-  switch (region) {
-  case 0: {
-    const Standard_Real invDet = 1. / det;
-    s *= invDet;
-    t *= invDet;
-    break;
-  }
-  case 1: {
-    const Standard_Real numer = c + e - b - d;
-    if (numer <= 0.) {
-      s = 0.;
+    int region = 0;
+    if (s + t <= det) {
+        if (s < 0.) {
+            if (t < 0.)
+                region = 4;
+            else
+                region = 3;
+        }
+        else if (t < 0.)
+            region = 5;
     }
     else {
-      const Standard_Real denom = a - 2. * b + c;
-      s = (numer >= denom ? 1. : numer / denom);
+        if (s < 0.)
+            region = 2;
+        else if (t < 0.)
+            region = 6;
+        else
+            region = 1;
     }
-    t = 1. - s;
-    break;
-  }
-  case 2: {
-    s = 0.;
-    t = 1.;
-    break;
-  }
-  case 3: {
-    s = 0.;
-    t = (e >= 0. ? 0. : (-e >= c ? 1. : -e / c));
-    break;
-  }
-  case 4: {
-    s = 0.;
-    t = 0.;
-    break;
-  }
-  case 5: {
-    t = 0.;
-    s = (d >= 0. ? 0. : (-d >= a ? 1. : -d / a));
-    break;
-  }
-  case 6: {
-    s = 1.;
-    t = 0.;
-    break;
-  }
-  } // end switch
 
-  return std::make_pair(v0.Translated(e0 * s).Translated(e1 * t),
-                        region == 0);
+    switch (region) {
+    case 0: {
+        const Standard_Real invDet = 1. / det;
+        s *= invDet;
+        t *= invDet;
+        break;
+    }
+    case 1: {
+        const Standard_Real numer = c + e - b - d;
+        if (numer <= 0.) {
+            s = 0.;
+        }
+        else {
+            const Standard_Real denom = a - 2. * b + c;
+            s = (numer >= denom ? 1. : numer / denom);
+        }
+        t = 1. - s;
+        break;
+    }
+    case 2: {
+        s = 0.;
+        t = 1.;
+        break;
+    }
+    case 3: {
+        s = 0.;
+        t = (e >= 0. ? 0. : (-e >= c ? 1. : -e / c));
+        break;
+    }
+    case 4: {
+        s = 0.;
+        t = 0.;
+        break;
+    }
+    case 5: {
+        t = 0.;
+        s = (d >= 0. ? 0. : (-d >= a ? 1. : -d / a));
+        break;
+    }
+    case 6: {
+        s = 1.;
+        t = 0.;
+        break;
+    }
+    } // end switch
+
+    return std::make_pair(v0.Translated(e0 * s).Translated(e1 * t),
+                          region == 0);
 }
 
 Standard_Real MathTools::euclideanNorm(const gp_Vec &vec)
 {
-  return std::sqrt(MathTools::squaredEuclideanNorm(vec));
+    return std::sqrt(MathTools::squaredEuclideanNorm(vec));
 }
 
 Standard_Real MathTools::squaredEuclideanNorm(const gp_Vec &vec)
 {
-  return vec.X() * vec.X() + vec.Y() * vec.Y() + vec.Z() * vec.Z();
+    return vec.X() * vec.X() + vec.Y() * vec.Y() + vec.Z() * vec.Z();
 }
 
 Standard_Real MathTools::manhattanNorm(const gp_Vec &vec)
 {
-  return std::fabs(vec.X()) + std::fabs(vec.Y()) + std::fabs(vec.Z());
+    return std::fabs(vec.X()) + std::fabs(vec.Y()) + std::fabs(vec.Z());
 }
 
 /*! \brief Returns the component of \p vec having the maximum absolute value */
 Standard_Real MathTools::maximumNorm(const gp_Vec &vec)
 {
-  return std::max(std::fabs(vec.X()), std::max(std::fabs(vec.Y()), std::fabs(vec.Z())));
+    return std::max(std::fabs(vec.X()), std::max(std::fabs(vec.Y()), std::fabs(vec.Z())));
 }
 
 /*! \brief Returns the oriented normal of a triangle
@@ -182,25 +182,25 @@ gp_Vec MathTools::triangleNormal(const TColgp_Array1OfPnt &nodes,
                                  const Poly_Triangle &triangle,
                                  TopAbs_Orientation ori)
 {
-  Standard_Integer n1, n2, n3;
-  if (ori == TopAbs_REVERSED)
-    triangle.Get(n1, n3, n2);
-  else
-    triangle.Get(n1, n2, n3);
-  assert(nodes.Lower() <= n1 && n1 <= nodes.Upper());
-  assert(nodes.Lower() <= n2 && n2 <= nodes.Upper());
-  assert(nodes.Lower() <= n3 && n3 <= nodes.Upper());
-  const gp_Vec v1(nodes(n1), nodes(n2)); // V1=(P1,P2)
-  const gp_Vec v2(nodes(n2), nodes(n3)); // V2=(P2,P3)
-  const gp_Vec v3(nodes(n3), nodes(n1)); // V3=(P3,P1)
+    Standard_Integer n1, n2, n3;
+    if (ori == TopAbs_REVERSED)
+        triangle.Get(n1, n3, n2);
+    else
+        triangle.Get(n1, n2, n3);
+    assert(nodes.Lower() <= n1 && n1 <= nodes.Upper());
+    assert(nodes.Lower() <= n2 && n2 <= nodes.Upper());
+    assert(nodes.Lower() <= n3 && n3 <= nodes.Upper());
+    const gp_Vec v1(nodes(n1), nodes(n2)); // V1=(P1,P2)
+    const gp_Vec v2(nodes(n2), nodes(n3)); // V2=(P2,P3)
+    const gp_Vec v3(nodes(n3), nodes(n1)); // V3=(P3,P1)
 
-  if ((v1.SquareMagnitude() > 1.e-10)
-      && (v2.SquareMagnitude() > 1.e-10)
-      && (v3.SquareMagnitude() > 1.e-10))
-  {
-    return v1.Crossed(v2);
-  }
-  return v1;
+    if ((v1.SquareMagnitude() > 1.e-10)
+            && (v2.SquareMagnitude() > 1.e-10)
+            && (v3.SquareMagnitude() > 1.e-10))
+    {
+        return v1.Crossed(v2);
+    }
+    return v1;
 }
 
 } // namespace occ
@@ -208,17 +208,17 @@ gp_Vec MathTools::triangleNormal(const TColgp_Array1OfPnt &nodes,
 //! \relates MathTools
 gp_Vec operator-(const gp_Pnt& p1, const gp_Pnt& p2)
 {
-  return gp_Vec(p2.X() - p1.X(), p2.Y() - p1.Y(), p2.Z() - p1.Z());
+    return gp_Vec(p2.X() - p1.X(), p2.Y() - p1.Y(), p2.Z() - p1.Z());
 }
 
 //! \relates MathTools
 gp_Pnt operator-(const gp_Pnt& p, const gp_Vec& v)
 {
-  return gp_Pnt(p.X() - v.X(), p.Y() - v.Y(), p.Z() - v.Z());
+    return gp_Pnt(p.X() - v.X(), p.Y() - v.Y(), p.Z() - v.Z());
 }
 
 //! \relates MathTools
 gp_Pnt operator+(const gp_Pnt& p, const gp_Vec& v)
 {
-  return gp_Pnt(p.X() + v.X(), p.Y() + v.Y(), p.Z() + v.Z());
+    return gp_Pnt(p.X() + v.X(), p.Y() + v.Y(), p.Z() + v.Z());
 }

@@ -71,24 +71,24 @@ namespace occ {
 class QtView::Private
 {
 public:
-  Private(const Handle_AIS_InteractiveContext& context3d, QtView *backPtr);
+    Private(const Handle_AIS_InteractiveContext& context3d, QtView *backPtr);
 
-  void initialize();
+    void initialize();
 
-  Handle_AIS_InteractiveContext m_context;
-  Handle_V3d_View m_internalView;
-  bool m_isInitialized;
-  bool m_needsResize;
+    Handle_AIS_InteractiveContext m_context;
+    Handle_V3d_View m_internalView;
+    bool m_isInitialized;
+    bool m_needsResize;
 
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
-  QList<QtView::PaintCallback> m_paintCallbacks;
-  QHash<int, QList<QtView::PaintCallback>::iterator> m_paintCallbackMapping;
+    QList<QtView::PaintCallback> m_paintCallbacks;
+    QHash<int, QList<QtView::PaintCallback>::iterator> m_paintCallbackMapping;
 #endif
-  int m_paintCallbackLastId;
-  Aspect_GraphicCallbackStruct* m_callbackData;
+    int m_paintCallbackLastId;
+    Aspect_GraphicCallbackStruct* m_callbackData;
 
 private:
-  QtView* m_backPtr;
+    QtView* m_backPtr;
 };
 
 //! Callback executed each time a paint is requested (on paintEvent())
@@ -96,64 +96,64 @@ int occ_QtView_paintCallBack(Aspect_Drawable drawable,
                              void* pointer,
                              Aspect_GraphicCallbackStruct* data)
 {
-  Q_UNUSED(drawable);
+    Q_UNUSED(drawable);
 
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
-  QtView::Private* d = reinterpret_cast<QtView::Private*>(pointer);
-  d->m_callbackData = data;
+    QtView::Private* d = reinterpret_cast<QtView::Private*>(pointer);
+    d->m_callbackData = data;
 
-  foreach (const QtView::PaintCallback& callback, d->m_paintCallbacks)
-    callback();
+    foreach (const QtView::PaintCallback& callback, d->m_paintCallbacks)
+        callback();
 
-  d->m_callbackData = NULL;
+    d->m_callbackData = NULL;
 #endif // !OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
 
-  return 0;
+    return 0;
 }
 
 QtView::Private::Private(const Handle_AIS_InteractiveContext &context3d, QtView* backPtr)
-  : m_context(context3d),
-    m_isInitialized(false),
-    m_needsResize(false),
-    m_paintCallbackLastId(0),
-    m_callbackData(NULL),
-    m_backPtr(backPtr)
+    : m_context(context3d),
+      m_isInitialized(false),
+      m_needsResize(false),
+      m_paintCallbackLastId(0),
+      m_callbackData(NULL),
+      m_backPtr(backPtr)
 {
 }
 
 void QtView::Private::initialize()
 {
-  if (!m_isInitialized && m_backPtr->winId() != 0) {
-    m_internalView = m_context->CurrentViewer()->CreateView();
+    if (!m_isInitialized && m_backPtr->winId() != 0) {
+        m_internalView = m_context->CurrentViewer()->CreateView();
 
 #if defined(Q_OS_WIN32)
-    Aspect_Handle winHandle = (Aspect_Handle)m_backPtr->winId();
-    Handle(WNT_Window) hWnd = new WNT_Window(winHandle);
+        Aspect_Handle winHandle = (Aspect_Handle)m_backPtr->winId();
+        Handle(WNT_Window) hWnd = new WNT_Window(winHandle);
 #elif defined(Q_OS_MAC) && !defined(MACOSX_USE_GLX)
-    NSView* viewHandle = (NSView*)m_backPtr->winId();
-    Handle_Cocoa_Window hWnd = new Cocoa_Window(viewHandle);
+        NSView* viewHandle = (NSView*)m_backPtr->winId();
+        Handle_Cocoa_Window hWnd = new Cocoa_Window(viewHandle);
 #else
-    Window winHandle = (Window)m_backPtr->winId();
-    Handle_Aspect_DisplayConnection dispConnection = m_context->CurrentViewer()->Driver()->GetDisplayConnection();
-    Handle_Xw_Window hWnd = new Xw_Window(dispConnection, winHandle);
+        Window winHandle = (Window)m_backPtr->winId();
+        Handle_Aspect_DisplayConnection dispConnection = m_context->CurrentViewer()->Driver()->GetDisplayConnection();
+        Handle_Xw_Window hWnd = new Xw_Window(dispConnection, winHandle);
 #endif
-    m_internalView->SetWindow(hWnd, NULL, &occ_QtView_paintCallBack, this);
-    if (!hWnd->IsMapped())
-      hWnd->Map();
+        m_internalView->SetWindow(hWnd, NULL, &occ_QtView_paintCallBack, this);
+        if (!hWnd->IsMapped())
+            hWnd->Map();
 
-    m_internalView->SetBgGradientColors(Quantity_Color(0.5, 0.58, 1., Quantity_TOC_RGB),
-                                        Quantity_NOC_WHITE,
-                                        Aspect_GFM_VER);
+        m_internalView->SetBgGradientColors(Quantity_Color(0.5, 0.58, 1., Quantity_TOC_RGB),
+                                            Quantity_NOC_WHITE,
+                                            Aspect_GFM_VER);
 
-    m_internalView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER,
-                                    Quantity_NOC_GRAY50,
-                                    0.1,
-                                    V3d_ZBUFFER);
+        m_internalView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER,
+                                        Quantity_NOC_GRAY50,
+                                        0.1,
+                                        V3d_ZBUFFER);
 
-    m_internalView->MustBeResized();
-    m_isInitialized = true;
-    m_needsResize = true;
-  }
+        m_internalView->MustBeResized();
+        m_isInitialized = true;
+        m_needsResize = true;
+    }
 }
 
 /*! \class QtView
@@ -171,95 +171,95 @@ void QtView::Private::initialize()
 //! Construct a QtView bound to the interactive context \p context3d, and having \p parent as its
 //! Qt widget parent
 QtView::QtView(const Handle_AIS_InteractiveContext& context3d, QWidget* parent)
-  : QWidget(parent),
-    d(new Private(context3d, this))
+    : QWidget(parent),
+      d(new Private(context3d, this))
 {
-  this->setMouseTracking(true);
+    this->setMouseTracking(true);
 
-  // Avoid Qt background clears to improve resizing speed, along with a couple of other attributes
-  this->setAutoFillBackground(false);
-  this->setAttribute(Qt::WA_NoSystemBackground);
+    // Avoid Qt background clears to improve resizing speed, along with a couple of other attributes
+    this->setAutoFillBackground(false);
+    this->setAttribute(Qt::WA_NoSystemBackground);
 
-  this->setAttribute(Qt::WA_PaintOnScreen);
-  this->setAttribute(Qt::WA_OpaquePaintEvent);
-  this->setAttribute(Qt::WA_NativeWindow);
+    this->setAttribute(Qt::WA_PaintOnScreen);
+    this->setAttribute(Qt::WA_OpaquePaintEvent);
+    this->setAttribute(Qt::WA_NativeWindow);
 }
 
 QtView::~QtView()
 {
-  delete d;
+    delete d;
 }
 
 Handle_AIS_InteractiveContext QtView::context() const
 {
-  return d->m_context;
+    return d->m_context;
 }
 
 Handle_V3d_View QtView::internalView() const
 {
-  return d->m_internalView;
+    return d->m_internalView;
 }
 
 //! Hack for Qt 4.5.x
 QPaintEngine* QtView::paintEngine() const
 {
-  return NULL;
+    return NULL;
 }
 
 //! Force a redraw of the view
 void QtView::redraw()
 {
-  if (!d->m_internalView.IsNull()) {
-    if (d->m_needsResize)
-      d->m_internalView->MustBeResized();
-    else
-      d->m_internalView->Redraw();
-  }
-  d->m_needsResize = false;
+    if (!d->m_internalView.IsNull()) {
+        if (d->m_needsResize)
+            d->m_internalView->MustBeResized();
+        else
+            d->m_internalView->Redraw();
+    }
+    d->m_needsResize = false;
 }
 
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
 int QtView::addPaintCallback(const PaintCallback &callback)
 {
-  if (callback) {
-    d->m_paintCallbacks.append(callback);
-    d->m_paintCallbackMapping.insert(d->m_paintCallbackLastId, --(d->m_paintCallbacks.end()));
-    return ++(d->m_paintCallbackLastId);
-  }
-  return -1;
+    if (callback) {
+        d->m_paintCallbacks.append(callback);
+        d->m_paintCallbackMapping.insert(d->m_paintCallbackLastId, --(d->m_paintCallbacks.end()));
+        return ++(d->m_paintCallbackLastId);
+    }
+    return -1;
 }
 
 void QtView::removePaintCallback(int callbackId)
 {
-  QList<PaintCallback>::iterator callbackIt =
-      d->m_paintCallbackMapping.value(callbackId, d->m_paintCallbacks.end());
-  if (callbackIt != d->m_paintCallbacks.end())
-    d->m_paintCallbacks.erase(callbackIt);
+    QList<PaintCallback>::iterator callbackIt =
+            d->m_paintCallbackMapping.value(callbackId, d->m_paintCallbacks.end());
+    if (callbackIt != d->m_paintCallbacks.end())
+        d->m_paintCallbacks.erase(callbackIt);
 }
 
 Aspect_GraphicCallbackStruct *QtView::paintCallbackData() const
 {
-  return d->m_callbackData;
+    return d->m_callbackData;
 }
 
 #endif // !OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
 
 void QtView::fitAll()
 {
-  if (!d->m_internalView.IsNull()) {
-    d->m_internalView->ZFitAll();
-    d->m_internalView->FitAll();
-  }
+    if (!d->m_internalView.IsNull()) {
+        d->m_internalView->ZFitAll();
+        d->m_internalView->FitAll();
+    }
 }
 
 //! Reimplemented from QWidget::paintEvent()
 void QtView::paintEvent(QPaintEvent* event)
 {
-  Q_UNUSED(event);
+    Q_UNUSED(event);
 
-  d->initialize();
-  if (!d->m_context->CurrentViewer().IsNull())
-    this->redraw();
+    d->initialize();
+    if (!d->m_context->CurrentViewer().IsNull())
+        this->redraw();
 }
 
 /*! \brief Reimplemented from QWidget::resizeEvent()
@@ -268,8 +268,8 @@ void QtView::paintEvent(QPaintEvent* event)
  */
 void QtView::resizeEvent(QResizeEvent* event)
 {
-  Q_UNUSED(event);
-  d->m_needsResize = true;
+    Q_UNUSED(event);
+    d->m_needsResize = true;
 }
 
 } // namespace occ

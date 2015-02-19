@@ -61,60 +61,60 @@ MessageDialog::MessageDialog(Icon icon,
                              const QString& text,
                              QDialogButtonBox::StandardButtons buttons,
                              QWidget* parent)
-  : QDialog(parent),
-    m_textLabel(new QLabel(text, this)),
-    m_detailsWidget(new QWidget(this))
+    : QDialog(parent),
+      m_textLabel(new QLabel(text, this)),
+      m_detailsWidget(new QWidget(this))
 {
-  this->setWindowTitle(title);
-  QLabel* pixLabel = new QLabel(this);
-  const QSize pixSize(32, 32);
-  const QStyle* style = QApplication::style();
-  switch (icon) {
-  case Question :
-    pixLabel->setPixmap(style->standardIcon(QStyle::SP_MessageBoxQuestion).pixmap(pixSize));
-    break;
-  case Information :
-    pixLabel->setPixmap(style->standardIcon(QStyle::SP_MessageBoxInformation).pixmap(pixSize));
-    break;
-  case Warning :
-    pixLabel->setPixmap(style->standardIcon(QStyle::SP_MessageBoxWarning).pixmap(pixSize));
-    break;
-  case Critical :
-    pixLabel->setPixmap(style->standardIcon(QStyle::SP_MessageBoxCritical).pixmap(pixSize));
-    break;
-  case NoIcon : break;
-  }
-  QDialogButtonBox* btnBox = new QDialogButtonBox(buttons, Qt::Horizontal, this);
+    this->setWindowTitle(title);
+    QLabel* pixLabel = new QLabel(this);
+    const QSize pixSize(32, 32);
+    const QStyle* style = QApplication::style();
+    switch (icon) {
+    case Question :
+        pixLabel->setPixmap(style->standardIcon(QStyle::SP_MessageBoxQuestion).pixmap(pixSize));
+        break;
+    case Information :
+        pixLabel->setPixmap(style->standardIcon(QStyle::SP_MessageBoxInformation).pixmap(pixSize));
+        break;
+    case Warning :
+        pixLabel->setPixmap(style->standardIcon(QStyle::SP_MessageBoxWarning).pixmap(pixSize));
+        break;
+    case Critical :
+        pixLabel->setPixmap(style->standardIcon(QStyle::SP_MessageBoxCritical).pixmap(pixSize));
+        break;
+    case NoIcon : break;
+    }
+    QDialogButtonBox* btnBox = new QDialogButtonBox(buttons, Qt::Horizontal, this);
 
-  QGridLayout* layout = new QGridLayout;
-  layout->addWidget(pixLabel, 0, 0);
-  layout->addWidget(m_textLabel, 0, 1);
-  layout->addWidget(m_detailsWidget, 1, 1);
-  layout->addWidget(btnBox, 2, 0, 1, 2, Qt::AlignRight);
-  this->setLayout(layout);
+    QGridLayout* layout = new QGridLayout;
+    layout->addWidget(pixLabel, 0, 0);
+    layout->addWidget(m_textLabel, 0, 1);
+    layout->addWidget(m_detailsWidget, 1, 1);
+    layout->addWidget(btnBox, 2, 0, 1, 2, Qt::AlignRight);
+    this->setLayout(layout);
 
-  QSignalMapper* sigMapper = new QSignalMapper(this);
-  foreach (QAbstractButton* btn, btnBox->buttons()) {
-    sigMapper->setMapping(btn, btnBox->standardButton(btn));
-    connect(btn, SIGNAL(clicked()), sigMapper, SLOT(map()));
-  }
-  connect(sigMapper, SIGNAL(mapped(int)), this, SLOT(done(int)));
+    QSignalMapper* sigMapper = new QSignalMapper(this);
+    foreach (QAbstractButton* btn, btnBox->buttons()) {
+        sigMapper->setMapping(btn, btnBox->standardButton(btn));
+        connect(btn, SIGNAL(clicked()), sigMapper, SLOT(map()));
+    }
+    connect(sigMapper, SIGNAL(mapped(int)), this, SLOT(done(int)));
 }
 
 QWidget *MessageDialog::detailsWidget() const
 {
-  return m_detailsWidget;
+    return m_detailsWidget;
 }
 
 void MessageDialog::setDetailsWidget(QWidget* widget)
 {
-  if (widget == NULL)
-    return;
-  widget->setParent(m_detailsWidget);
-  QBoxLayout* layout = new QVBoxLayout;
-  layout->setMargin(0);
-  layout->addWidget(widget);
-  m_detailsWidget->setLayout(layout);
+    if (widget == NULL)
+        return;
+    widget->setParent(m_detailsWidget);
+    QBoxLayout* layout = new QVBoxLayout;
+    layout->setMargin(0);
+    layout->addWidget(widget);
+    m_detailsWidget->setLayout(layout);
 }
 
 } // namespace qttools

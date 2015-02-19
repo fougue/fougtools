@@ -48,23 +48,23 @@ namespace internal {
 
 static QList<qttools::AbstractLogHandler*>* globalLogHandlers()
 {
-  static QList<qttools::AbstractLogHandler*> object;
-  return &object;
+    static QList<qttools::AbstractLogHandler*> object;
+    return &object;
 }
 
 typedef QPair<qttools::Log::MessageType, QString> PendingLogMessage;
 static QLinkedList<PendingLogMessage>* globalPendingMessages()
 {
-  static QLinkedList<PendingLogMessage> object;
-  return &object;
+    static QLinkedList<PendingLogMessage> object;
+    return &object;
 }
 
 static void handleLogMessage(qttools::Log::MessageType msgType, const QString& msg)
 {
-  if (globalLogHandlers()->isEmpty())
-    globalPendingMessages()->append(qMakePair(msgType, msg));
-  foreach (qttools::AbstractLogHandler* logHandler, *(globalLogHandlers()))
-    logHandler->handle(msgType, msg );
+    if (globalLogHandlers()->isEmpty())
+        globalPendingMessages()->append(qMakePair(msgType, msg));
+    foreach (qttools::AbstractLogHandler* logHandler, *(globalLogHandlers()))
+        logHandler->handle(msgType, msg );
 }
 
 } // namespace internal
@@ -75,26 +75,26 @@ static void handleLogMessage(qttools::Log::MessageType msgType, const QString& m
 
 struct Log::Stream
 {
-  Stream(MessageType mType);
-  Log::MessageType msgType;
-  QString buffer;
-  QTextStream ts;
-  int refCount;
+    Stream(MessageType mType);
+    Log::MessageType msgType;
+    QString buffer;
+    QTextStream ts;
+    int refCount;
 
-  template<typename T>
-  static Log& defaultQTextStreamOutput(Log& log, T value)
-  {
-      if (log.m_stream != NULL)
-        log.m_stream->ts << value;
-      return log.space();
-  }
+    template<typename T>
+    static Log& defaultQTextStreamOutput(Log& log, T value)
+    {
+        if (log.m_stream != NULL)
+            log.m_stream->ts << value;
+        return log.space();
+    }
 };
 
 
 Log::Stream::Stream(Log::MessageType mType)
-  : msgType(mType),
-    ts(&buffer),
-    refCount(1)
+    : msgType(mType),
+      ts(&buffer),
+      refCount(1)
 {
 }
 
@@ -116,128 +116,128 @@ Log::Stream::Stream(Log::MessageType mType)
 
 //! \brief Construct a null Log stream, ie. it won't print anything
 Log::Log()
-  : m_stream(NULL)
+    : m_stream(NULL)
 {
 }
 
 /*! \brief Construct a Log stream for messages of a special type
  */
 Log::Log(MessageType msgType)
-  : m_stream(new Stream(msgType))
+    : m_stream(new Stream(msgType))
 {
 }
 
 /*! \brief Construct a copy of the \p other Log stream
  */
 Log::Log(const Log& other)
-  : m_stream(other.m_stream)
+    : m_stream(other.m_stream)
 {
-  if (m_stream != NULL)
-    ++(m_stream->refCount);
+    if (m_stream != NULL)
+        ++(m_stream->refCount);
 }
 
 /*! \brief Flush any pending data to be written and destroys the Log stream
  */
 Log::~Log()
 {
-  if (m_stream != NULL) {
-    --(m_stream->refCount);
-    if (m_stream->refCount == 0) {
-      internal::handleLogMessage(m_stream->msgType, m_stream->buffer);
-      delete m_stream;
+    if (m_stream != NULL) {
+        --(m_stream->refCount);
+        if (m_stream->refCount == 0) {
+            internal::handleLogMessage(m_stream->msgType, m_stream->buffer);
+            delete m_stream;
+        }
     }
-  }
 }
 
 /*! \brief Write a space character to the Log stream and return a reference to the stream
  */
 Log& Log::space()
 {
-  if (m_stream != NULL)
-    m_stream->ts << ' ';
-  return *this;
+    if (m_stream != NULL)
+        m_stream->ts << ' ';
+    return *this;
 }
 
 /*! \brief Write the boolean \p t to the log stream and return a reference to the stream
  */
 Log& Log::operator<<(bool t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t ? "true" : "false");
+    return Log::Stream::defaultQTextStreamOutput(*this, t ? "true" : "false");
 }
 
 Log& Log::operator<<(char t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t);
+    return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(short t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t);
+    return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(unsigned short t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t);
+    return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(int t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t);
+    return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(unsigned int t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t);
+    return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(long t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t);
+    return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(unsigned long t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t);
+    return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(qlonglong t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t);
+    return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(qulonglong t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t);
+    return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(float t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t);
+    return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(double t)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, t);
+    return Log::Stream::defaultQTextStreamOutput(*this, t);
 }
 
 Log& Log::operator<<(const char* str)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, str);
+    return Log::Stream::defaultQTextStreamOutput(*this, str);
 }
 
 Log& Log::operator<<(const QString& str)
 {
-  return Log::Stream::defaultQTextStreamOutput(*this, str);
+    return Log::Stream::defaultQTextStreamOutput(*this, str);
 }
 
 void Log::registerMetaTypes()
 {
-  static bool alreadyRegistered = false;
-  if (!alreadyRegistered) {
-    qRegisterMetaType<MessageType>("Log::MessageType");
-    qRegisterMetaType<MessageType>("qttools::Log::MessageType");
-    alreadyRegistered = true;
-  }
+    static bool alreadyRegistered = false;
+    if (!alreadyRegistered) {
+        qRegisterMetaType<MessageType>("Log::MessageType");
+        qRegisterMetaType<MessageType>("qttools::Log::MessageType");
+        alreadyRegistered = true;
+    }
 }
 
 // --
@@ -249,7 +249,7 @@ void Log::registerMetaTypes()
  */
 Log debugLog()
 {
-  return Log(Log::DebugMessage);
+    return Log(Log::DebugMessage);
 }
 
 /*! \brief
@@ -257,7 +257,7 @@ Log debugLog()
  */
 Log infoLog()
 {
-  return Log(Log::InfoMessage);
+    return Log(Log::InfoMessage);
 }
 
 /*! \brief
@@ -265,7 +265,7 @@ Log infoLog()
  */
 Log warningLog()
 {
-  return Log(Log::WarningMessage);
+    return Log(Log::WarningMessage);
 }
 
 /*! \brief
@@ -273,7 +273,7 @@ Log warningLog()
  */
 Log criticalLog()
 {
-  return Log(Log::CriticalMessage);
+    return Log(Log::CriticalMessage);
 }
 
 /*! \brief
@@ -281,7 +281,7 @@ Log criticalLog()
  */
 Log fatalLog()
 {
-  return Log(Log::FatalMessage);
+    return Log(Log::FatalMessage);
 }
 
 /*!
@@ -293,14 +293,14 @@ Log fatalLog()
  */
 
 AbstractLogHandler::AbstractLogHandler()
-  : m_autoDetach(false)
+    : m_autoDetach(false)
 {
 }
 
 AbstractLogHandler::~AbstractLogHandler()
 {
-  if (m_autoDetach)
-    qttools::detachGlobalLogHandler(this);
+    if (m_autoDetach)
+        qttools::detachGlobalLogHandler(this);
 }
 
 /*! \fn void AbstractLogHandler::handle(Log::MessageType, const QString&)
@@ -315,7 +315,7 @@ AbstractLogHandler::~AbstractLogHandler()
  */
 void AbstractLogHandler::setAutoDetach(bool b)
 {
-  m_autoDetach = b;
+    m_autoDetach = b;
 }
 
 /*! \brief Append \p handler to the global list of log handlers
@@ -330,16 +330,16 @@ void AbstractLogHandler::setAutoDetach(bool b)
  */
 void attachGlobalLogHandler(AbstractLogHandler* handler)
 {
-  if (handler != NULL) {
-    if (internal::globalLogHandlers()->isEmpty()
-        && !internal::globalPendingMessages()->isEmpty())
-    {
-      foreach (const internal::PendingLogMessage& msg, *(internal::globalPendingMessages()))
-        handler->handle(msg.first, msg.second);
-      internal::globalPendingMessages()->clear();
+    if (handler != NULL) {
+        if (internal::globalLogHandlers()->isEmpty()
+                && !internal::globalPendingMessages()->isEmpty())
+        {
+            foreach (const internal::PendingLogMessage& msg, *(internal::globalPendingMessages()))
+                handler->handle(msg.first, msg.second);
+            internal::globalPendingMessages()->clear();
+        }
+        internal::globalLogHandlers()->append(handler);
     }
-    internal::globalLogHandlers()->append(handler);
-  }
 }
 
 /*! \brief Remove \p handler from the global list of log handlers
@@ -347,8 +347,8 @@ void attachGlobalLogHandler(AbstractLogHandler* handler)
  */
 void detachGlobalLogHandler(AbstractLogHandler* handler)
 {
-  if (handler != NULL)
-    internal::globalLogHandlers()->removeAll(handler);
+    if (handler != NULL)
+        internal::globalLogHandlers()->removeAll(handler);
 }
 
 /*!
@@ -360,7 +360,7 @@ void detachGlobalLogHandler(AbstractLogHandler* handler)
  */
 
 LogDispatcher::LogDispatcher(QObject* parent)
-  : QObject(parent)
+    : QObject(parent)
 {
 }
 
@@ -368,7 +368,7 @@ LogDispatcher::LogDispatcher(QObject* parent)
  */
 void LogDispatcher::handle(Log::MessageType msgType, const QString& msg)
 {
-  emit log(msgType, msg);
+    emit log(msgType, msg);
 }
 
 } // namespace qttools

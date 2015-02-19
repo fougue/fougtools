@@ -46,8 +46,8 @@ namespace qttools {
 class QTTOOLS_CORE_EXPORT AbstractCipher
 {
 public:
-  virtual QByteArray encrypted(const QByteArray& data) const = 0;
-  virtual QByteArray decrypted(const QByteArray& encryptedData) const = 0;
+    virtual QByteArray encrypted(const QByteArray& data) const = 0;
+    virtual QByteArray decrypted(const QByteArray& encryptedData) const = 0;
 };
 
 } // namespace qttools

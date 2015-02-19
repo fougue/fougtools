@@ -62,11 +62,11 @@ template<typename TYPE>
 class down_cast
 {
 public:
-  explicit down_cast<TYPE>(const Handle_Standard_Transient& handle);
-  operator TYPE() const;
-  const TYPE operator->() const;
+    explicit down_cast<TYPE>(const Handle_Standard_Transient& handle);
+    operator TYPE() const;
+    const TYPE operator->() const;
 private:
-  const Handle_Standard_Transient& m_handle;
+    const Handle_Standard_Transient& m_handle;
 };
 
 
@@ -78,7 +78,7 @@ private:
 //! Construct the operator that will down cast \p object to an handle of type TYPE
 template<typename TYPE>
 down_cast<TYPE>::down_cast(const Handle_Standard_Transient& handle)
-  : m_handle(handle)
+    : m_handle(handle)
 {
 }
 
@@ -86,14 +86,14 @@ down_cast<TYPE>::down_cast(const Handle_Standard_Transient& handle)
 template<typename TYPE>
 down_cast<TYPE>::operator TYPE() const
 {
-  return TYPE::DownCast(m_handle);
+    return TYPE::DownCast(m_handle);
 }
 
 //! Downcasted handle to type \e TYPE
 template<typename TYPE>
 const TYPE down_cast<TYPE>::operator->() const
 {
-  return TYPE::DownCast(m_handle);
+    return TYPE::DownCast(m_handle);
 }
 } // namespace occ
 

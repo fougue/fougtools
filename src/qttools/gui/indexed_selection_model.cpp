@@ -51,23 +51,23 @@ namespace qttools {
  */
 
 IndexedSelectionModel::IndexedSelectionModel(QObject* parent)
-  : QObject(parent),
-    m_hadSelection(false)
+    : QObject(parent),
+      m_hadSelection(false)
 {
-  connect(this, SIGNAL(selectionCleared()), this, SIGNAL(selectionChanged()));
-  connect(this, SIGNAL(itemToggled(int,bool)), this, SIGNAL(selectionChanged()));
+    connect(this, SIGNAL(selectionCleared()), this, SIGNAL(selectionChanged()));
+    connect(this, SIGNAL(itemToggled(int,bool)), this, SIGNAL(selectionChanged()));
 }
 
 //! Indexes of the items being selected in the view
 const QSet<int>& IndexedSelectionModel::selectedItems() const
 {
-  return m_selectedItems;
+    return m_selectedItems;
 }
 
 //! Is the selection not empty ?
 bool IndexedSelectionModel::hasSelection() const
 {
-  return !this->selectedItems().isEmpty();
+    return !this->selectedItems().isEmpty();
 }
 
 /*! Is index \p id valid ?
@@ -76,7 +76,7 @@ bool IndexedSelectionModel::hasSelection() const
  */
 bool IndexedSelectionModel::isValidIndex(int id) const
 {
-  return id >= 0;
+    return id >= 0;
 }
 
 /*! \brief Untoggle all selected items, this will emit selectionCleared() at the end
@@ -85,43 +85,43 @@ bool IndexedSelectionModel::isValidIndex(int id) const
  */
 void IndexedSelectionModel::clear()
 {
-  this->beginClear();
-  this->clearItems();
-  this->endClear();
+    this->beginClear();
+    this->clearItems();
+    this->endClear();
 }
 
 //! Toggle the item's selection state of index \p id
 void IndexedSelectionModel::toggleItem(int id)
 {
-  if (!this->isValidIndex(id))
-    return;
-  const bool isItemSelected = this->selectedItems().contains(id);
-  if (isItemSelected)
-    m_selectedItems.remove(id);
-  else
-    m_selectedItems.insert(id);
-  emit itemToggled(id, !isItemSelected);
+    if (!this->isValidIndex(id))
+        return;
+    const bool isItemSelected = this->selectedItems().contains(id);
+    if (isItemSelected)
+        m_selectedItems.remove(id);
+    else
+        m_selectedItems.insert(id);
+    emit itemToggled(id, !isItemSelected);
 }
 
 void IndexedSelectionModel::beginClear()
 {
-  m_hadSelection = this->hasSelection();
+    m_hadSelection = this->hasSelection();
 }
 
 void IndexedSelectionModel::clearItems()
 {
-  // Untoggle selected items
-  foreach (int id, this->selectedItems()) {
-    m_selectedItems.remove(id);
-    emit itemToggled(id, false);
-  }
-  Q_ASSERT(this->selectedItems().count() == 0);
+    // Untoggle selected items
+    foreach (int id, this->selectedItems()) {
+        m_selectedItems.remove(id);
+        emit itemToggled(id, false);
+    }
+    Q_ASSERT(this->selectedItems().count() == 0);
 }
 
 void IndexedSelectionModel::endClear()
 {
-  if (m_hadSelection)
-    emit selectionCleared();
+    if (m_hadSelection)
+        emit selectionCleared();
 }
 
 } // namespace qttools

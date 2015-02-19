@@ -56,33 +56,33 @@ namespace occ {
 class BRepPointOnFacesProjection::Private
 {
 public:
-  typedef std::pair<GeomAPI_ProjectPointOnSurf*, TopoDS_Face> ProjectorInfo;
-  struct ProjectorCompare
-  {
-    bool operator()(const ProjectorInfo& lhs, const ProjectorInfo& rhs) const;
-  };
+    typedef std::pair<GeomAPI_ProjectPointOnSurf*, TopoDS_Face> ProjectorInfo;
+    struct ProjectorCompare
+    {
+        bool operator()(const ProjectorInfo& lhs, const ProjectorInfo& rhs) const;
+    };
 
-  Private();
+    Private();
 
-  std::vector<ProjectorInfo> m_projectors;
-  ProjectorInfo m_solProjector;
+    std::vector<ProjectorInfo> m_projectors;
+    ProjectorInfo m_solProjector;
 };
 
 BRepPointOnFacesProjection::Private::Private()
-  : m_solProjector(static_cast<GeomAPI_ProjectPointOnSurf*>(NULL), TopoDS_Face())
+    : m_solProjector(static_cast<GeomAPI_ProjectPointOnSurf*>(NULL), TopoDS_Face())
 {
 }
 
 bool BRepPointOnFacesProjection::Private::ProjectorCompare::operator()(const ProjectorInfo &lhs,
                                                                        const ProjectorInfo &rhs) const
 {
-  double p1Dist = std::numeric_limits<double>::max();
-  double p2Dist = std::numeric_limits<double>::max();
-  if (lhs.first->IsDone() && lhs.first->NbPoints() > 0)
-    p1Dist = lhs.first->LowerDistance();
-  if (rhs.first->IsDone() && rhs.first->NbPoints() > 0)
-    p2Dist = rhs.first->LowerDistance();
-  return p1Dist < p2Dist;
+    double p1Dist = std::numeric_limits<double>::max();
+    double p2Dist = std::numeric_limits<double>::max();
+    if (lhs.first->IsDone() && lhs.first->NbPoints() > 0)
+        p1Dist = lhs.first->LowerDistance();
+    if (rhs.first->IsDone() && rhs.first->NbPoints() > 0)
+        p2Dist = rhs.first->LowerDistance();
+    return p1Dist < p2Dist;
 }
 
 /*! \class BRepPointOnFacesProjection
@@ -100,21 +100,21 @@ bool BRepPointOnFacesProjection::Private::ProjectorCompare::operator()(const Pro
 
 //! Construct an uninitialized BRepPointOnFacesProjection
 BRepPointOnFacesProjection::BRepPointOnFacesProjection()
-  : d(new Private)
+    : d(new Private)
 {
 }
 
 //! Construct a BRepPointOnFacesProjection and call prepare() on \p faces
 BRepPointOnFacesProjection::BRepPointOnFacesProjection(const TopoDS_Shape& faces)
-  : d(new Private)
+    : d(new Private)
 {
-  this->prepare(faces);
+    this->prepare(faces);
 }
 
 BRepPointOnFacesProjection::~BRepPointOnFacesProjection()
 {
-  this->releaseMemory();
-  delete d;
+    this->releaseMemory();
+    delete d;
 }
 
 /*! \brief Setup the algorithm to project points on \p faces
@@ -122,80 +122,80 @@ BRepPointOnFacesProjection::~BRepPointOnFacesProjection()
  */
 void BRepPointOnFacesProjection::prepare(const TopoDS_Shape& faces)
 {
-  this->releaseMemory();
+    this->releaseMemory();
 
-  // Allocate a projector for each face
-  for (TopExp_Explorer exp(faces, TopAbs_FACE); exp.More(); exp.Next()) {
-    const TopoDS_Face& iFace = TopoDS::Face(exp.Current());
-    const Handle_Geom_Surface& iSurf = BRep_Tool::Surface(iFace);
-    d->m_projectors.push_back(
-          Private::ProjectorInfo(new GeomAPI_ProjectPointOnSurf(occ::origin3d, iSurf), iFace));
-  }
+    // Allocate a projector for each face
+    for (TopExp_Explorer exp(faces, TopAbs_FACE); exp.More(); exp.Next()) {
+        const TopoDS_Face& iFace = TopoDS::Face(exp.Current());
+        const Handle_Geom_Surface& iSurf = BRep_Tool::Surface(iFace);
+        d->m_projectors.push_back(
+                    Private::ProjectorInfo(new GeomAPI_ProjectPointOnSurf(occ::origin3d, iSurf), iFace));
+    }
 }
 
 void BRepPointOnFacesProjection::releaseMemory()
 {
-  // Destroy allocated projectors
-  for (unsigned i = 0; i < d->m_projectors.size(); ++i) {
-    if (d->m_projectors.at(i).first != NULL)
-      delete d->m_projectors.at(i).first;
-  }
-  d->m_projectors.clear();
+    // Destroy allocated projectors
+    for (unsigned i = 0; i < d->m_projectors.size(); ++i) {
+        if (d->m_projectors.at(i).first != NULL)
+            delete d->m_projectors.at(i).first;
+    }
+    d->m_projectors.clear();
 }
 
 BRepPointOnFacesProjection& BRepPointOnFacesProjection::compute(const gp_Pnt& point)
 {
-  for (unsigned i = 0; i < d->m_projectors.size(); ++i)
-    d->m_projectors.at(i).first->Perform(point);
+    for (unsigned i = 0; i < d->m_projectors.size(); ++i)
+        d->m_projectors.at(i).first->Perform(point);
 
-  std::vector<Private::ProjectorInfo>::const_iterator iResult =
-      std::min_element(d->m_projectors.begin(), d->m_projectors.end(), Private::ProjectorCompare());
-  assert(iResult != d->m_projectors.end() && "always_a_minimum");
-  d->m_solProjector = *iResult;
-  return *this;
+    std::vector<Private::ProjectorInfo>::const_iterator iResult =
+            std::min_element(d->m_projectors.begin(), d->m_projectors.end(), Private::ProjectorCompare());
+    assert(iResult != d->m_projectors.end() && "always_a_minimum");
+    d->m_solProjector = *iResult;
+    return *this;
 }
 
 bool BRepPointOnFacesProjection::isDone() const
 {
-  const GeomAPI_ProjectPointOnSurf* projector = d->m_solProjector.first;
-  if (projector != NULL)
-    return projector->IsDone() && projector->NbPoints() > 0;
-  return false;
+    const GeomAPI_ProjectPointOnSurf* projector = d->m_solProjector.first;
+    if (projector != NULL)
+        return projector->IsDone() && projector->NbPoints() > 0;
+    return false;
 }
 
 const TopoDS_Face& BRepPointOnFacesProjection::solutionFace() const
 {
-  static TopoDS_Face emptyFace;
-  if (this->isDone())
-    return d->m_solProjector.second;
-  return emptyFace;
+    static TopoDS_Face emptyFace;
+    if (this->isDone())
+        return d->m_solProjector.second;
+    return emptyFace;
 }
 
 gp_Pnt BRepPointOnFacesProjection::solutionPoint() const
 {
-  if (this->isDone())
-    return d->m_solProjector.first->NearestPoint();
-  return occ::origin3d;
+    if (this->isDone())
+        return d->m_solProjector.first->NearestPoint();
+    return occ::origin3d;
 }
 
 std::pair<double, double> BRepPointOnFacesProjection::solutionUV() const
 {
-  if (this->isDone()) {
-    double u, v;
-    d->m_solProjector.first->LowerDistanceParameters(u, v);
-    return std::make_pair(u, v);
-  }
-  return std::make_pair(0., 0.);
+    if (this->isDone()) {
+        double u, v;
+        d->m_solProjector.first->LowerDistanceParameters(u, v);
+        return std::make_pair(u, v);
+    }
+    return std::make_pair(0., 0.);
 }
 
 gp_Vec BRepPointOnFacesProjection::solutionNormal() const
 {
-  if (this->isDone()) {
-    double u, v;
-    d->m_solProjector.first->LowerDistanceParameters(u, v);
-    return occ::TopoDsTools::normalToFaceAtUV(d->m_solProjector.second, u, v);
-  }
-  return gp_Vec(0., 0., 1.);
+    if (this->isDone()) {
+        double u, v;
+        d->m_solProjector.first->LowerDistanceParameters(u, v);
+        return occ::TopoDsTools::normalToFaceAtUV(d->m_solProjector.second, u, v);
+    }
+    return gp_Vec(0., 0., 1.);
 }
 
 } // namespace occ

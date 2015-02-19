@@ -46,26 +46,26 @@ namespace qttools {
 
 class QTTOOLS_GUI_EXPORT WaitDialog : public QDialog
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  WaitDialog(QWidget* parent = NULL);
-  ~WaitDialog();
+    WaitDialog(QWidget* parent = NULL);
+    ~WaitDialog();
 
-  bool isWaiting() const;
+    bool isWaiting() const;
 
 public slots:
-  void setWaitLabel(const QString& text);
-  void setMinimumDuration(int msecs);
-  void startWait();
-  void stopWait();
+    void setWaitLabel(const QString& text);
+    void setMinimumDuration(int msecs);
+    void startWait();
+    void stopWait();
 
 private slots:
-  void updateProgress();
+    void updateProgress();
 
 private:
-  class Private;
-  Private* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace qttools

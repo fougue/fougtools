@@ -46,24 +46,24 @@ template <typename T>
 class BasicSharedPointer
 {
 public:
-  BasicSharedPointer(T* data = NULL);
-  BasicSharedPointer(const BasicSharedPointer<T>& other);
-  ~BasicSharedPointer();
+    BasicSharedPointer(T* data = NULL);
+    BasicSharedPointer(const BasicSharedPointer<T>& other);
+    ~BasicSharedPointer();
 
-  T& operator*() const;
-  T* operator->() const;
-  T* data() const;
+    T& operator*() const;
+    T* operator->() const;
+    T* data() const;
 
-  bool isNull() const;
+    bool isNull() const;
 
-  BasicSharedPointer<T>& operator=(const BasicSharedPointer<T>& other);
+    BasicSharedPointer<T>& operator=(const BasicSharedPointer<T>& other);
 
 private:
-  void addRef();
-  void releaseRef();
+    void addRef();
+    void releaseRef();
 
-  T* m_data;
-  unsigned* m_refCount;
+    T* m_data;
+    unsigned* m_refCount;
 };
 
 //
@@ -89,76 +89,76 @@ private:
 
 template<typename T>
 BasicSharedPointer<T>::BasicSharedPointer(T* data)
-  : m_data(data),
-    m_refCount(new unsigned(1))
+    : m_data(data),
+      m_refCount(new unsigned(1))
 {
 }
 
 template<typename T>
 BasicSharedPointer<T>::BasicSharedPointer(const BasicSharedPointer<T>& other)
-  : m_data(other.m_data),
-    m_refCount(other.m_refCount)
+    : m_data(other.m_data),
+      m_refCount(other.m_refCount)
 {
-  this->addRef();
+    this->addRef();
 }
 
 template<typename T>
 BasicSharedPointer<T>::~BasicSharedPointer()
 {
-  this->releaseRef();
+    this->releaseRef();
 }
 
 template<typename T>
 T& BasicSharedPointer<T>::operator*() const
 {
-  return *m_data;
+    return *m_data;
 }
 
 template<typename T>
 T* BasicSharedPointer<T>::operator->() const
 {
-  return m_data;
+    return m_data;
 }
 
 template<typename T>
 T* BasicSharedPointer<T>::data() const
 {
-  return m_data;
+    return m_data;
 }
 
 template<typename T>
 bool BasicSharedPointer<T>::isNull() const
 {
-  return m_data == NULL;
+    return m_data == NULL;
 }
 
 template<typename T>
 BasicSharedPointer<T>& BasicSharedPointer<T>::operator=(const BasicSharedPointer<T>& other)
 {
-  if (this != &other) {
-    m_data = other.m_data;
-    m_refCount = other.m_refCount;
-    this->addRef();
-  }
-  return *this;
+    if (this != &other) {
+        m_data = other.m_data;
+        m_refCount = other.m_refCount;
+        this->addRef();
+    }
+    return *this;
 }
 
 template<typename T>
 void BasicSharedPointer<T>::addRef()
 {
-  ++(*m_refCount);
+    ++(*m_refCount);
 }
 
 template<typename T>
 void BasicSharedPointer<T>::releaseRef()
 {
-  --(*m_refCount);
-  if (*m_refCount == 0) {
-    delete m_data;
-    delete m_refCount;
-    m_data = NULL;
-    m_refCount = NULL;
-  }
+    --(*m_refCount);
+    if (*m_refCount == 0) {
+        delete m_data;
+        delete m_refCount;
+        m_data = NULL;
+        m_refCount = NULL;
+    }
 }
 
 } // namespace cpp

@@ -46,60 +46,60 @@ namespace occ {
 
 class OCCTOOLS_EXPORT GCPnts_UniformAbscissaConstIterator
 {
-  // --- Friends
-  friend double operator*(const GCPnts_UniformAbscissaConstIterator& i);
-  friend GCPnts_UniformAbscissaConstIterator&
-  operator++(GCPnts_UniformAbscissaConstIterator& i);
-  friend GCPnts_UniformAbscissaConstIterator
-  operator++(GCPnts_UniformAbscissaConstIterator& i, int unused);
-  friend GCPnts_UniformAbscissaConstIterator&
-  operator--(GCPnts_UniformAbscissaConstIterator& i);
-  friend GCPnts_UniformAbscissaConstIterator
-  operator--(GCPnts_UniformAbscissaConstIterator& i, int unused);
-  friend GCPnts_UniformAbscissaConstIterator
-  operator+(const GCPnts_UniformAbscissaConstIterator& i, int n);
-  friend GCPnts_UniformAbscissaConstIterator
-  operator+(int v, const GCPnts_UniformAbscissaConstIterator& i);
-  friend GCPnts_UniformAbscissaConstIterator
-  operator-(const GCPnts_UniformAbscissaConstIterator& i, int n);
-  friend GCPnts_UniformAbscissaConstIterator&
-  operator+=(GCPnts_UniformAbscissaConstIterator& i, int n);
-  friend GCPnts_UniformAbscissaConstIterator&
-  operator-=(GCPnts_UniformAbscissaConstIterator& i, int n);
-  friend int operator-(const GCPnts_UniformAbscissaConstIterator& i,
-                       const GCPnts_UniformAbscissaConstIterator& j);
-  friend bool operator<(const GCPnts_UniformAbscissaConstIterator& i,
-                        const GCPnts_UniformAbscissaConstIterator& j);
-  friend bool operator>(const GCPnts_UniformAbscissaConstIterator& i,
-                        const GCPnts_UniformAbscissaConstIterator& j);
-  friend bool operator<=(const GCPnts_UniformAbscissaConstIterator& i,
+    // --- Friends
+    friend double operator*(const GCPnts_UniformAbscissaConstIterator& i);
+    friend GCPnts_UniformAbscissaConstIterator&
+    operator++(GCPnts_UniformAbscissaConstIterator& i);
+    friend GCPnts_UniformAbscissaConstIterator
+    operator++(GCPnts_UniformAbscissaConstIterator& i, int unused);
+    friend GCPnts_UniformAbscissaConstIterator&
+    operator--(GCPnts_UniformAbscissaConstIterator& i);
+    friend GCPnts_UniformAbscissaConstIterator
+    operator--(GCPnts_UniformAbscissaConstIterator& i, int unused);
+    friend GCPnts_UniformAbscissaConstIterator
+    operator+(const GCPnts_UniformAbscissaConstIterator& i, int n);
+    friend GCPnts_UniformAbscissaConstIterator
+    operator+(int v, const GCPnts_UniformAbscissaConstIterator& i);
+    friend GCPnts_UniformAbscissaConstIterator
+    operator-(const GCPnts_UniformAbscissaConstIterator& i, int n);
+    friend GCPnts_UniformAbscissaConstIterator&
+    operator+=(GCPnts_UniformAbscissaConstIterator& i, int n);
+    friend GCPnts_UniformAbscissaConstIterator&
+    operator-=(GCPnts_UniformAbscissaConstIterator& i, int n);
+    friend int operator-(const GCPnts_UniformAbscissaConstIterator& i,
                          const GCPnts_UniformAbscissaConstIterator& j);
-  friend bool operator>=(const GCPnts_UniformAbscissaConstIterator& i,
-                         const GCPnts_UniformAbscissaConstIterator& j);
-  friend bool operator==(const GCPnts_UniformAbscissaConstIterator& i,
-                         const GCPnts_UniformAbscissaConstIterator& j);
-  friend bool operator!=(const GCPnts_UniformAbscissaConstIterator& i,
-                         const GCPnts_UniformAbscissaConstIterator& j);
+    friend bool operator<(const GCPnts_UniformAbscissaConstIterator& i,
+                          const GCPnts_UniformAbscissaConstIterator& j);
+    friend bool operator>(const GCPnts_UniformAbscissaConstIterator& i,
+                          const GCPnts_UniformAbscissaConstIterator& j);
+    friend bool operator<=(const GCPnts_UniformAbscissaConstIterator& i,
+                           const GCPnts_UniformAbscissaConstIterator& j);
+    friend bool operator>=(const GCPnts_UniformAbscissaConstIterator& i,
+                           const GCPnts_UniformAbscissaConstIterator& j);
+    friend bool operator==(const GCPnts_UniformAbscissaConstIterator& i,
+                           const GCPnts_UniformAbscissaConstIterator& j);
+    friend bool operator!=(const GCPnts_UniformAbscissaConstIterator& i,
+                           const GCPnts_UniformAbscissaConstIterator& j);
 
 public:
-  typedef int difference_type;
-  typedef double value_type;
-  typedef const double* pointer;
-  typedef const double& reference;
-  typedef std::random_access_iterator_tag iterator_category;
+    typedef int difference_type;
+    typedef double value_type;
+    typedef const double* pointer;
+    typedef const double& reference;
+    typedef std::random_access_iterator_tag iterator_category;
 
-  GCPnts_UniformAbscissaConstIterator();
-  GCPnts_UniformAbscissaConstIterator(const GCPnts_UniformAbscissa& ua, int index = 1);
+    GCPnts_UniformAbscissaConstIterator();
+    GCPnts_UniformAbscissaConstIterator(const GCPnts_UniformAbscissa& ua, int index = 1);
 
-  double operator[](int n) const;
-  const GCPnts_UniformAbscissa& operator->() const;
-  int index() const;
+    double operator[](int n) const;
+    const GCPnts_UniformAbscissa& operator->() const;
+    int index() const;
 
 private:
-  void limitInternalIndex();
+    void limitInternalIndex();
 
-  const GCPnts_UniformAbscissa* m_ua;
-  int m_index;
+    const GCPnts_UniformAbscissa* m_ua;
+    int m_index;
 };
 
 // --- Related functions

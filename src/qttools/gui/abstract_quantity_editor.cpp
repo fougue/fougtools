@@ -53,14 +53,14 @@ namespace qttools {
  */
 AbstractQuantityEditor::AbstractQuantityEditor()
 {
-  QuantityEditorManager::globalInstance()->attach(this);
+    QuantityEditorManager::globalInstance()->attach(this);
 }
 
 /*! Destroy and auto-detach this editor with QuantityEditorManager::detach()
  */
 AbstractQuantityEditor::~AbstractQuantityEditor()
 {
-  QuantityEditorManager::globalInstance()->detach(this);
+    QuantityEditorManager::globalInstance()->detach(this);
 }
 
 /*! \brief Called by QuantityEditorManager when the current measurement system was switched to
@@ -70,12 +70,12 @@ AbstractQuantityEditor::~AbstractQuantityEditor()
  */
 void AbstractQuantityEditor::updateEditor(QLocale::MeasurementSystem newSys)
 {
-  Q_UNUSED(newSys);
+    Q_UNUSED(newSys);
 }
 
 QLocale::MeasurementSystem AbstractQuantityEditor::measurementSystem() const
 {
-  return QuantityEditorManager::globalInstance()->measurementSytem();
+    return QuantityEditorManager::globalInstance()->measurementSytem();
 }
 
 } // namespace qttools

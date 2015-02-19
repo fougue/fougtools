@@ -72,28 +72,28 @@ template<typename _READER_>
 TopoDS_Shape loadFile(occ::IO::FileNameLocal8Bit fileName,
                       Handle_Message_ProgressIndicator indicator)
 {
-  TopoDS_Shape result;
+    TopoDS_Shape result;
 
-  if (!indicator.IsNull())
-    indicator->NewScope(30, "Loading file");
-  _READER_ reader;
-  const int status = reader.ReadFile(const_cast<Standard_CString>(fileName));
-  if (!indicator.IsNull())
-    indicator->EndScope();
-  if (status == IFSelect_RetDone) {
-    if (!indicator.IsNull()) {
-      reader.WS()->MapReader()->SetProgress(indicator);
-      indicator->NewScope(70, "Translating file");
+    if (!indicator.IsNull())
+        indicator->NewScope(30, "Loading file");
+    _READER_ reader;
+    const int status = reader.ReadFile(const_cast<Standard_CString>(fileName));
+    if (!indicator.IsNull())
+        indicator->EndScope();
+    if (status == IFSelect_RetDone) {
+        if (!indicator.IsNull()) {
+            reader.WS()->MapReader()->SetProgress(indicator);
+            indicator->NewScope(70, "Translating file");
+        }
+        reader.NbRootsForTransfer();
+        reader.TransferRoots();
+        result = reader.OneShape();
+        if (!indicator.IsNull()) {
+            indicator->EndScope();
+            reader.WS()->MapReader()->SetProgress(NULL);
+        }
     }
-    reader.NbRootsForTransfer();
-    reader.TransferRoots();
-    result = reader.OneShape();
-    if (!indicator.IsNull()) {
-      indicator->EndScope();
-      reader.WS()->MapReader()->SetProgress(NULL);
-    }
-  }
-  return result;
+    return result;
 }
 
 const char* skipWhiteSpaces(const char* str, std::size_t len)
@@ -153,16 +153,16 @@ IO::Format IO::partFormatFromContents(const char* contentsBegin,
     // -- Binary STL ?
     const std::size_t binaryStlHeaderSize = 80 + sizeof(std::uint32_t);
     if (contentsBeginSize >= binaryStlHeaderSize) {
-      const std::uint32_t offset = 80; // Skip header
-      const std::uint32_t facetsCount =
-              (static_cast<std::uint32_t>(contentsBegin[offset + 0]) << 24)
-              | (static_cast<std::uint32_t>(contentsBegin[offset + 1]) << 16)
-              | (static_cast<std::uint32_t>(contentsBegin[offset + 2]) << 8)
-              | (static_cast<std::uint32_t>(contentsBegin[offset + 3]));
-      const unsigned facetSize = (sizeof(float) * 12) + sizeof(std::uint16_t);
+        const std::uint32_t offset = 80; // Skip header
+        const std::uint32_t facetsCount =
+                (static_cast<std::uint32_t>(contentsBegin[offset + 0]) << 24)
+                | (static_cast<std::uint32_t>(contentsBegin[offset + 1]) << 16)
+                | (static_cast<std::uint32_t>(contentsBegin[offset + 2]) << 8)
+                | (static_cast<std::uint32_t>(contentsBegin[offset + 3]));
+        const unsigned facetSize = (sizeof(float) * 12) + sizeof(std::uint16_t);
 
-      if ((facetSize * facetsCount + binaryStlHeaderSize) == fullContentsSizeHint)
-        return BinaryStlFormat;
+        if ((facetSize * facetsCount + binaryStlHeaderSize) == fullContentsSizeHint)
+            return BinaryStlFormat;
     }
 
     // Assume a text-based format
@@ -231,22 +231,22 @@ IO::Format IO::partFormatFromContents(const char* contentsBegin,
 TopoDS_Shape IO::loadPartFile(
         FileNameLocal8Bit fileName, Handle_Message_ProgressIndicator indicator)
 {
-  switch (partFormat(fileName)) {
-  case StepFormat:
-    return IO::loadStepFile(fileName, indicator);
-  case IgesFormat:
-    return IO::loadIgesFile(fileName, indicator);
-  case OccBrepFormat:
-    return IO::loadBrepFile(fileName, indicator);
-  default:
-    return TopoDS_Shape();
-  }
+    switch (partFormat(fileName)) {
+    case StepFormat:
+        return IO::loadStepFile(fileName, indicator);
+    case IgesFormat:
+        return IO::loadIgesFile(fileName, indicator);
+    case OccBrepFormat:
+        return IO::loadBrepFile(fileName, indicator);
+    default:
+        return TopoDS_Shape();
+    }
 }
 
 Handle_StlMesh_Mesh IO::loadStlFile(
         FileNameLocal8Bit fileName, Handle_Message_ProgressIndicator indicator)
 {
-  return RWStl::ReadFile(OSD_Path(fileName), indicator);
+    return RWStl::ReadFile(OSD_Path(fileName), indicator);
 }
 
 /*! \brief Topologic shape read from a file (OCC's internal BREP format)
@@ -257,10 +257,10 @@ Handle_StlMesh_Mesh IO::loadStlFile(
 TopoDS_Shape IO::loadBrepFile(
         FileNameLocal8Bit fileName, Handle_Message_ProgressIndicator indicator)
 {
-  TopoDS_Shape result;
-  BRep_Builder brepBuilder;
-  BRepTools::Read(result, fileName, brepBuilder, indicator);
-  return result;
+    TopoDS_Shape result;
+    BRep_Builder brepBuilder;
+    BRepTools::Read(result, fileName, brepBuilder, indicator);
+    return result;
 }
 
 /*! \brief Topologic shape read from a file (IGES format)
@@ -270,7 +270,7 @@ TopoDS_Shape IO::loadBrepFile(
  */
 TopoDS_Shape IO::loadIgesFile(FileNameLocal8Bit fileName, Handle_Message_ProgressIndicator indicator)
 {
-  return ::loadFile<IGESControl_Reader>(fileName, indicator);
+    return ::loadFile<IGESControl_Reader>(fileName, indicator);
 }
 
 /*! \brief Topologic shape read from a file (STEP format)
@@ -280,7 +280,7 @@ TopoDS_Shape IO::loadIgesFile(FileNameLocal8Bit fileName, Handle_Message_Progres
  */
 TopoDS_Shape IO::loadStepFile(FileNameLocal8Bit fileName, Handle_Message_ProgressIndicator indicator)
 {
-  return ::loadFile<STEPControl_Reader>(fileName, indicator);
+    return ::loadFile<STEPControl_Reader>(fileName, indicator);
 }
 
 /*! \brief Write a topologic shape to a file (OCC's internal BREP format)
@@ -292,7 +292,7 @@ void IO::writeBrepFile(const TopoDS_Shape& shape,
                        FileNameLocal8Bit fileName,
                        Handle_Message_ProgressIndicator indicator)
 {
-  BRepTools::Write(shape, fileName, indicator);
+    BRepTools::Write(shape, fileName, indicator);
 }
 
 /*! \brief Write a topologic shape to a file (IGES format)
@@ -304,15 +304,15 @@ void IO::writeIgesFile(const TopoDS_Shape& shape,
                        FileNameLocal8Bit fileName,
                        Handle_Message_ProgressIndicator indicator)
 {
-  IGESControl_Controller::Init();
-  IGESControl_Writer writer(Interface_Static::CVal("XSTEP.iges.unit"),
-                            Interface_Static::IVal("XSTEP.iges.writebrep.mode"));
-  if (!indicator.IsNull())
-    writer.TransferProcess()->SetProgress(indicator);
-  writer.AddShape(shape);
-  writer.ComputeModel();
-  writer.Write(fileName);
-  writer.TransferProcess()->SetProgress(NULL);
+    IGESControl_Controller::Init();
+    IGESControl_Writer writer(Interface_Static::CVal("XSTEP.iges.unit"),
+                              Interface_Static::IVal("XSTEP.iges.writebrep.mode"));
+    if (!indicator.IsNull())
+        writer.TransferProcess()->SetProgress(indicator);
+    writer.AddShape(shape);
+    writer.ComputeModel();
+    writer.Write(fileName);
+    writer.TransferProcess()->SetProgress(NULL);
 }
 
 /*! \brief Write a topologic shape to a file (STEP format)
@@ -324,13 +324,13 @@ void IO::writeStepFile(const TopoDS_Shape& shape,
                        FileNameLocal8Bit fileName,
                        Handle_Message_ProgressIndicator indicator)
 {
-  IFSelect_ReturnStatus status;
-  STEPControl_Writer writer;
-  if (!indicator.IsNull())
-    writer.WS()->TransferWriter()->FinderProcess()->SetProgress(indicator);
-  status = writer.Transfer(shape, STEPControl_AsIs);
-  status = writer.Write(fileName);
-  writer.WS()->TransferWriter()->FinderProcess()->SetProgress(NULL);
+    IFSelect_ReturnStatus status;
+    STEPControl_Writer writer;
+    if (!indicator.IsNull())
+        writer.WS()->TransferWriter()->FinderProcess()->SetProgress(indicator);
+    status = writer.Transfer(shape, STEPControl_AsIs);
+    status = writer.Write(fileName);
+    writer.WS()->TransferWriter()->FinderProcess()->SetProgress(NULL);
 }
 
 /*! \brief Write a topologic shape to a file (ASCII STL format)
@@ -339,9 +339,9 @@ void IO::writeStepFile(const TopoDS_Shape& shape,
  */
 void IO::writeAsciiStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName)
 {
-  StlAPI_Writer writer;
-  writer.ASCIIMode() = Standard_True;
-  writer.Write(shape, fileName);
+    StlAPI_Writer writer;
+    writer.ASCIIMode() = Standard_True;
+    writer.Write(shape, fileName);
 }
 
 /*! \brief Write a topologic shape to a file (binary STL format)
@@ -350,9 +350,9 @@ void IO::writeAsciiStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName
  */
 void IO::writeBinaryStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName)
 {
-  StlAPI_Writer writer;
-  writer.ASCIIMode() = Standard_False;
-  writer.Write(shape, fileName);
+    StlAPI_Writer writer;
+    writer.ASCIIMode() = Standard_False;
+    writer.Write(shape, fileName);
 }
 
 } // namespace occ

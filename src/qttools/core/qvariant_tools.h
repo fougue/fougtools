@@ -51,11 +51,11 @@ namespace qttools {
 class QTTOOLS_CORE_EXPORT QVariantTools
 {
 public:
-  template<typename T, template <typename> class CONTAINER>
-  static CONTAINER<T> toTypedContainer(const CONTAINER<QVariant>& variants);
+    template<typename T, template <typename> class CONTAINER>
+    static CONTAINER<T> toTypedContainer(const CONTAINER<QVariant>& variants);
 
-  template<typename T, template <typename> class CONTAINER>
-  static CONTAINER<QVariant> toContainerOfVariants(const CONTAINER<T>& typeds);
+    template<typename T, template <typename> class CONTAINER>
+    static CONTAINER<QVariant> toContainerOfVariants(const CONTAINER<T>& typeds);
 };
 
 } // namespace qttools
@@ -80,11 +80,11 @@ namespace qttools {
 template<typename T, template <typename> class CONTAINER>
 CONTAINER<T> QVariantTools::toTypedContainer(const CONTAINER<QVariant>& variants)
 {
-  CONTAINER<T> typeds;
-  std::transform(variants.begin(), variants.end(),
-                 std::back_inserter(typeds),
-                 std::ptr_fun(&qVariantValue<T>));
-  return typeds;
+    CONTAINER<T> typeds;
+    std::transform(variants.begin(), variants.end(),
+                   std::back_inserter(typeds),
+                   std::ptr_fun(&qVariantValue<T>));
+    return typeds;
 }
 
 /*! \brief Converts a container of typed data (\c T) to a container of QVariant
@@ -97,11 +97,11 @@ CONTAINER<T> QVariantTools::toTypedContainer(const CONTAINER<QVariant>& variants
 template<typename T, template <typename> class CONTAINER>
 CONTAINER<QVariant> QVariantTools::toContainerOfVariants(const CONTAINER<T>& typeds)
 {
-  CONTAINER<QVariant> variants;
-  std::transform(typeds.begin(), typeds.end(),
-                 std::back_inserter(variants),
-                 std::ptr_fun(&QVariant::fromValue<T>));
-  return variants;
+    CONTAINER<QVariant> variants;
+    std::transform(typeds.begin(), typeds.end(),
+                   std::back_inserter(variants),
+                   std::ptr_fun(&QVariant::fromValue<T>));
+    return variants;
 }
 
 } // namespace qttools

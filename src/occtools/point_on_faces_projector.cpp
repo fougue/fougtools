@@ -75,60 +75,60 @@ typedef NCollection_UBTreeFiller<NodeIndexInTriangulation_t, Bnd_Box> UBTreeOfNo
 class NodeBndBoxSelector : public UBTreeOfNodeIndices_t::Selector
 {
 public:
-  NodeBndBoxSelector(const gp_Pnt& pntToProject)
-    : m_pntToProject(pntToProject),
-      m_currMinDist(std::numeric_limits<double>::max()),
-      m_currMinDistNodeId(-1, Handle_Poly_Triangulation())
-  {
-  }
-
-  Standard_Boolean Reject(const Bnd_Box& bb) const
-  {
-    const bool result =
-        bb.IsOpenXmin() == Standard_True
-        || bb.IsOpenXmax() == Standard_True
-        || bb.IsOpenYmin() == Standard_True
-        || bb.IsOpenYmax() == Standard_True
-        || bb.IsOpenZmin() == Standard_True
-        || bb.IsOpenZmax() == Standard_True
-        || bb.IsWhole() == Standard_True
-        || bb.IsVoid() == Standard_True;
-    return result ? Standard_True : Standard_False;
-  }
-
-  Standard_Boolean Accept(const NodeIndexInTriangulation_t& nodeId)
-  {
-    if (nodeId.second.IsNull())
-      return Standard_False;
-
-    const TColgp_Array1OfPnt& nodes = nodeId.second->Nodes();
-    if (!(nodes.Lower() <= nodeId.first && nodeId.first <= nodes.Upper()))
-      return Standard_False;
-
-    const gp_Pnt& pnt = nodes(nodeId.first);
-    const double dist = m_pntToProject.SquareDistance(pnt);
-    if (dist < m_currMinDist || m_currMinDistNodeId.first == -1) {
-      m_currMinDistNodeId = nodeId;
-      m_currMinDist = dist;
-      return Standard_True;
+    NodeBndBoxSelector(const gp_Pnt& pntToProject)
+        : m_pntToProject(pntToProject),
+          m_currMinDist(std::numeric_limits<double>::max()),
+          m_currMinDistNodeId(-1, Handle_Poly_Triangulation())
+    {
     }
-    return Standard_False;
-  }
 
-  double minDistance() const
-  {
-    return std::sqrt(m_currMinDist);
-  }
+    Standard_Boolean Reject(const Bnd_Box& bb) const
+    {
+        const bool result =
+                bb.IsOpenXmin() == Standard_True
+                || bb.IsOpenXmax() == Standard_True
+                || bb.IsOpenYmin() == Standard_True
+                || bb.IsOpenYmax() == Standard_True
+                || bb.IsOpenZmin() == Standard_True
+                || bb.IsOpenZmax() == Standard_True
+                || bb.IsWhole() == Standard_True
+                || bb.IsVoid() == Standard_True;
+        return result ? Standard_True : Standard_False;
+    }
 
-  const NodeIndexInTriangulation_t& minDistanceNodeIndex() const
-  {
-    return m_currMinDistNodeId;
-  }
+    Standard_Boolean Accept(const NodeIndexInTriangulation_t& nodeId)
+    {
+        if (nodeId.second.IsNull())
+            return Standard_False;
+
+        const TColgp_Array1OfPnt& nodes = nodeId.second->Nodes();
+        if (!(nodes.Lower() <= nodeId.first && nodeId.first <= nodes.Upper()))
+            return Standard_False;
+
+        const gp_Pnt& pnt = nodes(nodeId.first);
+        const double dist = m_pntToProject.SquareDistance(pnt);
+        if (dist < m_currMinDist || m_currMinDistNodeId.first == -1) {
+            m_currMinDistNodeId = nodeId;
+            m_currMinDist = dist;
+            return Standard_True;
+        }
+        return Standard_False;
+    }
+
+    double minDistance() const
+    {
+        return std::sqrt(m_currMinDist);
+    }
+
+    const NodeIndexInTriangulation_t& minDistanceNodeIndex() const
+    {
+        return m_currMinDistNodeId;
+    }
 
 private:
-  const gp_Pnt m_pntToProject;
-  double m_currMinDist;
-  NodeIndexInTriangulation_t m_currMinDistNodeId;
+    const gp_Pnt m_pntToProject;
+    double m_currMinDist;
+    NodeIndexInTriangulation_t m_currMinDistNodeId;
 };
 
 static const TopoDS_Face dummyFace;
@@ -138,45 +138,45 @@ static const TopoDS_Face dummyFace;
 class PointOnFacesProjector::Private
 {
 public:
-  ~Private();
+    ~Private();
 
-  void clear();
+    void clear();
 
-  const TopoDS_Face* triangulationToFace(Poly_Triangulation *tri) const;
-  const TopoDS_Face* triangulationToFace(const Handle_Poly_Triangulation& tri) const;
-  void insertMapping(const Handle_Poly_Triangulation& tri, const TopoDS_Face& face);
+    const TopoDS_Face* triangulationToFace(Poly_Triangulation *tri) const;
+    const TopoDS_Face* triangulationToFace(const Handle_Poly_Triangulation& tri) const;
+    void insertMapping(const Handle_Poly_Triangulation& tri, const TopoDS_Face& face);
 
-  std::map<const Poly_Triangulation*, TopoDS_Face> m_faceMap;
-  internal::UBTreeOfNodeIndices_t m_ubTree;
+    std::map<const Poly_Triangulation*, TopoDS_Face> m_faceMap;
+    internal::UBTreeOfNodeIndices_t m_ubTree;
 };
 
 PointOnFacesProjector::Private::~Private()
 {
-  this->clear();
+    this->clear();
 }
 
 void PointOnFacesProjector::Private::clear()
 {
-  m_faceMap.clear();
-  m_ubTree.Clear();
+    m_faceMap.clear();
+    m_ubTree.Clear();
 }
 
 const TopoDS_Face *PointOnFacesProjector::Private::triangulationToFace(Poly_Triangulation *tri) const
 {
-  auto it = m_faceMap.find(tri);
-  return it != m_faceMap.end() ? &(it->second) : NULL;
+    auto it = m_faceMap.find(tri);
+    return it != m_faceMap.end() ? &(it->second) : NULL;
 }
 
 const TopoDS_Face*
 PointOnFacesProjector::Private::triangulationToFace(const Handle_Poly_Triangulation& tri) const
 {
-  return this->triangulationToFace(tri.operator->());
+    return this->triangulationToFace(tri.operator->());
 }
 
 void PointOnFacesProjector::Private::insertMapping(const Handle_Poly_Triangulation &tri,
                                                    const TopoDS_Face &face)
 {
-  m_faceMap[tri.operator->()] = face;
+    m_faceMap[tri.operator->()] = face;
 }
 
 /*! \class PointOnFacesProjector
@@ -189,10 +189,10 @@ void PointOnFacesProjector::Private::insertMapping(const Handle_Poly_Triangulati
 // --- PointOnFacesProjector::Result implementation
 
 PointOnFacesProjector::Result::Result()
-  : isValid(false),
-    face(internal::dummyFace),
-    point(occ::origin3d),
-    normal(occ::zDir3d)
+    : isValid(false),
+      face(internal::dummyFace),
+      point(occ::origin3d),
+      normal(occ::zDir3d)
 {
 }
 
@@ -201,15 +201,15 @@ PointOnFacesProjector::Result::Result()
 PointOnFacesProjector::Result::Result(const TopoDS_Face& sFace,
                                       const gp_Pnt& sPoint,
                                       const gp_Vec& sNormal)
-  : isValid(true),
-    face(sFace),
-    point(sPoint),
-    normal(sNormal)
+    : isValid(true),
+      face(sFace),
+      point(sPoint),
+      normal(sNormal)
 {
 }
 
 PointOnFacesProjector::PointOnFacesProjector()
-  : d(new Private)
+    : d(new Private)
 {
 }
 
@@ -217,103 +217,103 @@ PointOnFacesProjector::PointOnFacesProjector()
  *
  */
 PointOnFacesProjector::PointOnFacesProjector(const TopoDS_Shape& faces)
-  : d(new Private)
+    : d(new Private)
 {
-  this->prepare(faces);
+    this->prepare(faces);
 }
 
 PointOnFacesProjector::~PointOnFacesProjector()
 {
-  delete d;
+    delete d;
 }
 
 void PointOnFacesProjector::prepare(const TopoDS_Shape& faces)
 {
-  d->clear();
-  // Build the UB tree for binary search of points
-  internal::UBTreeOfNodeIndicesFiller_t ubTreeFiller(d->m_ubTree, Standard_False);
-  for (TopExp_Explorer exp(faces, TopAbs_FACE); exp.More(); exp.Next()) {
-    const TopoDS_Face face = TopoDS::Face(exp.Current());
-    if (!face.IsNull()) {
-      TopLoc_Location loc;
-      const Handle_Poly_Triangulation& triangulation = BRep_Tool::Triangulation(face, loc);
-      if (!triangulation.IsNull()) {
-        d->insertMapping(triangulation, face);
-        const gp_Trsf& trsf = loc.Transformation();
-        const TColgp_Array1OfPnt& nodes = triangulation->Nodes();
-        for (int i = nodes.Lower(); i <= nodes.Upper(); ++i) {
-          const gp_Pnt iNode(nodes(i).Transformed(trsf));
-          Bnd_Box ibb;
-          ibb.Set(iNode);
-          ubTreeFiller.Add(std::make_pair(i, triangulation), ibb);
+    d->clear();
+    // Build the UB tree for binary search of points
+    internal::UBTreeOfNodeIndicesFiller_t ubTreeFiller(d->m_ubTree, Standard_False);
+    for (TopExp_Explorer exp(faces, TopAbs_FACE); exp.More(); exp.Next()) {
+        const TopoDS_Face face = TopoDS::Face(exp.Current());
+        if (!face.IsNull()) {
+            TopLoc_Location loc;
+            const Handle_Poly_Triangulation& triangulation = BRep_Tool::Triangulation(face, loc);
+            if (!triangulation.IsNull()) {
+                d->insertMapping(triangulation, face);
+                const gp_Trsf& trsf = loc.Transformation();
+                const TColgp_Array1OfPnt& nodes = triangulation->Nodes();
+                for (int i = nodes.Lower(); i <= nodes.Upper(); ++i) {
+                    const gp_Pnt iNode(nodes(i).Transformed(trsf));
+                    Bnd_Box ibb;
+                    ibb.Set(iNode);
+                    ubTreeFiller.Add(std::make_pair(i, triangulation), ibb);
+                }
+            }
         }
-      }
     }
-  }
-  ubTreeFiller.Fill();
+    ubTreeFiller.Fill();
 }
 
 const TopoDS_Face* PointOnFacesProjector::faceOfProjection(const gp_Pnt& point) const
 {
-  // Find the closest node in the triangulations
-  internal::NodeBndBoxSelector selector(point);
-  if (d->m_ubTree.Select(selector) > 0) {
-    const Handle_Poly_Triangulation& triangulation = selector.minDistanceNodeIndex().second;
-    return d->triangulationToFace(triangulation);
-  }
-  return NULL;
+    // Find the closest node in the triangulations
+    internal::NodeBndBoxSelector selector(point);
+    if (d->m_ubTree.Select(selector) > 0) {
+        const Handle_Poly_Triangulation& triangulation = selector.minDistanceNodeIndex().second;
+        return d->triangulationToFace(triangulation);
+    }
+    return NULL;
 }
 
 PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& point) const
 {
-  // Find the closest node in the triangulations
-  internal::NodeBndBoxSelector selector(point);
-  if (d->m_ubTree.Select(selector) <= 0)
-    return PointOnFacesProjector::Result();
+    // Find the closest node in the triangulations
+    internal::NodeBndBoxSelector selector(point);
+    if (d->m_ubTree.Select(selector) <= 0)
+        return PointOnFacesProjector::Result();
 
-  const int minNodeId = selector.minDistanceNodeIndex().first;
-  const Handle_Poly_Triangulation& triangulation = selector.minDistanceNodeIndex().second;
+    const int minNodeId = selector.minDistanceNodeIndex().first;
+    const Handle_Poly_Triangulation& triangulation = selector.minDistanceNodeIndex().second;
 
-  // Find the triangle where distance is minimum
-  const TColgp_Array1OfPnt& nodes = triangulation->Nodes();
-  const Poly_Array1OfTriangle& triangles = triangulation->Triangles();
-  double minDist = std::numeric_limits<double>::max();
-  const Poly_Triangle* minTriangle = NULL;
-  gp_Pnt projectedPnt;
-  for (int iTri = triangles.Lower(); iTri <= triangles.Upper(); iTri++) {
-    const Poly_Triangle& t = triangles(iTri);
-    int n1, n2, n3;
-    t.Get(n1, n2, n3);
-    if (minNodeId == n1 || minNodeId == n2 || minNodeId == n3) {
-      const std::pair<gp_Pnt, bool> projPntInfo = MathTools::projectPointOnTriangle(point,
-                                                                                    nodes(t(1)),
-                                                                                    nodes(t(2)),
-                                                                                    nodes(t(3)));
-      const double dist = point.SquareDistance(projPntInfo.first);
-      if (dist < minDist) {
-        minTriangle = &t;
-        minDist = dist;
-        projectedPnt = projPntInfo.first;
-      }
+    // Find the triangle where distance is minimum
+    const TColgp_Array1OfPnt& nodes = triangulation->Nodes();
+    const Poly_Array1OfTriangle& triangles = triangulation->Triangles();
+    double minDist = std::numeric_limits<double>::max();
+    const Poly_Triangle* minTriangle = NULL;
+    gp_Pnt projectedPnt;
+    for (int iTri = triangles.Lower(); iTri <= triangles.Upper(); iTri++) {
+        const Poly_Triangle& t = triangles(iTri);
+        int n1, n2, n3;
+        t.Get(n1, n2, n3);
+        if (minNodeId == n1 || minNodeId == n2 || minNodeId == n3) {
+            const std::pair<gp_Pnt, bool> projPntInfo = MathTools::projectPointOnTriangle(point,
+                                                                                          nodes(t(1)),
+                                                                                          nodes(t(2)),
+                                                                                          nodes(t(3)));
+            const double dist = point.SquareDistance(projPntInfo.first);
+            if (dist < minDist) {
+                minTriangle = &t;
+                minDist = dist;
+                projectedPnt = projPntInfo.first;
+            }
+        }
     }
-  }
 
-  if (minTriangle != NULL) {
-    const TopoDS_Face* face = d->triangulationToFace(triangulation);
-    const TopAbs_Orientation faceOrientation = face != NULL ? face->Orientation() : TopAbs_FORWARD;
-    const gp_Vec triNormal = occ::MathTools::triangleNormal(nodes, *minTriangle, faceOrientation);
-    return PointOnFacesProjector::Result(face != NULL ? *face : TopoDS_Face(),
-                                         projectedPnt,
-                                         triNormal);
-  }
-  return PointOnFacesProjector::Result();
+    if (minTriangle != NULL) {
+        const TopoDS_Face* face = d->triangulationToFace(triangulation);
+        const TopAbs_Orientation faceOrientation = face != NULL ? face->Orientation() : TopAbs_FORWARD;
+        const gp_Vec triNormal = occ::MathTools::triangleNormal(nodes, *minTriangle, faceOrientation);
+        return PointOnFacesProjector::Result(face != NULL ? *face : TopoDS_Face(),
+                                             projectedPnt,
+                                             triNormal);
+    }
+    return PointOnFacesProjector::Result();
 }
 
 /*! \brief Syntactic sugar around projected()
  */
 PointOnFacesProjector::Result PointOnFacesProjector::operator()(const gp_Pnt& point) const
 {
-  return this->projected(point);
+    return this->projected(point);
 }
 
 } // namespace occ

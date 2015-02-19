@@ -50,33 +50,33 @@ namespace qttools {
 class QTTOOLS_CORE_EXPORT PluginsLoader
 {
 public:
-  typedef PluginsLoader_InstanceFilter InstanceFilter;
+    typedef PluginsLoader_InstanceFilter InstanceFilter;
 
-  PluginsLoader();
-  ~PluginsLoader();
+    PluginsLoader();
+    ~PluginsLoader();
 
-  bool autoDeletePlugins() const;
-  void setAutoDeletePlugins(bool on);
+    bool autoDeletePlugins() const;
+    void setAutoDeletePlugins(bool on);
 
-  void addPath(const QString& path);
-  void removePath(const QString& path);
-  QStringList paths() const;
-  void setPaths(const QStringList& paths);
+    void addPath(const QString& path);
+    void removePath(const QString& path);
+    QStringList paths() const;
+    void setPaths(const QStringList& paths);
 
-  QStringList fileNameFilters() const;
-  void setFileNameFilters(const QStringList& nameFilters);
+    QStringList fileNameFilters() const;
+    void setFileNameFilters(const QStringList& nameFilters);
 
-  void loadPlugins(InstanceFilter* filter, QStringList* errors = NULL);
-  void loadPlugins(const QList<InstanceFilter*>& filters, QStringList* errors = NULL);
-  void discardPlugin(QObject* plugin);
+    void loadPlugins(InstanceFilter* filter, QStringList* errors = NULL);
+    void loadPlugins(const QList<InstanceFilter*>& filters, QStringList* errors = NULL);
+    void discardPlugin(QObject* plugin);
 
-  QString pluginFileName(const QObject* plugin) const;
-  QVector<QObject*> plugins() const;
-  template<typename INTERFACE> QVector<INTERFACE*> castPlugins() const;
+    QString pluginFileName(const QObject* plugin) const;
+    QVector<QObject*> plugins() const;
+    template<typename INTERFACE> QVector<INTERFACE*> castPlugins() const;
 
 private:
-  class Private;
-  Private* const d;
+    class Private;
+    Private* const d;
 };
 
 
@@ -94,13 +94,13 @@ private:
 template<typename INTERFACE>
 QVector<INTERFACE *> PluginsLoader::castPlugins() const
 {
-  QVector<INTERFACE *> typPlugins;
-  foreach (QObject* plugin, this->plugins()) {
-    INTERFACE* typPlugin = qobject_cast<INTERFACE*>(plugin);
-    if (typPlugin != NULL)
-      typPlugins.append(typPlugin);
-  }
-  return typPlugins;
+    QVector<INTERFACE *> typPlugins;
+    foreach (QObject* plugin, this->plugins()) {
+        INTERFACE* typPlugin = qobject_cast<INTERFACE*>(plugin);
+        if (typPlugin != NULL)
+            typPlugins.append(typPlugin);
+    }
+    return typPlugins;
 }
 
 } // namespace qttools

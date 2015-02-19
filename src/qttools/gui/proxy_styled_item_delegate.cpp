@@ -55,89 +55,89 @@ namespace qttools {
  */
 
 ProxyStyledItemDelegate::ProxyStyledItemDelegate(QObject *parent)
-  : QStyledItemDelegate(parent),
-    m_sourceDelegate(NULL)
+    : QStyledItemDelegate(parent),
+      m_sourceDelegate(NULL)
 {
 
 }
 
 ProxyStyledItemDelegate::ProxyStyledItemDelegate(QStyledItemDelegate *srcDelegate,
                                                  QObject* parent)
-  : QStyledItemDelegate(parent),
-    m_sourceDelegate(srcDelegate)
+    : QStyledItemDelegate(parent),
+      m_sourceDelegate(srcDelegate)
 {
 }
 
 QStyledItemDelegate *ProxyStyledItemDelegate::sourceDelegate() const
 {
-  return m_sourceDelegate;
+    return m_sourceDelegate;
 }
 
 void ProxyStyledItemDelegate::setSourceDelegate(QStyledItemDelegate *srcDelegate)
 {
-  m_sourceDelegate = srcDelegate;
+    m_sourceDelegate = srcDelegate;
 }
 
 void ProxyStyledItemDelegate::paint(QPainter *painter,
                                     const QStyleOptionViewItem &option,
                                     const QModelIndex &index) const
 {
-  if (m_sourceDelegate != NULL)
-    m_sourceDelegate->paint(painter, option, index);
-  else
-    QStyledItemDelegate::paint(painter, option, index);
+    if (m_sourceDelegate != NULL)
+        m_sourceDelegate->paint(painter, option, index);
+    else
+        QStyledItemDelegate::paint(painter, option, index);
 }
 
 QSize ProxyStyledItemDelegate::sizeHint(const QStyleOptionViewItem &option,
                                         const QModelIndex &index) const
 {
-  if (m_sourceDelegate != NULL)
-    return m_sourceDelegate->sizeHint(option, index);
-  return QStyledItemDelegate::sizeHint(option, index);
+    if (m_sourceDelegate != NULL)
+        return m_sourceDelegate->sizeHint(option, index);
+    return QStyledItemDelegate::sizeHint(option, index);
 }
 
 QString ProxyStyledItemDelegate::displayText(const QVariant &value, const QLocale &locale) const
 {
-  if (m_sourceDelegate != NULL)
-    return m_sourceDelegate->displayText(value, locale);
-  return QStyledItemDelegate::displayText(value, locale);
+    if (m_sourceDelegate != NULL)
+        return m_sourceDelegate->displayText(value, locale);
+    return QStyledItemDelegate::displayText(value, locale);
 }
 
 QWidget *ProxyStyledItemDelegate::createEditor(QWidget *parent,
                                                const QStyleOptionViewItem &option,
                                                const QModelIndex &index) const
 {
-  if (m_sourceDelegate != NULL)
-    return m_sourceDelegate->createEditor(parent, option, index);
-  return QStyledItemDelegate::createEditor(parent, option, index);
+    if (m_sourceDelegate != NULL)
+        return m_sourceDelegate->createEditor(parent, option, index);
+    return QStyledItemDelegate::createEditor(parent, option, index);
 }
 
 void ProxyStyledItemDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
-  if (m_sourceDelegate != NULL)
-    m_sourceDelegate->setEditorData(editor, index);
-  else
-    QStyledItemDelegate::setEditorData(editor, index);
+    if (m_sourceDelegate != NULL)
+        m_sourceDelegate->setEditorData(editor, index);
+    else
+        QStyledItemDelegate::setEditorData(editor, index);
 }
 
 void ProxyStyledItemDelegate::setModelData(QWidget *editor,
                                            QAbstractItemModel *model,
                                            const QModelIndex &index) const
 {
-  if (m_sourceDelegate != NULL)
-    m_sourceDelegate->setModelData(editor, model, index);
-  else
-    QStyledItemDelegate::setModelData(editor, model, index);
+    if (m_sourceDelegate != NULL)
+        m_sourceDelegate->setModelData(editor, model, index);
+    else
+        QStyledItemDelegate::setModelData(editor, model, index);
 }
 
 void ProxyStyledItemDelegate::updateEditorGeometry(QWidget *editor,
                                                    const QStyleOptionViewItem &option,
                                                    const QModelIndex &index) const
 {
-  if (m_sourceDelegate != NULL)
-    m_sourceDelegate->updateEditorGeometry(editor, option, index);
-  else
-    QStyledItemDelegate::updateEditorGeometry(editor, option, index);
+    if (m_sourceDelegate != NULL)
+        m_sourceDelegate->updateEditorGeometry(editor, option, index);
+    else
+        QStyledItemDelegate::updateEditorGeometry(editor, option, index);
 }
 
 } // namespace qttools

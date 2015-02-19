@@ -51,39 +51,39 @@ class AbstractCipher;
 class QTTOOLS_SQL_EXPORT DatabaseSettings
 {
 public:
-  typedef QHash<QString, QVariant> ValuesHash;
+    typedef QHash<QString, QVariant> ValuesHash;
 
-  DatabaseSettings();
+    DatabaseSettings();
 
-  QString host() const;
-  void setHost(const QString& host);
+    QString host() const;
+    void setHost(const QString& host);
 
-  QString databaseName() const;
-  void setDatabaseName(const QString& dbName);
+    QString databaseName() const;
+    void setDatabaseName(const QString& dbName);
 
-  int port() const;
-  void setPort(int port);
+    int port() const;
+    void setPort(int port);
 
-  QString userName() const;
-  void setUserName(const QString& userName);
+    QString userName() const;
+    void setUserName(const QString& userName);
 
-  QString password() const;
-  void setPassword(const QString& password);
+    QString password() const;
+    void setPassword(const QString& password);
 
-  void applyTo(QSqlDatabase* db) const;
+    void applyTo(QSqlDatabase* db) const;
 
-  void load(const QSettings* settings,
-            const AbstractCipher* passwordCipher = NULL,
-            const ValuesHash& defValues = ValuesHash());
-  void write(QSettings* settings,
-             const AbstractCipher* passwordCipher = NULL) const;
+    void load(const QSettings* settings,
+              const AbstractCipher* passwordCipher = NULL,
+              const ValuesHash& defValues = ValuesHash());
+    void write(QSettings* settings,
+               const AbstractCipher* passwordCipher = NULL) const;
 
 private:
-  QString m_host;
-  QString m_dbName;
-  int m_port;
-  QString m_userName;
-  QString m_password;
+    QString m_host;
+    QString m_dbName;
+    int m_port;
+    QString m_userName;
+    QString m_password;
 };
 
 } // namespace qttools

@@ -5,20 +5,20 @@
 
 class LengthEditorWidget : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  LengthEditorWidget(QWidget *parent = NULL);
-  ~LengthEditorWidget();
+    LengthEditorWidget(QWidget *parent = NULL);
+    ~LengthEditorWidget();
 
 private slots:
-  void onSystemComboBoxChanged(int id);
-  void onUnitComboBoxChanged(int id);
+    void onSystemComboBoxChanged(int id);
+    void onUnitComboBoxChanged(int id);
 
 private:
-  void selectPreferredUnit(const QString& unitText);
+    void selectPreferredUnit(const QString& unitText);
 
-  class Ui_LengthEditorWidget *m_ui;
+    class Ui_LengthEditorWidget *m_ui;
 };
 
 #endif // LENGTH_EDITOR_WIDGET_H

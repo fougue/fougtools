@@ -57,46 +57,46 @@
 class OCCTOOLS_EXPORT occ_AIS_Text : public AIS_InteractiveObject
 {
 public:
-  occ_AIS_Text();
-  occ_AIS_Text(const TCollection_ExtendedString& text, const gp_Pnt& pos);
-  virtual ~occ_AIS_Text();
+    occ_AIS_Text();
+    occ_AIS_Text(const TCollection_ExtendedString& text, const gp_Pnt& pos);
+    virtual ~occ_AIS_Text();
 
-//  DEFINE_STANDARD_RTTI(AIS_Text)
+    //  DEFINE_STANDARD_RTTI(AIS_Text)
 
-  Handle_Prs3d_TextAspect presentationTextAspect(unsigned i = 0) const;
-  Handle_Graphic3d_AspectText3d graphicTextAspect(unsigned i = 0) const;
+    Handle_Prs3d_TextAspect presentationTextAspect(unsigned i = 0) const;
+    Handle_Graphic3d_AspectText3d graphicTextAspect(unsigned i = 0) const;
 
-  void setDefaultColor(const Quantity_Color& c);
-  void setDefaultFont(const char* fontName);
-  void setDefaultTextBackgroundColor(const Quantity_Color& c);
-  void setDefaultTextDisplayMode(Aspect_TypeOfDisplayText mode);
-  void setDefaultTextStyle(Aspect_TypeOfStyleText style);
+    void setDefaultColor(const Quantity_Color& c);
+    void setDefaultFont(const char* fontName);
+    void setDefaultTextBackgroundColor(const Quantity_Color& c);
+    void setDefaultTextDisplayMode(Aspect_TypeOfDisplayText mode);
+    void setDefaultTextStyle(Aspect_TypeOfStyleText style);
 
-  gp_Pnt position(unsigned i = 0) const;
-  void setPosition(const gp_Pnt& pos, unsigned i = 0);
+    gp_Pnt position(unsigned i = 0) const;
+    void setPosition(const gp_Pnt& pos, unsigned i = 0);
 
-  TCollection_ExtendedString text(unsigned i = 0) const;
-  void setText(const TCollection_ExtendedString& v, unsigned i = 0);
-  bool isValidTextIndex(unsigned i) const;
+    TCollection_ExtendedString text(unsigned i = 0) const;
+    void setText(const TCollection_ExtendedString& v, unsigned i = 0);
+    bool isValidTextIndex(unsigned i) const;
 
-  void setTextBackgroundColor(const Quantity_Color& color, unsigned i = 0);
-  void setTextDisplayMode(Aspect_TypeOfDisplayText mode, unsigned i = 0);
-  void setTextStyle(Aspect_TypeOfStyleText style, unsigned i = 0);
+    void setTextBackgroundColor(const Quantity_Color& color, unsigned i = 0);
+    void setTextDisplayMode(Aspect_TypeOfDisplayText mode, unsigned i = 0);
+    void setTextStyle(Aspect_TypeOfStyleText style, unsigned i = 0);
 
-  unsigned textsCount() const;
-  void addText(const TCollection_ExtendedString& text, const gp_Pnt& pos);
+    unsigned textsCount() const;
+    void addText(const TCollection_ExtendedString& text, const gp_Pnt& pos);
 
-  // --- Implementation
+    // --- Implementation
 protected:
-  void Compute(const Handle_PrsMgr_PresentationManager3d& pm,
-               const Handle_Prs3d_Presentation& pres,
-               const Standard_Integer mode);
-  void Compute(const Handle_Prs3d_Projector& proj, const Handle_Prs3d_Presentation& pres);
-  void ComputeSelection(const Handle_SelectMgr_Selection& sel, const Standard_Integer mode);
+    void Compute(const Handle_PrsMgr_PresentationManager3d& pm,
+                 const Handle_Prs3d_Presentation& pres,
+                 const Standard_Integer mode);
+    void Compute(const Handle_Prs3d_Projector& proj, const Handle_Prs3d_Presentation& pres);
+    void ComputeSelection(const Handle_SelectMgr_Selection& sel, const Standard_Integer mode);
 
 private:
-  class Private;
-  Private* const d;
+    class Private;
+    Private* const d;
 };
 
 #endif // OCC_AIS_TEXT_H

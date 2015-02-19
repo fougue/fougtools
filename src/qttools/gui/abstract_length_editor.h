@@ -47,45 +47,45 @@ namespace qttools {
 class QTTOOLS_GUI_EXPORT AbstractLengthEditor : public AbstractQuantityEditor
 {
 public:
-  enum MetricUnit
-  {
-    MeterUnit,
-    CentimeterUnit,
-    MillimeterUnit
-  };
-  static QVector<MetricUnit> allMetricUnits();
+    enum MetricUnit
+    {
+        MeterUnit,
+        CentimeterUnit,
+        MillimeterUnit
+    };
+    static QVector<MetricUnit> allMetricUnits();
 
-  enum ImperialUnit
-  {
-    InchUnit,
-    FootUnit,
-    YardUnit
-  };
-  static QVector<ImperialUnit> allImperialUnits();
+    enum ImperialUnit
+    {
+        InchUnit,
+        FootUnit,
+        YardUnit
+    };
+    static QVector<ImperialUnit> allImperialUnits();
 
-  AbstractLengthEditor();
+    AbstractLengthEditor();
 
-  double qtyValue() const;
-  void setQtyValue(double v);
+    double qtyValue() const;
+    void setQtyValue(double v);
 
-  virtual double length() const = 0;
-  virtual void setLength(double v) = 0;
+    virtual double length() const = 0;
+    virtual void setLength(double v) = 0;
 
-  MetricUnit preferredMetricUnit() const;
-  virtual void setPreferredMetricUnit(MetricUnit unit);
+    MetricUnit preferredMetricUnit() const;
+    virtual void setPreferredMetricUnit(MetricUnit unit);
 
-  ImperialUnit preferredImperialUnit() const;
-  virtual void setPreferredImperialUnit(ImperialUnit unit);
+    ImperialUnit preferredImperialUnit() const;
+    virtual void setPreferredImperialUnit(ImperialUnit unit);
 
-  // -- Utilities
-  static QString unitText(MetricUnit unit);
-  static QString unitText(ImperialUnit unit);
-  static double asMetricLength(double len, MetricUnit unit);
-  static double asImperialLength(double len, ImperialUnit unit);
+    // -- Utilities
+    static QString unitText(MetricUnit unit);
+    static QString unitText(ImperialUnit unit);
+    static double asMetricLength(double len, MetricUnit unit);
+    static double asImperialLength(double len, ImperialUnit unit);
 
 private:
-  MetricUnit m_prefMetricUnit;
-  ImperialUnit m_prefImperialUnit;
+    MetricUnit m_prefMetricUnit;
+    ImperialUnit m_prefImperialUnit;
 };
 
 } // namespace qttools

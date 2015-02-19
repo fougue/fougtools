@@ -47,29 +47,29 @@ namespace qttools {
 
 class QTTOOLS_GUI_EXPORT QComboBoxCurrentItemKeeper : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  QComboBoxCurrentItemKeeper(QComboBox* comboBox = NULL);
+    QComboBoxCurrentItemKeeper(QComboBox* comboBox = NULL);
 
-  int columnForModelRowIdentifier() const;
-  void setColumnForModelRowIdentifier(int col);
+    int columnForModelRowIdentifier() const;
+    void setColumnForModelRowIdentifier(int col);
 
 signals:
-  void currentIndexChanged(int row);
+    void currentIndexChanged(int row);
 
 private slots:
-  void onModelAboutToBeReset();
-  void onModelReset();
+    void onModelAboutToBeReset();
+    void onModelReset();
 
 private:
-  QComboBox* comboBox() const;
-  QVariant currentIdentifierValue() const;
-  QVariant identifierValue(int row) const;
+    QComboBox* comboBox() const;
+    QVariant currentIdentifierValue() const;
+    QVariant identifierValue(int row) const;
 
-  int m_oldCurrentIndex;
-  QVariant m_oldIdentifierValue;
-  int m_columnForModelRowIdentifier;
+    int m_oldCurrentIndex;
+    QVariant m_oldIdentifierValue;
+    int m_columnForModelRowIdentifier;
 };
 
 } // namespace qttools

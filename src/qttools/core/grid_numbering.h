@@ -46,31 +46,31 @@ namespace qttools {
 class QTTOOLS_CORE_EXPORT GridNumbering
 {
 public:
-  enum SweepMode
-  {
-    OneWay,
-    ZigZag
-  };
+    enum SweepMode
+    {
+        OneWay,
+        ZigZag
+    };
 
-  GridNumbering();
-  GridNumbering(Qt::Corner corner, Qt::Orientation orientation, SweepMode sweep);
+    GridNumbering();
+    GridNumbering(Qt::Corner corner, Qt::Orientation orientation, SweepMode sweep);
 
-  Qt::Corner startCorner() const;
-  void setStartCorner(Qt::Corner corner);
+    Qt::Corner startCorner() const;
+    void setStartCorner(Qt::Corner corner);
 
-  Qt::Orientation orientation() const;
-  void setOrientation(Qt::Orientation orientation);
+    Qt::Orientation orientation() const;
+    void setOrientation(Qt::Orientation orientation);
 
-  SweepMode sweepMode() const;
-  void setSweepMode(SweepMode sweepMode);
+    SweepMode sweepMode() const;
+    void setSweepMode(SweepMode sweepMode);
 
-  static QVector< QVector<int> > gridIndexes(const GridNumbering& gridNb,
-                                             int rowCount, int colCount,
-                                             int startIndex = 0);
+    static QVector< QVector<int> > gridIndexes(const GridNumbering& gridNb,
+                                               int rowCount, int colCount,
+                                               int startIndex = 0);
 private:
-  Qt::Corner m_startCorner;
-  Qt::Orientation m_orientation;
-  SweepMode m_sweepMode;
+    Qt::Corner m_startCorner;
+    Qt::Orientation m_orientation;
+    SweepMode m_sweepMode;
 };
 
 } // namespace qttools

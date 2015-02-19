@@ -47,8 +47,8 @@ namespace qttools {
  */
 
 RuntimeError::RuntimeError(const QString& err)
-  : std::runtime_error(err.toStdString()),
-    m_err(err)
+    : std::runtime_error(err.toStdString()),
+      m_err(err)
 {
 }
 
@@ -58,7 +58,7 @@ RuntimeError::~RuntimeError() throw()
 
 QString RuntimeError::message() const
 {
-  return m_err;
+    return m_err;
 }
 
 } // namespace qttools

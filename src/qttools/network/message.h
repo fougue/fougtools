@@ -47,29 +47,29 @@ namespace qttools {
 class QTTOOLS_NETWORK_EXPORT Message
 {
 public:
-  Message();
+    Message();
 
-  QString from() const;
-  void setFrom(const QString& addr);
+    QString from() const;
+    void setFrom(const QString& addr);
 
-  QStringList to() const;
-  void setTo(const QStringList& recipients);
+    QStringList to() const;
+    void setTo(const QStringList& recipients);
 
-  QDateTime dateTime() const;
-  void setDateTime(const QDateTime& d);
+    QDateTime dateTime() const;
+    void setDateTime(const QDateTime& d);
 
-  QString subject() const;
-  void setSubject(const QString& text);
+    QString subject() const;
+    void setSubject(const QString& text);
 
-  QString body() const;
-  void setBody(const QString& text);
+    QString body() const;
+    void setBody(const QString& text);
 
 private:
-  QString m_from;
-  QStringList m_to;
-  QDateTime m_dateTime;
-  QString m_subject;
-  QString m_body;
+    QString m_from;
+    QStringList m_to;
+    QDateTime m_dateTime;
+    QString m_subject;
+    QString m_body;
 };
 
 } // namespace qttools

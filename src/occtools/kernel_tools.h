@@ -47,7 +47,7 @@ namespace occ {
 class OCCTOOLS_EXPORT KernelTools
 {
 public:
-  static Quantity_Color rgbColor(int red, int blue, int green);
+    static Quantity_Color rgbColor(int red, int blue, int green);
 };
 
 } // namespace occ

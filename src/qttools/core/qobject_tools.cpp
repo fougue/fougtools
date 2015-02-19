@@ -50,7 +50,7 @@ namespace qttools {
 
 void QObjectTools::forwardSignal(const QObject* sender, const QObject* resender, const char* signal)
 {
-  QObject::connect(sender, signal, resender, signal);
+    QObject::connect(sender, signal, resender, signal);
 }
 
 } // namespace qttools

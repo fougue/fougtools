@@ -48,7 +48,7 @@ namespace cpp {
 template <typename T, std::size_t N>
 std::size_t cArraySize(const T (&/*array*/)[N])
 {
-  return N;
+    return N;
 }
 
 /*! \brief Returns an iterator pointing to the end of C \p array (eg. "char str[128]" -> str + 128)
@@ -57,7 +57,7 @@ std::size_t cArraySize(const T (&/*array*/)[N])
 template <typename T, std::size_t N>
 T* cArrayEnd(T (&array)[N])
 {
-  return array + N;
+    return array + N;
 }
 
 /*! \brief Returns a const iterator pointing to the end of C \p array (eg. "char str[128]" -> str + 128)
@@ -66,7 +66,7 @@ T* cArrayEnd(T (&array)[N])
 template <typename T, std::size_t N>
 const T* cArrayEnd(const T (&array)[N])
 {
-  return array + N;
+    return array + N;
 }
 
 } // namespace cpp

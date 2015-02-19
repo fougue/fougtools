@@ -48,11 +48,11 @@ namespace qttools {
 class QTTOOLS_GUI_EXPORT ItemViewTools
 {
 public:
-  static QVector<int> selectedRows(const QAbstractItemView* view, int col = -1);
-  static void selectRows(QAbstractItemView* view, const QVector<int>& rows);
+    static QVector<int> selectedRows(const QAbstractItemView* view, int col = -1);
+    static void selectRows(QAbstractItemView* view, const QVector<int>& rows);
 
-  static int mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow);
-  static int mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow);
+    static int mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow);
+    static int mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow);
 };
 
 } // namespace qttools

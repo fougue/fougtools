@@ -50,9 +50,9 @@ namespace cpp {
 template<typename BI_ITERATOR>
 BI_ITERATOR circularNext(BI_ITERATOR iBegin, BI_ITERATOR iEnd, BI_ITERATOR iCurr)
 {
-  if (iCurr == --iEnd)
-    return iBegin;
-  return ++iCurr;
+    if (iCurr == --iEnd)
+        return iBegin;
+    return ++iCurr;
 }
 
 /*! \brief Iterator prior to \p iCurr bounded between \p iBegin and \p iEnd
@@ -65,9 +65,9 @@ BI_ITERATOR circularNext(BI_ITERATOR iBegin, BI_ITERATOR iEnd, BI_ITERATOR iCurr
 template<typename BI_ITERATOR>
 BI_ITERATOR circularPrior(BI_ITERATOR iBegin, BI_ITERATOR iEnd, BI_ITERATOR iCurr)
 {
-  if (iCurr == iBegin)
-    return --iEnd;
-  return --iCurr;
+    if (iCurr == iBegin)
+        return --iEnd;
+    return --iCurr;
 }
 
 /*! \brief Iterator advanced by \p d bounded between \p iBegin and \p iEnd
@@ -80,12 +80,12 @@ template<typename BI_ITERATOR, typename DISTANCE>
 BI_ITERATOR circularAdvance(BI_ITERATOR iBegin, BI_ITERATOR iEnd,
                             BI_ITERATOR iCurr, DISTANCE d)
 {
-  const DISTANCE absD = d < 0 ? -d : d;
-  for (DISTANCE i = 0; i < absD; ++i) {
-    iCurr = d < 0 ? circularPrior(iBegin, iEnd, iCurr) :
-                    circularNext(iBegin, iEnd, iCurr);
-  }
-  return iCurr;
+    const DISTANCE absD = d < 0 ? -d : d;
+    for (DISTANCE i = 0; i < absD; ++i) {
+        iCurr = d < 0 ? circularPrior(iBegin, iEnd, iCurr) :
+                        circularNext(iBegin, iEnd, iCurr);
+    }
+    return iCurr;
 }
 
 } // namespace cpp

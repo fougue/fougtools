@@ -53,7 +53,7 @@ namespace qttools {
  */
 
 DatabaseSettings::DatabaseSettings()
-  : m_port(0)
+    : m_port(0)
 {
 }
 
@@ -61,70 +61,70 @@ DatabaseSettings::DatabaseSettings()
  */
 void DatabaseSettings::setHost(const QString& host)
 {
-  m_host = host;
+    m_host = host;
 }
 
 /*! \sa QSqlDatabase::hostName()
  */
 QString DatabaseSettings::host() const
 {
-  return m_host;
+    return m_host;
 }
 
 /*! \sa QSqlDatabase::setDatabaseName()
  */
 void DatabaseSettings::setDatabaseName(const QString& dbName)
 {
-  m_dbName = dbName;
+    m_dbName = dbName;
 }
 
 /*! \sa QSqlDatabase::databaseName()
  */
 QString DatabaseSettings::databaseName() const
 {
-  return m_dbName;
+    return m_dbName;
 }
 
 /*! \sa QSqlDatabase::setPort()
  */
 void DatabaseSettings::setPort(int port)
 {
-  m_port = port;
+    m_port = port;
 }
 
 /*! \sa QSqlDatabase::port()
  */
 int DatabaseSettings::port() const
 {
-  return m_port;
+    return m_port;
 }
 
 /*! \sa QSqlDatabase::setUserName()
  */
 void DatabaseSettings::setUserName(const QString& userName)
 {
-  m_userName = userName;
+    m_userName = userName;
 }
 
 /*! \sa QSqlDatabase::userName()
  */
 QString DatabaseSettings::userName() const
 {
-  return m_userName;
+    return m_userName;
 }
 
 /*! \sa QSqlDatabase::setPassword()
  */
 void DatabaseSettings::setPassword(const QString& password)
 {
-  m_password = password;
+    m_password = password;
 }
 
 /*! \sa QSqlDatabase::password()
  */
 QString DatabaseSettings::password() const
 {
-  return m_password;
+    return m_password;
 }
 
 /*! \brief Load settings from the persistent storage
@@ -136,28 +136,28 @@ void DatabaseSettings::load(const QSettings* settings,
                             const AbstractCipher* passwordCipher,
                             const ValuesHash& defValues)
 {
-  if (settings == NULL)
-    return;
+    if (settings == NULL)
+        return;
 
-  const QString defHost = defValues.value("host").toString();
-  const QString defDbName = defValues.value("name").toString();
-  const int defPort = defValues.value("port").toInt();
-  const QString defUser = defValues.value("user").toString();
-  const QString defPwd = defValues.value("password").toString();
+    const QString defHost = defValues.value("host").toString();
+    const QString defDbName = defValues.value("name").toString();
+    const int defPort = defValues.value("port").toInt();
+    const QString defUser = defValues.value("user").toString();
+    const QString defPwd = defValues.value("password").toString();
 
-  this->setHost(settings->value("database/host", defHost).toString());
-  this->setDatabaseName(settings->value("database/name", defDbName).toString());
-  this->setPort(settings->value("database/port", defPort).toInt());
-  this->setUserName(settings->value("database/user", defUser).toString());
+    this->setHost(settings->value("database/host", defHost).toString());
+    this->setDatabaseName(settings->value("database/name", defDbName).toString());
+    this->setPort(settings->value("database/port", defPort).toInt());
+    this->setUserName(settings->value("database/user", defUser).toString());
 
-  if (passwordCipher != NULL && settings->contains("database/password")) {
-    const QByteArray decryptedPwd =
-        passwordCipher->decrypted(settings->value("database/password").toByteArray());
-    this->setPassword(decryptedPwd);
-  }
-  else {
-    this->setPassword(defPwd);
-  }
+    if (passwordCipher != NULL && settings->contains("database/password")) {
+        const QByteArray decryptedPwd =
+                passwordCipher->decrypted(settings->value("database/password").toByteArray());
+        this->setPassword(decryptedPwd);
+    }
+    else {
+        this->setPassword(defPwd);
+    }
 }
 
 /*! \brief Write settings to persistent storage
@@ -168,21 +168,21 @@ void DatabaseSettings::load(const QSettings* settings,
 void DatabaseSettings::write(QSettings* settings,
                              const AbstractCipher* passwordCipher) const
 {
-  if (settings == NULL)
-    return;
+    if (settings == NULL)
+        return;
 
-  settings->setValue("database/host", this->host());
-  settings->setValue("database/name", this->databaseName());
-  settings->setValue("database/port", this->port());
-  settings->setValue("database/user", this->userName());
+    settings->setValue("database/host", this->host());
+    settings->setValue("database/name", this->databaseName());
+    settings->setValue("database/port", this->port());
+    settings->setValue("database/user", this->userName());
 
-  if (passwordCipher != NULL) {
-    const QByteArray pwd = this->password().toUtf8();
-    settings->setValue("database/password", passwordCipher->encrypted(pwd));
-  }
-  else {
-    settings->setValue("database/password", QString());
-  }
+    if (passwordCipher != NULL) {
+        const QByteArray pwd = this->password().toUtf8();
+        settings->setValue("database/password", passwordCipher->encrypted(pwd));
+    }
+    else {
+        settings->setValue("database/password", QString());
+    }
 }
 
 /*! \brief Apply the current settings to a QSqlDatabase instance
@@ -190,13 +190,13 @@ void DatabaseSettings::write(QSettings* settings,
  */
 void DatabaseSettings::applyTo(QSqlDatabase* db) const
 {
-  if (db != NULL) {
-    db->setDatabaseName(this->databaseName());
-    db->setHostName(this->host());
-    db->setPort(this->port());
-    db->setUserName(this->userName());
-    db->setPassword(this->password());
-  }
+    if (db != NULL) {
+        db->setDatabaseName(this->databaseName());
+        db->setHostName(this->host());
+        db->setPort(this->port());
+        db->setUserName(this->userName());
+        db->setPassword(this->password());
+    }
 }
 
 } // namespace qttools

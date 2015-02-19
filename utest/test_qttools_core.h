@@ -5,11 +5,11 @@
 
 class TestQtToolsCore : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 private slots:
-  void WaitLoop_test();
-  void QLocaleTools_test();
+    void WaitLoop_test();
+    void QLocaleTools_test();
 };
 
 #endif // TEST_QTTOOLS_CORE_H

@@ -50,14 +50,14 @@ namespace qttools {
  */
 
 SqlQueryError::SqlQueryError(const QSqlQuery& qry)
-  : std::runtime_error(qry.lastError().text().toStdString()),
-    m_sqlError(qry.lastError())
+    : std::runtime_error(qry.lastError().text().toStdString()),
+      m_sqlError(qry.lastError())
 {
 }
 
 SqlQueryError::SqlQueryError(const QSqlError& err)
-  : std::runtime_error(err.text().toStdString()),
-    m_sqlError(err)
+    : std::runtime_error(err.text().toStdString()),
+      m_sqlError(err)
 {
 }
 
@@ -67,7 +67,7 @@ SqlQueryError::~SqlQueryError() throw()
 
 QSqlError SqlQueryError::sqlError() const
 {
-  return m_sqlError;
+    return m_sqlError;
 }
 
 /*! \brief Execute SQL statements in \p code use databse connection \p db
@@ -76,18 +76,18 @@ QSqlError SqlQueryError::sqlError() const
  */
 QSqlQuery execSqlCode(const QString& sqlCode, const QSqlDatabase& db)
 {
-  if (sqlCode.trimmed().isEmpty())
-    return QSqlQuery(QString(), db);
+    if (sqlCode.trimmed().isEmpty())
+        return QSqlQuery(QString(), db);
 
-  if (!db.isValid() || !db.isOpen()) {
-    throw SqlQueryError(QSqlError(QLatin1String("db is not valid or not open"),
-                                  QLatin1String(""),
-                                  QSqlError::ConnectionError));
-  }
+    if (!db.isValid() || !db.isOpen()) {
+        throw SqlQueryError(QSqlError(QLatin1String("db is not valid or not open"),
+                                      QLatin1String(""),
+                                      QSqlError::ConnectionError));
+    }
 
-  QSqlQuery qry = db.exec(sqlCode);
-  qttools::throwIfError(qry);
-  return qry;
+    QSqlQuery qry = db.exec(sqlCode);
+    qttools::throwIfError(qry);
+    return qry;
 }
 
 /*! \brief Same as qttools::execSqlCode() but execution performs inside a transaction
@@ -96,26 +96,26 @@ QSqlQuery execSqlCode(const QString& sqlCode, const QSqlDatabase& db)
  */
 QSqlQuery execSqlCodeInTransaction(const QString& sqlCode, QSqlDatabase db)
 {
-  db.transaction();
+    db.transaction();
 
-  QSqlQuery sqlQry;
-  try {
-    sqlQry = qttools::execSqlCode(sqlCode, db);
-    db.commit();
-  }
-  catch (const SqlQueryError& err) {
-    Q_UNUSED(err);
-    db.rollback();
-    throw;
-  }
-  return sqlQry;
+    QSqlQuery sqlQry;
+    try {
+        sqlQry = qttools::execSqlCode(sqlCode, db);
+        db.commit();
+    }
+    catch (const SqlQueryError& err) {
+        Q_UNUSED(err);
+        db.rollback();
+        throw;
+    }
+    return sqlQry;
 }
 
 //! Throw SqlQueryError if SQL query \p qry has error
 void throwIfError(const QSqlQuery& qry)
 {
-  if (qry.lastError().type() != QSqlError::NoError)
-    throw SqlQueryError(qry);
+    if (qry.lastError().type() != QSqlError::NoError)
+        throw SqlQueryError(qry);
 }
 
 } // namespace qttools

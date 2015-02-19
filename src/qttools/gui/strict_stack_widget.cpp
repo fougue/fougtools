@@ -46,20 +46,20 @@ namespace qttools {
 class StrictStackWidget::Private
 {
 public:
-  Private(StrictStackWidget* backPtr)
-    : m_implWidget(backPtr)
-  {
-  }
+    Private(StrictStackWidget* backPtr)
+        : m_implWidget(backPtr)
+    {
+    }
 
-  QStackedWidget* stackWidget()
-  {
-    return &m_implWidget;
-  }
+    QStackedWidget* stackWidget()
+    {
+        return &m_implWidget;
+    }
 
-  QStack<int> m_stackWidgetId;
+    QStack<int> m_stackWidgetId;
 
 private:
-  QStackedWidget m_implWidget;
+    QStackedWidget m_implWidget;
 };
 
 /*! \class StrictStackWidget
@@ -76,29 +76,29 @@ private:
  */
 
 StrictStackWidget::StrictStackWidget(QWidget *parent)
-  : QWidget(parent),
-    d(new Private(this))
+    : QWidget(parent),
+      d(new Private(this))
 {
-  QBoxLayout* boxLayout = new QVBoxLayout;
-  boxLayout->addWidget(d->stackWidget());
-  boxLayout->setContentsMargins(0, 0, 0, 0);
-  this->setLayout(boxLayout);
+    QBoxLayout* boxLayout = new QVBoxLayout;
+    boxLayout->addWidget(d->stackWidget());
+    boxLayout->setContentsMargins(0, 0, 0, 0);
+    this->setLayout(boxLayout);
 }
 
 StrictStackWidget::~StrictStackWidget()
 {
-  delete d;
+    delete d;
 }
 
 /*! \brief Adds \p widget to the top of the stack (and makes it the visible widget)
  */
 void StrictStackWidget::pushWidget(QWidget *widget)
 {
-  if (widget != NULL) {
-    const int widgetId = d->stackWidget()->addWidget(widget);
-    d->m_stackWidgetId.push(widgetId);
-    d->stackWidget()->setCurrentIndex(widgetId);
-  }
+    if (widget != NULL) {
+        const int widgetId = d->stackWidget()->addWidget(widget);
+        d->m_stackWidgetId.push(widgetId);
+        d->stackWidget()->setCurrentIndex(widgetId);
+    }
 }
 
 /*! \brief Destroys the top widget from the stack
@@ -107,24 +107,24 @@ void StrictStackWidget::pushWidget(QWidget *widget)
  */
 QWidget *StrictStackWidget::popWidget()
 {
-  if (!this->isEmpty()) {
-    const int widgetId = d->m_stackWidgetId.pop();
-    QWidget* widget = d->stackWidget()->widget(widgetId);
-    d->stackWidget()->removeWidget(widget);
-    if (!this->isEmpty())
-      d->stackWidget()->setCurrentIndex(d->m_stackWidgetId.top());
-    return widget;
-  }
-  else {
-    return NULL;
-  }
+    if (!this->isEmpty()) {
+        const int widgetId = d->m_stackWidgetId.pop();
+        QWidget* widget = d->stackWidget()->widget(widgetId);
+        d->stackWidget()->removeWidget(widget);
+        if (!this->isEmpty())
+            d->stackWidget()->setCurrentIndex(d->m_stackWidgetId.top());
+        return widget;
+    }
+    else {
+        return NULL;
+    }
 }
 
 /*! \brief Retruns \c true if the stack contains no widget, otherwise returns \c false
  */
 bool StrictStackWidget::isEmpty() const
 {
-  return d->m_stackWidgetId.isEmpty();
+    return d->m_stackWidgetId.isEmpty();
 }
 
 /*! \brief Returns a pointer to the stack's top widget
@@ -133,10 +133,10 @@ bool StrictStackWidget::isEmpty() const
  */
 QWidget *StrictStackWidget::topWidget() const
 {
-  if (!this->isEmpty())
-    return d->stackWidget()->widget(d->m_stackWidgetId.top());
-  else
-    return NULL;
+    if (!this->isEmpty())
+        return d->stackWidget()->widget(d->m_stackWidgetId.top());
+    else
+        return NULL;
 }
 
 } // namespace qttools

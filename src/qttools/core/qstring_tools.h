@@ -45,32 +45,32 @@ namespace qttools {
 
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareEqual
 {
-  bool operator()(const QString& lhs, const QString& rhs) const;
+    bool operator()(const QString& lhs, const QString& rhs) const;
 };
 
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareNotEqual
 {
-  bool operator()(const QString& lhs, const QString& rhs) const;
+    bool operator()(const QString& lhs, const QString& rhs) const;
 };
 
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareLess
 {
-  bool operator()(const QString& lhs, const QString& rhs) const;
+    bool operator()(const QString& lhs, const QString& rhs) const;
 };
 
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareLessEqual
 {
-  bool operator()(const QString& lhs, const QString& rhs) const;
+    bool operator()(const QString& lhs, const QString& rhs) const;
 };
 
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareGreater
 {
-  bool operator()(const QString& lhs, const QString& rhs) const;
+    bool operator()(const QString& lhs, const QString& rhs) const;
 };
 
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareGreaterEqual
 {
-  bool operator()(const QString& lhs, const QString& rhs) const;
+    bool operator()(const QString& lhs, const QString& rhs) const;
 };
 
 } // namespace qttools

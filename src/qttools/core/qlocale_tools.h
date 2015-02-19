@@ -47,10 +47,10 @@ namespace qttools {
 class QTTOOLS_CORE_EXPORT QLocaleTools
 {
 public:
-  static QLocale::MeasurementSystem toMeasurementSystem(int measSys);
+    static QLocale::MeasurementSystem toMeasurementSystem(int measSys);
 
-  static QLocale::Country toCountry(int code);
-  static QVector<QLocale::Country> allCountries();
+    static QLocale::Country toCountry(int code);
+    static QVector<QLocale::Country> allCountries();
 };
 
 } // namespace qttools

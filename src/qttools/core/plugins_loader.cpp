@@ -54,70 +54,70 @@ namespace qttools {
 class PluginsLoader::Private
 {
 public:
-  Private();
+    Private();
 
-  void releasePlugins();
+    void releasePlugins();
 
-  static bool filterAccepts(const QList<InstanceFilter*>& filters,
-                            QPluginLoader* pluginLoader,
-                            QString* filterError);
-  static bool isLibrary(const QString &path);
+    static bool filterAccepts(const QList<InstanceFilter*>& filters,
+                              QPluginLoader* pluginLoader,
+                              QString* filterError);
+    static bool isLibrary(const QString &path);
 
-  QVector<QObject*> m_plugins;
-  QVector<QPluginLoader*> m_pluginLoaders;
-  QHash<const QObject*, QString> m_pluginFileNames;
-  bool m_autoDeletePlugins;
-  QStringList m_pluginPaths;
-  QStringList m_fileNameFilters;
+    QVector<QObject*> m_plugins;
+    QVector<QPluginLoader*> m_pluginLoaders;
+    QHash<const QObject*, QString> m_pluginFileNames;
+    bool m_autoDeletePlugins;
+    QStringList m_pluginPaths;
+    QStringList m_fileNameFilters;
 };
 
 PluginsLoader::Private::Private()
-  : m_autoDeletePlugins(true)
+    : m_autoDeletePlugins(true)
 {
-  m_plugins.reserve(100);
-  m_pluginLoaders.reserve(100);
+    m_plugins.reserve(100);
+    m_pluginLoaders.reserve(100);
 }
 
 void PluginsLoader::Private::releasePlugins()
 {
-  foreach (QPluginLoader* pluginLoader, m_pluginLoaders) {
-    if (pluginLoader != NULL) {
-      if (m_autoDeletePlugins)
-        pluginLoader->unload();
-      delete pluginLoader;
+    foreach (QPluginLoader* pluginLoader, m_pluginLoaders) {
+        if (pluginLoader != NULL) {
+            if (m_autoDeletePlugins)
+                pluginLoader->unload();
+            delete pluginLoader;
+        }
     }
-  }
 
-  m_pluginLoaders.clear();
-  m_plugins.clear();
-  m_pluginFileNames.clear();
+    m_pluginLoaders.clear();
+    m_plugins.clear();
+    m_pluginFileNames.clear();
 }
 
 bool PluginsLoader::Private::filterAccepts(const QList<InstanceFilter *> &filters,
                                            QPluginLoader* pluginLoader,
                                            QString* filterError)
 {
-  foreach (InstanceFilter* filter, filters) {
-    if (!filter->accepts(pluginLoader, filterError))
-      return false;
-  }
-  return true;
+    foreach (InstanceFilter* filter, filters) {
+        if (!filter->accepts(pluginLoader, filterError))
+            return false;
+    }
+    return true;
 }
 
 bool PluginsLoader::Private::isLibrary(const QString &path)
 {
-  QStringList suffixList;
+    QStringList suffixList;
 #if defined(Q_OS_WIN) || defined(Q_OS_WIN32)
-  suffixList << QLatin1String(".dll");
+    suffixList << QLatin1String(".dll");
 #elif defined(Q_OS_LINUX) || defined(Q_OS_UNIX)
-  suffixList << QLatin1String(".so");
+    suffixList << QLatin1String(".so");
 #elif defined(Q_OS_MAC)
-  suffixList << QLatin1String(".dylib") << QLatin1String(".bundle") << QLatin1String(".so");
+    suffixList << QLatin1String(".dylib") << QLatin1String(".bundle") << QLatin1String(".so");
 #endif
 
-  foreach (const QString& suffix, suffixList)
-    return path.endsWith(suffix);
-  return false;
+    foreach (const QString& suffix, suffixList)
+        return path.endsWith(suffix);
+    return false;
 }
 
 /*!
@@ -130,14 +130,14 @@ bool PluginsLoader::Private::isLibrary(const QString &path)
  */
 
 PluginsLoader::PluginsLoader()
-  : d(new Private)
+    : d(new Private)
 {
 }
 
 PluginsLoader::~PluginsLoader()
 {
-  d->releasePlugins();
-  delete d;
+    d->releasePlugins();
+    delete d;
 }
 
 /*!
@@ -152,7 +152,7 @@ PluginsLoader::~PluginsLoader()
  */
 bool PluginsLoader::autoDeletePlugins() const
 {
-  return d->m_autoDeletePlugins;
+    return d->m_autoDeletePlugins;
 }
 
 /*!
@@ -161,7 +161,7 @@ bool PluginsLoader::autoDeletePlugins() const
  */
 void PluginsLoader::setAutoDeletePlugins(bool on)
 {
-  d->m_autoDeletePlugins = on;
+    d->m_autoDeletePlugins = on;
 }
 
 /*!
@@ -171,8 +171,8 @@ void PluginsLoader::setAutoDeletePlugins(bool on)
  */
 void PluginsLoader::addPath(const QString &path)
 {
-  if (!path.trimmed().isEmpty() || !d->m_pluginPaths.contains(path))
-    d->m_pluginPaths.append(path);
+    if (!path.trimmed().isEmpty() || !d->m_pluginPaths.contains(path))
+        d->m_pluginPaths.append(path);
 }
 
 /*!
@@ -180,7 +180,7 @@ void PluginsLoader::addPath(const QString &path)
  */
 void PluginsLoader::removePath(const QString &path)
 {
-  d->m_pluginPaths.removeOne(path);
+    d->m_pluginPaths.removeOne(path);
 }
 
 /*!
@@ -189,7 +189,7 @@ void PluginsLoader::removePath(const QString &path)
  */
 QStringList PluginsLoader::paths() const
 {
-  return d->m_pluginPaths;
+    return d->m_pluginPaths;
 }
 
 /*!
@@ -200,7 +200,7 @@ QStringList PluginsLoader::paths() const
  */
 void PluginsLoader::setPaths(const QStringList &paths)
 {
-  d->m_pluginPaths = paths;
+    d->m_pluginPaths = paths;
 }
 
 /*!
@@ -208,7 +208,7 @@ void PluginsLoader::setPaths(const QStringList &paths)
  */
 QStringList PluginsLoader::fileNameFilters() const
 {
-  return d->m_fileNameFilters;
+    return d->m_fileNameFilters;
 }
 
 /*! \brief Sets the name filters used by loadPlugins()
@@ -219,7 +219,7 @@ QStringList PluginsLoader::fileNameFilters() const
  */
 void PluginsLoader::setFileNameFilters(const QStringList &nameFilters)
 {
-  d->m_fileNameFilters = nameFilters;
+    d->m_fileNameFilters = nameFilters;
 }
 
 /*!
@@ -229,10 +229,10 @@ void PluginsLoader::setFileNameFilters(const QStringList &nameFilters)
  */
 QString PluginsLoader::pluginFileName(const QObject* plugin) const
 {
-  QHash<const QObject*, QString>::ConstIterator it = d->m_pluginFileNames.find(plugin);
-  if (it != d->m_pluginFileNames.constEnd())
-    return it.value();
-  return QString();
+    QHash<const QObject*, QString>::ConstIterator it = d->m_pluginFileNames.find(plugin);
+    if (it != d->m_pluginFileNames.constEnd())
+        return it.value();
+    return QString();
 }
 
 /*!
@@ -240,14 +240,14 @@ QString PluginsLoader::pluginFileName(const QObject* plugin) const
  */
 QVector<QObject*> PluginsLoader::plugins() const
 {
-  return d->m_plugins;
+    return d->m_plugins;
 }
 
 void PluginsLoader::loadPlugins(InstanceFilter *filter, QStringList *errors)
 {
-  QList<InstanceFilter*> filters;
-  filters.append(filter);
-  this->loadPlugins(filters, errors);
+    QList<InstanceFilter*> filters;
+    filters.append(filter);
+    this->loadPlugins(filters, errors);
 }
 
 /*!
@@ -255,56 +255,56 @@ void PluginsLoader::loadPlugins(InstanceFilter *filter, QStringList *errors)
  */
 void PluginsLoader::loadPlugins(const QList<InstanceFilter *> &filters, QStringList *errors)
 {
-  d->releasePlugins();
+    d->releasePlugins();
 
-  foreach (const QString& path, d->m_pluginPaths) {
-    QDir pluginDir(path);
-    const QStringList entryList(pluginDir.entryList(d->m_fileNameFilters, QDir::Files));
-    foreach (const QString& entry, entryList) {
-      if (!Private::isLibrary(entry))
-        continue;
+    foreach (const QString& path, d->m_pluginPaths) {
+        QDir pluginDir(path);
+        const QStringList entryList(pluginDir.entryList(d->m_fileNameFilters, QDir::Files));
+        foreach (const QString& entry, entryList) {
+            if (!Private::isLibrary(entry))
+                continue;
 
-      // Test plugin loader against filters
-      QPluginLoader* pluginLoader = new QPluginLoader(pluginDir.absoluteFilePath(entry));
-      QString filterError;
-      const bool pluginAccepted = Private::filterAccepts(filters, pluginLoader, &filterError);
+            // Test plugin loader against filters
+            QPluginLoader* pluginLoader = new QPluginLoader(pluginDir.absoluteFilePath(entry));
+            QString filterError;
+            const bool pluginAccepted = Private::filterAccepts(filters, pluginLoader, &filterError);
 
-      if (pluginAccepted) {
-        QObject* pluginInstance = pluginLoader->instance();
-        d->m_plugins.append(pluginInstance);
-        d->m_pluginLoaders.append(pluginLoader);
-        d->m_pluginFileNames.insert(pluginInstance, entry);
-      }
-      else {
-        if (errors != NULL) {
-          //: %1 holds the path to a plugin (DLL)
-          //: %2 holds an error description
-          errors->append(QCoreApplication::translate("qttools::PluginsLoader",
-                                                     "Failed to load plugin %1, error : %2")
-                         .arg(pluginLoader->fileName())
-                         .arg(!filterError.isEmpty() ? filterError : pluginLoader->errorString()));
-        }
-        pluginLoader->unload();
-        delete pluginLoader;
-      }
+            if (pluginAccepted) {
+                QObject* pluginInstance = pluginLoader->instance();
+                d->m_plugins.append(pluginInstance);
+                d->m_pluginLoaders.append(pluginLoader);
+                d->m_pluginFileNames.insert(pluginInstance, entry);
+            }
+            else {
+                if (errors != NULL) {
+                    //: %1 holds the path to a plugin (DLL)
+                    //: %2 holds an error description
+                    errors->append(QCoreApplication::translate("qttools::PluginsLoader",
+                                                               "Failed to load plugin %1, error : %2")
+                                   .arg(pluginLoader->fileName())
+                                   .arg(!filterError.isEmpty() ? filterError : pluginLoader->errorString()));
+                }
+                pluginLoader->unload();
+                delete pluginLoader;
+            }
+        } // end foreach ()
     } // end foreach ()
-  } // end foreach ()
 }
 
 /*! \brief Removes a previously loaded plugin object
  */
 void PluginsLoader::discardPlugin(QObject* plugin)
 {
-  for (int i = 0; i < d->m_plugins.size(); ++i) {
-    if (plugin == d->m_plugins.at(i)) {
-      d->m_plugins.remove(i);
-      if (this->autoDeletePlugins())
-        d->m_pluginLoaders.at(i)->unload();
-      delete d->m_pluginLoaders.at(i);
-      d->m_pluginLoaders.remove(i);
+    for (int i = 0; i < d->m_plugins.size(); ++i) {
+        if (plugin == d->m_plugins.at(i)) {
+            d->m_plugins.remove(i);
+            if (this->autoDeletePlugins())
+                d->m_pluginLoaders.at(i)->unload();
+            delete d->m_pluginLoaders.at(i);
+            d->m_pluginLoaders.remove(i);
+        }
     }
-  }
-  d->m_pluginFileNames.remove(plugin);
+    d->m_pluginFileNames.remove(plugin);
 }
 
 } // namespace qttools

@@ -47,19 +47,19 @@ class WaitLoop;
 class QTTOOLS_CORE_EXPORT WaitLoop_StopCondition
 {
 public:
-  WaitLoop_StopCondition();
-  virtual ~WaitLoop_StopCondition();
+    WaitLoop_StopCondition();
+    virtual ~WaitLoop_StopCondition();
 
-  WaitLoop* waitLoop() const;
+    WaitLoop* waitLoop() const;
 
 protected:
-  virtual void beginWait();
-  virtual void stopWait();
-  void endWaitLoop();
+    virtual void beginWait();
+    virtual void stopWait();
+    void endWaitLoop();
 
 private:
-  friend class WaitLoop;
-  WaitLoop* m_waitLoop;
+    friend class WaitLoop;
+    WaitLoop* m_waitLoop;
 };
 
 } // namespace qttools

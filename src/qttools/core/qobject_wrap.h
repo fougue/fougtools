@@ -46,14 +46,14 @@ template<typename T>
 class QObjectWrap : public QObject
 {
 public:
-  QObjectWrap(T* object, QObject* parent = NULL);
-  ~QObjectWrap();
+    QObjectWrap(T* object, QObject* parent = NULL);
+    ~QObjectWrap();
 
-  T* wrapped();
-  const T* wrapped() const;
+    T* wrapped();
+    const T* wrapped() const;
 
 private:
-  T* m_wrapped;
+    T* m_wrapped;
 };
 
 template<typename T>
@@ -78,27 +78,27 @@ QObjectWrap<T>* wrapAsQObject(T* object, QObject* parent = NULL);
 
 template<typename T>
 QObjectWrap<T>::QObjectWrap(T* object, QObject* parent)
-  : QObject(parent),
-    m_wrapped(object)
+    : QObject(parent),
+      m_wrapped(object)
 {
 }
 
 template<typename T>
 QObjectWrap<T>::~QObjectWrap()
 {
-  delete m_wrapped;
+    delete m_wrapped;
 }
 
 template<typename T>
 T* QObjectWrap<T>::wrapped()
 {
-  return m_wrapped;
+    return m_wrapped;
 }
 
 template<typename T>
 const T* QObjectWrap<T>::wrapped() const
 {
-  return m_wrapped;
+    return m_wrapped;
 }
 
 /*! \brief Create a QObjectWrap<T> owning \p object
@@ -110,7 +110,7 @@ const T* QObjectWrap<T>::wrapped() const
 template<typename T>
 QObjectWrap<T>* wrapAsQObject(T* object, QObject* parent)
 {
-  return new QObjectWrap<T>(object, parent);
+    return new QObjectWrap<T>(object, parent);
 }
 
 } // namespace qttools

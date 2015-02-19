@@ -48,13 +48,13 @@ namespace qttools {
 class QTTOOLS_CORE_EXPORT RuntimeError : public std::runtime_error
 {
 public:
-  RuntimeError(const QString& err);
-  virtual ~RuntimeError() throw();
+    RuntimeError(const QString& err);
+    virtual ~RuntimeError() throw();
 
-  QString message() const;
+    QString message() const;
 
 private:
-  QString m_err;
+    QString m_err;
 };
 
 } // namespace qttools

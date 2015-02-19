@@ -5,9 +5,9 @@
 
 int main(int argc, char** argv)
 {
-  QApplication app(argc, argv);
+    QApplication app(argc, argv);
 
-  LengthEditorWidget lenEditor;
-  lenEditor.show();
-  return app.exec();
+    LengthEditorWidget lenEditor;
+    lenEditor.show();
+    return app.exec();
 }

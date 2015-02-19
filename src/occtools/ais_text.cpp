@@ -85,50 +85,50 @@ IMPLEMENT_STANDARD_TYPE_END(occ_AIS_Text)
 
 namespace internal {
 
-  class TextProperties
-  {
-  public:
-    TextProperties()
-      : m_font(nullptr),
-        m_aspect(new Prs3d_TextAspect)
-    { }
-
-    bool operator==(const TextProperties& other) const
+    class TextProperties
     {
-      return
-          m_font == other.m_font
-          && m_position.SquareDistance(other.m_position) < 1e-6
-          && m_text == other.m_text
-          && m_aspect == other.m_aspect;
-    }
+    public:
+        TextProperties()
+            : m_font(nullptr),
+              m_aspect(new Prs3d_TextAspect)
+        { }
 
-    const char* m_font;
-    gp_Pnt m_position;
-    TCollection_ExtendedString m_text;
-    Handle_Prs3d_TextAspect m_aspect;
-  };
+        bool operator==(const TextProperties& other) const
+        {
+            return
+                    m_font == other.m_font
+                    && m_position.SquareDistance(other.m_position) < 1e-6
+                    && m_text == other.m_text
+                    && m_aspect == other.m_aspect;
+        }
+
+        const char* m_font;
+        gp_Pnt m_position;
+        TCollection_ExtendedString m_text;
+        Handle_Prs3d_TextAspect m_aspect;
+    };
 
 } // namespace internal
 
 class occ_AIS_Text::Private
 {
 public:
-  Private()
-    : m_defaultFont("Courrier" /*Graphic3d_NOF_ASCII_MONO*/),
-      m_defaultColor(Quantity_NOC_YELLOW),
-      m_defaultTextBackgroundColor(Quantity_NOC_GREEN),
-      m_defaultTextDisplayMode(Aspect_TODT_NORMAL),
-      m_defaultTextStyle(Aspect_TOST_NORMAL)
-  {
-    //Graphic3d_AspectText3d::TexFontDisable();
-  }
+    Private()
+        : m_defaultFont("Courrier" /*Graphic3d_NOF_ASCII_MONO*/),
+          m_defaultColor(Quantity_NOC_YELLOW),
+          m_defaultTextBackgroundColor(Quantity_NOC_GREEN),
+          m_defaultTextDisplayMode(Aspect_TODT_NORMAL),
+          m_defaultTextStyle(Aspect_TOST_NORMAL)
+    {
+        //Graphic3d_AspectText3d::TexFontDisable();
+    }
 
-  const char* m_defaultFont;
-  Quantity_Color m_defaultColor;
-  Quantity_Color m_defaultTextBackgroundColor;
-  Aspect_TypeOfDisplayText m_defaultTextDisplayMode;
-  Aspect_TypeOfStyleText m_defaultTextStyle;
-  std::vector<internal::TextProperties> m_textProps;
+    const char* m_defaultFont;
+    Quantity_Color m_defaultColor;
+    Quantity_Color m_defaultTextBackgroundColor;
+    Aspect_TypeOfDisplayText m_defaultTextDisplayMode;
+    Aspect_TypeOfStyleText m_defaultTextStyle;
+    std::vector<internal::TextProperties> m_textProps;
 };
 
 /*!
@@ -141,62 +141,62 @@ public:
 
 //! Constructs a default occ_AIS_Text
 occ_AIS_Text::occ_AIS_Text()
-  : d(new Private)
+    : d(new Private)
 {
 }
 
 //! Constructs a fully initialized occ_AIS_Text
 occ_AIS_Text::occ_AIS_Text(const TCollection_ExtendedString &text, const gp_Pnt& pos)
-  : d(new Private)
+    : d(new Private)
 {
-  internal::TextProperties defaultProps;
-  d->m_textProps.push_back(defaultProps);
-  this->setText(text);
-  this->setPosition(pos);
+    internal::TextProperties defaultProps;
+    d->m_textProps.push_back(defaultProps);
+    this->setText(text);
+    this->setPosition(pos);
 }
 
 //! Destructs the instance and free any allocated resources
 occ_AIS_Text::~occ_AIS_Text()
 {
-  delete d;
+    delete d;
 }
 
 Handle_Prs3d_TextAspect occ_AIS_Text::presentationTextAspect(unsigned i) const
 {
-  if (this->isValidTextIndex(i))
-    return d->m_textProps.at(i).m_aspect;
-  return Handle_Prs3d_TextAspect();
+    if (this->isValidTextIndex(i))
+        return d->m_textProps.at(i).m_aspect;
+    return Handle_Prs3d_TextAspect();
 }
 
 Handle_Graphic3d_AspectText3d occ_AIS_Text::graphicTextAspect(unsigned i) const
 {
-  if (this->isValidTextIndex(i))
-    return d->m_textProps.at(i).m_aspect->Aspect();
-  return Handle_Graphic3d_AspectText3d();
+    if (this->isValidTextIndex(i))
+        return d->m_textProps.at(i).m_aspect->Aspect();
+    return Handle_Graphic3d_AspectText3d();
 }
 
 //! Returns the position of the \p i-th text displayed
 gp_Pnt occ_AIS_Text::position(unsigned i) const
 {
-  return this->isValidTextIndex(i) ? d->m_textProps.at(i).m_position : gp_Pnt();
+    return this->isValidTextIndex(i) ? d->m_textProps.at(i).m_position : gp_Pnt();
 }
 
 //! Returns the \p i-th text displayed
 TCollection_ExtendedString occ_AIS_Text::text(unsigned i) const
 {
-  return this->isValidTextIndex(i) ? d->m_textProps.at(i).m_text : TCollection_ExtendedString();
+    return this->isValidTextIndex(i) ? d->m_textProps.at(i).m_text : TCollection_ExtendedString();
 }
 
 //! Is \p i a valid index to query some text ?
 bool occ_AIS_Text::isValidTextIndex(unsigned i) const
 {
-  return i < this->textsCount();
+    return i < this->textsCount();
 }
 
 //! Returns the count of texts displayed
 unsigned occ_AIS_Text::textsCount() const
 {
-  return static_cast<unsigned>(d->m_textProps.size());
+    return static_cast<unsigned>(d->m_textProps.size());
 }
 
 /*! \brief Adds a new item text item to be displayed at position \p pos
@@ -205,32 +205,32 @@ unsigned occ_AIS_Text::textsCount() const
  */
 void occ_AIS_Text::addText(const TCollection_ExtendedString &text, const gp_Pnt& pos)
 {
-  internal::TextProperties newProps;
-  d->m_textProps.push_back(newProps);
-  const unsigned i = this->textsCount() - 1; // Index of the last text item
+    internal::TextProperties newProps;
+    d->m_textProps.push_back(newProps);
+    const unsigned i = this->textsCount() - 1; // Index of the last text item
 
-  this->presentationTextAspect(i)->SetColor(d->m_defaultColor);
-  this->presentationTextAspect(i)->SetFont(d->m_defaultFont);
+    this->presentationTextAspect(i)->SetColor(d->m_defaultColor);
+    this->presentationTextAspect(i)->SetFont(d->m_defaultFont);
 
-  this->setPosition(pos, i);
-  this->setText(text, i);
-  this->setTextDisplayMode(d->m_defaultTextDisplayMode, i);
-  this->setTextStyle(d->m_defaultTextStyle, i);
-  this->setTextBackgroundColor(d->m_defaultTextBackgroundColor, i);
+    this->setPosition(pos, i);
+    this->setText(text, i);
+    this->setTextDisplayMode(d->m_defaultTextDisplayMode, i);
+    this->setTextStyle(d->m_defaultTextStyle, i);
+    this->setTextBackgroundColor(d->m_defaultTextBackgroundColor, i);
 }
 
 //! Sets the position of the \p i-th displayed text to \p pos
 void occ_AIS_Text::setPosition(const gp_Pnt& pos, unsigned i)
 {
-  if (this->isValidTextIndex(i))
-    d->m_textProps[i].m_position = pos;
+    if (this->isValidTextIndex(i))
+        d->m_textProps[i].m_position = pos;
 }
 
 //! Sets the \p i-th displayed text to \p v
 void occ_AIS_Text::setText(const TCollection_ExtendedString &v, unsigned i)
 {
-  if (this->isValidTextIndex(i))
-    d->m_textProps[i].m_text = v;
+    if (this->isValidTextIndex(i))
+        d->m_textProps[i].m_text = v;
 }
 
 /*! \brief Sets the color of the \p i-th text background to \p color
@@ -239,45 +239,45 @@ void occ_AIS_Text::setText(const TCollection_ExtendedString &v, unsigned i)
  */
 void occ_AIS_Text::setTextBackgroundColor(const Quantity_Color& color, unsigned i)
 {
-  if (this->isValidTextIndex(i))
-    this->graphicTextAspect(i)->SetColorSubTitle(color);
+    if (this->isValidTextIndex(i))
+        this->graphicTextAspect(i)->SetColorSubTitle(color);
 }
 
 void occ_AIS_Text::setTextDisplayMode(Aspect_TypeOfDisplayText mode, unsigned i)
 {
-  if (this->isValidTextIndex(i))
-    this->graphicTextAspect(i)->SetDisplayType(mode);
+    if (this->isValidTextIndex(i))
+        this->graphicTextAspect(i)->SetDisplayType(mode);
 }
 
 void occ_AIS_Text::setTextStyle(Aspect_TypeOfStyleText style, unsigned i)
 {
-  if (this->isValidTextIndex(i))
-    this->graphicTextAspect(i)->SetStyle(style);
+    if (this->isValidTextIndex(i))
+        this->graphicTextAspect(i)->SetStyle(style);
 }
 
 void occ_AIS_Text::setDefaultColor(const Quantity_Color &c)
 {
-  d->m_defaultColor = c;
+    d->m_defaultColor = c;
 }
 
 void occ_AIS_Text::setDefaultFont(const char *fontName)
 {
-  d->m_defaultFont = fontName;
+    d->m_defaultFont = fontName;
 }
 
 void occ_AIS_Text::setDefaultTextBackgroundColor(const Quantity_Color& c)
 {
-  d->m_defaultTextBackgroundColor = c;
+    d->m_defaultTextBackgroundColor = c;
 }
 
 void occ_AIS_Text::setDefaultTextDisplayMode(Aspect_TypeOfDisplayText mode)
 {
-  d->m_defaultTextDisplayMode = mode;
+    d->m_defaultTextDisplayMode = mode;
 }
 
 void occ_AIS_Text::setDefaultTextStyle(Aspect_TypeOfStyleText style)
 {
-  d->m_defaultTextStyle = style;
+    d->m_defaultTextStyle = style;
 }
 
 // --- Implementation
@@ -287,8 +287,8 @@ void occ_AIS_Text::Compute(const Handle_PrsMgr_PresentationManager3d& /*pm*/,
                            const Handle_Prs3d_Presentation& pres,
                            const Standard_Integer /*mode*/)
 {
-  for (unsigned i = 0; i < this->textsCount(); ++i)
-    Prs3d_Text::Draw(pres, this->presentationTextAspect(i), this->text(i), this->position(i));
+    for (unsigned i = 0; i < this->textsCount(); ++i)
+        Prs3d_Text::Draw(pres, this->presentationTextAspect(i), this->text(i), this->position(i));
 }
 
 //! -- from PrsMgr_PresentableObject

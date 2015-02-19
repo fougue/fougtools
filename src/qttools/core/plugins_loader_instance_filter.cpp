@@ -64,8 +64,8 @@ namespace qttools {
  */
 bool PluginsLoader_InstanceFilter::accepts(QPluginLoader *loader, QString *error) const
 {
-  Q_UNUSED(error);
-  return loader != NULL;
+    Q_UNUSED(error);
+    return loader != NULL;
 }
 
 } // namespace qttools

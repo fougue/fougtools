@@ -48,56 +48,56 @@ namespace occ {
 class OCCTOOLS_EXPORT IO
 {
 public:
-  typedef const char* FileNameLocal8Bit;
+    typedef const char* FileNameLocal8Bit;
 
-  enum Format
-  {
-    IgesFormat,
-    StepFormat,
-    OccBrepFormat,
-    AsciiStlFormat,
-    BinaryStlFormat,
-    UnknownFormat
-  };
+    enum Format
+    {
+        IgesFormat,
+        StepFormat,
+        OccBrepFormat,
+        AsciiStlFormat,
+        BinaryStlFormat,
+        UnknownFormat
+    };
 
-  static Format partFormat(FileNameLocal8Bit fileName);
-  static Format partFormatFromContents(const char* contentsBegin,
-                                       std::size_t contentsBeginSize,
-                                       std::size_t fullContentsSizeHint = 0);
+    static Format partFormat(FileNameLocal8Bit fileName);
+    static Format partFormatFromContents(const char* contentsBegin,
+                                         std::size_t contentsBeginSize,
+                                         std::size_t fullContentsSizeHint = 0);
 
-  static TopoDS_Shape loadPartFile(
-          FileNameLocal8Bit fileName,
-          Handle_Message_ProgressIndicator indicator = NULL);
+    static TopoDS_Shape loadPartFile(
+            FileNameLocal8Bit fileName,
+            Handle_Message_ProgressIndicator indicator = NULL);
 
-  static Handle_StlMesh_Mesh loadStlFile(
-          FileNameLocal8Bit fileName,
-          Handle_Message_ProgressIndicator indicator = NULL);
+    static Handle_StlMesh_Mesh loadStlFile(
+            FileNameLocal8Bit fileName,
+            Handle_Message_ProgressIndicator indicator = NULL);
 
-  static TopoDS_Shape loadBrepFile(
-          FileNameLocal8Bit fileName,
-          Handle_Message_ProgressIndicator indicator = NULL);
-  static TopoDS_Shape loadIgesFile(
-          FileNameLocal8Bit fileName,
-          Handle_Message_ProgressIndicator indicator = NULL);
-  static TopoDS_Shape loadStepFile(
-          FileNameLocal8Bit fileName,
-          Handle_Message_ProgressIndicator indicator = NULL);
+    static TopoDS_Shape loadBrepFile(
+            FileNameLocal8Bit fileName,
+            Handle_Message_ProgressIndicator indicator = NULL);
+    static TopoDS_Shape loadIgesFile(
+            FileNameLocal8Bit fileName,
+            Handle_Message_ProgressIndicator indicator = NULL);
+    static TopoDS_Shape loadStepFile(
+            FileNameLocal8Bit fileName,
+            Handle_Message_ProgressIndicator indicator = NULL);
 
-  static void writeBrepFile(
-          const TopoDS_Shape& shape,
-          FileNameLocal8Bit fileName,
-          Handle_Message_ProgressIndicator indicator = NULL);
-  static void writeIgesFile(
-          const TopoDS_Shape& shape,
-          FileNameLocal8Bit fileName,
-          Handle_Message_ProgressIndicator indicator = NULL);
-  static void writeStepFile(
-          const TopoDS_Shape& shape,
-          FileNameLocal8Bit fileName,
-          Handle_Message_ProgressIndicator indicator = NULL);
+    static void writeBrepFile(
+            const TopoDS_Shape& shape,
+            FileNameLocal8Bit fileName,
+            Handle_Message_ProgressIndicator indicator = NULL);
+    static void writeIgesFile(
+            const TopoDS_Shape& shape,
+            FileNameLocal8Bit fileName,
+            Handle_Message_ProgressIndicator indicator = NULL);
+    static void writeStepFile(
+            const TopoDS_Shape& shape,
+            FileNameLocal8Bit fileName,
+            Handle_Message_ProgressIndicator indicator = NULL);
 
-  static void writeAsciiStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName);
-  static void writeBinaryStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName);
+    static void writeAsciiStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName);
+    static void writeBinaryStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName);
 };
 
 } // namespace occ

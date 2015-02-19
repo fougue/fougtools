@@ -54,28 +54,28 @@ namespace qttools {
 
 QVector<AbstractLengthEditor::MetricUnit> AbstractLengthEditor::allMetricUnits()
 {
-  return QVector<MetricUnit>() << MeterUnit << CentimeterUnit << MillimeterUnit;
+    return QVector<MetricUnit>() << MeterUnit << CentimeterUnit << MillimeterUnit;
 }
 
 QVector<AbstractLengthEditor::ImperialUnit> AbstractLengthEditor::allImperialUnits()
 {
-  return QVector<ImperialUnit>() << InchUnit << FootUnit << YardUnit;
+    return QVector<ImperialUnit>() << InchUnit << FootUnit << YardUnit;
 }
 
 AbstractLengthEditor::AbstractLengthEditor()
-  : m_prefMetricUnit(MillimeterUnit),
-    m_prefImperialUnit(InchUnit)
+    : m_prefMetricUnit(MillimeterUnit),
+      m_prefImperialUnit(InchUnit)
 {
 }
 
 double AbstractLengthEditor::qtyValue() const
 {
-  return this->length();
+    return this->length();
 }
 
 void AbstractLengthEditor::setQtyValue(double v)
 {
-  this->setLength(v);
+    this->setLength(v);
 }
 
 /*! \fn double AbstractLengthEditor::length() const
@@ -90,80 +90,80 @@ void AbstractLengthEditor::setQtyValue(double v)
  */
 AbstractLengthEditor::MetricUnit AbstractLengthEditor::preferredMetricUnit() const
 {
-  return m_prefMetricUnit;
+    return m_prefMetricUnit;
 }
 
 /*! \brief Set the length unit to be used when the metric measurement system is currently active
  */
 void AbstractLengthEditor::setPreferredMetricUnit(MetricUnit unit)
 {
-  const double lengthMm = this->length();
-  m_prefMetricUnit = unit;
-  this->setLength(lengthMm);
-  this->updateEditor(this->measurementSystem());
+    const double lengthMm = this->length();
+    m_prefMetricUnit = unit;
+    this->setLength(lengthMm);
+    this->updateEditor(this->measurementSystem());
 }
 
 /*! \brief Length unit used when the imperial measurement system is currently active
  */
 AbstractLengthEditor::ImperialUnit AbstractLengthEditor::preferredImperialUnit() const
 {
-  return m_prefImperialUnit;
+    return m_prefImperialUnit;
 }
 
 /*! \brief Set the length unit to be used when the imperial measurement system is currently active
  */
 void AbstractLengthEditor::setPreferredImperialUnit(ImperialUnit unit)
 {
-  m_prefImperialUnit = unit;
-  this->updateEditor(this->measurementSystem());
+    m_prefImperialUnit = unit;
+    this->updateEditor(this->measurementSystem());
 }
 
 // -- Utilities
 
 QString AbstractLengthEditor::unitText(MetricUnit unit)
 {
-  switch (unit) {
-  case MeterUnit : return QLatin1String("m");
-  case CentimeterUnit : return QLatin1String("cm");
-  case MillimeterUnit : return QLatin1String("mm");
-  default : return QString();
-  }
+    switch (unit) {
+    case MeterUnit : return QLatin1String("m");
+    case CentimeterUnit : return QLatin1String("cm");
+    case MillimeterUnit : return QLatin1String("mm");
+    default : return QString();
+    }
 }
 
 QString AbstractLengthEditor::unitText(ImperialUnit unit)
 {
-  switch (unit) {
-  case InchUnit : return QLatin1String("in");
-  case FootUnit : return QLatin1String("ft");
-  case YardUnit : return QLatin1String("yd");
-  default : return QString();
-  }
+    switch (unit) {
+    case InchUnit : return QLatin1String("in");
+    case FootUnit : return QLatin1String("ft");
+    case YardUnit : return QLatin1String("yd");
+    default : return QString();
+    }
 }
 
 double AbstractLengthEditor::asMetricLength(double len, MetricUnit unit)
 {
-  switch (unit) {
-  case qttools::AbstractLengthEditor::MeterUnit :
-    return len / 1000.;
-  case qttools::AbstractLengthEditor::CentimeterUnit :
-    return len / 10.;
-  case qttools::AbstractLengthEditor::MillimeterUnit :
+    switch (unit) {
+    case qttools::AbstractLengthEditor::MeterUnit :
+        return len / 1000.;
+    case qttools::AbstractLengthEditor::CentimeterUnit :
+        return len / 10.;
+    case qttools::AbstractLengthEditor::MillimeterUnit :
+        return len;
+    }
     return len;
-  }
-  return len;
 }
 
 double AbstractLengthEditor::asImperialLength(double len, ImperialUnit unit)
 {
-  switch (unit) {
-  case qttools::AbstractLengthEditor::InchUnit :
-    return len / 25.4;
-  case qttools::AbstractLengthEditor::FootUnit :
-    return (len / 25.4) / 12.;
-  case qttools::AbstractLengthEditor::YardUnit :
-    return (len / 25.4) / 36.;
-  }
-  return len;
+    switch (unit) {
+    case qttools::AbstractLengthEditor::InchUnit :
+        return len / 25.4;
+    case qttools::AbstractLengthEditor::FootUnit :
+        return (len / 25.4) / 12.;
+    case qttools::AbstractLengthEditor::YardUnit :
+        return (len / 25.4) / 36.;
+    }
+    return len;
 }
 
 } // namespace qttools

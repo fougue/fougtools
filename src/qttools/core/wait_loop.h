@@ -48,24 +48,24 @@ namespace qttools {
 
 class QTTOOLS_CORE_EXPORT WaitLoop : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  typedef WaitLoop_StopCondition StopCondition;
+    typedef WaitLoop_StopCondition StopCondition;
 
-  WaitLoop(QObject* parent = NULL);
-  ~WaitLoop();
+    WaitLoop(QObject* parent = NULL);
+    ~WaitLoop();
 
-  void addStopCondition(StopCondition* cond);
-  void removeStopCondition(StopCondition* cond);
-  bool exec(int msec = -1);
-  bool exec(QEventLoop::ProcessEventsFlags flags, int msec = -1);
-  StopCondition* exitStopCondition() const;
+    void addStopCondition(StopCondition* cond);
+    void removeStopCondition(StopCondition* cond);
+    bool exec(int msec = -1);
+    bool exec(QEventLoop::ProcessEventsFlags flags, int msec = -1);
+    StopCondition* exitStopCondition() const;
 
 private:
-  friend class WaitLoop_StopCondition;
-  class Private;
-  Private* const d;
+    friend class WaitLoop_StopCondition;
+    class Private;
+    Private* const d;
 };
 
 } // namespace qttools

@@ -53,16 +53,16 @@ namespace occ {
 void AisTools::eraseObjectFromContext(const Handle_AIS_InteractiveObject &object,
                                       const Handle_AIS_InteractiveContext &context)
 {
-  if (!object.IsNull()) {
-    context->Erase(object, Standard_False);
-    context->Remove(object, Standard_False);
-    context->Clear(object, Standard_False); // Remove() can be used too
-    context->SelectionManager()->Remove(object);
+    if (!object.IsNull()) {
+        context->Erase(object, Standard_False);
+        context->Remove(object, Standard_False);
+        context->Clear(object, Standard_False); // Remove() can be used too
+        context->SelectionManager()->Remove(object);
 
-    Handle_AIS_InteractiveObject objectHCopy = object;
-    while (!objectHCopy.IsNull())
-      objectHCopy.Nullify();
-  }
+        Handle_AIS_InteractiveObject objectHCopy = object;
+        while (!objectHCopy.IsNull())
+            objectHCopy.Nullify();
+    }
 }
 
 } // namespace occ

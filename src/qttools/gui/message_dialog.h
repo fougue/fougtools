@@ -49,27 +49,27 @@ namespace qttools {
 class QTTOOLS_GUI_EXPORT MessageDialog : public QDialog
 {
 public:
-  enum Icon
-  {
-    NoIcon,
-    Information,
-    Warning,
-    Critical,
-    Question
-  };
+    enum Icon
+    {
+        NoIcon,
+        Information,
+        Warning,
+        Critical,
+        Question
+    };
 
-  MessageDialog(Icon icon,
-                const QString& title,
-                const QString& text,
-                QDialogButtonBox::StandardButtons buttons,
-                QWidget* parent = NULL);
+    MessageDialog(Icon icon,
+                  const QString& title,
+                  const QString& text,
+                  QDialogButtonBox::StandardButtons buttons,
+                  QWidget* parent = NULL);
 
-  QWidget* detailsWidget() const;
-  void setDetailsWidget(QWidget* widget);
+    QWidget* detailsWidget() const;
+    void setDetailsWidget(QWidget* widget);
 
 private:
-  QLabel* m_textLabel;
-  QWidget* m_detailsWidget;
+    QLabel* m_textLabel;
+    QWidget* m_detailsWidget;
 };
 
 } // namespace qttools

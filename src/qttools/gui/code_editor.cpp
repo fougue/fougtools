@@ -48,17 +48,17 @@ namespace qttools {
 class CodeEditor::Private
 {
 public:
-  Private(CodeEditor* backPtr);
+    Private(CodeEditor* backPtr);
 
-  void lineNumberAreaPaintEvent(QPaintEvent *event);
-  int lineNumberAreaWidth();
+    void lineNumberAreaPaintEvent(QPaintEvent *event);
+    int lineNumberAreaWidth();
 
-  void updateLineNumberAreaWidth(int newBlockCount);
-  void highlightCurrentLine();
-  void updateLineNumberArea(const QRect &rect, int dy);
+    void updateLineNumberAreaWidth(int newBlockCount);
+    void highlightCurrentLine();
+    void updateLineNumberArea(const QRect &rect, int dy);
 
-  CodeEditor* m_backPtr;
-  QWidget* m_lineNumberArea;
+    CodeEditor* m_backPtr;
+    QWidget* m_lineNumberArea;
 };
 
 /*! \class CodeEditor::LineNumberArea
@@ -68,109 +68,109 @@ public:
 class CodeEditor::LineNumberArea : public QWidget
 {
 public:
-  LineNumberArea(CodeEditor::Private *editor);
+    LineNumberArea(CodeEditor::Private *editor);
 
-  QSize sizeHint() const;
+    QSize sizeHint() const;
 
 protected:
-  void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 private:
-  CodeEditor::Private* m_codeEditor;
+    CodeEditor::Private* m_codeEditor;
 };
 
 CodeEditor::LineNumberArea::LineNumberArea(CodeEditor::Private *editor)
-  : QWidget(editor->m_backPtr),
-    m_codeEditor(editor)
+    : QWidget(editor->m_backPtr),
+      m_codeEditor(editor)
 {
 }
 
 QSize CodeEditor::LineNumberArea::sizeHint() const
 {
-  return QSize(m_codeEditor->lineNumberAreaWidth(), 0);
+    return QSize(m_codeEditor->lineNumberAreaWidth(), 0);
 }
 
 void CodeEditor::LineNumberArea::paintEvent(QPaintEvent *event)
 {
-  m_codeEditor->lineNumberAreaPaintEvent(event);
+    m_codeEditor->lineNumberAreaPaintEvent(event);
 }
 
 CodeEditor::Private::Private(CodeEditor* backPtr)
-  : m_backPtr(backPtr),
-    m_lineNumberArea(new CodeEditor::LineNumberArea(this))
+    : m_backPtr(backPtr),
+      m_lineNumberArea(new CodeEditor::LineNumberArea(this))
 {
 }
 
 int CodeEditor::Private::lineNumberAreaWidth()
 {
-  int digits = 1;
-  int max = qMax(1, m_backPtr->blockCount());
-  while (max >= 10) {
-    max /= 10;
-    ++digits;
-  }
+    int digits = 1;
+    int max = qMax(1, m_backPtr->blockCount());
+    while (max >= 10) {
+        max /= 10;
+        ++digits;
+    }
 
-  return 3 + m_backPtr->fontMetrics().width(QLatin1Char('9')) * digits;
+    return 3 + m_backPtr->fontMetrics().width(QLatin1Char('9')) * digits;
 }
 
 void CodeEditor::Private::lineNumberAreaPaintEvent(QPaintEvent *event)
 {
-  QPainter painter(m_lineNumberArea);
-  painter.fillRect(event->rect(), Qt::lightGray);
+    QPainter painter(m_lineNumberArea);
+    painter.fillRect(event->rect(), Qt::lightGray);
 
-  QTextBlock block = m_backPtr->firstVisibleBlock();
-  int blockNumber = block.blockNumber();
-  int top = (int) m_backPtr->blockBoundingGeometry(block).translated(m_backPtr->contentOffset()).top();
-  int bottom = top + (int) m_backPtr->blockBoundingRect(block).height();
+    QTextBlock block = m_backPtr->firstVisibleBlock();
+    int blockNumber = block.blockNumber();
+    int top = (int) m_backPtr->blockBoundingGeometry(block).translated(m_backPtr->contentOffset()).top();
+    int bottom = top + (int) m_backPtr->blockBoundingRect(block).height();
 
-  while (block.isValid() && top <= event->rect().bottom()) {
-    if (block.isVisible() && bottom >= event->rect().top()) {
-      painter.setPen(Qt::black);
-      painter.drawText(0, top, m_lineNumberArea->width(), m_backPtr->fontMetrics().height(),
-                       Qt::AlignRight, QString::number(blockNumber + 1));
+    while (block.isValid() && top <= event->rect().bottom()) {
+        if (block.isVisible() && bottom >= event->rect().top()) {
+            painter.setPen(Qt::black);
+            painter.drawText(0, top, m_lineNumberArea->width(), m_backPtr->fontMetrics().height(),
+                             Qt::AlignRight, QString::number(blockNumber + 1));
+        }
+
+        block = block.next();
+        top = bottom;
+        bottom = top + (int) m_backPtr->blockBoundingRect(block).height();
+        ++blockNumber;
     }
-
-    block = block.next();
-    top = bottom;
-    bottom = top + (int) m_backPtr->blockBoundingRect(block).height();
-    ++blockNumber;
-  }
 }
 
 void CodeEditor::Private::updateLineNumberAreaWidth(int newBlockCount)
 {
-  Q_UNUSED(newBlockCount);
-  m_backPtr->setViewportMargins(this->lineNumberAreaWidth(), 0, 0, 0);
+    Q_UNUSED(newBlockCount);
+    m_backPtr->setViewportMargins(this->lineNumberAreaWidth(), 0, 0, 0);
 }
 
 void CodeEditor::Private::highlightCurrentLine()
 {
-  QList<QTextEdit::ExtraSelection> extraSelections;
+    QList<QTextEdit::ExtraSelection> extraSelections;
 
-  if (!m_backPtr->isReadOnly()) {
-    QTextEdit::ExtraSelection selection;
+    if (!m_backPtr->isReadOnly()) {
+        QTextEdit::ExtraSelection selection;
 
-    QColor lineColor = QColor(Qt::yellow).lighter(160);
+        QColor lineColor = QColor(Qt::yellow).lighter(160);
 
-    selection.format.setBackground(lineColor);
-    selection.format.setProperty(QTextFormat::FullWidthSelection, true);
-    selection.cursor = m_backPtr->textCursor();
-    selection.cursor.clearSelection();
-    extraSelections.append(selection);
-  }
+        selection.format.setBackground(lineColor);
+        selection.format.setProperty(QTextFormat::FullWidthSelection, true);
+        selection.cursor = m_backPtr->textCursor();
+        selection.cursor.clearSelection();
+        extraSelections.append(selection);
+    }
 
-  m_backPtr->setExtraSelections(extraSelections);
+    m_backPtr->setExtraSelections(extraSelections);
 }
 
 void CodeEditor::Private::updateLineNumberArea(const QRect &rect, int dy)
 {
-  if (dy)
-    m_lineNumberArea->scroll(0, dy);
-  else
-    m_lineNumberArea->update(0, rect.y(), m_lineNumberArea->width(), rect.height());
+    if (dy)
+        m_lineNumberArea->scroll(0, dy);
+    else
+        m_lineNumberArea->update(0, rect.y(), m_lineNumberArea->width(), rect.height());
 
-  if (rect.contains(m_backPtr->viewport()->rect()))
-    this->updateLineNumberAreaWidth(0);
+    if (rect.contains(m_backPtr->viewport()->rect()))
+        this->updateLineNumberAreaWidth(0);
 }
 
 /*! \class CodeEditor
@@ -182,29 +182,29 @@ void CodeEditor::Private::updateLineNumberArea(const QRect &rect, int dy)
  */
 
 CodeEditor::CodeEditor(QWidget *parent)
-  : QPlainTextEdit(parent),
-    d(new Private(this))
+    : QPlainTextEdit(parent),
+      d(new Private(this))
 {
-  connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
-  connect(this, SIGNAL(updateRequest(QRect, int)), this, SLOT(updateLineNumberArea(QRect, int)));
-  connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
+    connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
+    connect(this, SIGNAL(updateRequest(QRect, int)), this, SLOT(updateLineNumberArea(QRect, int)));
+    connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
 
-  d->updateLineNumberAreaWidth(0);
-  d->highlightCurrentLine();
+    d->updateLineNumberAreaWidth(0);
+    d->highlightCurrentLine();
 }
 
 CodeEditor::~CodeEditor()
 {
-  delete d;
+    delete d;
 }
 
 void CodeEditor::resizeEvent(QResizeEvent *e)
 {
-  QPlainTextEdit::resizeEvent(e);
+    QPlainTextEdit::resizeEvent(e);
 
-  const QRect cr = this->contentsRect();
-  d->m_lineNumberArea->setGeometry(QRect(cr.left(), cr.top(),
-                                         d->lineNumberAreaWidth(), cr.height()));
+    const QRect cr = this->contentsRect();
+    d->m_lineNumberArea->setGeometry(QRect(cr.left(), cr.top(),
+                                           d->lineNumberAreaWidth(), cr.height()));
 }
 
 } // namespace qttools

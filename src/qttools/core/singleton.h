@@ -47,12 +47,12 @@ template<typename T>
 class Singleton
 {
 public:
-  static T* instance();
-  static void release();
+    static T* instance();
+    static void release();
 
 private:
-  static QAtomicPointer<T> m_instance;
-  static QMutex m_mutex;
+    static QAtomicPointer<T> m_instance;
+    static QMutex m_mutex;
 };
 
 // --
@@ -62,23 +62,23 @@ private:
 template<typename T>
 T* Singleton<T>::instance()
 {
-  if (!m_instance) {
-    m_mutex.lock();
-    if (!m_instance)
-      m_instance = new T;
-    m_mutex.unlock();
-  }
-  return m_instance;
+    if (!m_instance) {
+        m_mutex.lock();
+        if (!m_instance)
+            m_instance = new T;
+        m_mutex.unlock();
+    }
+    return m_instance;
 }
 
 template<typename T>
 void Singleton<T>::release()
 {
-  m_mutex.lock();
-  if (m_instance)
-    delete m_instance;
-  m_instance = NULL;
-  m_mutex.unlock();
+    m_mutex.lock();
+    if (m_instance)
+        delete m_instance;
+    m_instance = NULL;
+    m_mutex.unlock();
 }
 
 } // namespace qttools

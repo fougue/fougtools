@@ -45,21 +45,21 @@ namespace qttools {
 
 class QTTOOLS_GUI_EXPORT StrictStackWidget : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  StrictStackWidget(QWidget* parent = NULL);
-  ~StrictStackWidget();
+    StrictStackWidget(QWidget* parent = NULL);
+    ~StrictStackWidget();
 
-  void pushWidget(QWidget* widget);
-  QWidget* popWidget();
+    void pushWidget(QWidget* widget);
+    QWidget* popWidget();
 
-  bool isEmpty() const;
-  QWidget* topWidget() const;
+    bool isEmpty() const;
+    QWidget* topWidget() const;
 
 private:
-  class Private;
-  Private* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace qttools

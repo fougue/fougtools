@@ -48,8 +48,8 @@ namespace occ {
 class OCCTOOLS_EXPORT AisTools
 {
 public:
-  static void eraseObjectFromContext(const Handle_AIS_InteractiveObject& object,
-                                     const Handle_AIS_InteractiveContext& context);
+    static void eraseObjectFromContext(const Handle_AIS_InteractiveObject& object,
+                                       const Handle_AIS_InteractiveContext& context);
 };
 
 } // namespace occ

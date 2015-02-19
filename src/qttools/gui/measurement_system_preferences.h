@@ -46,19 +46,19 @@ namespace qttools {
 class QTTOOLS_GUI_EXPORT MeasurementSystemPreferences
 {
 public:
-  MeasurementSystemPreferences();
-  MeasurementSystemPreferences(AbstractLengthEditor::MetricUnit metUnit,
-                               AbstractLengthEditor::ImperialUnit impUnit);
+    MeasurementSystemPreferences();
+    MeasurementSystemPreferences(AbstractLengthEditor::MetricUnit metUnit,
+                                 AbstractLengthEditor::ImperialUnit impUnit);
 
-  AbstractLengthEditor::MetricUnit metricUnit() const;
-  void setMetricUnit(AbstractLengthEditor::MetricUnit unit);
+    AbstractLengthEditor::MetricUnit metricUnit() const;
+    void setMetricUnit(AbstractLengthEditor::MetricUnit unit);
 
-  AbstractLengthEditor::ImperialUnit imperialUnit() const;
-  void setImperialUnit(AbstractLengthEditor::ImperialUnit unit);
+    AbstractLengthEditor::ImperialUnit imperialUnit() const;
+    void setImperialUnit(AbstractLengthEditor::ImperialUnit unit);
 
 private:
-  AbstractLengthEditor::MetricUnit m_metricUnit;
-  AbstractLengthEditor::ImperialUnit m_imperialUnit;
+    AbstractLengthEditor::MetricUnit m_metricUnit;
+    AbstractLengthEditor::ImperialUnit m_imperialUnit;
 };
 
 } // namespace qttools

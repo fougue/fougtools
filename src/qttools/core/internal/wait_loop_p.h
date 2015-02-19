@@ -14,18 +14,18 @@ namespace internal { class WaitLoopTimeOutStopCondition; }
 class WaitLoop::Private
 {
 public:
-  Private(WaitLoop* backPtr);
+    Private(WaitLoop* backPtr);
 
-  void stopWait();
-  void endWaitLoop(WaitLoop_StopCondition* endCond);
-  internal::WaitLoopTimeOutStopCondition* timeOutStopCondition() const;
+    void stopWait();
+    void endWaitLoop(WaitLoop_StopCondition* endCond);
+    internal::WaitLoopTimeOutStopCondition* timeOutStopCondition() const;
 
-  QEventLoop m_eventLoop;
-  QList<WaitLoop_StopCondition*> m_stopConditions;
-  WaitLoop_StopCondition* m_exitStopCondition;
+    QEventLoop m_eventLoop;
+    QList<WaitLoop_StopCondition*> m_stopConditions;
+    WaitLoop_StopCondition* m_exitStopCondition;
 
 private:
-  WaitLoop* m_backPtr;
+    WaitLoop* m_backPtr;
 };
 
 } // namespace qttools

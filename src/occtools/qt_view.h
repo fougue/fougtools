@@ -54,36 +54,36 @@ namespace occ {
 
 class OCCTOOLS_EXPORT QtView : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  QtView(const Handle_AIS_InteractiveContext& context3d, QWidget* parent = NULL);
-  ~QtView();
+    QtView(const Handle_AIS_InteractiveContext& context3d, QWidget* parent = NULL);
+    ~QtView();
 
-  Handle_AIS_InteractiveContext context() const;
-  Handle_V3d_View internalView() const;
+    Handle_AIS_InteractiveContext context() const;
+    Handle_V3d_View internalView() const;
 
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
-  typedef std::function<void()> PaintCallback;
-  int addPaintCallback(const PaintCallback& callback);
-  void removePaintCallback(int callbackId);
-  Aspect_GraphicCallbackStruct* paintCallbackData() const;
+    typedef std::function<void()> PaintCallback;
+    int addPaintCallback(const PaintCallback& callback);
+    void removePaintCallback(int callbackId);
+    Aspect_GraphicCallbackStruct* paintCallbackData() const;
 #endif
 
-  QPaintEngine* paintEngine() const;
+    QPaintEngine* paintEngine() const;
 
 public slots:
-  void redraw();
-  void fitAll();
+    void redraw();
+    void fitAll();
 
 protected:
-  void paintEvent(QPaintEvent* event);
-  void resizeEvent(QResizeEvent* event);
+    void paintEvent(QPaintEvent* event);
+    void resizeEvent(QResizeEvent* event);
 
 private:
-  friend int occ_QtView_paintCallBack(Aspect_Drawable, void*, Aspect_GraphicCallbackStruct*);
-  class Private;
-  Private* const d;
+    friend int occ_QtView_paintCallBack(Aspect_Drawable, void*, Aspect_GraphicCallbackStruct*);
+    class Private;
+    Private* const d;
 };
 
 } // namespace occ

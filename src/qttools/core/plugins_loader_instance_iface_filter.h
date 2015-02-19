@@ -52,9 +52,9 @@ namespace internal {
 class QTTOOLS_CORE_EXPORT PluginsLoader_InstanceIFaceFilter_Helper
 {
 protected:
-  static void setRootComponentNullError(QString* error, const QPluginLoader* loader);
-  static void setRootComponentIncompatibleError(QString* error, const char* iid);
-  static QObject* rootComponent(QPluginLoader* loader);
+    static void setRootComponentNullError(QString* error, const QPluginLoader* loader);
+    static void setRootComponentIncompatibleError(QString* error, const char* iid);
+    static QObject* rootComponent(QPluginLoader* loader);
 };
 
 } // namespace internal
@@ -67,23 +67,23 @@ protected:
  */
 template<typename INTERFACE>
 class PluginsLoader_InstanceIFaceFilter :
-    public PluginsLoader_InstanceFilter,
-    protected internal::PluginsLoader_InstanceIFaceFilter_Helper
+        public PluginsLoader_InstanceFilter,
+        protected internal::PluginsLoader_InstanceIFaceFilter_Helper
 {
 public:
-  bool accepts(QPluginLoader *loader, QString* error = NULL) const
-  {
-    if (rootComponent(loader) != NULL) {
-      if (qobject_cast<INTERFACE*>(rootComponent(loader)) != NULL)
-        return true;
-      else
-        setRootComponentIncompatibleError(error, qobject_interface_iid<INTERFACE>());
+    bool accepts(QPluginLoader *loader, QString* error = NULL) const
+    {
+        if (rootComponent(loader) != NULL) {
+            if (qobject_cast<INTERFACE*>(rootComponent(loader)) != NULL)
+                return true;
+            else
+                setRootComponentIncompatibleError(error, qobject_interface_iid<INTERFACE>());
+        }
+        else {
+            setRootComponentNullError(error, loader);
+        }
+        return false;
     }
-    else {
-      setRootComponentNullError(error, loader);
-    }
-    return false;
-  }
 };
 
 } // namespace qttools

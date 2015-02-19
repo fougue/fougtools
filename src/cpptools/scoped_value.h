@@ -44,12 +44,12 @@ template<typename T>
 class ScopedValue
 {
 public:
-  ScopedValue(T& variable, T scopeValue);
-  ~ScopedValue();
+    ScopedValue(T& variable, T scopeValue);
+    ~ScopedValue();
 
 private:
-  T m_orgValue;
-  T& m_variable;
+    T m_orgValue;
+    T& m_variable;
 };
 
 typedef ScopedValue<bool> ScopedBool;
@@ -70,16 +70,16 @@ typedef ScopedValue<bool> ScopedBool;
 
 template<typename T>
 ScopedValue<T>::ScopedValue(T &variable, T scopeValue)
-  : m_orgValue(variable),
-    m_variable(variable)
+    : m_orgValue(variable),
+      m_variable(variable)
 {
-  m_variable = scopeValue;
+    m_variable = scopeValue;
 }
 
 template<typename T>
 ScopedValue<T>::~ScopedValue()
 {
-  m_variable = m_orgValue;
+    m_variable = m_orgValue;
 }
 
 } // namespace cpp

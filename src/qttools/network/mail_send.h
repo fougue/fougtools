@@ -49,20 +49,20 @@ class SmtpAccount;
 class QTTOOLS_NETWORK_EXPORT MailSend
 {
 public:
-  MailSend();
-  ~MailSend();
+    MailSend();
+    ~MailSend();
 
-  int timeout() const;
-  void setTimeout(int msecs);
+    int timeout() const;
+    void setTimeout(int msecs);
 
-  bool connectToSmtpServer(const SmtpAccount& account);
-  bool sendMessage(const Message& msg);
+    bool connectToSmtpServer(const SmtpAccount& account);
+    bool sendMessage(const Message& msg);
 
-  QString errorString() const;
+    QString errorString() const;
 
 private:
-  class Private;
-  Private* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace qttools

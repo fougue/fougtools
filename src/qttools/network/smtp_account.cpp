@@ -48,70 +48,70 @@ namespace qttools {
  */
 
 SmtpAccount::SmtpAccount()
-  : m_port(25),
-    m_authMethod(NoAuthentication),
-    m_connSecurity(NoSecurity)
+    : m_port(25),
+      m_authMethod(NoAuthentication),
+      m_connSecurity(NoSecurity)
 {
 }
 
 QString SmtpAccount::host() const
 {
-  return m_host;
+    return m_host;
 }
 
 void SmtpAccount::setHost(const QString& name)
 {
-  m_host = name;
+    m_host = name;
 }
 
 int SmtpAccount::port() const
 {
-  return m_port;
+    return m_port;
 }
 
 void SmtpAccount::setPort(int p)
 {
-  m_port = p;
+    m_port = p;
 }
 
 SmtpAccount::AuthenticationMethod SmtpAccount::authenticationMethod() const
 {
-  return m_authMethod;
+    return m_authMethod;
 }
 
 void SmtpAccount::setAuthenticationMethod(AuthenticationMethod method)
 {
-  m_authMethod = method;
+    m_authMethod = method;
 }
 
 SmtpAccount::ConnectionSecurity SmtpAccount::connectionSecurity() const
 {
-  return m_connSecurity;
+    return m_connSecurity;
 }
 
 void SmtpAccount::setConnectionSecurity(ConnectionSecurity connSecurity)
 {
-  m_connSecurity = connSecurity;
+    m_connSecurity = connSecurity;
 }
 
 QString SmtpAccount::userName() const
 {
-  return m_userName;
+    return m_userName;
 }
 
 void SmtpAccount::setUserName(const QString& uname)
 {
-  m_userName = uname;
+    m_userName = uname;
 }
 
 QString SmtpAccount::password() const
 {
-  return m_password;
+    return m_password;
 }
 
 void SmtpAccount::setPassword(const QString& pwd)
 {
-  m_password = pwd;
+    m_password = pwd;
 }
 
 /*! \brief Convert integer \p id to a value of SmtpAccount::AuthenticationMethod
@@ -122,16 +122,16 @@ void SmtpAccount::setPassword(const QString& pwd)
  */
 SmtpAccount::AuthenticationMethod SmtpAccount::toAuthenticationMethod(int id, bool* ok)
 {
-  if (ok != NULL)
-    *ok = SmtpAccount::NoAuthentication <= id && id <= SmtpAccount::CramMd5Authentication;
+    if (ok != NULL)
+        *ok = SmtpAccount::NoAuthentication <= id && id <= SmtpAccount::CramMd5Authentication;
 
-  switch (id) {
-  case SmtpAccount::NoAuthentication:      return SmtpAccount::NoAuthentication;
-  case SmtpAccount::LoginAuthentication:   return SmtpAccount::LoginAuthentication;
-  case SmtpAccount::PlainAuthentication:   return SmtpAccount::PlainAuthentication;
-  case SmtpAccount::CramMd5Authentication: return SmtpAccount::CramMd5Authentication;
-  default: return SmtpAccount::NoAuthentication;
-  }
+    switch (id) {
+    case SmtpAccount::NoAuthentication:      return SmtpAccount::NoAuthentication;
+    case SmtpAccount::LoginAuthentication:   return SmtpAccount::LoginAuthentication;
+    case SmtpAccount::PlainAuthentication:   return SmtpAccount::PlainAuthentication;
+    case SmtpAccount::CramMd5Authentication: return SmtpAccount::CramMd5Authentication;
+    default: return SmtpAccount::NoAuthentication;
+    }
 }
 
 /*! \brief Convert integer \p id to a value of SmtpAccount::ConnectionSecurity
@@ -142,15 +142,15 @@ SmtpAccount::AuthenticationMethod SmtpAccount::toAuthenticationMethod(int id, bo
  */
 SmtpAccount::ConnectionSecurity SmtpAccount::toConnectionSecurity(int id, bool* ok)
 {
-  if (ok != NULL)
-    *ok = SmtpAccount::NoSecurity <= id && id <= SmtpAccount::SslTlsSecurity;
+    if (ok != NULL)
+        *ok = SmtpAccount::NoSecurity <= id && id <= SmtpAccount::SslTlsSecurity;
 
-  switch (id) {
-  case SmtpAccount::NoSecurity:       return SmtpAccount::NoSecurity;
-  case SmtpAccount::StartTlsSecurity: return SmtpAccount::StartTlsSecurity;
-  case SmtpAccount::SslTlsSecurity:   return SmtpAccount::SslTlsSecurity;
-  default: return SmtpAccount::NoSecurity;
-  }
+    switch (id) {
+    case SmtpAccount::NoSecurity:       return SmtpAccount::NoSecurity;
+    case SmtpAccount::StartTlsSecurity: return SmtpAccount::StartTlsSecurity;
+    case SmtpAccount::SslTlsSecurity:   return SmtpAccount::SslTlsSecurity;
+    default: return SmtpAccount::NoSecurity;
+    }
 }
 
 } // namespace qttools

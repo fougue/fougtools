@@ -46,33 +46,33 @@ namespace qttools {
 
 class QTTOOLS_GUI_EXPORT IndexedSelectionModel : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  IndexedSelectionModel(QObject* parent = NULL);
+    IndexedSelectionModel(QObject* parent = NULL);
 
-  const QSet<int>& selectedItems() const;
+    const QSet<int>& selectedItems() const;
 
-  virtual bool hasSelection() const;
-  virtual bool isValidIndex(int id) const;
+    virtual bool hasSelection() const;
+    virtual bool isValidIndex(int id) const;
 
 public slots:
-  virtual void clear();
-  void toggleItem(int id);
+    virtual void clear();
+    void toggleItem(int id);
 
 signals:
-  void selectionCleared();
-  void itemToggled(int id, bool on);
-  void selectionChanged();
+    void selectionCleared();
+    void itemToggled(int id, bool on);
+    void selectionChanged();
 
 protected:
-  void beginClear();
-  void clearItems();
-  void endClear();
+    void beginClear();
+    void clearItems();
+    void endClear();
 
 private:
-  QSet<int> m_selectedItems;
-  bool m_hadSelection;
+    QSet<int> m_selectedItems;
+    bool m_hadSelection;
 };
 
 } // namespace qttools

@@ -48,31 +48,31 @@ namespace qttools {
 class QTTOOLS_GUI_EXPORT ProxyStyledItemDelegate : public QStyledItemDelegate
 {
 public:
-  ProxyStyledItemDelegate(QObject* parent = NULL);
-  ProxyStyledItemDelegate(QStyledItemDelegate* srcDelegate, QObject* parent = NULL);
+    ProxyStyledItemDelegate(QObject* parent = NULL);
+    ProxyStyledItemDelegate(QStyledItemDelegate* srcDelegate, QObject* parent = NULL);
 
-  QStyledItemDelegate* sourceDelegate() const;
-  void setSourceDelegate(QStyledItemDelegate* srcDelegate);
+    QStyledItemDelegate* sourceDelegate() const;
+    void setSourceDelegate(QStyledItemDelegate* srcDelegate);
 
-  void paint(QPainter *painter,
-             const QStyleOptionViewItem &option,
-             const QModelIndex &index) const;
-  QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
-  QString displayText(const QVariant &value, const QLocale &locale) const;
+    void paint(QPainter *painter,
+               const QStyleOptionViewItem &option,
+               const QModelIndex &index) const;
+    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    QString displayText(const QVariant &value, const QLocale &locale) const;
 
-  QWidget *createEditor(QWidget *parent,
-                        const QStyleOptionViewItem &option,
-                        const QModelIndex &index) const;
-  void setEditorData(QWidget *editor, const QModelIndex &index) const;
-  void setModelData(QWidget *editor,
-                    QAbstractItemModel *model,
-                    const QModelIndex &index) const;
-  void updateEditorGeometry(QWidget *editor,
-                            const QStyleOptionViewItem &option,
-                            const QModelIndex &index) const;
+    QWidget *createEditor(QWidget *parent,
+                          const QStyleOptionViewItem &option,
+                          const QModelIndex &index) const;
+    void setEditorData(QWidget *editor, const QModelIndex &index) const;
+    void setModelData(QWidget *editor,
+                      QAbstractItemModel *model,
+                      const QModelIndex &index) const;
+    void updateEditorGeometry(QWidget *editor,
+                              const QStyleOptionViewItem &option,
+                              const QModelIndex &index) const;
 
 private:
-  QStyledItemDelegate* m_sourceDelegate;
+    QStyledItemDelegate* m_sourceDelegate;
 };
 
 } // namespace qttools

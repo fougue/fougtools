@@ -46,51 +46,51 @@ namespace qttools {
 class QTTOOLS_NETWORK_EXPORT SmtpAccount
 {
 public:
-  enum AuthenticationMethod
-  {
-    NoAuthentication, // Anonymous
-    LoginAuthentication,
-    PlainAuthentication,
-    CramMd5Authentication
-  };
+    enum AuthenticationMethod
+    {
+        NoAuthentication, // Anonymous
+        LoginAuthentication,
+        PlainAuthentication,
+        CramMd5Authentication
+    };
 
-  enum ConnectionSecurity
-  {
-    NoSecurity,
-    StartTlsSecurity,
-    SslTlsSecurity
-  };
+    enum ConnectionSecurity
+    {
+        NoSecurity,
+        StartTlsSecurity,
+        SslTlsSecurity
+    };
 
-  SmtpAccount();
+    SmtpAccount();
 
-  QString host() const;
-  void setHost(const QString& name);
+    QString host() const;
+    void setHost(const QString& name);
 
-  int port() const;
-  void setPort(int p);
+    int port() const;
+    void setPort(int p);
 
-  AuthenticationMethod authenticationMethod() const;
-  void setAuthenticationMethod(AuthenticationMethod method);
+    AuthenticationMethod authenticationMethod() const;
+    void setAuthenticationMethod(AuthenticationMethod method);
 
-  ConnectionSecurity connectionSecurity() const;
-  void setConnectionSecurity(ConnectionSecurity connSecurity);
+    ConnectionSecurity connectionSecurity() const;
+    void setConnectionSecurity(ConnectionSecurity connSecurity);
 
-  QString userName() const;
-  void setUserName(const QString& uname);
+    QString userName() const;
+    void setUserName(const QString& uname);
 
-  QString password() const;
-  void setPassword(const QString& pwd);
+    QString password() const;
+    void setPassword(const QString& pwd);
 
-  static AuthenticationMethod toAuthenticationMethod(int id, bool* ok = NULL);
-  static ConnectionSecurity toConnectionSecurity(int id, bool* ok = NULL);
+    static AuthenticationMethod toAuthenticationMethod(int id, bool* ok = NULL);
+    static ConnectionSecurity toConnectionSecurity(int id, bool* ok = NULL);
 
 private:
-  QString m_host;
-  int m_port;
-  AuthenticationMethod m_authMethod;
-  ConnectionSecurity m_connSecurity;
-  QString m_userName;
-  QString m_password;
+    QString m_host;
+    int m_port;
+    AuthenticationMethod m_authMethod;
+    ConnectionSecurity m_connSecurity;
+    QString m_userName;
+    QString m_password;
 };
 
 } // namespace qttools

@@ -5,10 +5,10 @@
 
 class TestQtToolsScript : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 private slots:
-  void Calculator_test();
+    void Calculator_test();
 };
 
 #endif // TEST_QTTOOLS_SCRIPT_H

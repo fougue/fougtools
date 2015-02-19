@@ -46,27 +46,27 @@ namespace qttools {
 class QTTOOLS_CORE_EXPORT GridStruct
 {
 public:
-  GridStruct();
-  GridStruct(int rows, int cols);
+    GridStruct();
+    GridStruct(int rows, int cols);
 
-  bool isValid() const;
+    bool isValid() const;
 
-  int itemCount() const;
-  void setItemCount(int rows, int cols);
+    int itemCount() const;
+    void setItemCount(int rows, int cols);
 
-  int rowCount() const;
-  void setRowCount(int count);
+    int rowCount() const;
+    void setRowCount(int count);
 
-  int columnCount() const;
-  void setColumnCount(int count);
+    int columnCount() const;
+    void setColumnCount(int count);
 
-  const qttools::GridNumbering& itemNumbering() const;
-  void setItemNumbering(const qttools::GridNumbering& gridNb);
+    const qttools::GridNumbering& itemNumbering() const;
+    void setItemNumbering(const qttools::GridNumbering& gridNb);
 
 private:
-  int m_rowCount;
-  int m_colCount;
-  qttools::GridNumbering m_gridNb;
+    int m_rowCount;
+    int m_colCount;
+    qttools::GridNumbering m_gridNb;
 };
 
 } // namespace qttools

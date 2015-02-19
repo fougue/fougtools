@@ -46,30 +46,30 @@ template<typename NUMERIC_TRAITS, typename TRAIT = cpp::VoidNull>
 class Quantity
 {
 public:
-  typedef typename NUMERIC_TRAITS::Type NumericType;
-  typedef Quantity<NUMERIC_TRAITS, TRAIT> QuantityType;
+    typedef typename NUMERIC_TRAITS::Type NumericType;
+    typedef Quantity<NUMERIC_TRAITS, TRAIT> QuantityType;
 
-  Quantity();
-  explicit Quantity(NumericType v);
-  Quantity(const QuantityType& other);
+    Quantity();
+    explicit Quantity(NumericType v);
+    Quantity(const QuantityType& other);
 
-  //operator NumericType() const;
-  NumericType value() const;
-  void setValue(NumericType v);
+    //operator NumericType() const;
+    NumericType value() const;
+    void setValue(NumericType v);
 
-  QuantityType& operator=(const QuantityType& other);
-  QuantityType& operator+=(const QuantityType& other);
-  QuantityType& operator-=(const QuantityType& other);
-  QuantityType& operator*=(const QuantityType& other);
-  QuantityType& operator/=(const QuantityType& other);
+    QuantityType& operator=(const QuantityType& other);
+    QuantityType& operator+=(const QuantityType& other);
+    QuantityType& operator-=(const QuantityType& other);
+    QuantityType& operator*=(const QuantityType& other);
+    QuantityType& operator/=(const QuantityType& other);
 
-  QuantityType& operator+=(NumericType v);
-  QuantityType& operator-=(NumericType v);
-  QuantityType& operator*=(NumericType v);
-  QuantityType& operator/=(NumericType v);
+    QuantityType& operator+=(NumericType v);
+    QuantityType& operator-=(NumericType v);
+    QuantityType& operator*=(NumericType v);
+    QuantityType& operator/=(NumericType v);
 
 private:
-  NumericType m_value;
+    NumericType m_value;
 };
 
 // Operator <
@@ -137,9 +137,9 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator/(typename NUMERIC_TRAITS::Type k,
 template<typename TYPE>
 struct NumericTraits
 {
-  typedef TYPE Type;
-  static TYPE zero()
-  { return static_cast<TYPE>(0); }
+    typedef TYPE Type;
+    static TYPE zero()
+    { return static_cast<TYPE>(0); }
 };
 
 typedef NumericTraits<double> DoubleNumericTraits;
@@ -160,19 +160,19 @@ typedef NumericTraits<int> IntNumericTraits;
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>::Quantity()
-  : m_value(NUMERIC_TRAITS::zero())
+    : m_value(NUMERIC_TRAITS::zero())
 {
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>::Quantity(NumericType v)
-  : m_value(v)
+    : m_value(v)
 {
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>::Quantity(const QuantityType& other)
-  : m_value(other.value())
+    : m_value(other.value())
 {
 }
 
@@ -185,81 +185,81 @@ Quantity<NUMERIC_TRAITS, TRAIT>::Quantity(const QuantityType& other)
 template<typename NUMERIC_TRAITS, typename TRAIT>
 typename NUMERIC_TRAITS::Type Quantity<NUMERIC_TRAITS, TRAIT>::value() const
 {
-  return m_value;
+    return m_value;
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 void Quantity<NUMERIC_TRAITS, TRAIT>::setValue(NumericType v)
 {
-  m_value = v;
+    m_value = v;
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator=(const QuantityType& other)
 {
-  if (this != &other)
-    m_value = other.value();
-  return *this;
+    if (this != &other)
+        m_value = other.value();
+    return *this;
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator+=(const QuantityType& other)
 {
-  if (this != &other)
-    m_value += other.value();
-  return *this;
+    if (this != &other)
+        m_value += other.value();
+    return *this;
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator-=(const QuantityType& other)
 {
-  if (this != &other)
-    m_value -= other.value();
-  return *this;
+    if (this != &other)
+        m_value -= other.value();
+    return *this;
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator*=(const QuantityType& other)
 {
-  if (this != &other)
-    m_value *= other.value();
-  return *this;
+    if (this != &other)
+        m_value *= other.value();
+    return *this;
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator/=(const QuantityType& other)
 {
-  if (this != &other)
-    m_value /= other.value();
-  return *this;
+    if (this != &other)
+        m_value /= other.value();
+    return *this;
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator+=(NumericType v)
 {
-  m_value += v;
-  return *this;
+    m_value += v;
+    return *this;
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator-=(NumericType v)
 {
-  m_value -= v;
-  return *this;
+    m_value -= v;
+    return *this;
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator*=(NumericType v)
 {
-  m_value *= v;
-  return *this;
+    m_value *= v;
+    return *this;
 }
 
 template<typename NUMERIC_TRAITS, typename TRAIT>
 Quantity<NUMERIC_TRAITS, TRAIT>& Quantity<NUMERIC_TRAITS, TRAIT>::operator/=(NumericType v)
 {
-  m_value /= v;
-  return *this;
+    m_value /= v;
+    return *this;
 }
 
 // Operator <
@@ -268,9 +268,9 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 bool operator<(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
 {
-  if (&lhs == &rhs)
-    return false;
-  return lhs.value() < rhs.value();
+    if (&lhs == &rhs)
+        return false;
+    return lhs.value() < rhs.value();
 }
 
 // Operator >
@@ -279,9 +279,9 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 bool operator>(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
 {
-  if (&lhs == &rhs)
-    return false;
-  return lhs.value() > rhs.value();
+    if (&lhs == &rhs)
+        return false;
+    return lhs.value() > rhs.value();
 }
 
 // Operator +
@@ -291,7 +291,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator+(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) += rhs;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) += rhs;
 }
 
 //! \relates Quantity
@@ -299,7 +299,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator+(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 typename NUMERIC_TRAITS::Type k)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) += k;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) += k;
 }
 
 //! \relates Quantity
@@ -307,7 +307,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator+(typename NUMERIC_TRAITS::Type k,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) += k;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) += k;
 }
 
 // Operator -
@@ -317,7 +317,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator-(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) -= rhs;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) -= rhs;
 }
 
 //! \relates Quantity
@@ -325,7 +325,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator-(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 typename NUMERIC_TRAITS::Type k)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) -= k;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) -= k;
 }
 
 //! \relates Quantity
@@ -333,7 +333,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator-(typename NUMERIC_TRAITS::Type k,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) -= k;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) -= k;
 }
 
 // Operator *
@@ -343,7 +343,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator*(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) *= rhs;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) *= rhs;
 }
 
 //! \relates Quantity
@@ -351,7 +351,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator*(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 typename NUMERIC_TRAITS::Type k)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) *= k;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) *= k;
 }
 
 //! \relates Quantity
@@ -359,7 +359,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator*(typename NUMERIC_TRAITS::Type k,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) *= k;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) *= k;
 }
 
 // Operator /
@@ -369,7 +369,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator/(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) /= rhs;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) /= rhs;
 }
 
 //! \relates Quantity
@@ -377,7 +377,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator/(const Quantity<NUMERIC_TRAITS, TRAIT>& lhs,
                                                 typename NUMERIC_TRAITS::Type k)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) /= k;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(lhs) /= k;
 }
 
 //! \relates Quantity
@@ -385,7 +385,7 @@ template<typename NUMERIC_TRAITS, typename TRAIT>
 const Quantity<NUMERIC_TRAITS, TRAIT> operator/(typename NUMERIC_TRAITS::Type k,
                                                 const Quantity<NUMERIC_TRAITS, TRAIT>& rhs)
 {
-  return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) /= k;
+    return Quantity<NUMERIC_TRAITS, TRAIT>(rhs) /= k;
 }
 
 } // namespace cpp

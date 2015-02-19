@@ -51,26 +51,26 @@ namespace occ {
 class OCCTOOLS_EXPORT MathTools
 {
 public:
-  static gp_Pnt projectPointOnPlane(const gp_Pnt& p, const gp_Vec& n);
-  static std::pair<gp_Pnt, bool> projectPointOnTriangle(const gp_Pnt& p,
-                                                        const gp_Pnt& v0,
-                                                        const gp_Pnt& v1,
-                                                        const gp_Pnt& v2);
+    static gp_Pnt projectPointOnPlane(const gp_Pnt& p, const gp_Vec& n);
+    static std::pair<gp_Pnt, bool> projectPointOnTriangle(const gp_Pnt& p,
+                                                          const gp_Pnt& v0,
+                                                          const gp_Pnt& v1,
+                                                          const gp_Pnt& v2);
 
-  static Standard_Real euclideanNorm(const gp_Vec& vec);
-  static Standard_Real squaredEuclideanNorm(const gp_Vec& vec);
-  static Standard_Real manhattanNorm(const gp_Vec& vec);
-  static Standard_Real maximumNorm(const gp_Vec& vec);
+    static Standard_Real euclideanNorm(const gp_Vec& vec);
+    static Standard_Real squaredEuclideanNorm(const gp_Vec& vec);
+    static Standard_Real manhattanNorm(const gp_Vec& vec);
+    static Standard_Real maximumNorm(const gp_Vec& vec);
 
-  template<typename NORM>
-  static bool isNull(const gp_Vec& vec, const NORM& norm);
+    template<typename NORM>
+    static bool isNull(const gp_Vec& vec, const NORM& norm);
 
-  static gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
-                               const Poly_Triangle& triangle,
-                               TopAbs_Orientation ori = TopAbs_FORWARD);
+    static gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
+                                 const Poly_Triangle& triangle,
+                                 TopAbs_Orientation ori = TopAbs_FORWARD);
 
-  template<typename OCC_PNT_VEC, typename TEXT_STREAM>
-  static TEXT_STREAM& printOccPntVec(TEXT_STREAM& ts, const OCC_PNT_VEC& v);
+    template<typename OCC_PNT_VEC, typename TEXT_STREAM>
+    static TEXT_STREAM& printOccPntVec(TEXT_STREAM& ts, const OCC_PNT_VEC& v);
 };
 
 const gp_Pnt2d origin2d(0, 0);
@@ -104,34 +104,34 @@ TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d);
 template<typename NORM>
 bool occ::MathTools::isNull(const gp_Vec& vec, const NORM& norm)
 {
-  return norm(vec) <= 0.000000000001;
+    return norm(vec) <= 0.000000000001;
 }
 
 template<typename OCC_PNT_VEC, typename TEXT_STREAM>
 TEXT_STREAM &occ::MathTools::printOccPntVec(TEXT_STREAM &ts, const OCC_PNT_VEC &v)
 {
-  return ts << "(" << v.X() << ", " << v.Y() << ", " << v.Z() << ")";
+    return ts << "(" << v.X() << ", " << v.Y() << ", " << v.Z() << ")";
 }
 
 //! Print (dump) in the text stream \p ts the point \p p
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Pnt& p)
 {
-  return occ::MathTools::printOccPntVec(ts, p);
+    return occ::MathTools::printOccPntVec(ts, p);
 }
 
 //! Print (dump) in the text stream \p ts the vector \p v
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Vec& v)
 {
-  return occ::MathTools::printOccPntVec(ts, v);
+    return occ::MathTools::printOccPntVec(ts, v);
 }
 
 //! Print (dump) in the text stream \p ts the direction \p d
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d)
 {
-  return occ::MathTools::printOccPntVec(ts, d);
+    return occ::MathTools::printOccPntVec(ts, d);
 }
 
 #endif // OCC_MATH_TOOLS_H

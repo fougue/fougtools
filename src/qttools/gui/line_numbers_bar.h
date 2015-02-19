@@ -47,24 +47,24 @@ namespace qttools {
 
 class QTTOOLS_GUI_EXPORT LineNumbersBar : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  LineNumbersBar(QWidget* parent = NULL);
-  ~LineNumbersBar();
+    LineNumbersBar(QWidget* parent = NULL);
+    ~LineNumbersBar();
 
-  void setCurrentLine(int lineno);
-  void setStopLine(int lineno);
-  void setBugLine(int lineno);
-  void setTextEdit(QTextEdit* edit);
+    void setCurrentLine(int lineno);
+    void setStopLine(int lineno);
+    void setBugLine(int lineno);
+    void setTextEdit(QTextEdit* edit);
 
 protected:
-  void paintEvent(QPaintEvent* event);
-  bool event(QEvent *event);
+    void paintEvent(QPaintEvent* event);
+    bool event(QEvent *event);
 
 private:
-  class Private;
-  Private* const d;
+    class Private;
+    Private* const d;
 };
 
 } //namespace qttools

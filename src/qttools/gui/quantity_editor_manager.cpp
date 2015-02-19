@@ -46,11 +46,11 @@ namespace internal {
 class QuantityEditorManagerCreator : public QuantityEditorManager
 {
 public:
-  QuantityEditorManagerCreator()
-  { }
+    QuantityEditorManagerCreator()
+    { }
 
-  ~QuantityEditorManagerCreator()
-  { }
+    ~QuantityEditorManagerCreator()
+    { }
 };
 
 } // namespace internal
@@ -65,7 +65,7 @@ public:
  */
 
 QuantityEditorManager::QuantityEditorManager()
-  : m_measureSys(QLocale::MetricSystem)
+    : m_measureSys(QLocale::MetricSystem)
 {
 }
 
@@ -75,37 +75,37 @@ QuantityEditorManager::~QuantityEditorManager()
 
 void QuantityEditorManager::attach(AbstractQuantityEditor* editor)
 {
-  if (editor != NULL)
-    m_qtyEditors.insert(editor);
+    if (editor != NULL)
+        m_qtyEditors.insert(editor);
 }
 
 void QuantityEditorManager::detach(AbstractQuantityEditor* editor)
 {
-  if (editor != NULL)
-    m_qtyEditors.remove(editor);
+    if (editor != NULL)
+        m_qtyEditors.remove(editor);
 }
 
 Q_GLOBAL_STATIC(internal::QuantityEditorManagerCreator, globalCoreInstance)
 
 QuantityEditorManager* QuantityEditorManager::globalInstance()
 {
-  return globalCoreInstance();
+    return globalCoreInstance();
 }
 
 QLocale::MeasurementSystem QuantityEditorManager::measurementSytem() const
 {
-  return m_measureSys;
+    return m_measureSys;
 }
 
 void QuantityEditorManager::setMeasurementSystem(QLocale::MeasurementSystem sys)
 {
-  if (sys == m_measureSys)
-    return;
+    if (sys == m_measureSys)
+        return;
 
-  foreach (AbstractQuantityEditor* qtyEditor, m_qtyEditors)
-    qtyEditor->updateEditor(sys);
-  m_measureSys = sys;
-  emit currentMeasurementSytemChanged(sys);
+    foreach (AbstractQuantityEditor* qtyEditor, m_qtyEditors)
+        qtyEditor->updateEditor(sys);
+    m_measureSys = sys;
+    emit currentMeasurementSytemChanged(sys);
 }
 
 } // namespace qttools

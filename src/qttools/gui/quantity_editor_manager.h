@@ -50,29 +50,29 @@ namespace internal { class QuantityEditorManagerCreator; }
 
 class QTTOOLS_GUI_EXPORT QuantityEditorManager : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 private:
-  QuantityEditorManager();
-  ~QuantityEditorManager();
+    QuantityEditorManager();
+    ~QuantityEditorManager();
 
-  void attach(AbstractQuantityEditor* editor);
-  void detach(AbstractQuantityEditor* editor);
+    void attach(AbstractQuantityEditor* editor);
+    void detach(AbstractQuantityEditor* editor);
 
 public:
-  static QuantityEditorManager* globalInstance();
+    static QuantityEditorManager* globalInstance();
 
-  QLocale::MeasurementSystem measurementSytem() const;
-  void setMeasurementSystem(QLocale::MeasurementSystem sys);
+    QLocale::MeasurementSystem measurementSytem() const;
+    void setMeasurementSystem(QLocale::MeasurementSystem sys);
 
 signals:
-  void currentMeasurementSytemChanged(QLocale::MeasurementSystem sys);
+    void currentMeasurementSytemChanged(QLocale::MeasurementSystem sys);
 
 private:
-  friend class internal::QuantityEditorManagerCreator;
-  friend class AbstractQuantityEditor;
-  QSet<AbstractQuantityEditor*> m_qtyEditors;
-  QLocale::MeasurementSystem m_measureSys;
+    friend class internal::QuantityEditorManagerCreator;
+    friend class AbstractQuantityEditor;
+    QSet<AbstractQuantityEditor*> m_qtyEditors;
+    QLocale::MeasurementSystem m_measureSys;
 };
 
 } // namespace qttools

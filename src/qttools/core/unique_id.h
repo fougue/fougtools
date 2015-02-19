@@ -47,13 +47,13 @@ namespace qttools {
 class QTTOOLS_CORE_EXPORT UniqueId
 {
 public:
-  struct QTTOOLS_CORE_EXPORT RegisterResult
-  {
-    int id;
-    bool isValid;
-  };
-  static RegisterResult registerId(int min, int max = INT_MAX);
-  static bool isRegistered(int id);
+    struct QTTOOLS_CORE_EXPORT RegisterResult
+    {
+        int id;
+        bool isValid;
+    };
+    static RegisterResult registerId(int min, int max = INT_MAX);
+    static bool isRegistered(int id);
 };
 
 } // namespace qttools

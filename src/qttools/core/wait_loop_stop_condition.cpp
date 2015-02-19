@@ -52,7 +52,7 @@ namespace qttools {
  */
 
 WaitLoop_StopCondition::WaitLoop_StopCondition()
-  : m_waitLoop(NULL)
+    : m_waitLoop(NULL)
 {
 }
 
@@ -62,7 +62,7 @@ WaitLoop_StopCondition::~WaitLoop_StopCondition()
 
 WaitLoop *WaitLoop_StopCondition::waitLoop() const
 {
-  return m_waitLoop;
+    return m_waitLoop;
 }
 
 void WaitLoop_StopCondition::beginWait()
@@ -75,9 +75,9 @@ void WaitLoop_StopCondition::stopWait()
 
 void WaitLoop_StopCondition::endWaitLoop()
 {
-  this->stopWait();
-  if (m_waitLoop != NULL)
-    m_waitLoop->d->endWaitLoop(this);
+    this->stopWait();
+    if (m_waitLoop != NULL)
+        m_waitLoop->d->endWaitLoop(this);
 }
 
 } // namespace qttools

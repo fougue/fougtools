@@ -57,27 +57,27 @@ namespace qttools {
 int QAtomicTools::loadRelaxed(const QAtomicInt &atomInt)
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-  return atomInt.load();
+    return atomInt.load();
 #else
-  return atomInt;
+    return atomInt;
 #endif
 }
 
 void QAtomicTools::storeRelaxed(QAtomicInt* atomInt, int newVal)
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-  atomInt->store(newVal);
+    atomInt->store(newVal);
 #else
-  atomInt->fetchAndStoreRelaxed(newVal);
+    atomInt->fetchAndStoreRelaxed(newVal);
 #endif
 }
 
 void QAtomicTools::storeRelease(QAtomicInt* atomInt, int newVal)
 {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-  atomInt->storeRelease(newVal);
+    atomInt->storeRelease(newVal);
 #else
-  atomInt->fetchAndStoreRelease(newVal);
+    atomInt->fetchAndStoreRelease(newVal);
 #endif
 }
 

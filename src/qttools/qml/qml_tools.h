@@ -50,18 +50,18 @@ namespace qttools {
 
 class QTTOOLS_QML_EXPORT QmlTools : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  QmlTools(QObject* parent = NULL);
+    QmlTools(QObject* parent = NULL);
 
-  Q_INVOKABLE void setOverrideCursor(int shape);
-  Q_INVOKABLE void restoreOverrideCursor();
+    Q_INVOKABLE void setOverrideCursor(int shape);
+    Q_INVOKABLE void restoreOverrideCursor();
 
 #if QT_VERSION >= 0x050000
-  static void declareObject(QQmlContext* context, QmlTools* obj);
+    static void declareObject(QQmlContext* context, QmlTools* obj);
 #else
-  static void declareObject(QDeclarativeContext* context, QmlTools* obj);
+    static void declareObject(QDeclarativeContext* context, QmlTools* obj);
 #endif // QT_VERSION
 };
 

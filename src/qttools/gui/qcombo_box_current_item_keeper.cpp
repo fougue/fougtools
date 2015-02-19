@@ -54,87 +54,87 @@ namespace qttools {
  */
 
 QComboBoxCurrentItemKeeper::QComboBoxCurrentItemKeeper(QComboBox* comboBox)
-  : QObject(comboBox),
-    m_oldCurrentIndex(-1),
-    m_oldIdentifierValue(),
-    m_columnForModelRowIdentifier(0)
+    : QObject(comboBox),
+      m_oldCurrentIndex(-1),
+      m_oldIdentifierValue(),
+      m_columnForModelRowIdentifier(0)
 {
-  if (comboBox == NULL)
-    return;
-  const QAbstractItemModel* model = comboBox->model();
-  connect(model, SIGNAL(modelAboutToBeReset()),
-          this, SLOT(onModelAboutToBeReset()));
-  connect(model, SIGNAL(modelReset()), this, SLOT(onModelReset()));
+    if (comboBox == NULL)
+        return;
+    const QAbstractItemModel* model = comboBox->model();
+    connect(model, SIGNAL(modelAboutToBeReset()),
+            this, SLOT(onModelAboutToBeReset()));
+    connect(model, SIGNAL(modelReset()), this, SLOT(onModelReset()));
 }
 
 int QComboBoxCurrentItemKeeper::columnForModelRowIdentifier() const
 {
-  return m_columnForModelRowIdentifier;
+    return m_columnForModelRowIdentifier;
 }
 
 void QComboBoxCurrentItemKeeper::setColumnForModelRowIdentifier(int col)
 {
-  m_columnForModelRowIdentifier = col;
+    m_columnForModelRowIdentifier = col;
 }
 
 void QComboBoxCurrentItemKeeper::onModelAboutToBeReset()
 {
-  m_oldCurrentIndex = this->comboBox()->currentIndex();
-  m_oldIdentifierValue = this->currentIdentifierValue();
+    m_oldCurrentIndex = this->comboBox()->currentIndex();
+    m_oldIdentifierValue = this->currentIdentifierValue();
 
 #ifdef _TRACE_QComboBoxCurrentItemKeeper_
-  qDebug() << "QComboBoxCurrentItemKeeper::onModelAboutToBeReset()";
-  qDebug() << "   m_oldCurrentIndex :" << m_oldCurrentIndex
-           << " m_oldIdentifierValue :" << m_oldIdentifierValue;
+    qDebug() << "QComboBoxCurrentItemKeeper::onModelAboutToBeReset()";
+    qDebug() << "   m_oldCurrentIndex :" << m_oldCurrentIndex
+             << " m_oldIdentifierValue :" << m_oldIdentifierValue;
 #endif // _TRACE_QComboBoxCurrentItemKeeper_
 }
 
 void QComboBoxCurrentItemKeeper::onModelReset()
 {
 #ifdef _TRACE_QComboBoxCurrentItemKeeper_
-  qDebug() << "QComboBoxCurrentItemKeeper::onModelReset()";
+    qDebug() << "QComboBoxCurrentItemKeeper::onModelReset()";
 #endif // _TRACE_QComboBoxCurrentItemKeeper_
 
-  int newCurrIndex = -1;
-  if (m_oldIdentifierValue == this->identifierValue(m_oldCurrentIndex)) {
-    // Special case when the old index matches the (new) current index
-    newCurrIndex = m_oldCurrentIndex;
+    int newCurrIndex = -1;
+    if (m_oldIdentifierValue == this->identifierValue(m_oldCurrentIndex)) {
+        // Special case when the old index matches the (new) current index
+        newCurrIndex = m_oldCurrentIndex;
 #ifdef _TRACE_QComboBoxCurrentItemKeeper_
-    qDebug() << "   if() newCurrIndex :" << newCurrIndex;
+        qDebug() << "   if() newCurrIndex :" << newCurrIndex;
 #endif // _TRACE_QComboBoxCurrentItemKeeper_
-  }
-  else  {
-    // Case when the old index does not match the (new) current index
-    const QAbstractItemModel* model = this->comboBox()->model();
-    for (int iRow = 0; iRow < model->rowCount() && newCurrIndex == -1; ++iRow) {
-      if (m_oldIdentifierValue == this->identifierValue(iRow))
-        newCurrIndex = iRow;
     }
+    else  {
+        // Case when the old index does not match the (new) current index
+        const QAbstractItemModel* model = this->comboBox()->model();
+        for (int iRow = 0; iRow < model->rowCount() && newCurrIndex == -1; ++iRow) {
+            if (m_oldIdentifierValue == this->identifierValue(iRow))
+                newCurrIndex = iRow;
+        }
 #ifdef _TRACE_QComboBoxCurrentItemKeeper_
-    qDebug() << "   else() newCurrIndex :" << newCurrIndex;
+        qDebug() << "   else() newCurrIndex :" << newCurrIndex;
 #endif // _TRACE_QComboBoxCurrentItemKeeper_
-  }
-  newCurrIndex = std::max(newCurrIndex, 0);
+    }
+    newCurrIndex = std::max(newCurrIndex, 0);
 #ifdef _TRACE_QComboBoxCurrentItemKeeper_
-  qDebug() << "   setCurrentIndex :" << newCurrIndex;
+    qDebug() << "   setCurrentIndex :" << newCurrIndex;
 #endif // _TRACE_QComboBoxCurrentItemKeeper_
-  this->comboBox()->setCurrentIndex(newCurrIndex);
+    this->comboBox()->setCurrentIndex(newCurrIndex);
 }
 
 QComboBox* QComboBoxCurrentItemKeeper::comboBox() const
 {
-  return qobject_cast<QComboBox*>(this->parent());
+    return qobject_cast<QComboBox*>(this->parent());
 }
 
 QVariant QComboBoxCurrentItemKeeper::currentIdentifierValue() const
 {
-  return this->identifierValue(this->comboBox()->currentIndex());
+    return this->identifierValue(this->comboBox()->currentIndex());
 }
 
 QVariant QComboBoxCurrentItemKeeper::identifierValue(int row) const
 {
-  const QAbstractItemModel* model = this->comboBox()->model();
-  return model->data(model->index(row, this->columnForModelRowIdentifier()));
+    const QAbstractItemModel* model = this->comboBox()->model();
+    return model->data(model->index(row, this->columnForModelRowIdentifier()));
 }
 
 } // namespace qttools

@@ -46,9 +46,9 @@ namespace qttools {
  */
 
 AbstractSignalDispatch::AbstractSignalDispatch(QObject* parent)
-  : QObject(parent),
-    m_sender(NULL),
-    m_signal(NULL)
+    : QObject(parent),
+      m_sender(NULL),
+      m_signal(NULL)
 {
 }
 
@@ -56,7 +56,7 @@ void AbstractSignalDispatch::dispatch(const QObject* sender,
                                       const char* paramLessSignal,
                                       Qt::ConnectionType type)
 {
-  connect(sender, paramLessSignal, this, SLOT(action()), type);
+    connect(sender, paramLessSignal, this, SLOT(action()), type);
 }
 
 } // namespace qttools

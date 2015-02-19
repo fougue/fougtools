@@ -48,7 +48,7 @@ namespace cpp {
 template <typename T>
 std::size_t scalarAddress(const T* pointer)
 {
-  return reinterpret_cast<std::size_t>(pointer);
+    return reinterpret_cast<std::size_t>(pointer);
 }
 
 /*! \brief Frees memory in \p pointer, and sets pointer to NULL
@@ -57,10 +57,10 @@ std::size_t scalarAddress(const T* pointer)
 template<typename T>
 void checkedReset(T*& pointer)
 {
-  if (pointer != NULL) {
-    delete pointer;
-    pointer = NULL;
-  }
+    if (pointer != NULL) {
+        delete pointer;
+        pointer = NULL;
+    }
 }
 
 /*! \brief Assigns \p value at memory in \p pointer if valid (ie. non-NULL)
@@ -69,8 +69,8 @@ void checkedReset(T*& pointer)
 template<typename T>
 void checkedAssign(T* pointer, T value)
 {
-  if (pointer != NULL)
-    *pointer = value;
+    if (pointer != NULL)
+        *pointer = value;
 }
 
 /*! \brief Assigns \p value to object member attribute \p attrMember if valid (ie. non-NULL)
@@ -79,8 +79,8 @@ void checkedAssign(T* pointer, T value)
 template<typename CALL_VALUE_TYPE, typename VALUE_TYPE, typename CLASS>
 void checkedAssign(VALUE_TYPE CLASS::*attrMember, CLASS* object, CALL_VALUE_TYPE value)
 {
-  if (object != NULL && attrMember != NULL)
-    object->*attrMember = value;
+    if (object != NULL && attrMember != NULL)
+        object->*attrMember = value;
 }
 
 /*! \brief Returns a heap-allocated instance of T, created with the default constructor
@@ -92,13 +92,13 @@ void checkedAssign(VALUE_TYPE CLASS::*attrMember, CLASS* object, CALL_VALUE_TYPE
 template<typename T>
 T* newObject()
 {
-  return new T;
+    return new T;
 }
 
 template<typename T, typename ARG>
 T* newObject(ARG arg)
 {
-  return new T(arg);
+    return new T(arg);
 }
 
 } // namespace cpp

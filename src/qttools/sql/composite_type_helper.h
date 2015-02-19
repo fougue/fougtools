@@ -47,11 +47,11 @@ namespace qttools {
 class QTTOOLS_SQL_EXPORT CompositeTypeHelper
 {
 private:
-  CompositeTypeHelper();
+    CompositeTypeHelper();
 
 public:
-  static QString toRow(const QList<QVariant>& values);
-  static QStringList toValues(const QString& row);
+    static QString toRow(const QList<QVariant>& values);
+    static QStringList toValues(const QString& row);
 };
 
 } // namespace qttools

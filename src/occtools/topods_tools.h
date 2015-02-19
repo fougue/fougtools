@@ -54,24 +54,24 @@ namespace occ {
 class OCCTOOLS_EXPORT TopoDsTools
 {
 public:
-  template<typename FWD_ITERATOR>
-  static TopoDS_Compound makeCompoundFromShapeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
+    template<typename FWD_ITERATOR>
+    static TopoDS_Compound makeCompoundFromShapeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
 
-  template<typename CONTAINER>
-  static TopoDS_Compound makeCompoundFromShapeContainer(CONTAINER cnter);
+    template<typename CONTAINER>
+    static TopoDS_Compound makeCompoundFromShapeContainer(CONTAINER cnter);
 
-  template<typename FWD_ITERATOR>
-  static TopoDS_Wire makeWireFromEdgeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
+    template<typename FWD_ITERATOR>
+    static TopoDS_Wire makeWireFromEdgeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
 
-  static gp_Vec normalToFaceAtUV(const TopoDS_Face& face, Standard_Real u, Standard_Real v);
+    static gp_Vec normalToFaceAtUV(const TopoDS_Face& face, Standard_Real u, Standard_Real v);
 
-  static std::string shapeToString(const TopoDS_Shape& shape);
-  static TopoDS_Shape shapeFromString(const std::string& str);
+    static std::string shapeToString(const TopoDS_Shape& shape);
+    static TopoDS_Shape shapeFromString(const std::string& str);
 
 private:
-  static Handle_ShapeExtend_WireData createShapeExtendWireData();
-  static void addEdge(const Handle_ShapeExtend_WireData& wireData, const TopoDS_Edge& edge);
-  static TopoDS_Wire fixedWire(const Handle_ShapeExtend_WireData& wireData);
+    static Handle_ShapeExtend_WireData createShapeExtendWireData();
+    static void addEdge(const Handle_ShapeExtend_WireData& wireData, const TopoDS_Edge& edge);
+    static TopoDS_Wire fixedWire(const Handle_ShapeExtend_WireData& wireData);
 };
 
 
@@ -88,23 +88,23 @@ private:
 template<typename FWD_ITERATOR>
 TopoDS_Compound TopoDsTools::makeCompoundFromShapeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
 {
-  TopoDS_Compound cmpd;
-  BRep_Builder builder;
-  builder.MakeCompound(cmpd);
+    TopoDS_Compound cmpd;
+    BRep_Builder builder;
+    builder.MakeCompound(cmpd);
 
-  while (iBegin != iEnd) {
-    builder.Add(cmpd, *iBegin);
-    ++iBegin;
-  }
+    while (iBegin != iEnd) {
+        builder.Add(cmpd, *iBegin);
+        ++iBegin;
+    }
 
-  return cmpd;
+    return cmpd;
 }
 
 //! Same as occ::makeCompoundFromShapeRange(cnter.begin(), cnter.end())
 template<typename CONTAINER>
 TopoDS_Compound TopoDsTools::makeCompoundFromShapeContainer(CONTAINER cnter)
 {
-  return TopoDsTools::makeCompoundFromShapeRange(cnter.begin(), cnter.end());
+    return TopoDsTools::makeCompoundFromShapeRange(cnter.begin(), cnter.end());
 }
 
 /*! \brief Build a topologic wire of edges denoted between the begin and end iterators \p iBegin
@@ -115,12 +115,12 @@ TopoDS_Compound TopoDsTools::makeCompoundFromShapeContainer(CONTAINER cnter)
 template<typename FWD_ITERATOR>
 TopoDS_Wire TopoDsTools::makeWireFromEdgeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
 {
-  Handle_ShapeExtend_WireData wireData = TopoDsTools::createShapeExtendWireData();
-  while (iBegin != iEnd) {
-    TopoDsTools::addEdge(wireData, *iBegin);
-    ++iBegin;
-  }
-  return TopoDsTools::fixedWire(wireData);
+    Handle_ShapeExtend_WireData wireData = TopoDsTools::createShapeExtendWireData();
+    while (iBegin != iEnd) {
+        TopoDsTools::addEdge(wireData, *iBegin);
+        ++iBegin;
+    }
+    return TopoDsTools::fixedWire(wireData);
 }
 
 } // namespace occ

@@ -49,7 +49,7 @@ namespace qttools {
 
 bool QStringLocaleAwareEqual::operator()(const QString &lhs, const QString &rhs) const
 {
-  return QString::localeAwareCompare(lhs, rhs) == 0;
+    return QString::localeAwareCompare(lhs, rhs) == 0;
 }
 
 /*!
@@ -62,7 +62,7 @@ bool QStringLocaleAwareEqual::operator()(const QString &lhs, const QString &rhs)
 
 bool QStringLocaleAwareNotEqual::operator()(const QString &lhs, const QString &rhs) const
 {
-  return QString::localeAwareCompare(lhs, rhs) != 0;
+    return QString::localeAwareCompare(lhs, rhs) != 0;
 }
 
 /*!
@@ -75,7 +75,7 @@ bool QStringLocaleAwareNotEqual::operator()(const QString &lhs, const QString &r
 
 bool QStringLocaleAwareLess::operator()(const QString& lhs, const QString& rhs) const
 {
-  return QString::localeAwareCompare(lhs, rhs) < 0;
+    return QString::localeAwareCompare(lhs, rhs) < 0;
 }
 
 /*!
@@ -88,7 +88,7 @@ bool QStringLocaleAwareLess::operator()(const QString& lhs, const QString& rhs) 
 
 bool QStringLocaleAwareLessEqual::operator()(const QString &lhs, const QString &rhs) const
 {
-  return QString::localeAwareCompare(lhs, rhs) <= 0;
+    return QString::localeAwareCompare(lhs, rhs) <= 0;
 }
 
 /*!
@@ -101,7 +101,7 @@ bool QStringLocaleAwareLessEqual::operator()(const QString &lhs, const QString &
 
 bool QStringLocaleAwareGreater::operator()(const QString &lhs, const QString &rhs) const
 {
-  return QString::localeAwareCompare(lhs, rhs) > 0;
+    return QString::localeAwareCompare(lhs, rhs) > 0;
 }
 
 /*!
@@ -114,7 +114,7 @@ bool QStringLocaleAwareGreater::operator()(const QString &lhs, const QString &rh
 
 bool QStringLocaleAwareGreaterEqual::operator()(const QString &lhs, const QString &rhs) const
 {
-  return QString::localeAwareCompare(lhs, rhs) >= 0;
+    return QString::localeAwareCompare(lhs, rhs) >= 0;
 }
 
 } // namespace qttools
@@ -124,5 +124,5 @@ bool QStringLocaleAwareGreaterEqual::operator()(const QString &lhs, const QStrin
 //! Implementation of Boost's hash function for QString objects
 std::size_t hash_value(QString const& str)
 {
-  return qHash(str);
+    return qHash(str);
 }

@@ -46,7 +46,7 @@ namespace cpp {
 template <typename T>
 bool boolXor(T lhs, T rhs)
 {
-  return (!lhs && rhs) || (lhs && !rhs);
+    return (!lhs && rhs) || (lhs && !rhs);
 }
 
 /*! \brief Returns "boolean implies" evaluation of expressions in \p lhs and \p rhs
@@ -55,7 +55,7 @@ bool boolXor(T lhs, T rhs)
 template <typename T>
 bool boolImplies(T lhs, T rhs)
 {
-  return lhs ? rhs : true;
+    return lhs ? rhs : true;
 }
 
 } // namespace cpp

@@ -50,23 +50,23 @@ namespace occ {
 class OCCTOOLS_EXPORT BRepPointOnFacesProjection
 {
 public:
-  BRepPointOnFacesProjection();
-  BRepPointOnFacesProjection(const TopoDS_Shape& faces);
-  ~BRepPointOnFacesProjection();
-  void releaseMemory();
+    BRepPointOnFacesProjection();
+    BRepPointOnFacesProjection(const TopoDS_Shape& faces);
+    ~BRepPointOnFacesProjection();
+    void releaseMemory();
 
-  void prepare(const TopoDS_Shape& faces);
-  BRepPointOnFacesProjection& compute(const gp_Pnt& point);
-  bool isDone() const;
+    void prepare(const TopoDS_Shape& faces);
+    BRepPointOnFacesProjection& compute(const gp_Pnt& point);
+    bool isDone() const;
 
-  const TopoDS_Face& solutionFace() const;
-  gp_Pnt solutionPoint() const;
-  std::pair<double, double> solutionUV() const;
-  gp_Vec solutionNormal() const;
+    const TopoDS_Face& solutionFace() const;
+    gp_Pnt solutionPoint() const;
+    std::pair<double, double> solutionUV() const;
+    gp_Vec solutionNormal() const;
 
 private:
-  class Private;
-  Private* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace occ

@@ -50,28 +50,28 @@ namespace occ {
 class OCCTOOLS_EXPORT PointOnFacesProjector
 {
 public:
-  struct OCCTOOLS_EXPORT Result
-  {
-    Result();
-    Result(const TopoDS_Face& sFace, const gp_Pnt& sPoint, const gp_Vec& sNormal);
-    const bool isValid;
-    const TopoDS_Face face;
-    const gp_Pnt point;
-    const gp_Vec normal;
-  };
+    struct OCCTOOLS_EXPORT Result
+    {
+        Result();
+        Result(const TopoDS_Face& sFace, const gp_Pnt& sPoint, const gp_Vec& sNormal);
+        const bool isValid;
+        const TopoDS_Face face;
+        const gp_Pnt point;
+        const gp_Vec normal;
+    };
 
-  PointOnFacesProjector();
-  PointOnFacesProjector(const TopoDS_Shape& faces);
-  ~PointOnFacesProjector();
+    PointOnFacesProjector();
+    PointOnFacesProjector(const TopoDS_Shape& faces);
+    ~PointOnFacesProjector();
 
-  void prepare(const TopoDS_Shape& faces);
-  const TopoDS_Face* faceOfProjection(const gp_Pnt& point) const;
-  Result projected(const gp_Pnt& point) const;
-  Result operator()(const gp_Pnt& point) const;
+    void prepare(const TopoDS_Shape& faces);
+    const TopoDS_Face* faceOfProjection(const gp_Pnt& point) const;
+    Result projected(const gp_Pnt& point) const;
+    Result operator()(const gp_Pnt& point) const;
 
 private:
-  class Private;
-  Private* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace occ

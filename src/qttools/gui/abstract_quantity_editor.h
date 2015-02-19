@@ -46,16 +46,16 @@ namespace qttools {
 class QTTOOLS_GUI_EXPORT AbstractQuantityEditor
 {
 public:
-  AbstractQuantityEditor();
-  virtual ~AbstractQuantityEditor();
+    AbstractQuantityEditor();
+    virtual ~AbstractQuantityEditor();
 
-  virtual double qtyValue() const = 0;
-  virtual void setQtyValue(double v) = 0;
+    virtual double qtyValue() const = 0;
+    virtual void setQtyValue(double v) = 0;
 
-  virtual void updateEditor(QLocale::MeasurementSystem newSys);
+    virtual void updateEditor(QLocale::MeasurementSystem newSys);
 
 protected:
-  QLocale::MeasurementSystem measurementSystem() const;
+    QLocale::MeasurementSystem measurementSystem() const;
 };
 
 } // namespace qttools

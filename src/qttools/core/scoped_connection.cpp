@@ -57,17 +57,17 @@ namespace qttools {
 ScopedConnect::ScopedConnect(const QObject* sender, const char* signal,
                              const QObject* receiver, const char* slot,
                              Qt::ConnectionType type)
-  : m_sender(sender),
-    m_receiver(receiver),
-    m_signal(signal),
-    m_slot(slot)
+    : m_sender(sender),
+      m_receiver(receiver),
+      m_signal(signal),
+      m_slot(slot)
 {
-  QObject::connect(sender, signal, receiver, slot, type);
+    QObject::connect(sender, signal, receiver, slot, type);
 }
 
 ScopedConnect::~ScopedConnect()
 {
-  QObject::disconnect(m_sender, m_signal, m_receiver, m_slot);
+    QObject::disconnect(m_sender, m_signal, m_receiver, m_slot);
 }
 
 /*!
@@ -85,18 +85,18 @@ ScopedConnect::~ScopedConnect()
 ScopedDisconnect::ScopedDisconnect(const QObject* sender, const char* signal,
                                    const QObject* receiver, const char* slot,
                                    Qt::ConnectionType type)
-  : m_sender(sender),
-    m_receiver(receiver),
-    m_signal(signal),
-    m_slot(slot),
-    m_type(type)
+    : m_sender(sender),
+      m_receiver(receiver),
+      m_signal(signal),
+      m_slot(slot),
+      m_type(type)
 {
-  QObject::disconnect(sender, signal, receiver, slot);
+    QObject::disconnect(sender, signal, receiver, slot);
 }
 
 ScopedDisconnect::~ScopedDisconnect()
 {
-  QObject::connect(m_sender, m_signal, m_receiver, m_slot, m_type);
+    QObject::connect(m_sender, m_signal, m_receiver, m_slot, m_type);
 }
 
 } // namespace qttools

@@ -46,26 +46,26 @@
 namespace qttools {
 
 class QTTOOLS_GUI_EXPORT LengthDoubleSpinBox :
-    public QDoubleSpinBox,
-    public AbstractLengthEditor
+        public QDoubleSpinBox,
+        public AbstractLengthEditor
 {
-  Q_OBJECT
-  Q_PROPERTY(double length READ length WRITE setLength)
+    Q_OBJECT
+    Q_PROPERTY(double length READ length WRITE setLength)
 
 public:
-  LengthDoubleSpinBox(QWidget* parent = NULL);
-  ~LengthDoubleSpinBox();
+    LengthDoubleSpinBox(QWidget* parent = NULL);
+    ~LengthDoubleSpinBox();
 
-  double length() const;
-  Q_SLOT void setLength(double v);
+    double length() const;
+    Q_SLOT void setLength(double v);
 
 public slots:
-  void updateEditor(QLocale::MeasurementSystem newSys);
+    void updateEditor(QLocale::MeasurementSystem newSys);
 
 private:
-  class Private;
-  Private* const d;
-  Q_PRIVATE_SLOT(d, void onValueChanged(double))
+    class Private;
+    Private* const d;
+    Q_PRIVATE_SLOT(d, void onValueChanged(double))
 };
 
 } // namespace qttools

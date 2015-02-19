@@ -12,18 +12,18 @@ namespace internal {
 class WaitLoopTimeOutStopCondition : public QObject, public WaitLoop::StopCondition
 {
 public:
-  WaitLoopTimeOutStopCondition(QObject* parent = NULL);
+    WaitLoopTimeOutStopCondition(QObject* parent = NULL);
 
-  void setInterval(int msec);
+    void setInterval(int msec);
 
 protected:
-  void beginWait();
-  void stopWait();
-  void timerEvent(QTimerEvent* event);
+    void beginWait();
+    void stopWait();
+    void timerEvent(QTimerEvent* event);
 
 private:
-  int m_interval;
-  int m_timerId;
+    int m_interval;
+    int m_timerId;
 };
 
 } // namespace internal

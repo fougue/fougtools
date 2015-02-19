@@ -49,13 +49,13 @@ namespace qttools {
 class QTTOOLS_GUI_EXPORT QStandardItemExplorer : public cpp::AbstractTreeBfsExplorer<QStandardItem>
 {
 public:
-  QStandardItemExplorer();
-  QStandardItemExplorer(QStandardItem* rootItem);
-  QStandardItemExplorer(QStandardItemModel* model);
+    QStandardItemExplorer();
+    QStandardItemExplorer(QStandardItem* rootItem);
+    QStandardItemExplorer(QStandardItemModel* model);
 
 protected:
-  bool isCurrentDeeper(const QStandardItem* previous) const;
-  void enqueueNodeChildren(QStandardItem* parentItem);
+    bool isCurrentDeeper(const QStandardItem* previous) const;
+    void enqueueNodeChildren(QStandardItem* parentItem);
 };
 
 } // namespace qttools

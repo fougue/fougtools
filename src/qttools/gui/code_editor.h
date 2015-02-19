@@ -51,22 +51,22 @@ namespace qttools {
 
 class QTTOOLS_GUI_EXPORT CodeEditor : public QPlainTextEdit
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  CodeEditor(QWidget *parent = NULL);
-  ~CodeEditor();
+    CodeEditor(QWidget *parent = NULL);
+    ~CodeEditor();
 
 protected:
-  void resizeEvent(QResizeEvent *event);
+    void resizeEvent(QResizeEvent *event);
 
 private:
-  class LineNumberArea;
-  class Private;
-  Private* const d;
-  Q_PRIVATE_SLOT(d, void updateLineNumberAreaWidth(int))
-  Q_PRIVATE_SLOT(d, void highlightCurrentLine())
-  Q_PRIVATE_SLOT(d, void updateLineNumberArea(const QRect&, int))
+    class LineNumberArea;
+    class Private;
+    Private* const d;
+    Q_PRIVATE_SLOT(d, void updateLineNumberAreaWidth(int))
+    Q_PRIVATE_SLOT(d, void highlightCurrentLine())
+    Q_PRIVATE_SLOT(d, void updateLineNumberArea(const QRect&, int))
 };
 
 } // namespace qttools

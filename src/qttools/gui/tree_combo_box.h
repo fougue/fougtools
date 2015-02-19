@@ -49,22 +49,22 @@ namespace qttools {
 
 class QTTOOLS_GUI_EXPORT TreeComboBox : public QComboBox
 {
-  Q_OBJECT
-  Q_PROPERTY(QModelIndex currentModelIndex READ currentModelIndex WRITE setCurrentModelIndex)
+    Q_OBJECT
+    Q_PROPERTY(QModelIndex currentModelIndex READ currentModelIndex WRITE setCurrentModelIndex)
 
 public:
-  TreeComboBox(QWidget *parent = NULL);
+    TreeComboBox(QWidget *parent = NULL);
 
-  void showPopup();
+    void showPopup();
 
-  QTreeView* treeView() const;
+    QTreeView* treeView() const;
 
-  QModelIndex treeFindData(const QVariant& data,
-                           int role = Qt::UserRole,
-                           Qt::MatchFlags flags = Qt::MatchRecursive) const;
+    QModelIndex treeFindData(const QVariant& data,
+                             int role = Qt::UserRole,
+                             Qt::MatchFlags flags = Qt::MatchRecursive) const;
 
-  QModelIndex currentModelIndex() const;
-  Q_SLOT void setCurrentModelIndex(const QModelIndex& modelIndex);
+    QModelIndex currentModelIndex() const;
+    Q_SLOT void setCurrentModelIndex(const QModelIndex& modelIndex);
 };
 
 } // namespace qttools

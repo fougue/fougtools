@@ -46,18 +46,18 @@ namespace qttools {
 class QTTOOLS_SCRIPT_EXPORT Calculator
 {
 public:
-  Calculator();
+    Calculator();
 
-  void evaluate(const QString& program);
-  bool hasResult() const;
-  QString lastErrorText() const;
+    void evaluate(const QString& program);
+    bool hasResult() const;
+    QString lastErrorText() const;
 
-  double lastResult() const;
-  QString lastResultText() const;
+    double lastResult() const;
+    QString lastResultText() const;
 
 private:
-  QScriptEngine m_scriptEngine;
-  QScriptValue m_lastResult;
+    QScriptEngine m_scriptEngine;
+    QScriptValue m_lastResult;
 };
 
 } // namespace qttools

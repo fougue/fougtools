@@ -42,62 +42,62 @@ namespace occ {
 //! Conversion of the Quantity_Color \p c to a QColor
 QColor toQtColor(const Quantity_Color& c)
 {
-  return QColor(c.Red() * 255., c.Green() * 255., c.Blue() * 255.);
+    return QColor(c.Red() * 255., c.Green() * 255., c.Blue() * 255.);
 }
 
 //! Conversion of the Quantity_NameOfColor \p c to a QColor
 QColor toQtColor(const Quantity_NameOfColor c)
 {
-  Quantity_Color qc(c);
-  return toQtColor(qc);
+    Quantity_Color qc(c);
+    return toQtColor(qc);
 }
 
 //! Conversion of the QColor \p c to a Quantity_Color
 Quantity_Color toOccColor(const QColor& c)
 {
-  return Quantity_Color(c.red() / 255., c.green() / 255., c.blue() / 255., Quantity_TOC_RGB);
+    return Quantity_Color(c.red() / 255., c.green() / 255., c.blue() / 255., Quantity_TOC_RGB);
 }
 
 //! Conversion of the QColor object \p c to a Quantity_NameOfColor
 Quantity_NameOfColor toNamedOccColor(const QColor& c)
 {
-  return toOccColor(c).Name();
+    return toOccColor(c).Name();
 }
 
 //! Conversion of the QString \p str to an OCC CString
 Standard_CString toCString(const QString& str)
 {
-  return str.toLocal8Bit().constData();
+    return str.toLocal8Bit().constData();
 }
 
 //! Conversion of the QString \p str to an OCC TCollection_AsciiString
 TCollection_AsciiString toAsciiString(const QString& str)
 {
-  return TCollection_AsciiString(toCString(str));
+    return TCollection_AsciiString(toCString(str));
 }
 
 //! Conversion of the QString \p str to an OCC ExtString
 Standard_ExtString toExtString(const QString& str)
 {
-  return reinterpret_cast<Standard_ExtString>(str.utf16());
+    return reinterpret_cast<Standard_ExtString>(str.utf16());
 }
 
 //! Conversion of the QString \p str to an OCC TCollection_ExtendedString
 TCollection_ExtendedString toOccExtendedString(const QString& str)
 {
-  return TCollection_ExtendedString(toExtString(str));
+    return TCollection_ExtendedString(toExtString(str));
 }
 
 //! Conversion of the OCC TCollection_AsciiString \p str to a QString
 QString toQString(const TCollection_AsciiString& str)
 {
-  return QString::fromLatin1(str.ToCString(), str.Length());
+    return QString::fromLatin1(str.ToCString(), str.Length());
 }
 
 //! Conversion of the OCC TCollection_ExtendedString \p str to a QString
 QString toQString(const TCollection_ExtendedString& str)
 {
-  return QString::fromUtf16(reinterpret_cast<const ushort*>(str.ToExtString()), str.Length());
+    return QString::fromUtf16(reinterpret_cast<const ushort*>(str.ToExtString()), str.Length());
 }
 
 } // namespace occ

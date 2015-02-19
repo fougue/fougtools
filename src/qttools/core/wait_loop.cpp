@@ -53,62 +53,62 @@ namespace qttools {
  */
 
 WaitLoop::WaitLoop(QObject *parent)
-  : QObject(parent),
-    d(new WaitLoop::Private(this))
+    : QObject(parent),
+      d(new WaitLoop::Private(this))
 {
-  this->addStopCondition(new internal::WaitLoopTimeOutStopCondition(this));
+    this->addStopCondition(new internal::WaitLoopTimeOutStopCondition(this));
 }
 
 WaitLoop::~WaitLoop()
 {
-  d->stopWait();
-  d->m_stopConditions.removeFirst(); // TimeOut stop condition is deleted by parent QObject
-  //qDeleteAll(d->m_stopConditions);
-  delete d;
+    d->stopWait();
+    d->m_stopConditions.removeFirst(); // TimeOut stop condition is deleted by parent QObject
+    //qDeleteAll(d->m_stopConditions);
+    delete d;
 }
 
 void WaitLoop::addStopCondition(WaitLoop::StopCondition *cond)
 {
-  if (cond == NULL)
-    return;
+    if (cond == NULL)
+        return;
 
-  cond->m_waitLoop = this;
-  d->m_stopConditions.append(cond);
+    cond->m_waitLoop = this;
+    d->m_stopConditions.append(cond);
 }
 
 void WaitLoop::removeStopCondition(WaitLoop::StopCondition *cond)
 {
-  d->m_stopConditions.removeOne(cond);
+    d->m_stopConditions.removeOne(cond);
 }
 
 bool WaitLoop::exec(int msec)
 {
-  return this->exec(QEventLoop::AllEvents, msec);
+    return this->exec(QEventLoop::AllEvents, msec);
 }
 
 bool WaitLoop::exec(QEventLoop::ProcessEventsFlags flags, int msec)
 {
-  d->m_exitStopCondition = NULL;
-  d->timeOutStopCondition()->setInterval(msec);
-  foreach (StopCondition* cond, d->m_stopConditions) {
+    d->m_exitStopCondition = NULL;
+    d->timeOutStopCondition()->setInterval(msec);
+    foreach (StopCondition* cond, d->m_stopConditions) {
+        if (d->m_exitStopCondition == NULL)
+            cond->beginWait();
+        else
+            break;
+    }
+
+    int exitCode = 0;
     if (d->m_exitStopCondition == NULL)
-      cond->beginWait();
+        exitCode = d->m_eventLoop.exec(flags);
     else
-      break;
-  }
+        exitCode = (d->m_exitStopCondition != d->timeOutStopCondition()) ? 0 : -1;
 
-  int exitCode = 0;
-  if (d->m_exitStopCondition == NULL)
-    exitCode = d->m_eventLoop.exec(flags);
-  else
-    exitCode = (d->m_exitStopCondition != d->timeOutStopCondition()) ? 0 : -1;
-
-  return exitCode != -1;
+    return exitCode != -1;
 }
 
 WaitLoop::StopCondition *WaitLoop::exitStopCondition() const
 {
-  return d->m_exitStopCondition;
+    return d->m_exitStopCondition;
 }
 
 } // namespace qttools

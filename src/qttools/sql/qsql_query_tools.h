@@ -49,14 +49,14 @@ namespace qttools {
 class QTTOOLS_SQL_EXPORT SqlQueryError : public std::runtime_error
 {
 public:
-  SqlQueryError(const QSqlQuery& qry);
-  SqlQueryError(const QSqlError& err);
-  ~SqlQueryError() throw();
+    SqlQueryError(const QSqlQuery& qry);
+    SqlQueryError(const QSqlError& err);
+    ~SqlQueryError() throw();
 
-  QSqlError sqlError() const;
+    QSqlError sqlError() const;
 
 private:
-  QSqlError m_sqlError;
+    QSqlError m_sqlError;
 };
 
 QTTOOLS_SQL_EXPORT

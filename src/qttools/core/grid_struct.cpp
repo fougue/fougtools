@@ -49,61 +49,61 @@ namespace qttools {
 
 //! Constructs an invalid grid having no items, ie. itemCount() == 0
 GridStruct::GridStruct()
-  : m_rowCount(0),
-    m_colCount(0)
+    : m_rowCount(0),
+      m_colCount(0)
 {
 }
 
 GridStruct::GridStruct(int rows, int cols)
-  : m_rowCount(rows),
-    m_colCount(cols)
+    : m_rowCount(rows),
+      m_colCount(cols)
 {
 }
 
 bool GridStruct::isValid() const
 {
-  return this->itemCount() > 0;
+    return this->itemCount() > 0;
 }
 
 int GridStruct::itemCount() const
 {
-  return this->rowCount() * this->columnCount();
+    return this->rowCount() * this->columnCount();
 }
 
 void GridStruct::setItemCount(int rows, int cols)
 {
-  this->setRowCount(rows);
-  this->setColumnCount(cols);
+    this->setRowCount(rows);
+    this->setColumnCount(cols);
 }
 
 int GridStruct::rowCount() const
 {
-  return m_rowCount;
+    return m_rowCount;
 }
 
 void GridStruct::setRowCount(int count)
 {
-  m_rowCount = count;
+    m_rowCount = count;
 }
 
 int GridStruct::columnCount() const
 {
-  return m_colCount;
+    return m_colCount;
 }
 
 void GridStruct::setColumnCount(int count)
 {
-  m_colCount = count;
+    m_colCount = count;
 }
 
 const qttools::GridNumbering& GridStruct::itemNumbering() const
 {
-  return m_gridNb;
+    return m_gridNb;
 }
 
 void GridStruct::setItemNumbering(const qttools::GridNumbering& gridNb)
 {
-  m_gridNb = gridNb;
+    m_gridNb = gridNb;
 }
 
 } // namespace qttools

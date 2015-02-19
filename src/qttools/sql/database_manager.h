@@ -49,34 +49,34 @@ namespace qttools {
 class QTTOOLS_SQL_EXPORT DatabaseManager
 {
 public:
-  DatabaseManager(const QSqlDatabase& refDb);
-  virtual ~DatabaseManager();
+    DatabaseManager(const QSqlDatabase& refDb);
+    virtual ~DatabaseManager();
 
-  bool isDatabaseOpen(const QThread* inThread = QThread::currentThread()) const;
-  bool hasDatabase(const QThread* inThread = QThread::currentThread()) const;
+    bool isDatabaseOpen(const QThread* inThread = QThread::currentThread()) const;
+    bool hasDatabase(const QThread* inThread = QThread::currentThread()) const;
 
-  const QSqlDatabase& referenceDatabase() const;
-  QSqlDatabase database(const QThread* inThread = QThread::currentThread()) const;
-  virtual QSqlDatabase createDatabase(const QThread* inThread = QThread::currentThread());
+    const QSqlDatabase& referenceDatabase() const;
+    QSqlDatabase database(const QThread* inThread = QThread::currentThread()) const;
+    virtual QSqlDatabase createDatabase(const QThread* inThread = QThread::currentThread());
 
-  virtual QSqlQuery execSqlCode(const QString& sqlCode,
-                                const QThread* inThread = QThread::currentThread()) const;
-  virtual QSqlQuery execSqlCodeInTransaction(const QString& sqlCode,
-                                             const QThread* inThread = QThread::currentThread()) const;
+    virtual QSqlQuery execSqlCode(const QString& sqlCode,
+                                  const QThread* inThread = QThread::currentThread()) const;
+    virtual QSqlQuery execSqlCodeInTransaction(const QString& sqlCode,
+                                               const QThread* inThread = QThread::currentThread()) const;
 
-  // SQL output
-  bool isSqlOutputEnabled() const;
-  void setSqlOutputEnabled(bool on);
+    // SQL output
+    bool isSqlOutputEnabled() const;
+    void setSqlOutputEnabled(bool on);
 
-  QIODevice* sqlOutputDevice() const;
-  void setSqlOutputDevice(QIODevice* device);
+    QIODevice* sqlOutputDevice() const;
+    void setSqlOutputDevice(QIODevice* device);
 
 protected:
-  virtual void logSql(const QString& sqlCode, const QThread* inThread) const;
+    virtual void logSql(const QString& sqlCode, const QThread* inThread) const;
 
 private:
-  class Private;
-  Private* const d;
+    class Private;
+    Private* const d;
 };
 
 } // namespace qttools

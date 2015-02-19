@@ -53,57 +53,57 @@ namespace internal {
 
 static Qt::CursorShape toQtCursorShape(int shape)
 {
-  switch (shape) {
-  case Qt::ArrowCursor: return Qt::ArrowCursor;
-  case Qt::UpArrowCursor: return Qt::UpArrowCursor;
-  case Qt::CrossCursor: return Qt::CrossCursor;
-  case Qt::WaitCursor: return Qt::WaitCursor;
-  case Qt::IBeamCursor: return Qt::IBeamCursor;
-  case Qt::SizeVerCursor: return Qt::SizeVerCursor;
-  case Qt::SizeHorCursor: return Qt::SizeHorCursor;
-  case Qt::SizeBDiagCursor: return Qt::SizeBDiagCursor;
-  case Qt::SizeFDiagCursor: return Qt::SizeFDiagCursor;
-  case Qt::SizeAllCursor: return Qt::SizeAllCursor;
-  case Qt::BlankCursor: return Qt::BlankCursor;
-  case Qt::SplitVCursor: return Qt::SplitVCursor;
-  case Qt::SplitHCursor: return Qt::SplitHCursor;
-  case Qt::PointingHandCursor: return Qt::PointingHandCursor;
-  case Qt::ForbiddenCursor: return Qt::ForbiddenCursor;
-  case Qt::WhatsThisCursor: return Qt::WhatsThisCursor;
-  case Qt::BusyCursor: return Qt::BusyCursor;
-  case Qt::OpenHandCursor: return Qt::OpenHandCursor;
-  case Qt::ClosedHandCursor: return Qt::ClosedHandCursor;
-  case Qt::DragCopyCursor: return Qt::DragCopyCursor;
-  case Qt::DragMoveCursor: return Qt::DragMoveCursor;
-  case Qt::DragLinkCursor: return Qt::DragLinkCursor;
-  case Qt::BitmapCursor: return Qt::BitmapCursor;
-  case Qt::CustomCursor: return Qt::CustomCursor;
-  }
-  return Qt::ArrowCursor;
+    switch (shape) {
+    case Qt::ArrowCursor: return Qt::ArrowCursor;
+    case Qt::UpArrowCursor: return Qt::UpArrowCursor;
+    case Qt::CrossCursor: return Qt::CrossCursor;
+    case Qt::WaitCursor: return Qt::WaitCursor;
+    case Qt::IBeamCursor: return Qt::IBeamCursor;
+    case Qt::SizeVerCursor: return Qt::SizeVerCursor;
+    case Qt::SizeHorCursor: return Qt::SizeHorCursor;
+    case Qt::SizeBDiagCursor: return Qt::SizeBDiagCursor;
+    case Qt::SizeFDiagCursor: return Qt::SizeFDiagCursor;
+    case Qt::SizeAllCursor: return Qt::SizeAllCursor;
+    case Qt::BlankCursor: return Qt::BlankCursor;
+    case Qt::SplitVCursor: return Qt::SplitVCursor;
+    case Qt::SplitHCursor: return Qt::SplitHCursor;
+    case Qt::PointingHandCursor: return Qt::PointingHandCursor;
+    case Qt::ForbiddenCursor: return Qt::ForbiddenCursor;
+    case Qt::WhatsThisCursor: return Qt::WhatsThisCursor;
+    case Qt::BusyCursor: return Qt::BusyCursor;
+    case Qt::OpenHandCursor: return Qt::OpenHandCursor;
+    case Qt::ClosedHandCursor: return Qt::ClosedHandCursor;
+    case Qt::DragCopyCursor: return Qt::DragCopyCursor;
+    case Qt::DragMoveCursor: return Qt::DragMoveCursor;
+    case Qt::DragLinkCursor: return Qt::DragLinkCursor;
+    case Qt::BitmapCursor: return Qt::BitmapCursor;
+    case Qt::CustomCursor: return Qt::CustomCursor;
+    }
+    return Qt::ArrowCursor;
 }
 
 } // namespace internal
 
 QmlTools::QmlTools(QObject* parent)
-  : QObject(parent)
+    : QObject(parent)
 {
 }
 
 void QmlTools::setOverrideCursor(int shape)
 {
 #if QT_VERSION >= 0x050000
-  QGuiApplication::setOverrideCursor(QCursor(internal::toQtCursorShape(shape)));
+    QGuiApplication::setOverrideCursor(QCursor(internal::toQtCursorShape(shape)));
 #else
-  QApplication::setOverrideCursor(QCursor(internal::toQtCursorShape(shape)));
+    QApplication::setOverrideCursor(QCursor(internal::toQtCursorShape(shape)));
 #endif // QT_VERSION
 }
 
 void QmlTools::restoreOverrideCursor()
 {
 #if QT_VERSION >= 0x050000
-  QGuiApplication::restoreOverrideCursor();
+    QGuiApplication::restoreOverrideCursor();
 #else
-  QApplication::restoreOverrideCursor();
+    QApplication::restoreOverrideCursor();
 #endif // QT_VERSION
 }
 
@@ -113,8 +113,8 @@ void QmlTools::declareObject(QQmlContext* context, QmlTools* obj)
 void QmlTools::declareObject(QDeclarativeContext* context, QmlTools* obj)
 #endif // QT_VERSION
 {
-  if (obj != NULL)
-    context->setContextProperty(QLatin1String("qttools_QmlTools"), obj);
+    if (obj != NULL)
+        context->setContextProperty(QLatin1String("qttools_QmlTools"), obj);
 }
 
 } // namespace qttools

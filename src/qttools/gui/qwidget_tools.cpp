@@ -62,24 +62,24 @@ namespace qttools {
  */
 void QWidgetTools::wrapWidgetInDialog(QWidget *widget, QDialog *dialog)
 {
-  if (widget != NULL && dialog != NULL) {
-    dialog->setWindowTitle(widget->windowTitle());
-    widget->setParent(dialog);
-    if (dialog->layout() != NULL) {
-      dialog->layout()->addWidget(widget);
-    }
-    else {
-      QBoxLayout* layout = new QVBoxLayout;
-      layout->addWidget(widget);
-      dialog->setLayout(layout);
-    }
+    if (widget != NULL && dialog != NULL) {
+        dialog->setWindowTitle(widget->windowTitle());
+        widget->setParent(dialog);
+        if (dialog->layout() != NULL) {
+            dialog->layout()->addWidget(widget);
+        }
+        else {
+            QBoxLayout* layout = new QVBoxLayout;
+            layout->addWidget(widget);
+            dialog->setLayout(layout);
+        }
 
-    QDialogButtonBox* btnBox = widget->findChild<QDialogButtonBox*>();
-    if (btnBox != NULL) {
-      QObject::connect(btnBox, SIGNAL(accepted()), dialog, SLOT(accept()));
-      QObject::connect(btnBox, SIGNAL(rejected()), dialog, SLOT(reject()));
+        QDialogButtonBox* btnBox = widget->findChild<QDialogButtonBox*>();
+        if (btnBox != NULL) {
+            QObject::connect(btnBox, SIGNAL(accepted()), dialog, SLOT(accept()));
+            QObject::connect(btnBox, SIGNAL(rejected()), dialog, SLOT(reject()));
+        }
     }
-  }
 }
 
 /*! \brief Add \p contentsWidget to \p containerWidget
@@ -88,14 +88,14 @@ void QWidgetTools::wrapWidgetInDialog(QWidget *widget, QDialog *dialog)
  */
 void QWidgetTools::addContentsWidget(QWidget *containerWidget, QWidget *contentsWidget)
 {
-  if (containerWidget != NULL && contentsWidget != NULL) {
-    if (containerWidget->layout() == NULL) {
-      containerWidget->setLayout(new QVBoxLayout);
-      containerWidget->layout()->setContentsMargins(0, 0, 0, 0);
+    if (containerWidget != NULL && contentsWidget != NULL) {
+        if (containerWidget->layout() == NULL) {
+            containerWidget->setLayout(new QVBoxLayout);
+            containerWidget->layout()->setContentsMargins(0, 0, 0, 0);
+        }
+        contentsWidget->setParent(containerWidget);
+        containerWidget->layout()->addWidget(contentsWidget);
     }
-    contentsWidget->setParent(containerWidget);
-    containerWidget->layout()->addWidget(contentsWidget);
-  }
 }
 
 /*! \brief Returns the global position of a widget corner
@@ -104,41 +104,41 @@ void QWidgetTools::addContentsWidget(QWidget *containerWidget, QWidget *contents
  */
 QPoint QWidgetTools::globalPos(const QWidget *widget, Qt::Corner widgetCorner)
 {
-  if (widget != NULL) {
-    const QRect geom = widget->frameGeometry();
-    switch (widgetCorner) {
-    case Qt::TopLeftCorner: return widget->mapToGlobal(QPoint(-geom.width(), 0));
-    case Qt::TopRightCorner: return widget->mapToGlobal(QPoint(geom.width(), 0));
-    case Qt::BottomLeftCorner: return widget->mapToGlobal(QPoint(-geom.width(), geom.height()));
-    case Qt::BottomRightCorner: return widget->mapToGlobal(QPoint(geom.width(), geom.height()));
+    if (widget != NULL) {
+        const QRect geom = widget->frameGeometry();
+        switch (widgetCorner) {
+        case Qt::TopLeftCorner: return widget->mapToGlobal(QPoint(-geom.width(), 0));
+        case Qt::TopRightCorner: return widget->mapToGlobal(QPoint(geom.width(), 0));
+        case Qt::BottomLeftCorner: return widget->mapToGlobal(QPoint(-geom.width(), geom.height()));
+        case Qt::BottomRightCorner: return widget->mapToGlobal(QPoint(geom.width(), geom.height()));
+        }
     }
-  }
-  return QPoint(0, 0);
+    return QPoint(0, 0);
 }
 
 /*! \brief Move position of \p widget so it is displayed stuck to the right of \p nextTo
   */
 void QWidgetTools::moveWidgetRightTo(QWidget* widget, const QWidget* nextTo)
 {
-  const QRect frameGeom = nextTo->frameGeometry();
-  widget->move(nextTo->mapToGlobal(QPoint(frameGeom.width(), 0)));
+    const QRect frameGeom = nextTo->frameGeometry();
+    widget->move(nextTo->mapToGlobal(QPoint(frameGeom.width(), 0)));
 }
 
 /*! \brief Move position of \p widget so it is displayed stuck to the left of \p nextTo
  */
 void QWidgetTools::moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo)
 {
-  //const QRect nextToFrameGeom = nextTo->frameGeometry();
-  const QRect widgetFrameGeom = widget->frameGeometry();
-  widget->move(nextTo->mapToGlobal(QPoint(-widgetFrameGeom.width(), 0)));
+    //const QRect nextToFrameGeom = nextTo->frameGeometry();
+    const QRect widgetFrameGeom = widget->frameGeometry();
+    widget->move(nextTo->mapToGlobal(QPoint(-widgetFrameGeom.width(), 0)));
 }
 
 /*! \brief Current slide positions of the horizontal and vertical scroll bars
  */
 QPair<int, int> QWidgetTools::horizAndVertScrollValue(const QAbstractScrollArea* area)
 {
-  return qMakePair(area->horizontalScrollBar()->value(),
-                   area->verticalScrollBar()->value());
+    return qMakePair(area->horizontalScrollBar()->value(),
+                     area->verticalScrollBar()->value());
 }
 
 /*! \brief Set the current slide positions of the horizontal and vertical scroll bars to \p values
@@ -146,8 +146,8 @@ QPair<int, int> QWidgetTools::horizAndVertScrollValue(const QAbstractScrollArea*
 void QWidgetTools::setHorizAndVertScrollValue(QAbstractScrollArea* area,
                                               const QPair<int, int>& values)
 {
-  area->horizontalScrollBar()->setValue(values.first);
-  area->verticalScrollBar()->setValue(values.second);
+    area->horizontalScrollBar()->setValue(values.first);
+    area->verticalScrollBar()->setValue(values.second);
 }
 
 } // namespace qttools

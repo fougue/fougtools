@@ -53,41 +53,41 @@ class ViewControllerDelegate;
 
 class OCCTOOLS_EXPORT QtViewController : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
-  friend class ViewControllerDelegate;
+    friend class ViewControllerDelegate;
 
-  QtViewController(QtView* view);
+    QtViewController(QtView* view);
 
-  bool eventFilter(QObject* object, QEvent* event);
+    bool eventFilter(QObject* object, QEvent* event);
 
 signals:
-  void contextSelectionChanged();
-  void escaped();
+    void contextSelectionChanged();
+    void escaped();
 
 protected:
-  virtual void beginRubberBandDraw(const QPoint& startPos);
-  virtual void updateRubberBandDraw(const QPoint& currPos);
-  virtual void endRubberBandDraw();
+    virtual void beginRubberBandDraw(const QPoint& startPos);
+    virtual void updateRubberBandDraw(const QPoint& currPos);
+    virtual void endRubberBandDraw();
 
-  void notifyContextSelectionChanged();
-  void notifyEscaped();
+    void notifyContextSelectionChanged();
+    void notifyEscaped();
 
 public:
-  Handle_V3d_View internalOccView() const;
-  Handle_AIS_InteractiveContext context() const;
-  QtView* view() const;
+    Handle_V3d_View internalOccView() const;
+    Handle_AIS_InteractiveContext context() const;
+    QtView* view() const;
 
 protected:
-  const QRect rubberBandGeometry() const;
+    const QRect rubberBandGeometry() const;
 
 private:
-  void createRubberBand();
+    void createRubberBand();
 
-  QtView* m_view;
-  QPoint m_startRubberBandPos;
-  QRubberBand* m_rubberBand;
+    QtView* m_view;
+    QPoint m_startRubberBandPos;
+    QRubberBand* m_rubberBand;
 };
 
 } // namespace occ

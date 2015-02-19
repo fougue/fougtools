@@ -52,46 +52,46 @@ namespace qttools {
 //! Safe cast of an integer to QLocale::MeasurementSystem
 QLocale::MeasurementSystem QLocaleTools::toMeasurementSystem(int measSys)
 {
-  switch (measSys) {
-  case QLocale::MetricSystem : return QLocale::MetricSystem;
+    switch (measSys) {
+    case QLocale::MetricSystem : return QLocale::MetricSystem;
 #if QT_VERSION > 0x050000
-  case QLocale::ImperialUKSystem : return QLocale::ImperialUKSystem;
+    case QLocale::ImperialUKSystem : return QLocale::ImperialUKSystem;
 #endif // QT_VERSION
-  case QLocale::ImperialSystem : return QLocale::ImperialSystem;
-  default : return QLocale::MetricSystem;
-  }
+    case QLocale::ImperialSystem : return QLocale::ImperialSystem;
+    default : return QLocale::MetricSystem;
+    }
 }
 
 //! Safe cast of an integer to QLocale::Country
 QLocale::Country QLocaleTools::toCountry(int code)
 {
-  const QMetaObject& localeMetaObj = QLocale::staticMetaObject;
-  const int countryEnumIndex = localeMetaObj.indexOfEnumerator("Country");
-  if (countryEnumIndex != -1) {
-    const QMetaEnum countryEnum = localeMetaObj.enumerator(countryEnumIndex);
-    if (countryEnum.valueToKey(code) != nullptr)
-      return static_cast<QLocale::Country>(code);
-  }
-  return QLocale::AnyCountry;
+    const QMetaObject& localeMetaObj = QLocale::staticMetaObject;
+    const int countryEnumIndex = localeMetaObj.indexOfEnumerator("Country");
+    if (countryEnumIndex != -1) {
+        const QMetaEnum countryEnum = localeMetaObj.enumerator(countryEnumIndex);
+        if (countryEnum.valueToKey(code) != nullptr)
+            return static_cast<QLocale::Country>(code);
+    }
+    return QLocale::AnyCountry;
 }
 
 //! All enumerator values of QLocale::Country returned in a single array
 QVector<QLocale::Country> QLocaleTools::allCountries()
 {
-  QVector<QLocale::Country> countryVec;
-  const int countryEnumIndex = QLocale::staticMetaObject.indexOfEnumerator("Country");
-  if (countryEnumIndex != -1) {
-    const QMetaEnum countryEnum = QLocale::staticMetaObject.enumerator(countryEnumIndex);
-    for (int i = 0; i < countryEnum.keyCount(); ++i) {
-      const int countryEnumValue = countryEnum.value(i);
-      if (countryEnumValue != -1) {
-        const QLocale::Country country = static_cast<QLocale::Country>(countryEnumValue);
-        if (!countryVec.contains(country))
-          countryVec.append(country);
-      }
+    QVector<QLocale::Country> countryVec;
+    const int countryEnumIndex = QLocale::staticMetaObject.indexOfEnumerator("Country");
+    if (countryEnumIndex != -1) {
+        const QMetaEnum countryEnum = QLocale::staticMetaObject.enumerator(countryEnumIndex);
+        for (int i = 0; i < countryEnum.keyCount(); ++i) {
+            const int countryEnumValue = countryEnum.value(i);
+            if (countryEnumValue != -1) {
+                const QLocale::Country country = static_cast<QLocale::Country>(countryEnumValue);
+                if (!countryVec.contains(country))
+                    countryVec.append(country);
+            }
+        }
     }
-  }
-  return countryVec;
+    return countryVec;
 }
 
 } // namespace qttools

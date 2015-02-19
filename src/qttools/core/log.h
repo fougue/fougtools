@@ -51,46 +51,46 @@ namespace qttools {
 class QTTOOLS_CORE_EXPORT Log
 {
 public:
-  enum MessageType
-  {
-    DebugMessage,
-    InfoMessage,
-    WarningMessage,
-    CriticalMessage,
-    FatalMessage
-  };
+    enum MessageType
+    {
+        DebugMessage,
+        InfoMessage,
+        WarningMessage,
+        CriticalMessage,
+        FatalMessage
+    };
 
-  Log();
-  Log(MessageType msgType);
-  Log(const Log& other);
-  ~Log();
+    Log();
+    Log(MessageType msgType);
+    Log(const Log& other);
+    ~Log();
 
-  Log& space();
-  Log& operator<<(bool);
-  Log& operator<<(char);
-  Log& operator<<(short);
-  Log& operator<<(unsigned short);
-  Log& operator<<(int);
-  Log& operator<<(unsigned int);
-  Log& operator<<(long);
-  Log& operator<<(unsigned long);
-  Log& operator<<(qlonglong);
-  Log& operator<<(qulonglong);
-  Log& operator<<(float);
-  Log& operator<<(double);
-  Log& operator<<(const char*);
-  Log& operator<<(const QString&);
+    Log& space();
+    Log& operator<<(bool);
+    Log& operator<<(char);
+    Log& operator<<(short);
+    Log& operator<<(unsigned short);
+    Log& operator<<(int);
+    Log& operator<<(unsigned int);
+    Log& operator<<(long);
+    Log& operator<<(unsigned long);
+    Log& operator<<(qlonglong);
+    Log& operator<<(qulonglong);
+    Log& operator<<(float);
+    Log& operator<<(double);
+    Log& operator<<(const char*);
+    Log& operator<<(const QString&);
 
-  template <typename T>
-  Log& operator<<(const T* ptr);
+    template <typename T>
+    Log& operator<<(const T* ptr);
 
-  static void registerMetaTypes();
+    static void registerMetaTypes();
 
 private:
-  Log& operator=(const Log& other); // disabled
+    Log& operator=(const Log& other); // disabled
 
-  struct Stream;
-  Stream* m_stream;
+    struct Stream;
+    Stream* m_stream;
 };
 
 QTTOOLS_CORE_EXPORT Log debugLog();
@@ -105,12 +105,12 @@ QTTOOLS_CORE_EXPORT Log fatalLog();
 class QTTOOLS_CORE_EXPORT AbstractLogHandler
 {
 public:
-  AbstractLogHandler();
-  virtual ~AbstractLogHandler();
-  virtual void handle(Log::MessageType msgType, const QString& msg) = 0;
-  void setAutoDetach(bool b);
+    AbstractLogHandler();
+    virtual ~AbstractLogHandler();
+    virtual void handle(Log::MessageType msgType, const QString& msg) = 0;
+    void setAutoDetach(bool b);
 private:
-  bool m_autoDetach;
+    bool m_autoDetach;
 };
 QTTOOLS_CORE_EXPORT void attachGlobalLogHandler(AbstractLogHandler* handler);
 QTTOOLS_CORE_EXPORT void detachGlobalLogHandler(AbstractLogHandler* handler);
@@ -119,15 +119,15 @@ QTTOOLS_CORE_EXPORT void detachGlobalLogHandler(AbstractLogHandler* handler);
 // -- class LogDispatcher
 // --
 class QTTOOLS_CORE_EXPORT LogDispatcher :
-    public QObject,
-    public AbstractLogHandler
+        public QObject,
+        public AbstractLogHandler
 {
-  Q_OBJECT
+    Q_OBJECT
 public:
-  LogDispatcher(QObject* parent = NULL);
-  void handle(Log::MessageType msgType, const QString& msg);
+    LogDispatcher(QObject* parent = NULL);
+    void handle(Log::MessageType msgType, const QString& msg);
 signals:
-  void log(qttools::Log::MessageType msgType, const QString& msg);
+    void log(qttools::Log::MessageType msgType, const QString& msg);
 };
 
 // --
@@ -137,7 +137,7 @@ signals:
 template <typename T>
 Log& Log::operator<<(const T* ptr)
 {
-  return *this << QString("0x%1").arg(reinterpret_cast<std::size_t>(ptr), 0, 16);
+    return *this << QString("0x%1").arg(reinterpret_cast<std::size_t>(ptr), 0, 16);
 }
 
 } // namespace qttools

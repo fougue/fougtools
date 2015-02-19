@@ -49,36 +49,36 @@ namespace qttools {
  */
 
 MeasurementSystemPreferences::MeasurementSystemPreferences()
-  : m_metricUnit(AbstractLengthEditor::MillimeterUnit),
-    m_imperialUnit(AbstractLengthEditor::InchUnit)
+    : m_metricUnit(AbstractLengthEditor::MillimeterUnit),
+      m_imperialUnit(AbstractLengthEditor::InchUnit)
 {
 }
 
 MeasurementSystemPreferences::MeasurementSystemPreferences(AbstractLengthEditor::MetricUnit metUnit,
                                                            AbstractLengthEditor::ImperialUnit impUnit)
-  : m_metricUnit(metUnit),
-    m_imperialUnit(impUnit)
+    : m_metricUnit(metUnit),
+      m_imperialUnit(impUnit)
 {
 }
 
 AbstractLengthEditor::MetricUnit MeasurementSystemPreferences::metricUnit() const
 {
-  return m_metricUnit;
+    return m_metricUnit;
 }
 
 AbstractLengthEditor::ImperialUnit MeasurementSystemPreferences::imperialUnit() const
 {
-  return m_imperialUnit;
+    return m_imperialUnit;
 }
 
 void MeasurementSystemPreferences::setMetricUnit(AbstractLengthEditor::MetricUnit unit)
 {
-  m_metricUnit = unit;
+    m_metricUnit = unit;
 }
 
 void MeasurementSystemPreferences::setImperialUnit(AbstractLengthEditor::ImperialUnit unit)
 {
-  m_imperialUnit = unit;
+    m_imperialUnit = unit;
 }
 
 } // namespace qttools

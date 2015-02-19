@@ -46,7 +46,7 @@ namespace qttools {
 class QTTOOLS_CORE_EXPORT PluginsLoader_InstanceFilter
 {
 public:
-  virtual bool accepts(QPluginLoader* loader, QString* error = NULL) const;
+    virtual bool accepts(QPluginLoader* loader, QString* error = NULL) const;
 };
 
 } // namespace qttools

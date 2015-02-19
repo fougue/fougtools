@@ -52,42 +52,42 @@ namespace qttools {
 
 QString CompositeTypeHelper::toRow(const QList<QVariant>& values)
 {
-  QStringList valuesStr;
-  foreach (const QVariant& value, values) {
-    switch (value.type()) {
-    case QVariant::Char:
-    case QVariant::String:
-      valuesStr += QString("\"%1\"").arg(value.toString());
-      break;
-    case QVariant::ULongLong:
-    case QVariant::UInt:
-    case QVariant::Int:
-    case QVariant::LongLong:
-    case QVariant::Double:
-      valuesStr += QString("%1").arg(value.toString());
-      break;
-    case QVariant::Bool: {
-      valuesStr += (value.toBool() ? QLatin1String("TRUE") : QLatin1String("FALSE"));
-      break;
-    }
-    default: {
+    QStringList valuesStr;
+    foreach (const QVariant& value, values) {
+        switch (value.type()) {
+        case QVariant::Char:
+        case QVariant::String:
+            valuesStr += QString("\"%1\"").arg(value.toString());
+            break;
+        case QVariant::ULongLong:
+        case QVariant::UInt:
+        case QVariant::Int:
+        case QVariant::LongLong:
+        case QVariant::Double:
+            valuesStr += QString("%1").arg(value.toString());
+            break;
+        case QVariant::Bool: {
+            valuesStr += (value.toBool() ? QLatin1String("TRUE") : QLatin1String("FALSE"));
+            break;
+        }
+        default: {
 #ifndef QT_NO_DEBUG_OUTPUT
-      qWarning() << "CompositeTypeHelper::toRow() : type not supported"
-                 << " (value :" << value << ")";
+            qWarning() << "CompositeTypeHelper::toRow() : type not supported"
+                       << " (value :" << value << ")";
 #endif // !QT_NO_DEBUG_OUTPUT
-      break;
-    }
-    } // end switch()
-  } // end foreach()
-  return QString("(%1)").arg(valuesStr.join(QLatin1String(",")));
+            break;
+        }
+        } // end switch()
+    } // end foreach()
+    return QString("(%1)").arg(valuesStr.join(QLatin1String(",")));
 }
 
 QStringList CompositeTypeHelper::toValues(const QString& row)
 {
-  QString sqlRow = row;
-  sqlRow.replace(QRegExp(QLatin1String("^\\(")), QString());
-  sqlRow.replace(QRegExp(QLatin1String("\\)$")), QString());
-  return sqlRow.split(QLatin1Char(','));
+    QString sqlRow = row;
+    sqlRow.replace(QRegExp(QLatin1String("^\\(")), QString());
+    sqlRow.replace(QRegExp(QLatin1String("\\)$")), QString());
+    return sqlRow.split(QLatin1Char(','));
 }
 
 } // namespace qttools

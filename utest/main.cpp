@@ -4,6 +4,7 @@
 
 #include "test_cpptools.h"
 #include "test_qttools_core.h"
+#include "test_qttools_gui.h"
 #include "test_qttools_script.h"
 #include "test_occtools.h"
 
@@ -23,6 +24,7 @@ int main(int argc, char** argv)
     QList<QObject*> testObjects;
     testObjects << new TestCppTools
                 << new TestQtToolsCore
+                << new TestQtToolsGui
                 << new TestQtToolsScript
                 << new TestOccTools;
     int exitCode = 0;

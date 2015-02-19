@@ -1,14 +1,17 @@
 #include "test_cpptools.h"
 
+#include "../src/cpptools/basic_shared_pointer.h"
 #include "../src/cpptools/c_array_utils.h"
 #include "../src/cpptools/circular_iterator.h"
 #include "../src/cpptools/memory_utils.h"
-#include "../src/cpptools/scoped_value.h"
-#include "../src/cpptools/basic_shared_pointer.h"
+#include "../src/cpptools/pusher.h"
 #include "../src/cpptools/quantity.h"
+#include "../src/cpptools/scoped_value.h"
 
 #include <QtCore/QScopedPointer>
 #include <QtCore/QtDebug>
+
+#include <queue>
 
 // --
 // -- Functor<> tests
@@ -195,6 +198,18 @@ void TestCppTools::memoryUtils_test()
     QVERIFY(!oldIsDeletedTag);
     QVERIFY(dummy == NULL);
     QVERIFY(observer.isDummyDeleted);
+}
+
+void TestCppTools::pusher_test()
+{
+    std::queue<int> intq;
+    auto it = cpp::pusher(intq);
+    *it = 5; ++it;
+    *it = 10; ++it;
+
+    QCOMPARE(intq.front(), 5);
+    intq.pop();
+    QCOMPARE(intq.front(), 10);
 }
 
 

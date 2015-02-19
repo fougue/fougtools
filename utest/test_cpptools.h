@@ -14,6 +14,7 @@ private slots:
     void ScopedValue_test();
     void circularIterator_test();
     void memoryUtils_test();
+    void pusher_test();
 
     void Quantity_test();
     void Quantity_operators_test();

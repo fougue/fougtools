@@ -39,28 +39,22 @@
 #define CPPTOOLS_ABSTRACT_TREE_BFS_EXPLORER_H
 
 #include <queue>
+#include "pusher.h"
 
 namespace cpp {
 
-template<class NODE>
-class AbstractTreeBfsExplorer
+template<typename NODE, typename TREE_MODEL>
+class TreeBfsExplorer
 {
 public:
-    AbstractTreeBfsExplorer();
-    virtual ~AbstractTreeBfsExplorer();
+    TreeBfsExplorer();
 
-    void begin(NODE* node = static_cast<NODE*>(NULL));
+    void begin(NODE* node = nullptr);
     void goNext();
     bool atEnd() const;
 
     NODE* current() const;
     unsigned depth() const;
-
-protected:
-    virtual bool isCurrentDeeper(const NODE* previous) const = 0;
-    virtual void enqueueNodeChildren(NODE* parentNode) = 0;
-
-    void enqueueNode(NODE* node);
 
 private:
     NODE* m_current;
@@ -68,53 +62,64 @@ private:
     unsigned m_depth;
 };
 
+
 // --
 // -- Implementation
 // --
 
 /*!
- * \class AbstractTreeBfsExplorer
- * \brief Generic base class for the exploration of trees using BFS (breadth-first search) algorithm
+ * \class TreeBfsExplorer
+ * \brief Generic class for the exploration of trees using BFS (breadth-first search) algorithm
  *
- * \headerfile abstract_tree_bfs_explorer.h <cpptools/abstract_tree_bfs_explorer.h>
+ * TREE_MODEL type must be a model of TreeBfsConcept :
+ *
+ * \code
+ *     struct TreeBfsConcept
+ *     {
+ *         // Is current tree node deeper (depth value) than tree node previous ?
+ *         static bool isDeeper(const NODE* current, const NODE* previous);
+ *
+ *         // Enqueue all first-level (direct) children of tree node parentNode
+ *         // using output iterator
+ *         template<typename OUTPUT_ITERATOR>
+ *         static void enqueueChildren(OUTPUT_ITERATOR out, NODE* parentNode);
+ *     };
+ * \endcode
+ *
+ * \headerfile tree_bfs_explorer.h <cpptools/tree_bfs_explorer.h>
  * \ingroup cpptools
  */
 
-template<class NODE>
-AbstractTreeBfsExplorer<NODE>::AbstractTreeBfsExplorer()
-    : m_current(static_cast<NODE*>(NULL)),
+template<typename NODE, typename TREE_MODEL>
+TreeBfsExplorer<NODE, TREE_MODEL>::TreeBfsExplorer()
+    : m_current(nullptr),
       m_depth(0)
 {
 }
 
-template<class NODE>
-AbstractTreeBfsExplorer<NODE>::~AbstractTreeBfsExplorer()
-{
-}
-
 //! Prepares exploration to start from tree \p node
-template<class NODE>
-void AbstractTreeBfsExplorer<NODE>::begin(NODE* node)
+template<typename NODE, typename TREE_MODEL>
+void TreeBfsExplorer<NODE, TREE_MODEL>::begin(NODE* node)
 {
     while (!m_levelNodes.empty())
         m_levelNodes.pop();
-    m_current = static_cast<NODE*>(NULL);
+    m_current = nullptr;
     m_depth = 0;
 
-    if (node == static_cast<NODE*>(NULL))
-        this->enqueueNodeChildren(node);
+    if (node == nullptr)
+        TREE_MODEL::enqueueChildren(cpp::pusher(m_levelNodes), node);
     else
-        this->enqueueNode(node);
+        m_levelNodes.push(node);
 
     this->goNext();
 }
 
 //! Move exploration to the next tree node
-template<class NODE>
-void AbstractTreeBfsExplorer<NODE>::goNext()
+template<typename NODE, typename TREE_MODEL>
+void TreeBfsExplorer<NODE, TREE_MODEL>::goNext()
 {
     if (m_levelNodes.empty()) {
-        m_current = static_cast<NODE*>(NULL);
+        m_current = nullptr;
         return;
     }
 
@@ -123,55 +128,37 @@ void AbstractTreeBfsExplorer<NODE>::goNext()
     m_current = m_levelNodes.front();
     m_levelNodes.pop();
 
-    if (previous != static_cast<const NODE*>(NULL)
-            && m_current != static_cast<const NODE*>(NULL)
-            && this->isCurrentDeeper(previous))
+    if (previous != nullptr
+            && m_current != nullptr
+            && TREE_MODEL::isDeeper(m_current, previous))
     {
         ++m_depth;
     }
 
-    if (m_current != static_cast<const NODE*>(NULL))
-        this->enqueueNodeChildren(m_current);
+    if (m_current != nullptr)
+        TREE_MODEL::enqueueChildren(cpp::pusher(m_levelNodes), m_current);
 }
 
 //! Is exploration beyond the last tree node (ended) ?
-template<class NODE>
-bool AbstractTreeBfsExplorer<NODE>::atEnd() const
+template<typename NODE, typename TREE_MODEL>
+bool TreeBfsExplorer<NODE, TREE_MODEL>::atEnd() const
 {
-    return m_current == static_cast<const NODE*>(NULL);
+    return m_current == nullptr;
 }
 
 //! Current explored tree node
-template<class NODE>
-NODE* AbstractTreeBfsExplorer<NODE>::current() const
+template<typename NODE, typename TREE_MODEL>
+NODE* TreeBfsExplorer<NODE, TREE_MODEL>::current() const
 {
     return m_current;
 }
 
 //! Depth of the current tree node
-template<class NODE>
-unsigned AbstractTreeBfsExplorer<NODE>::depth() const
+template<typename NODE, typename TREE_MODEL>
+unsigned TreeBfsExplorer<NODE, TREE_MODEL>::depth() const
 {
     return m_depth;
 }
-
-template<class NODE>
-void AbstractTreeBfsExplorer<NODE>::enqueueNode(NODE* node)
-{
-    m_levelNodes.push(node);
-}
-
-/*!
- * \fn bool AbstractTreeBfsExplorer::isCurrentDeeper(const NODE*) const
- * \brief Is current tree node deeper (depth value) than tree node \p previous ?
- */
-
-/*!
- * \fn void AbstractTreeBfsExplorer::enqueueNodeChildren(NODE*)
- * \brief Enqueue all first-level (direct) children of tree node \p parentNode
- *
- * Use enqueueNode() to enqueue each child tree node.
- */
 
 } // namespace cpp
 

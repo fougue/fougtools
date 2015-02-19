@@ -40,22 +40,34 @@
 
 #include "gui.h"
 
-#include "../../cpptools/abstract_tree_bfs_explorer.h"
+#include "../../cpptools/tree_bfs_explorer.h"
+
+#include <QtGui/QStandardItem>
 class QStandardItemModel;
-class QStandardItem;
 
 namespace qttools {
 
-class QTTOOLS_GUI_EXPORT QStandardItemExplorer : public cpp::AbstractTreeBfsExplorer<QStandardItem>
+struct QStandardItemTreeBfsModel
+{
+    static bool isDeeper(const QStandardItem* current, const QStandardItem* previous);
+
+    template<typename OUT_ITERATOR>
+    static void enqueueChildren(OUT_ITERATOR out, QStandardItem* parentItem)
+    {
+        for (int row = 0; row < parentItem->rowCount(); ++row) {
+            *out = parentItem->child(row);
+            ++out;
+        }
+    }
+};
+
+class QTTOOLS_GUI_EXPORT QStandardItemExplorer :
+        public cpp::TreeBfsExplorer<QStandardItem, QStandardItemTreeBfsModel>
 {
 public:
     QStandardItemExplorer();
     QStandardItemExplorer(QStandardItem* rootItem);
     QStandardItemExplorer(QStandardItemModel* model);
-
-protected:
-    bool isCurrentDeeper(const QStandardItem* previous) const;
-    void enqueueNodeChildren(QStandardItem* parentItem);
 };
 
 } // namespace qttools

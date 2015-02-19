@@ -74,15 +74,10 @@ QStandardItemExplorer::QStandardItemExplorer(QStandardItemModel *model)
     this->begin(model->invisibleRootItem());
 }
 
-bool QStandardItemExplorer::isCurrentDeeper(const QStandardItem *previous) const
+bool QStandardItemTreeBfsModel::isDeeper(const QStandardItem *current,
+                                         const QStandardItem *previous)
 {
-    return this->current()->index().parent() != previous->index().parent();
-}
-
-void QStandardItemExplorer::enqueueNodeChildren(QStandardItem *parentItem)
-{
-    for (int row = 0; row < parentItem->rowCount(); ++row)
-        this->enqueueNode(parentItem->child(row));
+    return current->index().parent() != previous->index().parent();
 }
 
 } // namespace qttools

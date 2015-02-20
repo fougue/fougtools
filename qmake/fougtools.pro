@@ -9,6 +9,7 @@ SUBDIRS += qttools_core \
            qttools_script \
            qttools_sql
 
+qttools_task:SUBDIRS += qttools_task
 occtools:SUBDIRS += occtools
 build_utest:SUBDIRS += utest
 build_examples:SUBDIRS += examples

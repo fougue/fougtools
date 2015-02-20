@@ -23,3 +23,5 @@ CONFIG(debug, debug|release) {
     TARGET_SUFFIX =
 }
 CONFIG += build_all
+
+occtools:DEFINES += FOUGTOOLS_OCCTOOLS

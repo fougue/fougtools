@@ -6,9 +6,9 @@
 #include "test_qttools_core.h"
 #include "test_qttools_gui.h"
 #include "test_qttools_script.h"
-#ifdef FOUGTOOLS_OCCTOOLS
+#ifdef FOUGTOOLS_HAVE_OCCTOOLS
 # include "test_occtools.h"
-#endif // FOUGTOOLS_OCCTOOLS
+#endif // FOUGTOOLS_HAVE_OCCTOOLS
 
 #include <iostream>
 
@@ -28,9 +28,9 @@ int main(int argc, char** argv)
                 << new TestQtToolsCore
                 << new TestQtToolsGui
                 << new TestQtToolsScript;
-#ifdef FOUGTOOLS_OCCTOOLS
+#ifdef FOUGTOOLS_HAVE_OCCTOOLS
     testObjects << new TestOccTools;
-#endif // FOUGTOOLS_OCCTOOLS
+#endif // FOUGTOOLS_HAVE_OCCTOOLS
 
     int exitCode = 0;
     foreach (QObject* iTestObject, testObjects)

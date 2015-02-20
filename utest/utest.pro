@@ -46,6 +46,8 @@ SOURCES += \
     $$PWD/../src/qttools/script/calculator.cpp
 
 occtools {
+    DEFINES += FOUGTOOLS_HAVE_OCCTOOLS
+
     include(../src/occtools/occ.pri)
 
     HEADERS += \

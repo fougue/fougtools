@@ -1,3 +1,9 @@
+# Config tests
+load(configure)
+#CONFIG += recheck
+qtCompileTest(variadic_templates)
+#config_variadic_templates:message(Variadic templates supported)
+
 include(config.pri)
 
 TEMPLATE = subdirs
@@ -9,7 +15,12 @@ SUBDIRS += qttools_core \
            qttools_script \
            qttools_sql
 
-qttools_task:SUBDIRS += qttools_task
+qttools_task {
+    SUBDIRS += qttools_task
+} else {
+    warning(qttools_task cannot be built : requires support of C++11 variadic templates and Qt >= 5.4.0)
+}
+
 occtools:SUBDIRS += occtools
 build_utest:SUBDIRS += utest
 build_examples:SUBDIRS += examples

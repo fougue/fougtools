@@ -25,3 +25,11 @@ CONFIG(debug, debug|release) {
 CONFIG += build_all
 
 occtools:DEFINES += FOUGTOOLS_OCCTOOLS
+
+config_variadic_templates {
+    isEqual(QT_MAJOR_VERSION, 5) {
+        isEqual(QT_MINOR_VERSION, 4) {
+            CONFIG *= qttools_task
+        }
+    }
+}

@@ -1,5 +1,5 @@
-FougTools: Handy libraries for the C++ programmer  {#mainpage}
-=================================================
+FougTools: Handy C++ libraries
+==============================
 
 This is FougTools v0.6dev
 

@@ -66,7 +66,7 @@ VER_PAT = 0
 } else {
     _REV_NUM = norev
 }
-_FOUGTOOLS_VERSION = "$$VER_MAJ"."$$VER_MIN"."$$VER_PAT"dev-$$_REV_NUM
+_FOUGTOOLS_VERSION = "$$VER_MAJ"."$$VER_MIN"."$$VER_PAT"-$$_REV_NUM
 
 # Add custom "doc" target
 _CMD_SEP = ;

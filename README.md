@@ -1,7 +1,7 @@
 FougTools: Handy C++ libraries
 ==============================
 
-This is FougTools v0.6dev
+This is FougTools v0.6
 
 FougTools is a collection of utility libraries for the C++ language, Qt and
 Open Cascade toolkits.

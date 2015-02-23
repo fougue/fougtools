@@ -15,7 +15,7 @@ Building FougTools
 
 Create a file named `_local_config.pri` in the folder where FougTools will
 be built and define the following variables, depending on your needs:
-
+~~~~~~~~~~~~~{.sh}
     # Everything will be installed here
     PREFIX_DIR = /opt/lib/fougtools/build
 
@@ -31,11 +31,13 @@ be built and define the following variables, depending on your needs:
 
     # If you want to build unit tests and examples
     CONFIG += build_utest  build_exmaples
+~~~~~~~~~~~~~
 
 Or use Ruby configure script `qmake/configure.rb`.
 It will generate the `_local_config.pri` file for you, see help with:
-
+~~~~~~~~~~~~~{.sh}
     ruby $FOUGTOOLS/qmake/configure.rb -h
+~~~~~~~~~~~~~
 
 Note that on Windows, qmake complains about deprecated support of
 backslash '\' characters.
@@ -43,10 +45,11 @@ So you may have to escape backslashes like `C:\\path\\to\\opencascade`
 or simply use Unix separators instead `C:/path/to/opencascade`
 
 Once configuration is done, then type: 
-
+~~~~~~~~~~~~~{.sh}
     qmake -r $FOUGTOOLS/qmake/fougtools.pro
     (n)make
     (n)make install
+~~~~~~~~~~~~~
 
 
 Coding style
@@ -71,7 +74,7 @@ With these exceptions:
          Private* const d;
        };
 ~~~~~~~~~~~~~
-       This has the advantage to not have to forward declare the Private class outside Foo
+  This has the advantage to not have to forward declare the Private class outside Foo
 
 
 How to report a bug

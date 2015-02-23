@@ -26,7 +26,7 @@ HEADERS += \
     \
     $$PWD/../src/qttools/gui/qstandard_item_explorer.h \
     \
-    $$PWD/../src/qttools/script/calculator.h
+    $$PWD/../src/qttools/script/calculator.h \
 
 SOURCES += \
     $$PWD/main.cpp \
@@ -62,4 +62,13 @@ occtools {
           -lTKIGES -lTKMath -lTKPrim -lTKService -lTKShHealing \
           -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -lTKSTEP209 -lTKSTL -lTKTopAlgo \
           -lTKXSBase
-}
+} # occtools
+
+qttools_task {
+    DEFINES += FOUGTOOLS_HAVE_QTTOOLS_TASK
+
+    HEADERS += $$PWD/test_qttools_task.h
+    SOURCES += $$PWD/test_qttools_task.cpp
+
+    include(../src/qttools/Task/qttools_task.pri)
+} # qttools_task

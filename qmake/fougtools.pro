@@ -59,7 +59,7 @@ INSTALLS += scripts
 
 # Automatic generation of version infos
 VER_MAJ = 0
-VER_MIN = 6
+VER_MIN = 7
 VER_PAT = 0
 !isActiveConfig(no_ruby) {
     _REV_NUM = $$system(ruby ../scripts/rev_num.rb  --rcs git  --workdir $$PWD)

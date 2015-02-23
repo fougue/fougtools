@@ -18,7 +18,7 @@ SUBDIRS += qttools_core \
 qttools_task {
     SUBDIRS += qttools_task
 } else {
-    warning(qttools_task cannot be built : requires support of C++11 variadic templates and Qt >= 5.4.0)
+    warning(qttools_task will not be built : requires support of C++11 variadic templates and Qt >= 5.4.0)
 }
 
 occtools:SUBDIRS += occtools
@@ -28,8 +28,7 @@ build_examples:SUBDIRS += examples
 HEADERS += ../src/fougtools_global.h
 OTHER_FILES += configure.rb \
                ../README.md \
-               ../doc/Doxyfile \
-               ../doc/doxy.cpp
+               ../doc/Doxyfile
 
 # INSTALLS for globals
 globals_qmake.path  = $$PREFIX_DIR/qmake

@@ -1,9 +1,9 @@
-Introduction
-============
+FougTools: Handy libraries for the C++ programmer  {#mainpage}
+=================================================
 
 This is FougTools v0.6dev
 
-FougTools is a collection of utility tools for the C++ language, Qt and 
+FougTools is a collection of utility libraries for the C++ language, Qt and
 Open Cascade toolkits.
 
 Check doxygen generated documentation at:
@@ -16,15 +16,21 @@ Building FougTools
 Create a file named `_local_config.pri` in the folder where FougTools will
 be built and define the following variables, depending on your needs:
 
-    PREFIX_DIR = /opt/lib/fougtools/build  # Everything will be installed here
-    CONFIG += occtools                     # If you want to build occtools (optional)
+    # Everything will be installed here
+    PREFIX_DIR = /opt/lib/fougtools/build
+
+    # If you want to build occtools (optional)
+    CONFIG += occtools
     occtools:CONFIG(debug, debug|release) {
-        CASCADE_ROOT = /opt/lib/occ/build  # Path to build dir of OpenCascade(debug)
+        # Path to build directory of OpenCascade(debug)
+        CASCADE_ROOT = /opt/lib/opencascade/build
     } else {
-        CASCADE_ROOT = /opt/lib/occ/build  # Path to build dir of OpenCascade(release)
+        # Path to build directory of OpenCascade(release)
+        CASCADE_ROOT = /opt/lib/opencascade/build
     }
-    CONFIG += build_utest     # If you want to build unit tests
-    CONFIG += build_exmaples  # If you want to build examples
+
+    # If you want to build unit tests and examples
+    CONFIG += build_utest  build_exmaples
 
 Or use Ruby configure script `qmake/configure.rb`.
 It will generate the `_local_config.pri` file for you, see help with:
@@ -41,6 +47,31 @@ Once configuration is done, then type:
     qmake -r $FOUGTOOLS/qmake/fougtools.pro
     (n)make
     (n)make install
+
+
+Coding style
+============
+
+The coding style is borrowed from Qt-Creator:
+  http://doc-snapshot.qt-project.org/qtcreator-extending/coding-style.html
+
+With these exceptions:
+
+  * Formatting/Capitalizing Identifiers: namespace names begin with a lower case letter
+  * Use this pattern for pimpl class:
+~~~~~~~~~~~~~{.cpp}
+       class Foo
+       {
+       public:
+         Foo();
+         // API ...
+
+       private:
+         class Private;
+         Private* const d;
+       };
+~~~~~~~~~~~~~
+       This has the advantage to not have to forward declare the Private class outside Foo
 
 
 How to report a bug

@@ -1,4 +1,4 @@
-INTRODUCTION
+Introduction
 ============
 
 This is FougTools v0.6dev
@@ -10,11 +10,12 @@ Check doxygen generated documentation at:
     http://www.fougsys.fr/projects/fougtools_doc
 
 
-BUILDING FougTools
+Building FougTools
 ==================
 
 Create a file named `_local_config.pri` in the folder where FougTools will
 be built and define the following variables, depending on your needs:
+
     PREFIX_DIR = /opt/lib/fougtools/build  # Everything will be installed here
     CONFIG += occtools                     # If you want to build occtools (optional)
     occtools:CONFIG(debug, debug|release) {
@@ -27,6 +28,7 @@ be built and define the following variables, depending on your needs:
 
 Or use Ruby configure script `qmake/configure.rb`.
 It will generate the `_local_config.pri` file for you, see help with:
+
     ruby $FOUGTOOLS/qmake/configure.rb -h
 
 Note that on Windows, qmake complains about deprecated support of
@@ -35,12 +37,13 @@ So you may have to escape backslashes like `C:\\path\\to\\opencascade`
 or simply use Unix separators instead `C:/path/to/opencascade`
 
 Once configuration is done, then type: 
+
     qmake -r $FOUGTOOLS/qmake/fougtools.pro
     (n)make
     (n)make install
 
 
-HOW TO REPORT A BUG
+How to report a bug
 ===================
 
 If you think you have found a bug in FougTools, we would like to hear
@@ -59,7 +62,7 @@ If the problem you are reporting is only visible at run-time, try to
 create a small test program that shows the problem when run.
 
 
-LICENSE
+License
 =======
 
 This software is governed by the CeCILL-C license under French law and

@@ -27,7 +27,7 @@ build_examples:SUBDIRS += examples
 
 HEADERS += ../src/fougtools_global.h
 OTHER_FILES += configure.rb \
-               ../README \
+               ../README.md \
                ../doc/Doxyfile \
                ../doc/doxy.cpp
 

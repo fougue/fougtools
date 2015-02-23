@@ -17,16 +17,16 @@ Create a file named `_local_config.pri` in the folder where FougTools will
 be built and define the following variables, depending on your needs:
 ~~~~~~~~~~~~~{.sh}
     # Everything will be installed here
-    PREFIX_DIR = /opt/lib/fougtools/build
+    PREFIX_DIR = /opt/lib/fougtools/install
 
     # If you want to build occtools (optional)
     CONFIG += occtools
     occtools:CONFIG(debug, debug|release) {
         # Path to build directory of OpenCascade(debug)
-        CASCADE_ROOT = /opt/lib/opencascade/build
+        CASCADE_ROOT = /opt/lib/opencascade/debug/install
     } else {
         # Path to build directory of OpenCascade(release)
-        CASCADE_ROOT = /opt/lib/opencascade/build
+        CASCADE_ROOT = /opt/lib/opencascade/release/install
     }
 
     # If you want to build unit tests and examples

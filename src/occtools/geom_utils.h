@@ -35,20 +35,31 @@
 **
 ****************************************************************************/
 
-#include "kernel_tools.h"
+#pragma once
+
+#include "occtools.h"
+
+#include <Handle_Geom_Curve.hxx>
+#include <Handle_Geom_Surface.hxx>
+#include <gp_Pnt2d.hxx>
+#include <gp_Dir2d.hxx>
+#include <gp_Dir.hxx>
+#include <gp_Pnt.hxx>
+#include <gp_Vec.hxx>
 
 namespace occ {
 
-/*! \class KernelTools
- *  \brief Collection of tools for the Kernel toolkit
- *
- *  \headerfile kernel_tools.h <occtools/kernel_tools.h>
- *  \ingroup occtools
- */
-
-Quantity_Color KernelTools::rgbColor(int red, int blue, int green)
+class OCCTOOLS_EXPORT GeomUtils
 {
-    return Quantity_Color(red / 255., blue / 255., green / 255., Quantity_TOC_RGB);
-}
+public:
+    static gp_Pnt geomCurveD0(const Handle_Geom_Curve& curve, Standard_Real u);
+    static Standard_Real curveLength(const Handle_Geom_Curve& curve);
+    static Standard_Real curveLengthBetweenParams(const Handle_Geom_Curve& curve,
+                                                  Standard_Real firstU,
+                                                  Standard_Real lastU);
+    static gp_Vec normalToSurfaceAtUV(const Handle_Geom_Surface& surface,
+                                      Standard_Real u,
+                                      Standard_Real v);
+};
 
 } // namespace occ

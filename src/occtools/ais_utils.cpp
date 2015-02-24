@@ -35,20 +35,34 @@
 **
 ****************************************************************************/
 
-#pragma once
+#include "ais_utils.h"
 
-#include "occtools.h"
-
-#include <Handle_AIS_InteractiveContext.hxx>
-#include <Handle_AIS_InteractiveObject.hxx>
+#include <AIS_InteractiveContext.hxx>
+#include <AIS_InteractiveObject.hxx>
+#include <SelectMgr_SelectionManager.hxx>
 
 namespace occ {
 
-class OCCTOOLS_EXPORT AisTools
+/*! \class AisUtils
+ *  \brief Collection of tools for the AIS package
+ *
+ *  \headerfile ais_utils.h <occtools/ais_utils.h>
+ *  \ingroup occtools
+ */
+
+void AisUtils::eraseObjectFromContext(const Handle_AIS_InteractiveObject &object,
+                                      const Handle_AIS_InteractiveContext &context)
 {
-public:
-    static void eraseObjectFromContext(const Handle_AIS_InteractiveObject& object,
-                                       const Handle_AIS_InteractiveContext& context);
-};
+    if (!object.IsNull()) {
+        context->Erase(object, Standard_False);
+        context->Remove(object, Standard_False);
+        context->Clear(object, Standard_False); // Remove() can be used too
+        context->SelectionManager()->Remove(object);
+
+        Handle_AIS_InteractiveObject objectHCopy = object;
+        while (!objectHCopy.IsNull())
+            objectHCopy.Nullify();
+    }
+}
 
 } // namespace occ

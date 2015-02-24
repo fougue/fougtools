@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "geom_tools.h"
+#include "geom_utils.h"
 
 #include <Geom_Curve.hxx>
 #include <Geom_Surface.hxx>
@@ -44,21 +44,21 @@
 
 namespace occ {
 
-/*! \class GeomTools
+/*! \class GeomUtils
  *  \brief Collection of tools for the Geom package
  *
- *  \headerfile geom_tools.h <occtools/geom_tools.h>
+ *  \headerfile geom_utils.h <occtools/geom_utils.h>
  *  \ingroup occtools
  */
 
-gp_Pnt GeomTools::geomCurveD0(const Handle_Geom_Curve& curve, Standard_Real u)
+gp_Pnt GeomUtils::geomCurveD0(const Handle_Geom_Curve& curve, Standard_Real u)
 {
     gp_Pnt pnt;
     curve->D0(u, pnt);
     return pnt;
 }
 
-Standard_Real GeomTools::curveLength(const Handle_Geom_Curve& curve)
+Standard_Real GeomUtils::curveLength(const Handle_Geom_Curve& curve)
 {
     if (!curve.IsNull()) {
         GeomAdaptor_Curve adaptor(curve);
@@ -67,7 +67,7 @@ Standard_Real GeomTools::curveLength(const Handle_Geom_Curve& curve)
     return 0;
 }
 
-Standard_Real GeomTools::curveLengthBetweenParams(const Handle_Geom_Curve& curve,
+Standard_Real GeomUtils::curveLengthBetweenParams(const Handle_Geom_Curve& curve,
                                                   Standard_Real firstU,
                                                   Standard_Real lastU)
 {
@@ -78,7 +78,7 @@ Standard_Real GeomTools::curveLengthBetweenParams(const Handle_Geom_Curve& curve
     return 0;
 }
 
-gp_Vec GeomTools::normalToSurfaceAtUV(const Handle_Geom_Surface& surface,
+gp_Vec GeomUtils::normalToSurfaceAtUV(const Handle_Geom_Surface& surface,
                                       Standard_Real u,
                                       Standard_Real v)
 {

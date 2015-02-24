@@ -37,7 +37,7 @@
 
 #include "point_on_faces_projector.h"
 
-#include "math_tools.h"
+#include "math_utils.h"
 
 #include <BRep_Tool.hxx>
 #include <Bnd_Box.hxx>
@@ -285,10 +285,8 @@ PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& poi
         int n1, n2, n3;
         t.Get(n1, n2, n3);
         if (minNodeId == n1 || minNodeId == n2 || minNodeId == n3) {
-            const std::pair<gp_Pnt, bool> projPntInfo = MathTools::projectPointOnTriangle(point,
-                                                                                          nodes(t(1)),
-                                                                                          nodes(t(2)),
-                                                                                          nodes(t(3)));
+            const auto projPntInfo =
+                    MathUtils::projectPointOnTriangle(point, nodes(t(1)), nodes(t(2)), nodes(t(3)));
             const double dist = point.SquareDistance(projPntInfo.first);
             if (dist < minDist) {
                 minTriangle = &t;
@@ -301,7 +299,7 @@ PointOnFacesProjector::Result PointOnFacesProjector::projected(const gp_Pnt& poi
     if (minTriangle != NULL) {
         const TopoDS_Face* face = d->triangulationToFace(triangulation);
         const TopAbs_Orientation faceOrientation = face != NULL ? face->Orientation() : TopAbs_FORWARD;
-        const gp_Vec triNormal = occ::MathTools::triangleNormal(nodes, *minTriangle, faceOrientation);
+        const gp_Vec triNormal = occ::MathUtils::triangleNormal(nodes, *minTriangle, faceOrientation);
         return PointOnFacesProjector::Result(face != NULL ? *face : TopoDS_Face(),
                                              projectedPnt,
                                              triNormal);

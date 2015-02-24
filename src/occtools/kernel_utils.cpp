@@ -35,34 +35,20 @@
 **
 ****************************************************************************/
 
-#include "ais_tools.h"
-
-#include <AIS_InteractiveContext.hxx>
-#include <AIS_InteractiveObject.hxx>
-#include <SelectMgr_SelectionManager.hxx>
+#include "kernel_utils.h"
 
 namespace occ {
 
-/*! \class AisTools
- *  \brief Collection of tools for the AIS package
+/*! \class KernelUtils
+ *  \brief Collection of tools for the Kernel toolkit
  *
- *  \headerfile ais_tools.h <occtools/ais_tools.h>
+ *  \headerfile kernel_utils.h <occtools/kernel_utils.h>
  *  \ingroup occtools
  */
 
-void AisTools::eraseObjectFromContext(const Handle_AIS_InteractiveObject &object,
-                                      const Handle_AIS_InteractiveContext &context)
+Quantity_Color KernelUtils::rgbColor(int red, int blue, int green)
 {
-    if (!object.IsNull()) {
-        context->Erase(object, Standard_False);
-        context->Remove(object, Standard_False);
-        context->Clear(object, Standard_False); // Remove() can be used too
-        context->SelectionManager()->Remove(object);
-
-        Handle_AIS_InteractiveObject objectHCopy = object;
-        while (!objectHCopy.IsNull())
-            objectHCopy.Nullify();
-    }
+    return Quantity_Color(red / 255., blue / 255., green / 255., Quantity_TOC_RGB);
 }
 
 } // namespace occ

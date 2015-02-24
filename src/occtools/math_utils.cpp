@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "math_tools.h"
+#include "math_utils.h"
 
 #include <algorithm>
 #include <cassert>
@@ -46,21 +46,21 @@
 
 namespace occ {
 
-/*! \class MathTools
+/*! \class MathUtils
  *  \brief Collection of tools for the Math toolkit
  *
- *  \headerfile math_tools.h <occtools/math_tools.h>
+ *  \headerfile math_utils.h <occtools/math_utils.h>
  *  \ingroup occtools
  */
 
-gp_Pnt MathTools::projectPointOnPlane(const gp_Pnt &p, const gp_Vec &n)
+gp_Pnt MathUtils::projectPointOnPlane(const gp_Pnt &p, const gp_Vec &n)
 {
     const gp_Vec pVec(p.X(), p.Y(), p.Z());
     const Standard_Real dotVN = pVec.Dot(n);
     return p.Translated(-dotVN * n);
 }
 
-std::pair<gp_Pnt, bool> MathTools::projectPointOnTriangle(const gp_Pnt &p,
+std::pair<gp_Pnt, bool> MathUtils::projectPointOnTriangle(const gp_Pnt &p,
                                                           const gp_Pnt &v0,
                                                           const gp_Pnt &v1,
                                                           const gp_Pnt &v2)
@@ -149,23 +149,23 @@ std::pair<gp_Pnt, bool> MathTools::projectPointOnTriangle(const gp_Pnt &p,
                           region == 0);
 }
 
-Standard_Real MathTools::euclideanNorm(const gp_Vec &vec)
+Standard_Real MathUtils::euclideanNorm(const gp_Vec &vec)
 {
-    return std::sqrt(MathTools::squaredEuclideanNorm(vec));
+    return std::sqrt(MathUtils::squaredEuclideanNorm(vec));
 }
 
-Standard_Real MathTools::squaredEuclideanNorm(const gp_Vec &vec)
+Standard_Real MathUtils::squaredEuclideanNorm(const gp_Vec &vec)
 {
     return vec.X() * vec.X() + vec.Y() * vec.Y() + vec.Z() * vec.Z();
 }
 
-Standard_Real MathTools::manhattanNorm(const gp_Vec &vec)
+Standard_Real MathUtils::manhattanNorm(const gp_Vec &vec)
 {
     return std::fabs(vec.X()) + std::fabs(vec.Y()) + std::fabs(vec.Z());
 }
 
 /*! \brief Returns the component of \p vec having the maximum absolute value */
-Standard_Real MathTools::maximumNorm(const gp_Vec &vec)
+Standard_Real MathUtils::maximumNorm(const gp_Vec &vec)
 {
     return std::max(std::fabs(vec.X()), std::max(std::fabs(vec.Y()), std::fabs(vec.Z())));
 }
@@ -178,7 +178,7 @@ Standard_Real MathTools::maximumNorm(const gp_Vec &vec)
  *  \param triangle  Triangle whose normal has to be computed
  *  \param ori  Orientation of the triangle (generally inherited from the triangulated face)
  */
-gp_Vec MathTools::triangleNormal(const TColgp_Array1OfPnt &nodes,
+gp_Vec MathUtils::triangleNormal(const TColgp_Array1OfPnt &nodes,
                                  const Poly_Triangle &triangle,
                                  TopAbs_Orientation ori)
 {
@@ -205,19 +205,19 @@ gp_Vec MathTools::triangleNormal(const TColgp_Array1OfPnt &nodes,
 
 } // namespace occ
 
-//! \relates MathTools
+//! \relates MathUtils
 gp_Vec operator-(const gp_Pnt& p1, const gp_Pnt& p2)
 {
     return gp_Vec(p2.X() - p1.X(), p2.Y() - p1.Y(), p2.Z() - p1.Z());
 }
 
-//! \relates MathTools
+//! \relates MathUtils
 gp_Pnt operator-(const gp_Pnt& p, const gp_Vec& v)
 {
     return gp_Pnt(p.X() - v.X(), p.Y() - v.Y(), p.Z() - v.Z());
 }
 
-//! \relates MathTools
+//! \relates MathUtils
 gp_Pnt operator+(const gp_Pnt& p, const gp_Vec& v)
 {
     return gp_Pnt(p.X() + v.X(), p.Y() + v.Y(), p.Z() + v.Z());

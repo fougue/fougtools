@@ -47,12 +47,12 @@ HEADERS += $$PWD/io.h \
            $$PWD/qt_view.h \
            $$PWD/qt_view_controller.h \
            $$PWD/qt_occ.h \
-           $$PWD/topods_tools.h \
-           $$PWD/geom_tools.h \
            $$PWD/down_cast.h \
-           $$PWD/ais_tools.h \
-           $$PWD/math_tools.h \
-           $$PWD/kernel_tools.h
+    $$PWD/ais_utils.h \
+    $$PWD/geom_utils.h \
+    $$PWD/kernel_utils.h \
+    $$PWD/math_utils.h \
+    $$PWD/topods_utils.h
 
 SOURCES += \
            $$PWD/io.cpp \
@@ -63,11 +63,11 @@ SOURCES += \
            $$PWD/qt_view.cpp \
            $$PWD/qt_view_controller.cpp \
            $$PWD/qt_occ.cpp \
-           $$PWD/topods_tools.cpp \
-           $$PWD/geom_tools.cpp \
-           $$PWD/ais_tools.cpp \
-           $$PWD/math_tools.cpp \
-           $$PWD/kernel_tools.cpp
+    $$PWD/ais_utils.cpp \
+    $$PWD/geom_utils.cpp \
+    $$PWD/kernel_utils.cpp \
+    $$PWD/math_utils.cpp \
+    $$PWD/topods_utils.cpp
 
 LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
         -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim -lTKService -lTKShHealing \

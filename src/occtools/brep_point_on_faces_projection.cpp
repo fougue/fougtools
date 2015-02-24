@@ -37,8 +37,8 @@
 
 #include "brep_point_on_faces_projection.h"
 
-#include "math_tools.h"
-#include "topods_tools.h"
+#include "math_utils.h"
+#include "topods_utils.h"
 
 #include <BRep_Tool.hxx>
 #include <GeomAPI_ProjectPointOnSurf.hxx>
@@ -193,7 +193,7 @@ gp_Vec BRepPointOnFacesProjection::solutionNormal() const
     if (this->isDone()) {
         double u, v;
         d->m_solProjector.first->LowerDistanceParameters(u, v);
-        return occ::TopoDsTools::normalToFaceAtUV(d->m_solProjector.second, u, v);
+        return occ::TopoDsUtils::normalToFaceAtUV(d->m_solProjector.second, u, v);
     }
     return gp_Vec(0., 0., 1.);
 }

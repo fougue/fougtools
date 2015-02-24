@@ -47,7 +47,7 @@ class TColgp_Array1OfPnt;
 
 namespace occ {
 
-class OCCTOOLS_EXPORT MathTools
+class OCCTOOLS_EXPORT MathUtils
 {
 public:
     static gp_Pnt projectPointOnPlane(const gp_Pnt& p, const gp_Vec& n);
@@ -101,13 +101,13 @@ TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d);
 //--
 
 template<typename NORM>
-bool occ::MathTools::isNull(const gp_Vec& vec, const NORM& norm)
+bool occ::MathUtils::isNull(const gp_Vec& vec, const NORM& norm)
 {
     return norm(vec) <= 0.000000000001;
 }
 
 template<typename OCC_PNT_VEC, typename TEXT_STREAM>
-TEXT_STREAM &occ::MathTools::printOccPntVec(TEXT_STREAM &ts, const OCC_PNT_VEC &v)
+TEXT_STREAM &occ::MathUtils::printOccPntVec(TEXT_STREAM &ts, const OCC_PNT_VEC &v)
 {
     return ts << "(" << v.X() << ", " << v.Y() << ", " << v.Z() << ")";
 }
@@ -116,19 +116,19 @@ TEXT_STREAM &occ::MathTools::printOccPntVec(TEXT_STREAM &ts, const OCC_PNT_VEC &
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Pnt& p)
 {
-    return occ::MathTools::printOccPntVec(ts, p);
+    return occ::MathUtils::printOccPntVec(ts, p);
 }
 
 //! Print (dump) in the text stream \p ts the vector \p v
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Vec& v)
 {
-    return occ::MathTools::printOccPntVec(ts, v);
+    return occ::MathUtils::printOccPntVec(ts, v);
 }
 
 //! Print (dump) in the text stream \p ts the direction \p d
 template<typename TEXT_STREAM>
 TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d)
 {
-    return occ::MathTools::printOccPntVec(ts, d);
+    return occ::MathUtils::printOccPntVec(ts, d);
 }

@@ -50,7 +50,7 @@
 
 namespace occ {
 
-class OCCTOOLS_EXPORT TopoDsTools
+class OCCTOOLS_EXPORT TopoDsUtils
 {
 public:
     template<typename FWD_ITERATOR>
@@ -85,7 +85,7 @@ private:
  *  \note The value type of \p iBegin and \p iEnd (accessed with operator*) must be TopoDS_Shape
  */
 template<typename FWD_ITERATOR>
-TopoDS_Compound TopoDsTools::makeCompoundFromShapeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
+TopoDS_Compound TopoDsUtils::makeCompoundFromShapeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
 {
     TopoDS_Compound cmpd;
     BRep_Builder builder;
@@ -101,9 +101,9 @@ TopoDS_Compound TopoDsTools::makeCompoundFromShapeRange(FWD_ITERATOR iBegin, FWD
 
 //! Same as occ::makeCompoundFromShapeRange(cnter.begin(), cnter.end())
 template<typename CONTAINER>
-TopoDS_Compound TopoDsTools::makeCompoundFromShapeContainer(CONTAINER cnter)
+TopoDS_Compound TopoDsUtils::makeCompoundFromShapeContainer(CONTAINER cnter)
 {
-    return TopoDsTools::makeCompoundFromShapeRange(cnter.begin(), cnter.end());
+    return TopoDsUtils::makeCompoundFromShapeRange(cnter.begin(), cnter.end());
 }
 
 /*! \brief Build a topologic wire of edges denoted between the begin and end iterators \p iBegin
@@ -112,14 +112,14 @@ TopoDS_Compound TopoDsTools::makeCompoundFromShapeContainer(CONTAINER cnter)
  * \note The value type of \p iBegin and \p iEnd (accessed with operator*) must be TopoDS_Edge
  */
 template<typename FWD_ITERATOR>
-TopoDS_Wire TopoDsTools::makeWireFromEdgeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
+TopoDS_Wire TopoDsUtils::makeWireFromEdgeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
 {
-    Handle_ShapeExtend_WireData wireData = TopoDsTools::createShapeExtendWireData();
+    Handle_ShapeExtend_WireData wireData = TopoDsUtils::createShapeExtendWireData();
     while (iBegin != iEnd) {
-        TopoDsTools::addEdge(wireData, *iBegin);
+        TopoDsUtils::addEdge(wireData, *iBegin);
         ++iBegin;
     }
-    return TopoDsTools::fixedWire(wireData);
+    return TopoDsUtils::fixedWire(wireData);
 }
 
 } // namespace occ

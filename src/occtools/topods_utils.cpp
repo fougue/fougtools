@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "topods_tools.h"
+#include "topods_utils.h"
 
 #include <BRepAdaptor_Surface.hxx>
 #include <BRepLProp_SLProps.hxx>
@@ -48,10 +48,10 @@
 
 namespace occ {
 
-/*! \class TopoDsTools
+/*! \class TopoDsUtils
  *  \brief Collection of tools for the TopoDS package
  *
- *  \headerfile topods_tools.h <occtools/topods_tools.h>
+ *  \headerfile topods_utils.h <occtools/topods_utils.h>
  *  \ingroup occtools
  */
 
@@ -60,7 +60,7 @@ namespace occ {
  *  \note This function is slow if called many successive times on the same face (because it
  *        constructs internally a BRepLProp_SLProps and BRepAdaptor_Surface instance)
  */
-gp_Vec TopoDsTools::normalToFaceAtUV(const TopoDS_Face &face, Standard_Real u, Standard_Real v)
+gp_Vec TopoDsUtils::normalToFaceAtUV(const TopoDS_Face &face, Standard_Real u, Standard_Real v)
 {
     BRepLProp_SLProps localSurfaceProps(1, 1e-6);
     localSurfaceProps.SetSurface(BRepAdaptor_Surface(face));
@@ -79,7 +79,7 @@ gp_Vec TopoDsTools::normalToFaceAtUV(const TopoDS_Face &face, Standard_Real u, S
  *
  *  Uses BRepTools::Write() internally
  */
-std::string TopoDsTools::shapeToString(const TopoDS_Shape &shape)
+std::string TopoDsUtils::shapeToString(const TopoDS_Shape &shape)
 {
     std::ostringstream oss(std::ios_base::out);
     BRepTools::Write(shape, oss);
@@ -91,7 +91,7 @@ std::string TopoDsTools::shapeToString(const TopoDS_Shape &shape)
  *
  *  Uses BRepTools::Read() internally
  */
-TopoDS_Shape TopoDsTools::shapeFromString(const std::string &str)
+TopoDS_Shape TopoDsUtils::shapeFromString(const std::string &str)
 {
     TopoDS_Shape shape;
     BRep_Builder brepBuilder;
@@ -101,17 +101,17 @@ TopoDS_Shape TopoDsTools::shapeFromString(const std::string &str)
     return shape;
 }
 
-Handle_ShapeExtend_WireData TopoDsTools::createShapeExtendWireData()
+Handle_ShapeExtend_WireData TopoDsUtils::createShapeExtendWireData()
 {
     return new ShapeExtend_WireData;
 }
 
-void TopoDsTools::addEdge(const Handle_ShapeExtend_WireData &wireData, const TopoDS_Edge &edge)
+void TopoDsUtils::addEdge(const Handle_ShapeExtend_WireData &wireData, const TopoDS_Edge &edge)
 {
     wireData->Add(edge);
 }
 
-TopoDS_Wire TopoDsTools::fixedWire(const Handle_ShapeExtend_WireData &wireData)
+TopoDS_Wire TopoDsUtils::fixedWire(const Handle_ShapeExtend_WireData &wireData)
 {
     ShapeFix_Wire fix;
     fix.Load(wireData);

@@ -39,27 +39,14 @@
 
 #include "occtools.h"
 
-#include <Handle_Geom_Curve.hxx>
-#include <Handle_Geom_Surface.hxx>
-#include <gp_Pnt2d.hxx>
-#include <gp_Dir2d.hxx>
-#include <gp_Dir.hxx>
-#include <gp_Pnt.hxx>
-#include <gp_Vec.hxx>
+#include <Quantity_Color.hxx>
 
 namespace occ {
 
-class OCCTOOLS_EXPORT GeomTools
+class OCCTOOLS_EXPORT KernelUtils
 {
 public:
-    static gp_Pnt geomCurveD0(const Handle_Geom_Curve& curve, Standard_Real u);
-    static Standard_Real curveLength(const Handle_Geom_Curve& curve);
-    static Standard_Real curveLengthBetweenParams(const Handle_Geom_Curve& curve,
-                                                  Standard_Real firstU,
-                                                  Standard_Real lastU);
-    static gp_Vec normalToSurfaceAtUV(const Handle_Geom_Surface& surface,
-                                      Standard_Real u,
-                                      Standard_Real v);
+    static Quantity_Color rgbColor(int red, int blue, int green);
 };
 
 } // namespace occ

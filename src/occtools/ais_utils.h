@@ -39,14 +39,16 @@
 
 #include "occtools.h"
 
-#include <Quantity_Color.hxx>
+#include <Handle_AIS_InteractiveContext.hxx>
+#include <Handle_AIS_InteractiveObject.hxx>
 
 namespace occ {
 
-class OCCTOOLS_EXPORT KernelTools
+class OCCTOOLS_EXPORT AisUtils
 {
 public:
-    static Quantity_Color rgbColor(int red, int blue, int green);
+    static void eraseObjectFromContext(const Handle_AIS_InteractiveObject& object,
+                                       const Handle_AIS_InteractiveContext& context);
 };
 
 } // namespace occ

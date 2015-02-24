@@ -7,6 +7,7 @@ namespace Task {
 
 Runnable::~Runnable()
 {
+    delete m_taskRunner;
 }
 
 quint64 Runnable::taskId() const

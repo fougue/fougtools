@@ -8,7 +8,8 @@ HEADERS += \
     $$PWD/Manager.h \
     $$PWD/Progress.h \
     $$PWD/Runnable.h \
-    $$PWD/RunnableSignals.h
+    $$PWD/RunnableSignals.h \
+    $$PWD/StdAsyncRunner.h
 
 SOURCES += \
     $$PWD/QThreadPoolRunner.cpp \
@@ -18,4 +19,5 @@ SOURCES += \
     $$PWD/Manager.cpp \
     $$PWD/Progress.cpp \
     $$PWD/Runnable.cpp \
-    $$PWD/RunnableSignals.cpp
+    $$PWD/RunnableSignals.cpp \
+    $$PWD/StdAsyncRunner.cpp

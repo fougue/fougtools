@@ -57,11 +57,20 @@ def asQMakePath(file)
     end
 end
 
+def addQMakeConfigFlag(file, flagOn, flagName)
+    if flagOn then
+        file.puts("CONFIG += #{flagName}")
+    end
+end
+
 def printHelp()
     puts "Usage: configure.rb [--help|-h]"
     puts ""
     puts "         --prefix <dir> ............. This will install everything relative to <dir>"
     puts "                                      (default PWD/local)"
+    puts ""
+    puts "      *  --shared-libs .............. Build shared libraries (DLL)"
+    puts "         --static-libs .............. Build static libraries"
     puts ""
     puts "         --occ-debug-dir ............ Open Cascade root directory, debug variant"
     puts "                                      Useful only with --occtools"
@@ -72,8 +81,8 @@ def printHelp()
     puts "         --occtools ................. Compile occtools"
     puts "                                      Requires OpenCascade (see --occ-dir)"
     puts ""
-    puts "      *  --shared-libs .............. Build shared libraries (DLL)"
-    puts "         --static-libs .............. Build static libraries"
+    puts "         --utest .................... Build unit tests"
+    puts "         --examples ................. Build unit examples"
     puts ""
 end
 
@@ -87,13 +96,21 @@ opts = GetoptLong.new(
     ['--no-occtools', GetoptLong::NO_ARGUMENT],
     ['--occtools', GetoptLong::NO_ARGUMENT],
     ['--shared-libs', GetoptLong::NO_ARGUMENT],
-    ['--static-libs', GetoptLong::NO_ARGUMENT])
+    ['--static-libs', GetoptLong::NO_ARGUMENT],
+    ['--utest', GetoptLong::NO_ARGUMENT],
+    ['--examples', GetoptLong::NO_ARGUMENT]
+)
 
-options = { :prefix => "$$PWD/local",
-            :occDebugDir => "/opt/def/occ_debug",
-            :occReleaseDir => "/opt/def/occ_release",
-            :occTools => false,
-            :sharedLibs => true}
+optValues = {
+    :prefix => "$$PWD/local",
+    :occDebugDir => "/opt/def/occ_debug",
+    :occReleaseDir => "/opt/def/occ_release",
+    :occTools => false,
+    :sharedLibs => true,
+    :utest => false,
+    :examples => false
+}
+
 opts.each do |opt, arg|
     case opt
         when '--help'
@@ -103,40 +120,43 @@ opts.each do |opt, arg|
             printHelp()
             exit
         when '--prefix'
-            options[:prefix] = arg
+            optValues[:prefix] = arg
         when '--occ-debug-dir'
-            options[:occDebugDir] = arg
+            optValues[:occDebugDir] = arg
         when '--occ-release-dir'
-            options[:occReleaseDir] = arg
+            optValues[:occReleaseDir] = arg
         when '--no-occtools'
-            options[:occTools] = false
+            optValues[:occTools] = false
         when '--occtools'
-            options[:occTools] = true
+            optValues[:occTools] = true
         when '--shared-libs'
-            options[:sharedLibs] = true
+            optValues[:sharedLibs] = true
         when '--static-libs'
-            options[:sharedLibs] = false
+            optValues[:sharedLibs] = false
+        when '--utest'
+            optValues[:utest] = true
+        when '--examples'
+            optValues[:examples] = true
     end
 end
 
 File.open('_local_config.pri', 'w') do |f|
-    f.puts("PREFIX_DIR = #{asQMakePath(File.expand_path(options[:prefix]))}")
-    if options[:occTools] then
-        checkFileExists(options[:occDebugDir])
-        checkFileExists(options[:occReleaseDir])
-        f.puts("CONFIG += occtools")
+    f.puts("PREFIX_DIR = #{asQMakePath(File.expand_path(optValues[:prefix]))}")
+    addQMakeConfigFlag(f, optValues[:occTools], "occtools")
+    if optValues[:occTools] then
+        checkFileExists(optValues[:occDebugDir])
+        checkFileExists(optValues[:occReleaseDir])
         f.puts("CONFIG(debug, debug|release) {")
-        f.puts("    CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occDebugDir]))}")
+        f.puts("    CASCADE_ROOT = #{asQMakePath(File.expand_path(optValues[:occDebugDir]))}")
         f.puts("} else {")
-        f.puts("    CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occReleaseDir]))}")
+        f.puts("    CASCADE_ROOT = #{asQMakePath(File.expand_path(optValues[:occReleaseDir]))}")
         f.puts("}")
     end
 
-    if options[:sharedLibs] then
-        f.puts("CONFIG += shared_libs")
-    else
-        f.puts("CONFIG += static_libs")
-    end
+    addQMakeConfigFlag(f, optValues[:sharedLibs], "shared_libs")
+    addQMakeConfigFlag(f, !optValues[:sharedLibs], "static_libs")
+    addQMakeConfigFlag(f, optValues[:utest], "build_utest")
+    addQMakeConfigFlag(f, optValues[:examples], "build_examples")
 end
 
 # Output configure cache

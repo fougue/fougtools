@@ -1,11 +1,11 @@
-#include <functional>
+#include <qttools/gui/item_view_buttons.h>
 
 #include <QStandardItemModel>
 #include <QApplication>
 #include <QHeaderView>
 #include <QTreeView>
 
-#include <qttools/gui/item_view_buttons.h>
+#include <functional>
 
 enum {
     ModelRootItemTag = 1,
@@ -76,7 +76,9 @@ int main(int argc, char** argv)
     QObject::connect(
                 &viewBtns,
                 &qttools::ItemViewButtons::buttonClicked,
-                std::bind(&handleItemViewButtonClicked, &model, std::placeholders::_1, std::placeholders::_2));
+                [&](int btnId, const QModelIndex& index) {
+        handleItemViewButtonClicked(&model, btnId, index);
+    } );
 
     // Run app
     treeView.show();

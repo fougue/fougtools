@@ -1,12 +1,9 @@
-include(../config.pri)
+include(../lib_config.pri)
 
-TEMPLATE = lib
 TARGET = qttools_task$$TARGET_SUFFIX
 
-CONFIG += dll
-CONFIG(dll):DEFINES += QTTOOLS_TASK_DLL QTTOOLS_TASK_MAKE_DLL
-
 QT = core
+CONFIG(dll):DEFINES += QTTOOLS_TASK_DLL QTTOOLS_TASK_MAKE_DLL
 
 include(../../src/qttools/Task/qttools_task.pri)
 

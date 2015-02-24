@@ -1,12 +1,9 @@
-include(../config.pri)
-
-TEMPLATE = lib
+include(../lib_config.pri)
 
 TARGET = qttools_sql$$TARGET_SUFFIX
 
 QT -= gui
 
-CONFIG += dll
 CONFIG(dll):DEFINES += QTTOOLS_SQL_DLL QTTOOLS_SQL_MAKE_DLL
 
 include(../../src/qttools/sql/qttools_sql.pri)

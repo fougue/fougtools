@@ -1,12 +1,9 @@
-include(../config.pri)
+include(../lib_config.pri)
 
-TEMPLATE = lib
 TARGET = qttools_network$$TARGET_SUFFIX
 
-CONFIG += dll
-CONFIG(dll):DEFINES += QTTOOLS_NETWORK_DLL QTTOOLS_NETWORK_MAKE_DLL
-
 QT -= gui
+CONFIG(dll):DEFINES += QTTOOLS_NETWORK_DLL QTTOOLS_NETWORK_MAKE_DLL
 
 include(../../src/qttools/network/qttools_network.pri)
 

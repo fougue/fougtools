@@ -2,11 +2,6 @@ include(../qmake/config.pri)
 
 TEMPLATE = app
 
-CONFIG(debug, debug|release) {
-  TARGET_SUFFIX = _d
-} else {
-  TARGET_SUFFIX =
-}
 TARGET = utest$$TARGET_SUFFIX
 
 CONFIG += console

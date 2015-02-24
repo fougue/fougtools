@@ -1,10 +1,7 @@
-include(../config.pri)
-
-TEMPLATE = lib
+include(../lib_config.pri)
 
 TARGET = qttools_gui$$TARGET_SUFFIX
 
-CONFIG += dll
 CONFIG(dll):DEFINES += QTTOOLS_GUI_DLL QTTOOLS_GUI_MAKE_DLL
 
 include(../../src/qttools/gui/qttools_gui.pri)

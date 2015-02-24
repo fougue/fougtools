@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QCOMBO_BOX_CURRENT_ITEM_KEEPER_H
-#define QTTOOLS_QCOMBO_BOX_CURRENT_ITEM_KEEPER_H
+#pragma once
 
 #include "gui.h"
 #include <QtCore/QObject>
@@ -73,5 +72,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_QCOMBO_BOX_CURRENT_ITEM_KEEPER_H

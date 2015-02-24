@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_QT_OCC_H
-#define OCC_QT_OCC_H
+#pragma once
 
 #include "occtools.h"
 
@@ -88,5 +87,3 @@ QString toQString(const OCC_PNT_VEC& pv, const QString& format, char realFormat,
 }
 
 } // namespace occ
-
-#endif // OCC_QT_OCC_H

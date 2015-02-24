@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_QT_VIEW_CONTROLLER_H
-#define OCC_QT_VIEW_CONTROLLER_H
+#pragma once
 
 #include "occtools.h"
 #include <Handle_AIS_InteractiveContext.hxx>
@@ -91,5 +90,3 @@ private:
 };
 
 } // namespace occ
-
-#endif // OCC_QT_VIEW_CONTROLLER_H

@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_GRID_STRUCT_H
-#define QTTOOLS_GRID_STRUCT_H
+#pragma once
 
 #include "core.h"
 #include "grid_numbering.h"
@@ -70,5 +69,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_GRID_STRUCT_H

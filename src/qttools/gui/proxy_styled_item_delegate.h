@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_PROXY_STYLED_ITEM_DELEGATE_H
-#define QTTOOLS_PROXY_STYLED_ITEM_DELEGATE_H
+#pragma once
 
 #include "gui.h"
 
@@ -76,5 +75,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_PROXY_STYLED_ITEM_DELEGATE_H

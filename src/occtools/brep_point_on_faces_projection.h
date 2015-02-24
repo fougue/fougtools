@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_BREP_POINT_ON_FACES_PROJECTION_H
-#define OCC_BREP_POINT_ON_FACES_PROJECTION_H
+#pragma once
 
 #include "occtools.h"
 #include <TopoDS_Face.hxx>
@@ -70,5 +69,3 @@ private:
 };
 
 } // namespace occ
-
-#endif // OCC_BREP_POINT_ON_FACES_PROJECTION_H

@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef CPPTOOLS_SCOPED_VALUE_H
-#define CPPTOOLS_SCOPED_VALUE_H
+#pragma once
 
 namespace cpp {
 
@@ -83,5 +82,3 @@ ScopedValue<T>::~ScopedValue()
 }
 
 } // namespace cpp
-
-#endif // CPPTOOLS_SCOPED_VALUE_H

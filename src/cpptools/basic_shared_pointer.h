@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef CPPTOOLS_BASIC_SHARED_POINTER_H
-#define CPPTOOLS_BASIC_SHARED_POINTER_H
+#pragma once
 
 #include <cstddef>
 
@@ -162,5 +161,3 @@ void BasicSharedPointer<T>::releaseRef()
 }
 
 } // namespace cpp
-
-#endif // CPPTOOLS_BASIC_SHARED_POINTER_H

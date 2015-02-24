@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_COMPOSITE_TYPE_HELPER_H
-#define QTTOOLS_COMPOSITE_TYPE_HELPER_H
+#pragma once
 
 #include "sql.h"
 #include <QtCore/QList>
@@ -55,5 +54,3 @@ public:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_COMPOSITE_TYPE_HELPER_H

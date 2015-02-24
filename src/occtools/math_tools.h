@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_MATH_TOOLS_H
-#define OCC_MATH_TOOLS_H
+#pragma once
 
 #include "occtools.h"
 
@@ -133,5 +132,3 @@ TEXT_STREAM& operator<<(TEXT_STREAM& ts, const gp_Dir& d)
 {
     return occ::MathTools::printOccPntVec(ts, d);
 }
-
-#endif // OCC_MATH_TOOLS_H

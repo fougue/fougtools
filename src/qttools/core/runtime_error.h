@@ -35,13 +35,12 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_RUNTIME_ERROR_H
-#define QTTOOLS_RUNTIME_ERROR_H
+#pragma once
 
 #include "core.h"
 
-#include <stdexcept>
 #include <QtCore/QString>
+#include <stdexcept>
 
 namespace qttools {
 
@@ -59,4 +58,3 @@ private:
 
 } // namespace qttools
 
-#endif // QTTOOLS_RUNTIME_ERROR_H

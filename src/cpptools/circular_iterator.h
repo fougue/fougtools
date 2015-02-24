@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef CPPTOOLS_CIRCULAR_ITERATOR_H
-#define CPPTOOLS_CIRCULAR_ITERATOR_H
+#pragma once
 
 namespace cpp {
 
@@ -89,5 +88,3 @@ BI_ITERATOR circularAdvance(BI_ITERATOR iBegin, BI_ITERATOR iEnd,
 }
 
 } // namespace cpp
-
-#endif // CPPTOOLS_CIRCULAR_ITERATOR_H

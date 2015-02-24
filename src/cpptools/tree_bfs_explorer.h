@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef CPPTOOLS_ABSTRACT_TREE_BFS_EXPLORER_H
-#define CPPTOOLS_ABSTRACT_TREE_BFS_EXPLORER_H
+#pragma once
 
 #include <queue>
 #include "pusher.h"
@@ -161,5 +160,3 @@ unsigned TreeBfsExplorer<NODE, TREE_MODEL>::depth() const
 }
 
 } // namespace cpp
-
-#endif // CPPTOOLS_ABSTRACT_TREE_BFS_EXPLORER_H

@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_PLUGINS_LOADER_H
-#define QTTOOLS_PLUGINS_LOADER_H
+#pragma once
 
 #include "core.h"
 #include "plugins_loader_instance_filter.h"
@@ -104,5 +103,3 @@ QVector<INTERFACE *> PluginsLoader::castPlugins() const
 }
 
 } // namespace qttools
-
-#endif // QTTOOLS_PLUGINS_LOADER_H

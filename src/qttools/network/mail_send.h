@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_MAIL_SEND_H
-#define QTTOOLS_MAIL_SEND_H
+#pragma once
 
 #include "network.h"
 #include <QtCore/QString>
@@ -66,5 +65,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_MAIL_SEND_H

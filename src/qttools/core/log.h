@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_LOG_H
-#define QTTOOLS_LOG_H
+#pragma once
 
 #include "core.h"
 #include <QtCore/QObject>
@@ -141,5 +140,3 @@ Log& Log::operator<<(const T* ptr)
 }
 
 } // namespace qttools
-
-#endif // QTTOOLS_LOG_H

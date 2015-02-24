@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef CPPTOOLS_FIXED_ARRAY_H
-#define CPPTOOLS_FIXED_ARRAY_H
+#pragma once
 
 #include <cstddef>
 #include <algorithm>
@@ -233,5 +232,3 @@ TEXT_STREAM& operator<<(TEXT_STREAM& os, const FixedArray<T, S>& coords)
 }
 
 } // namespace cpp
-
-#endif // CPPTOOLS_FIXED_ARRAY_H

@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_MEASUREMENT_SYSTEM_PREFERENCES_H
-#define QTTOOLS_MEASUREMENT_SYSTEM_PREFERENCES_H
+#pragma once
 
 #include "gui.h"
 #include "abstract_length_editor.h"
@@ -62,5 +61,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // MEASUREMENT_SYSTEM_PREFERENCES_H

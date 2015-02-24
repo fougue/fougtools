@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_CPP_SQL_ENUM_MAP_FWD_H
-#define QTTOOLS_CPP_SQL_ENUM_MAP_FWD_H
+#pragma once
 
 namespace qttools {
 
@@ -44,5 +43,3 @@ template<typename CPP_ENUM>
 class SqlCppEnumMap;
 
 } // namespace qttools
-
-#endif // QTTOOLS_CPP_SQL_ENUM_MAP_FWD_H

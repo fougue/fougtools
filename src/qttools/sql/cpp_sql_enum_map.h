@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_CPP_SQL_ENUM_MAP_H
-#define QTTOOLS_CPP_SQL_ENUM_MAP_H
+#pragma once
 
 #include <map>
 #include <QtCore/QHash>
@@ -154,5 +153,3 @@ SqlCppEnumMap<CPP_ENUM>& SqlCppEnumMap<CPP_ENUM>::operator=(const std::map<CPP_E
 }
 
 } // namespace qttools
-
-#endif // QTTOOLS_CPP_SQL_ENUM_MAP_H

@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_SINGLETON_H
-#define QTTOOLS_SINGLETON_H
+#pragma once
 
 #include <QtCore/QAtomicPointer>
 #include <QtCore/QMutex>
@@ -88,5 +87,3 @@ QAtomicPointer<T> qttools::Singleton<T>::m_instance;
 
 template<typename T>
 QMutex qttools::Singleton<T>::m_mutex;
-
-#endif // QTTOOLS_SINGLETON_H

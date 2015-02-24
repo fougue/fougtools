@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_INDEXED_SELECTION_MODEL_H
-#define QTTOOLS_INDEXED_SELECTION_MODEL_H
+#pragma once
 
 #include "gui.h"
 #include <QtCore/QObject>
@@ -76,5 +75,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_INDEXED_SELECTION_MODEL_H

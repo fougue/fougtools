@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_PLUGINS_LOADER_INSTANCE_IFACE_FILTER_H
-#define QTTOOLS_PLUGINS_LOADER_INSTANCE_IFACE_FILTER_H
+#pragma once
 
 #include "plugins_loader_instance_filter.h"
 
@@ -87,5 +86,3 @@ public:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_PLUGINS_LOADER_INSTANCE_IFACE_FILTER_H

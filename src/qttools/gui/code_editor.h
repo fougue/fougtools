@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_CODE_EDITOR_H
-#define QTTOOLS_CODE_EDITOR_H
+#pragma once
 
 #include "gui.h"
 #include <QtCore/QObject>
@@ -71,4 +70,3 @@ private:
 
 } // namespace qttools
 
-#endif // QTTOOLS_CODE_EDITOR_H

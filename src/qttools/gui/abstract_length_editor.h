@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_ABSTRACT_LENGTH_EDITOR_H
-#define QTTOOLS_ABSTRACT_LENGTH_EDITOR_H
+#pragma once
 
 #include "gui.h"
 #include "abstract_quantity_editor.h"
@@ -94,4 +93,3 @@ private:
 Q_DECLARE_METATYPE(qttools::AbstractLengthEditor::MetricUnit)
 Q_DECLARE_METATYPE(qttools::AbstractLengthEditor::ImperialUnit)
 
-#endif // QTTOOLS_ABSTRACT_LENGTH_EDITOR_H

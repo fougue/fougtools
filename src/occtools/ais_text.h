@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_AIS_TEXT_H
-#define OCC_AIS_TEXT_H
+#pragma once
 
 #include "occtools.h"
 #include "handle_ais_text.h"
@@ -98,5 +97,3 @@ private:
     class Private;
     Private* const d;
 };
-
-#endif // OCC_AIS_TEXT_H

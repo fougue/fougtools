@@ -37,11 +37,12 @@
 
 #pragma once
 
+class QAbstractItemModel;
+
 #include "core.h"
 #include <QtCore/QModelIndex>
 #include <QtCore/QVariant>
 #include <QtCore/QVector>
-class QAbstractItemModel;
 
 namespace qttools {
 

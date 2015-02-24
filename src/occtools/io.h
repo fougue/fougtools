@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_IO_H
-#define OCC_IO_H
+#pragma once
 
 #include "occtools.h"
 #include <Handle_Message_ProgressIndicator.hxx>
@@ -101,5 +100,3 @@ public:
 };
 
 } // namespace occ
-
-#endif // OCC_IO_H

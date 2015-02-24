@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QSTANDARD_ITEM_EXPLORER_H
-#define QTTOOLS_QSTANDARD_ITEM_EXPLORER_H
+#pragma once
 
 #include "gui.h"
 
@@ -71,5 +70,3 @@ public:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_QSTANDARD_ITEM_EXPLORER_H

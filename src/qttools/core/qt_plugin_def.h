@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QT_PLUGIN_DEF_H
-#define QTTOOLS_QT_PLUGIN_DEF_H
+#pragma once
 
 #include "core.h"
 #include <QtCore/QtPlugin>
@@ -47,5 +46,3 @@
 #else
 # define QTTOOLS_QT4_EXPORT_PLUGIN2(target, className)
 #endif
-
-#endif // QTTOOLS_QT_PLUGIN_DEF_H

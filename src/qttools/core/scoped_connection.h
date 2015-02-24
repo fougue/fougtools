@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_SCOPED_CONNECTION_H
-#define QTTOOLS_SCOPED_CONNECTION_H
+#pragma once
 
 #include "core.h"
 #include <QtCore/Qt>
@@ -76,5 +75,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_SCOPED_CONNECTION_H

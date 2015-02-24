@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_DATABASE_MANAGER_H
-#define QTTOOLS_DATABASE_MANAGER_H
+#pragma once
 
 #include "sql.h"
 #include <QtCore/QThread>
@@ -80,5 +79,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_DATABASE_MANAGER_H

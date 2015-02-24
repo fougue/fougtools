@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_AIS_TOOLS_H
-#define OCC_AIS_TOOLS_H
+#pragma once
 
 #include "occtools.h"
 
@@ -53,5 +52,3 @@ public:
 };
 
 } // namespace occ
-
-#endif // OCC_AIS_TOOLS_H

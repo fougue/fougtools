@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_POINT_ON_FACES_PROJECTOR_H
-#define OCC_POINT_ON_FACES_PROJECTOR_H
+#pragma once
 
 #include "occtools.h"
 #include <gp_Pnt.hxx>
@@ -75,5 +74,3 @@ private:
 };
 
 } // namespace occ
-
-#endif // OCC_POINT_ON_FACES_PROJECTOR_H

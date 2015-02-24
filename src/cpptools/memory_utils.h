@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef CPPTOOLS_MEMORY_UTILS_H
-#define CPPTOOLS_MEMORY_UTILS_H
+#pragma once
 
 #include <cstddef>
 
@@ -102,5 +101,3 @@ T* newObject(ARG arg)
 }
 
 } // namespace cpp
-
-#endif // CPPTOOLS_MEMORY_UTILS_H

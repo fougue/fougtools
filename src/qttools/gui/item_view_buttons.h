@@ -35,8 +35,13 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_ITEM_VIEW_BUTTONS_H
-#define QTTOOLS_ITEM_VIEW_BUTTONS_H
+#pragma once
+
+class QAbstractItemView;
+class QIcon;
+class QPainter;
+class QStyledItemDelegate;
+class QStyleOptionViewItem;
 
 #include "gui.h"
 
@@ -45,11 +50,6 @@
 #include <QtCore/QObject>
 #include <QtCore/QFlags>
 #include <QtGui/QIcon>
-class QAbstractItemView;
-class QIcon;
-class QPainter;
-class QStyledItemDelegate;
-class QStyleOptionViewItem;
 
 namespace qttools {
 
@@ -132,5 +132,3 @@ private:
 } // namespace qttools
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(qttools::ItemViewButtons::DisplayModes)
-
-#endif // QTTOOLS_ITEM_VIEW_BUTTONS_H

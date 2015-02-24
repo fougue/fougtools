@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef CPPTOOLS_QUANTITY_H
-#define CPPTOOLS_QUANTITY_H
+#pragma once
 
 #include "null.h"
 
@@ -389,5 +388,3 @@ const Quantity<NUMERIC_TRAITS, TRAIT> operator/(typename NUMERIC_TRAITS::Type k,
 }
 
 } // namespace cpp
-
-#endif // CPPTOOLS_QUANTITY_H

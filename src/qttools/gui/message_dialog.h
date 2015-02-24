@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_MESSAGE_DIALOG_H
-#define QTTOOLS_MESSAGE_DIALOG_H
+#pragma once
 
 #include "gui.h"
 // QtWidgets
@@ -73,5 +72,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_MESSAGE_DIALOG_H

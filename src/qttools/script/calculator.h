@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_CALCULATOR_H
-#define QTTOOLS_CALCULATOR_H
+#pragma once
 
 #include "script.h"
 #include <QtScript/QScriptEngine>
@@ -61,5 +60,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_CALCULATOR_H

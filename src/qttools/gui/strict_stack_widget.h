@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_STRICT_STACK_WIDGET_H
-#define QTTOOLS_STRICT_STACK_WIDGET_H
+#pragma once
 
 #include "gui.h"
 #include <QWidget>
@@ -63,5 +62,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_STRICT_STACK_WIDGET_H

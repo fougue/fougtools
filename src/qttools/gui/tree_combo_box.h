@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_TREE_COMBO_BOX_H
-#define QTTOOLS_TREE_COMBO_BOX_H
+#pragma once
 
 #include "gui.h"
 
@@ -55,7 +54,7 @@ class QTTOOLS_GUI_EXPORT TreeComboBox : public QComboBox
 public:
     TreeComboBox(QWidget *parent = NULL);
 
-    void showPopup();
+    void showPopup() Q_DECL_OVERRIDE;
 
     QTreeView* treeView() const;
 
@@ -68,5 +67,3 @@ public:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_TREE_COMBO_BOX_H

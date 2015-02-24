@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_LOG_UNQUALIFIED_H
-#define QTTOOLS_LOG_UNQUALIFIED_H
+#pragma once
 
 #include "log.h"
 using qttools::debugLog;
@@ -44,5 +43,3 @@ using qttools::infoLog;
 using qttools::warningLog;
 using qttools::criticalLog;
 using qttools::fatalLog;
-
-#endif // QTTOOLS_LOG_UNQUALIFIED_H

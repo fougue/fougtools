@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_QT_VIEW_H
-#define OCC_QT_VIEW_H
+#pragma once
 
 #include "occtools.h"
 
@@ -87,5 +86,3 @@ private:
 };
 
 } // namespace occ
-
-#endif // OCC_QT_VIEW_H

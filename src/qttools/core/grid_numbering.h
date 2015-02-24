@@ -34,8 +34,8 @@
 ** knowledge of the CeCILL-C license and that you accept its terms.
 **
 ****************************************************************************/
-#ifndef QTTOOLS_GRID_NUMBERING_H
-#define QTTOOLS_GRID_NUMBERING_H
+
+#pragma once
 
 #include "core.h"
 #include <QtCore/Qt>
@@ -74,5 +74,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_GRID_NUMBERING_H

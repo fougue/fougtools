@@ -35,13 +35,10 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_HANDLE_AIS_TEXT_H
-#define OCC_HANDLE_AIS_TEXT_H
+#pragma once
 
 #include "occtools.h"
 #include <Handle_AIS_InteractiveObject.hxx>
 #include <Standard_Macro.hxx>
 
 DEFINE_STANDARD_HANDLE(occ_AIS_Text, AIS_InteractiveObject)
-
-#endif // OCC_HANDLE_AIS_TEXT_H

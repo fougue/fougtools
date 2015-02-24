@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QT_TOOLS_LINE_NUMBERS_BAR_H
-#define QT_TOOLS_LINE_NUMBERS_BAR_H
+#pragma once
 
 #include "gui.h"
 // QtWidgets
@@ -68,5 +67,3 @@ private:
 };
 
 } //namespace qttools
-
-#endif // QT_TOOLS_LINE_NUMBERS_BAR_H

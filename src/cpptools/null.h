@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef CPPTOOLS_NULL_H
-#define CPPTOOLS_NULL_H
+#pragma once
 
 namespace cpp {
 
@@ -53,5 +52,3 @@ struct Null<void>
 typedef Null<void> VoidNull;
 
 } // namespace cpp
-
-#endif // CPPTOOLS_NULL_H

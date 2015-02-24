@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_DOWN_CAST_H
-#define OCC_DOWN_CAST_H
+#pragma once
 
 #include <Handle_Standard_Transient.hxx>
 
@@ -96,5 +95,3 @@ const TYPE down_cast<TYPE>::operator->() const
     return TYPE::DownCast(m_handle);
 }
 } // namespace occ
-
-#endif // OCC_DOWN_CAST_H

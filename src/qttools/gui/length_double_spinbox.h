@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_LENGTH_DOUBLE_SPINBOX_H
-#define QTTOOLS_LENGTH_DOUBLE_SPINBOX_H
+#pragma once
 
 #include "gui.h"
 #include "abstract_length_editor.h"
@@ -69,5 +68,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_LENGTH_DOUBLE_SPINBOX_H

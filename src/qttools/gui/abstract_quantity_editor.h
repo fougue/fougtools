@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_ABSTRACT_QUANTITY_EDITOR_H
-#define QTTOOLS_ABSTRACT_QUANTITY_EDITOR_H
+#pragma once
 
 #include "gui.h"
 #include <QtCore/QLocale>
@@ -59,5 +58,3 @@ protected:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_ABSTRACT_QUANTITY_EDITOR_H

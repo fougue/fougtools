@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_GCPNTS_UNIFORM_ABSCISSA_CONST_ITERATOR_H
-#define OCC_GCPNTS_UNIFORM_ABSCISSA_CONST_ITERATOR_H
+#pragma once
 
 #include "occtools.h"
 #include <iterator>
@@ -161,5 +160,3 @@ GCPnts_UniformAbscissaConstIterator
 endConstIterator(const GCPnts_UniformAbscissa& ua);
 
 } // namespace occ
-
-#endif // OCC_GCPNTS_UNIFORM_ABSCISSA_CONST_ITERATOR_H

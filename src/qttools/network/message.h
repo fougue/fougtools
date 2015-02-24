@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_MESSAGE_H
-#define QTTOOLS_MESSAGE_H
+#pragma once
 
 #include "network.h"
 #include <QtCore/QDateTime>
@@ -73,5 +72,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_MESSAGE_H

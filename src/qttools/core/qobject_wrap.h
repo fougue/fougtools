@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QOBJECT_WRAP_H
-#define QTTOOLS_QOBJECT_WRAP_H
+#pragma once
 
 #include <QtCore/QObject>
 
@@ -114,5 +113,3 @@ QObjectWrap<T>* wrapAsQObject(T* object, QObject* parent)
 }
 
 } // namespace qttools
-
-#endif // QTTOOLS_QOBJECT_WRAP_H

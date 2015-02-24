@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_SLEEP_H
-#define QTTOOLS_SLEEP_H
+#pragma once
 
 #include "core.h"
 
@@ -47,4 +46,3 @@ QTTOOLS_CORE_EXPORT void waitForMSec(unsigned msec);
 
 } // namespace qttools
 
-#endif // QTTOOLS_SLEEP_H

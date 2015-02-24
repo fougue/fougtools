@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_UNIQUE_ID_H
-#define QTTOOLS_UNIQUE_ID_H
+#pragma once
 
 #include "core.h"
 
@@ -58,4 +57,3 @@ public:
 
 } // namespace qttools
 
-#endif // QTTOOLS_UNIQUE_ID_H

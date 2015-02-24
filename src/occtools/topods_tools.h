@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef OCC_TOPODS_TOOLS_H
-#define OCC_TOPODS_TOOLS_H
+#pragma once
 
 #include "occtools.h"
 
@@ -124,5 +123,3 @@ TopoDS_Wire TopoDsTools::makeWireFromEdgeRange(FWD_ITERATOR iBegin, FWD_ITERATOR
 }
 
 } // namespace occ
-
-#endif // OCC_TOPODS_TOOLS_H

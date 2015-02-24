@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_PLUGINS_LOADER_INSTANCE_FILTER_H
-#define QTTOOLS_PLUGINS_LOADER_INSTANCE_FILTER_H
+#pragma once
 
 #include "core.h"
 class QPluginLoader;
@@ -50,5 +49,3 @@ public:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_PLUGINS_LOADER_INSTANCE_FILTER_H

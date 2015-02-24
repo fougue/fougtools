@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef CPPTOOLS_BOOL_UTILS_H
-#define CPPTOOLS_BOOL_UTILS_H
+#pragma once
 
 namespace cpp {
 
@@ -59,5 +58,3 @@ bool boolImplies(T lhs, T rhs)
 }
 
 } // namespace cpp
-
-#endif // CPPTOOLS_BOOL_UTILS_H

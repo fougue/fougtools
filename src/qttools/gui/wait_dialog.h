@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_WAIT_DIALOG_H
-#define QTTOOLS_WAIT_DIALOG_H
+#pragma once
 
 #include "gui.h"
 // QtWidgets
@@ -69,5 +68,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_WAIT_DIALOG_H

@@ -37,7 +37,6 @@
 
 HEADERS += \
     $$PWD/plugins_loader.h \
-    $$PWD/abstract_signal_dispatch.h \
     $$PWD/core.h \
     $$PWD/grid_numbering.h \
     $$PWD/grid_struct.h \
@@ -63,7 +62,6 @@ HEADERS += \
 
 SOURCES += \
     $$PWD/plugins_loader.cpp \
-    $$PWD/abstract_signal_dispatch.cpp \
     $$PWD/log.cpp \
     $$PWD/runtime_error.cpp \
     $$PWD/scoped_connection.cpp \

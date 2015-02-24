@@ -50,14 +50,10 @@ HEADERS += \
     $$PWD/scoped_connection.h \
     $$PWD/singleton.h \
     $$PWD/sleep.h \
-    $$PWD/wait_loop.h \
-    $$PWD/wait_loop_stop_condition.h \
     $$PWD/unique_id.h \
     $$PWD/plugins_loader_instance_filter.h \
     $$PWD/plugins_loader_instance_iface_filter.h \
     \
-    $$PWD/internal/wait_loop_p.h \
-    $$PWD/internal/wait_loop_time_out_stop_condition.h \
     $$PWD/item_model_utils.h \
     $$PWD/qatomic_utils.h \
     $$PWD/qlocale_utils.h \
@@ -76,14 +72,10 @@ SOURCES += \
     $$PWD/sleep.cpp \
     $$PWD/grid_numbering.cpp \
     $$PWD/grid_struct.cpp \
-    $$PWD/wait_loop.cpp \
-    $$PWD/wait_loop_stop_condition.cpp \
     $$PWD/unique_id.cpp \
     $$PWD/plugins_loader_instance_filter.cpp \
     $$PWD/plugins_loader_instance_iface_filter.cpp \
     \
-    $$PWD/internal/wait_loop_p.cpp \
-    $$PWD/internal/wait_loop_time_out_stop_condition.cpp \
     $$PWD/item_model_utils.cpp \
     $$PWD/qatomic_utils.cpp \
     $$PWD/qlocale_utils.cpp \

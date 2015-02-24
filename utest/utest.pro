@@ -19,10 +19,6 @@ HEADERS += \
     $$PWD/test_qttools_script.h \
     \
     $$PWD/../src/qttools/core/qlocale_utils.h \
-    $$PWD/../src/qttools/core/wait_loop.h \
-    $$PWD/../src/qttools/core/wait_loop_stop_condition.h \
-    $$PWD/../src/qttools/core/internal/wait_loop_p.h \
-    $$PWD/../src/qttools/core/internal/wait_loop_time_out_stop_condition.h \
     \
     $$PWD/../src/qttools/gui/qstandard_item_explorer.h \
     \
@@ -36,10 +32,6 @@ SOURCES += \
     $$PWD/test_qttools_script.cpp \
     \
     $$PWD/../src/qttools/core/qlocale_utils.cpp \
-    $$PWD/../src/qttools/core/wait_loop.cpp \
-    $$PWD/../src/qttools/core/wait_loop_stop_condition.cpp \
-    $$PWD/../src/qttools/core/internal/wait_loop_p.cpp \
-    $$PWD/../src/qttools/core/internal/wait_loop_time_out_stop_condition.cpp \
     \
     $$PWD/../src/qttools/gui/qstandard_item_explorer.cpp \
     \
@@ -58,10 +50,11 @@ occtools {
         $$PWD/test_occtools.cpp \
         $$PWD/../src/occtools/io.cpp
 
-    LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
-          -lTKIGES -lTKMath -lTKPrim -lTKService -lTKShHealing \
-          -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -lTKSTEP209 -lTKSTL -lTKTopAlgo \
-          -lTKXSBase
+    LIBS += \
+        -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
+        -lTKIGES -lTKMath -lTKPrim -lTKService -lTKShHealing \
+        -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -lTKSTEP209 -lTKSTL -lTKTopAlgo \
+        -lTKXSBase
 } # occtools
 
 qttools_task {

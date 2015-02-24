@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qstring_tools.h"
+#include "qstring_utils.h"
 
 namespace qttools {
 
@@ -43,7 +43,7 @@ namespace qttools {
  * \class QStringLocaleAwareEqual
  * \brief Functor wrapper around QString::localeAwareCompare(lhs, rhs) == 0
  *
- * \headerfile qstring_tools.h <qttools/core/qstring_tools.h>
+ * \headerfile qstring_utils.h <qttools/core/qstring_utils.h>
  * \ingroup qttools_core
  */
 

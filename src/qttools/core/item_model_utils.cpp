@@ -35,33 +35,53 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QCOMBO_BOX_TOOLS_H
-#define QTTOOLS_QCOMBO_BOX_TOOLS_H
-
-#include "gui.h"
-
-#include <QtWidgets/QComboBox>
+#include "item_model_utils.h"
 
 namespace qttools {
 
-class QTTOOLS_GUI_EXPORT QComboBoxTools
-{
-public:
-    typedef void (QComboBox::*SignalActivated_int)(int);
-    typedef void (QComboBox::*SignalActivated_QString)(const QString&);
-    typedef void (QComboBox::*SignalCurrentIndexChanged_int)(int);
-    typedef void (QComboBox::*SignalCurrentIndexChanged_QString)(const QString&);
-    typedef void (QComboBox::*SignalHighlighted_int)(int);
-    typedef void (QComboBox::*SignalHighlighted_QString)(const QString&);
+/*! \class ItemModelUtils
+ *  \brief Provides a collection of tools around QAbstractItemModel
+ *  \headerfile item_model_utils.h <qttools/core/item_model_utils.h>
+ *  \ingroup qttools_core
+ *
+ */
 
-    static SignalActivated_int signalActivated_int();
-    static SignalActivated_QString signalActivated_QString();
-    static SignalCurrentIndexChanged_int signalCurrentIndexChanged_int();
-    static SignalCurrentIndexChanged_QString signalCurrentIndexChanged_QString();
-    static SignalHighlighted_int signalHighlighted_int();
-    static SignalHighlighted_QString signalHighlighted_QString();
-};
+bool ItemModelUtils::isValidRow(const QAbstractItemModel* model, int row, const QModelIndex& parent)
+{
+    if (model != NULL)
+        return 0 <= row && row < model->rowCount(parent);
+    return false;
+}
+
+bool ItemModelUtils::isValidColumn(const QAbstractItemModel* model, int col, const QModelIndex& parent)
+{
+    if (model != NULL)
+        return 0 <= col && col < model->columnCount(parent);
+    return false;
+}
+
+/*! \brief Try to find a value in a given column of a model
+ *  \return Index of the row where the first match of \p value could be found
+ *  \retval -1 if \p value could not be found
+ */
+int ItemModelUtils::findDataInRow(const QAbstractItemModel* model, int col, const QVariant& value)
+{
+    if (model != NULL) {
+        for (int row = 0; row < model->rowCount(); ++row) {
+            if (model->data(model->index(row, col)) == value)
+                return row;
+        }
+    }
+    return -1;
+}
+
+/*! \brief Same as QAbstractItemModel::data() but more concise
+ */
+QVariant ItemModelUtils::tableData(const QAbstractItemModel* model, int row, int col, int role)
+{
+    if (model != NULL)
+        return model->data(model->index(row, col), role);
+    return QVariant();
+}
 
 } // namespace qttools
-
-#endif // QTTOOLS_QCOMBO_BOX_TOOLS_H

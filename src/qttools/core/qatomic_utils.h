@@ -35,22 +35,62 @@
 **
 ****************************************************************************/
 
-#include "qobject_tools.h"
+#pragma once
 
-#include <QtCore/QObject>
+#include "core.h"
+
+#include <QtCore/QAtomicPointer>
+class QAtomicInt;
 
 namespace qttools {
 
-/*! \class QObjectTools
- *  \brief Provides a collection of tools around QObject
- *  \headerfile qobject_tools.h <qttools/core/qobject_tools.h>
- *  \ingroup qttools_core
- *
- */
-
-void QObjectTools::forwardSignal(const QObject* sender, const QObject* resender, const char* signal)
+class QTTOOLS_CORE_EXPORT QAtomicUtils
 {
-    QObject::connect(sender, signal, resender, signal);
+public:
+    // QAtomicInt
+    static int loadRelaxed(const QAtomicInt& atomInt);
+
+    static void storeRelaxed(QAtomicInt* atomInt, int newVal);
+    static void storeRelease(QAtomicInt* atomInt, int newVal);
+
+    // QAtomicPointer
+    template<typename T>  static T* loadRelaxed(const QAtomicPointer<T>& atomPtr);
+
+    template<typename T>  static void storeRelaxed(QAtomicPointer<T>* atomPtr, T* newPtr);
+    template<typename T>  static void storeRelease(QAtomicPointer<T>* atomPtr, T* newPtr);
+};
+
+
+
+// --
+// -- Implementation
+// --
+
+template<typename T>  T* QAtomicUtils::loadRelaxed(const QAtomicPointer<T>& atomPtr)
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    return atomPtr.load();
+#else
+    return atomPtr;
+#endif
+}
+
+template<typename T>  void QAtomicUtils::storeRelaxed(QAtomicPointer<T>* atomPtr, T* newPtr)
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    atomPtr->store(newPtr);
+#else
+    atomPtr->fetchAndStoreRelaxed(newPtr);
+#endif
+}
+
+template<typename T>  void QAtomicUtils::storeRelease(QAtomicPointer<T>* atomPtr, T* newPtr)
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    atomPtr->storeRelease(newPtr);
+#else
+    atomPtr->fetchAndStoreRelease(newPtr);
+#endif
 }
 
 } // namespace qttools

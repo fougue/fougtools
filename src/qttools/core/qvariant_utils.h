@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QVARIANT_TOOLS_H
-#define QTTOOLS_QVARIANT_TOOLS_H
+#pragma once
 
 #include "core.h"
 #include <QtCore/QVariant>
@@ -44,11 +43,11 @@
 namespace qttools {
 
 /*! \brief Provides a collection of tools around QVariant
- *  \headerfile qvariant_tools.h <qttools/core/qvariant_tools.h>
+ *  \headerfile qvariant_utils.h <qttools/core/qvariant_utils.h>
  *  \ingroup qttools_core
  *
  */
-class QTTOOLS_CORE_EXPORT QVariantTools
+class QTTOOLS_CORE_EXPORT QVariantUtils
 {
 public:
     template<typename T, template <typename> class CONTAINER>
@@ -78,7 +77,7 @@ namespace qttools {
  * \sa toContainerOfVariants()
  */
 template<typename T, template <typename> class CONTAINER>
-CONTAINER<T> QVariantTools::toTypedContainer(const CONTAINER<QVariant>& variants)
+CONTAINER<T> QVariantUtils::toTypedContainer(const CONTAINER<QVariant>& variants)
 {
     CONTAINER<T> typeds;
     std::transform(variants.begin(), variants.end(),
@@ -95,7 +94,7 @@ CONTAINER<T> QVariantTools::toTypedContainer(const CONTAINER<QVariant>& variants
  * \sa toTypedContainer()
  */
 template<typename T, template <typename> class CONTAINER>
-CONTAINER<QVariant> QVariantTools::toContainerOfVariants(const CONTAINER<T>& typeds)
+CONTAINER<QVariant> QVariantUtils::toContainerOfVariants(const CONTAINER<T>& typeds)
 {
     CONTAINER<QVariant> variants;
     std::transform(typeds.begin(), typeds.end(),

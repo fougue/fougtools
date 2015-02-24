@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "item_view_tools.h"
+#include "item_view_utils.h"
 
 // Those classe are in Qt4/QtGui and Qt5/QtCore
 #include <QSortFilterProxyModel>
@@ -46,10 +46,10 @@
 
 namespace qttools {
 
-/*! \class ItemViewTools
+/*! \class ItemViewUtils
  *  \brief Provides a collection of tools around QAbstractItemView
  *
- *  \headerfile item_view_tools.h <qttools/gui/item_view_tools.h>
+ *  \headerfile item_view_utils.h <qttools/gui/item_view_utils.h>
  *  \ingroup qttools_gui
  */
 
@@ -57,7 +57,7 @@ namespace qttools {
  *  \param view View in which to find selected rows
  *  \param col Column index. If \p col == \c -1 then \p col is ignored
  */
-QVector<int> ItemViewTools::selectedRows(const QAbstractItemView* view, int col)
+QVector<int> ItemViewUtils::selectedRows(const QAbstractItemView* view, int col)
 {
     const QItemSelectionModel* itemSelModel = view->selectionModel();
     if (itemSelModel == NULL || !itemSelModel->hasSelection())
@@ -75,7 +75,7 @@ QVector<int> ItemViewTools::selectedRows(const QAbstractItemView* view, int col)
     return result;
 }
 
-void ItemViewTools::selectRows(QAbstractItemView* view, const QVector<int>& rows)
+void ItemViewUtils::selectRows(QAbstractItemView* view, const QVector<int>& rows)
 {
     const QAbstractItemModel* model = view->model();
     QItemSelectionModel* selModel = view->selectionModel();
@@ -90,14 +90,14 @@ void ItemViewTools::selectRows(QAbstractItemView* view, const QVector<int>& rows
 
 /*! \brief Same as QSortFilterProxyModel::mapFromSource() but more concise
  */
-int ItemViewTools::mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow)
+int ItemViewUtils::mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow)
 {
     return proxyModel->mapFromSource(proxyModel->sourceModel()->index(srcRow, 0)).row();
 }
 
 /*! \brief Same as QSortFilterProxyModel::mapToSource() but more concise
  */
-int ItemViewTools::mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow)
+int ItemViewUtils::mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow)
 {
     return proxyModel->mapToSource(proxyModel->index(proxyRow, 0)).row();
 }

@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_ITEM_MODEL_TOOLS_H
-#define QTTOOLS_ITEM_MODEL_TOOLS_H
+#pragma once
 
 #include "core.h"
 #include <QtCore/QModelIndex>
@@ -46,7 +45,7 @@ class QAbstractItemModel;
 
 namespace qttools {
 
-class QTTOOLS_CORE_EXPORT ItemModelTools
+class QTTOOLS_CORE_EXPORT ItemModelUtils
 {
 public:
     static bool isValidRow(const QAbstractItemModel* model,
@@ -86,26 +85,26 @@ public:
 namespace qttools {
 
 template<typename INT_CONTAINER>
-bool ItemModelTools::validRows(const QAbstractItemModel* model,
+bool ItemModelUtils::validRows(const QAbstractItemModel* model,
                                const INT_CONTAINER& rows,
                                const QModelIndex& parent)
 {
     for (typename INT_CONTAINER::const_iterator iRow = rows.begin(); iRow != rows.end(); ++iRow) {
-        if (!ItemModelTools::isValidRow(model, *iRow, parent))
+        if (!ItemModelUtils::isValidRow(model, *iRow, parent))
             return false;
     }
     return !rows.isEmpty();
 }
 
 template<typename INT_CONTAINER>
-void ItemModelTools::removeRows(QAbstractItemModel* model, const INT_CONTAINER& rows)
+void ItemModelUtils::removeRows(QAbstractItemModel* model, const INT_CONTAINER& rows)
 {
     if (model == NULL)
         return;
     // Delete rows by descending order
     QVector<int> descRows;
     for (typename INT_CONTAINER::const_iterator it = rows.begin(); it != rows.end(); ++it) {
-        if (ItemModelTools::isValidRow(model, *it))
+        if (ItemModelUtils::isValidRow(model, *it))
             descRows.append(*it);
     }
     std::sort(descRows.begin(), descRows.end(), std::greater<int>());
@@ -114,5 +113,3 @@ void ItemModelTools::removeRows(QAbstractItemModel* model, const INT_CONTAINER& 
 }
 
 } // namespace qttools
-
-#endif // QTTOOLS_ITEM_MODEL_TOOLS_H

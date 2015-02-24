@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qsql_query_tools.h"
+#include "qsql_query_utils.h"
 
 #include <QtCore/QVariant>
 
@@ -45,7 +45,7 @@ namespace qttools {
  * \class SqlQueryError
  * \brief Provides a std::runtime_error that can convey a QSqlError object
  *
- * \headerfile qsql_query_tools.h <qttools/sql/qsql_query_tools.h>
+ * \headerfile qsql_query_utils.h <qttools/sql/qsql_query_utils.h>
  * \ingroup qttools_sql
  */
 

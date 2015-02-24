@@ -35,53 +35,50 @@
 **
 ****************************************************************************/
 
-#include "item_model_tools.h"
+#include "qatomic_utils.h"
+
+#include <QtCore/QAtomicInt>
+#include <QtCore/QAtomicPointer>
+#include <QtCore/QtDebug>
 
 namespace qttools {
 
-/*! \class ItemModelTools
- *  \brief Provides a collection of tools around QAbstractItemModel
- *  \headerfile item_model_tools.h <qttools/core/item_model_tools.h>
+/*! \class QAtomicUtils
+ *  \brief Provides a collection of tools around QAtomicInt and QAtomicPointer
+ *
+ *  QAtomicUtils mainly provides common operations for QAtomicInt and QAtomicPointer. It is useful
+ *  when portability for Qt4 / Qt5 is required because the API of these two classes have changed.
+ *
+ *  \headerfile qatomic_utils.h <qttools/core/qatomic_utils.h>
  *  \ingroup qttools_core
  *
  */
 
-bool ItemModelTools::isValidRow(const QAbstractItemModel* model, int row, const QModelIndex& parent)
+int QAtomicUtils::loadRelaxed(const QAtomicInt &atomInt)
 {
-    if (model != NULL)
-        return 0 <= row && row < model->rowCount(parent);
-    return false;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    return atomInt.load();
+#else
+    return atomInt;
+#endif
 }
 
-bool ItemModelTools::isValidColumn(const QAbstractItemModel* model, int col, const QModelIndex& parent)
+void QAtomicUtils::storeRelaxed(QAtomicInt* atomInt, int newVal)
 {
-    if (model != NULL)
-        return 0 <= col && col < model->columnCount(parent);
-    return false;
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    atomInt->store(newVal);
+#else
+    atomInt->fetchAndStoreRelaxed(newVal);
+#endif
 }
 
-/*! \brief Try to find a value in a given column of a model
- *  \return Index of the row where the first match of \p value could be found
- *  \retval -1 if \p value could not be found
- */
-int ItemModelTools::findDataInRow(const QAbstractItemModel* model, int col, const QVariant& value)
+void QAtomicUtils::storeRelease(QAtomicInt* atomInt, int newVal)
 {
-    if (model != NULL) {
-        for (int row = 0; row < model->rowCount(); ++row) {
-            if (model->data(model->index(row, col)) == value)
-                return row;
-        }
-    }
-    return -1;
-}
-
-/*! \brief Same as QAbstractItemModel::data() but more concise
- */
-QVariant ItemModelTools::tableData(const QAbstractItemModel* model, int row, int col, int role)
-{
-    if (model != NULL)
-        return model->data(model->index(row, col), role);
-    return QVariant();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    atomInt->storeRelease(newVal);
+#else
+    atomInt->fetchAndStoreRelease(newVal);
+#endif
 }
 
 } // namespace qttools

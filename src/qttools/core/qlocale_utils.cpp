@@ -35,22 +35,22 @@
 **
 ****************************************************************************/
 
-#include "qlocale_tools.h"
+#include "qlocale_utils.h"
 
 #include <QtCore/QMetaObject>
 #include <QtCore/QMetaEnum>
 
 namespace qttools {
 
-/*! \class QLocaleTools
+/*! \class QLocaleUtils
  *  \brief Provides a collection of tools around QLocale
- *  \headerfile qlocale_tools.h <qttools/core/qlocale_tools.h>
+ *  \headerfile qlocale_utils.h <qttools/core/qlocale_utils.h>
  *  \ingroup qttools_core
  *
  */
 
 //! Safe cast of an integer to QLocale::MeasurementSystem
-QLocale::MeasurementSystem QLocaleTools::toMeasurementSystem(int measSys)
+QLocale::MeasurementSystem QLocaleUtils::toMeasurementSystem(int measSys)
 {
     switch (measSys) {
     case QLocale::MetricSystem : return QLocale::MetricSystem;
@@ -63,7 +63,7 @@ QLocale::MeasurementSystem QLocaleTools::toMeasurementSystem(int measSys)
 }
 
 //! Safe cast of an integer to QLocale::Country
-QLocale::Country QLocaleTools::toCountry(int code)
+QLocale::Country QLocaleUtils::toCountry(int code)
 {
     const QMetaObject& localeMetaObj = QLocale::staticMetaObject;
     const int countryEnumIndex = localeMetaObj.indexOfEnumerator("Country");
@@ -76,7 +76,7 @@ QLocale::Country QLocaleTools::toCountry(int code)
 }
 
 //! All enumerator values of QLocale::Country returned in a single array
-QVector<QLocale::Country> QLocaleTools::allCountries()
+QVector<QLocale::Country> QLocaleUtils::allCountries()
 {
     QVector<QLocale::Country> countryVec;
     const int countryEnumIndex = QLocale::staticMetaObject.indexOfEnumerator("Country");

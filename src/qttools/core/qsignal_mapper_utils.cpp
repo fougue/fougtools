@@ -35,14 +35,14 @@
 **
 ****************************************************************************/
 
-#include "qsignal_mapper_tools.h"
+#include "qsignal_mapper_utils.h"
 
 namespace qttools {
 
 /*!
- * \class QSignalMapperTools
+ * \class QSignalMapperUtils
  * \brief Provides a collection of tools around QSignalMapper
- * \headerfile qsignal_mapper_tools.h <qttools/core/qsignal_mapper_tools.h>
+ * \headerfile qsignal_mapper_utils.h <qttools/core/qsignal_mapper_utils.h>
  * \ingroup qttools_core
  */
 
@@ -60,38 +60,38 @@ namespace qttools {
  *                       this, &MyClass:onSigMapped);
  *
  *      // More readable :
- *      QObject::connect(sigMap, qttools::QSignalMapperTools::signalMapped_int(),
+ *      QObject::connect(sigMap, qttools::QSignalMapperUtils::signalMapped_int(),
  *                       this, &MyClass:onSigMapped);
  *  \endcode
  *
  */
-QSignalMapperTools::SignalMapped_int QSignalMapperTools::signalMapped_int()
+QSignalMapperUtils::SignalMapped_int QSignalMapperUtils::signalMapped_int()
 {
-    return (QSignalMapperTools::SignalMapped_int)&QSignalMapper::mapped;
+    return (QSignalMapperUtils::SignalMapped_int)&QSignalMapper::mapped;
 }
 
 /*! \brief Returns the member function pointer(Qt signal) to QSignalMapper::mapped(const QString&)
- *  \sa QSignalMapperTools::signalMapped_int()
+ *  \sa QSignalMapperUtils::signalMapped_int()
  */
-QSignalMapperTools::SignalMapped_QString QSignalMapperTools::signalMapped_QString()
+QSignalMapperUtils::SignalMapped_QString QSignalMapperUtils::signalMapped_QString()
 {
-    return (QSignalMapperTools::SignalMapped_QString)&QSignalMapper::mapped;
+    return (QSignalMapperUtils::SignalMapped_QString)&QSignalMapper::mapped;
 }
 
 /*! \brief Returns the member function pointer(Qt signal) to QSignalMapper::mapped(QWidget*)
- *  \sa QSignalMapperTools::signalMapped_int()
+ *  \sa QSignalMapperUtils::signalMapped_int()
  */
-QSignalMapperTools::SignalMapped_QWidgetPtr QSignalMapperTools::signalMapped_QWidgetPtr()
+QSignalMapperUtils::SignalMapped_QWidgetPtr QSignalMapperUtils::signalMapped_QWidgetPtr()
 {
-    return (QSignalMapperTools::SignalMapped_QWidgetPtr)&QSignalMapper::mapped;
+    return (QSignalMapperUtils::SignalMapped_QWidgetPtr)&QSignalMapper::mapped;
 }
 
 /*! \brief Returns the member function pointer(Qt signal) to QSignalMapper::mapped(QObject*)
- *  \sa QSignalMapperTools::signalMapped_int()
+ *  \sa QSignalMapperUtils::signalMapped_int()
  */
-QSignalMapperTools::SignalMapped_QObjectPtr QSignalMapperTools::signalMapped_QObjectPtr()
+QSignalMapperUtils::SignalMapped_QObjectPtr QSignalMapperUtils::signalMapped_QObjectPtr()
 {
-    return (QSignalMapperTools::SignalMapped_QObjectPtr)&QSignalMapper::mapped;
+    return (QSignalMapperUtils::SignalMapped_QObjectPtr)&QSignalMapper::mapped;
 }
 
 /*! \brief Returns the member function pointer(Qt slot) to QSignalMapper::map()
@@ -109,20 +109,20 @@ QSignalMapperTools::SignalMapped_QObjectPtr QSignalMapperTools::signalMapped_QOb
  *
  *      // More readable :
  *      QObject::connect(action, &QAction::triggered,
- *                       sigMap, qttools::QSignalMapperTools::slotMap());
+ *                       sigMap, qttools::QSignalMapperUtils::slotMap());
  *  \endcode
  */
-QSignalMapperTools::SlotMap QSignalMapperTools::slotMap()
+QSignalMapperUtils::SlotMap QSignalMapperUtils::slotMap()
 {
-    return (QSignalMapperTools::SlotMap)&QSignalMapper::map;
+    return (QSignalMapperUtils::SlotMap)&QSignalMapper::map;
 }
 
 /*! \brief Returns the member function pointer(Qt slot) to QSignalMapper::map(QObject*)
- *  \sa QSignalMapperTools::slotMap()
+ *  \sa QSignalMapperUtils::slotMap()
  */
-QSignalMapperTools::SlotMap_QObjectPtr QSignalMapperTools::slotMap_QObjectPtr()
+QSignalMapperUtils::SlotMap_QObjectPtr QSignalMapperUtils::slotMap_QObjectPtr()
 {
-    return (QSignalMapperTools::SlotMap_QObjectPtr)&QSignalMapper::map;
+    return (QSignalMapperUtils::SlotMap_QObjectPtr)&QSignalMapper::map;
 }
 
 } // namespace qttools

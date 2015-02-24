@@ -35,45 +35,21 @@
 **
 ****************************************************************************/
 
-#include "qcombo_box_tools.h"
+#pragma once
+
+#include "core.h"
+#include <QtCore/QVector>
+#include <QtCore/QLocale>
 
 namespace qttools {
 
-/*!
- * \class QComboBoxTools
- * \brief Provides a collection of tools around QComboBox
- * \headerfile qcombo_box_tools.h <qttools/gui/qcombo_box_tools.h>
- * \ingroup qttools_gui
- */
-
-QComboBoxTools::SignalActivated_int QComboBoxTools::signalActivated_int()
+class QTTOOLS_CORE_EXPORT QLocaleUtils
 {
-    return (QComboBoxTools::SignalActivated_int)&QComboBox::activated;
-}
+public:
+    static QLocale::MeasurementSystem toMeasurementSystem(int measSys);
 
-QComboBoxTools::SignalActivated_QString QComboBoxTools::signalActivated_QString()
-{
-    return (QComboBoxTools::SignalActivated_QString)&QComboBox::activated;
-}
-
-QComboBoxTools::SignalCurrentIndexChanged_int QComboBoxTools::signalCurrentIndexChanged_int()
-{
-    return (QComboBoxTools::SignalCurrentIndexChanged_int)&QComboBox::currentIndexChanged;
-}
-
-QComboBoxTools::SignalCurrentIndexChanged_QString QComboBoxTools::signalCurrentIndexChanged_QString()
-{
-    return (QComboBoxTools::SignalCurrentIndexChanged_QString)&QComboBox::currentIndexChanged;
-}
-
-QComboBoxTools::SignalHighlighted_int QComboBoxTools::signalHighlighted_int()
-{
-    return (QComboBoxTools::SignalHighlighted_int)&QComboBox::highlighted;
-}
-
-QComboBoxTools::SignalHighlighted_QString QComboBoxTools::signalHighlighted_QString()
-{
-    return (QComboBoxTools::SignalHighlighted_QString)&QComboBox::highlighted;
-}
+    static QLocale::Country toCountry(int code);
+    static QVector<QLocale::Country> allCountries();
+};
 
 } // namespace qttools

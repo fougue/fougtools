@@ -35,47 +35,32 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QSTRING_TOOLS_H
-#define QTTOOLS_QSTRING_TOOLS_H
+#pragma once
 
 #include "core.h"
-#include <QtCore/QString>
+
+#include <QtCore/QSignalMapper>
 
 namespace qttools {
 
-struct QTTOOLS_CORE_EXPORT QStringLocaleAwareEqual
+class QTTOOLS_CORE_EXPORT QSignalMapperUtils
 {
-    bool operator()(const QString& lhs, const QString& rhs) const;
-};
+public:
+    typedef void (QSignalMapper::*SignalMapped_int)(int);
+    typedef void (QSignalMapper::*SignalMapped_QString)(const QString&);
+    typedef void (QSignalMapper::*SignalMapped_QWidgetPtr)(QWidget*);
+    typedef void (QSignalMapper::*SignalMapped_QObjectPtr)(QObject*);
 
-struct QTTOOLS_CORE_EXPORT QStringLocaleAwareNotEqual
-{
-    bool operator()(const QString& lhs, const QString& rhs) const;
-};
+    typedef void (QSignalMapper::*SlotMap)();
+    typedef void (QSignalMapper::*SlotMap_QObjectPtr)(QObject*);
 
-struct QTTOOLS_CORE_EXPORT QStringLocaleAwareLess
-{
-    bool operator()(const QString& lhs, const QString& rhs) const;
-};
+    static SignalMapped_int signalMapped_int();
+    static SignalMapped_QString signalMapped_QString();
+    static SignalMapped_QWidgetPtr signalMapped_QWidgetPtr();
+    static SignalMapped_QObjectPtr signalMapped_QObjectPtr();
 
-struct QTTOOLS_CORE_EXPORT QStringLocaleAwareLessEqual
-{
-    bool operator()(const QString& lhs, const QString& rhs) const;
-};
-
-struct QTTOOLS_CORE_EXPORT QStringLocaleAwareGreater
-{
-    bool operator()(const QString& lhs, const QString& rhs) const;
-};
-
-struct QTTOOLS_CORE_EXPORT QStringLocaleAwareGreaterEqual
-{
-    bool operator()(const QString& lhs, const QString& rhs) const;
+    static SlotMap slotMap();
+    static SlotMap_QObjectPtr slotMap_QObjectPtr();
 };
 
 } // namespace qttools
-
-QTTOOLS_CORE_EXPORT
-std::size_t hash_value(QString const& str);
-
-#endif // QTTOOLS_QSTRING_TOOLS_H

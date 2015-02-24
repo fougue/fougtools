@@ -35,60 +35,44 @@
 **
 ****************************************************************************/
 
-#include "core.h"
+#pragma once
 
-#include <QtCore/QAtomicPointer>
-class QAtomicInt;
+#include "core.h"
+#include <QtCore/QString>
 
 namespace qttools {
 
-class QTTOOLS_CORE_EXPORT QAtomicTools
+struct QTTOOLS_CORE_EXPORT QStringLocaleAwareEqual
 {
-public:
-    // QAtomicInt
-    static int loadRelaxed(const QAtomicInt& atomInt);
-
-    static void storeRelaxed(QAtomicInt* atomInt, int newVal);
-    static void storeRelease(QAtomicInt* atomInt, int newVal);
-
-    // QAtomicPointer
-    template<typename T>  static T* loadRelaxed(const QAtomicPointer<T>& atomPtr);
-
-    template<typename T>  static void storeRelaxed(QAtomicPointer<T>* atomPtr, T* newPtr);
-    template<typename T>  static void storeRelease(QAtomicPointer<T>* atomPtr, T* newPtr);
+    bool operator()(const QString& lhs, const QString& rhs) const;
 };
 
-
-
-// --
-// -- Implementation
-// --
-
-template<typename T>  T* QAtomicTools::loadRelaxed(const QAtomicPointer<T>& atomPtr)
+struct QTTOOLS_CORE_EXPORT QStringLocaleAwareNotEqual
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-    return atomPtr.load();
-#else
-    return atomPtr;
-#endif
-}
+    bool operator()(const QString& lhs, const QString& rhs) const;
+};
 
-template<typename T>  void QAtomicTools::storeRelaxed(QAtomicPointer<T>* atomPtr, T* newPtr)
+struct QTTOOLS_CORE_EXPORT QStringLocaleAwareLess
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-    atomPtr->store(newPtr);
-#else
-    atomPtr->fetchAndStoreRelaxed(newPtr);
-#endif
-}
+    bool operator()(const QString& lhs, const QString& rhs) const;
+};
 
-template<typename T>  void QAtomicTools::storeRelease(QAtomicPointer<T>* atomPtr, T* newPtr)
+struct QTTOOLS_CORE_EXPORT QStringLocaleAwareLessEqual
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-    atomPtr->storeRelease(newPtr);
-#else
-    atomPtr->fetchAndStoreRelease(newPtr);
-#endif
-}
+    bool operator()(const QString& lhs, const QString& rhs) const;
+};
+
+struct QTTOOLS_CORE_EXPORT QStringLocaleAwareGreater
+{
+    bool operator()(const QString& lhs, const QString& rhs) const;
+};
+
+struct QTTOOLS_CORE_EXPORT QStringLocaleAwareGreaterEqual
+{
+    bool operator()(const QString& lhs, const QString& rhs) const;
+};
 
 } // namespace qttools
+
+QTTOOLS_CORE_EXPORT
+std::size_t hash_value(QString const& str);

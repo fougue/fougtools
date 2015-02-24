@@ -45,7 +45,6 @@ HEADERS += \
     $$PWD/code_editor.h \
     $$PWD/gui.h \
     $$PWD/indexed_selection_model.h \
-    $$PWD/item_view_tools.h \
     $$PWD/length_double_spinbox.h \
     $$PWD/quantity_editor_manager.h \
     $$PWD/line_numbers_bar.h \
@@ -53,20 +52,20 @@ HEADERS += \
     $$PWD/message_dialog.h \
     $$PWD/proxy_styled_item_delegate.h \
     $$PWD/qcombo_box_current_item_keeper.h \
-    $$PWD/qcombo_box_tools.h \
     $$PWD/qstandard_item_explorer.h \
     $$PWD/tree_combo_box.h \
     $$PWD/item_view_buttons.h \
     $$PWD/wait_dialog.h \
-    $$PWD/qwidget_tools.h \
     $$PWD/strict_stack_widget.h \
-    $$PWD/abstract_quantity_editor.h
+    $$PWD/abstract_quantity_editor.h \
+    $$PWD/item_view_utils.h \
+    $$PWD/qcombo_box_utils.h \
+    $$PWD/qwidget_utils.h
 
 SOURCES += \
     $$PWD/abstract_length_editor.cpp \
     $$PWD/code_editor.cpp \
     $$PWD/indexed_selection_model.cpp \
-    $$PWD/item_view_tools.cpp \
     $$PWD/length_double_spinbox.cpp \
     $$PWD/quantity_editor_manager.cpp \
     $$PWD/line_numbers_bar.cpp \
@@ -74,11 +73,12 @@ SOURCES += \
     $$PWD/message_dialog.cpp \
     $$PWD/proxy_styled_item_delegate.cpp \
     $$PWD/qcombo_box_current_item_keeper.cpp \
-    $$PWD/qcombo_box_tools.cpp \
     $$PWD/qstandard_item_explorer.cpp \
     $$PWD/tree_combo_box.cpp \
     $$PWD/item_view_buttons.cpp \
     $$PWD/wait_dialog.cpp \
-    $$PWD/qwidget_tools.cpp \
     $$PWD/strict_stack_widget.cpp \
-    $$PWD/abstract_quantity_editor.cpp
+    $$PWD/abstract_quantity_editor.cpp \
+    $$PWD/item_view_utils.cpp \
+    $$PWD/qcombo_box_utils.cpp \
+    $$PWD/qwidget_utils.cpp

@@ -35,51 +35,30 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QOBJECT_TOOLS_H
-#define QTTOOLS_QOBJECT_TOOLS_H
+#pragma once
 
-#include "core.h"
-class QObject;
+#include "gui.h"
+
+#include <QtWidgets/QComboBox>
 
 namespace qttools {
 
-class QTTOOLS_CORE_EXPORT QObjectTools
+class QTTOOLS_GUI_EXPORT QComboBoxUtils
 {
 public:
-    static void forwardSignal(const QObject* sender, const QObject* resender, const char* signal);
+    typedef void (QComboBox::*SignalActivated_int)(int);
+    typedef void (QComboBox::*SignalActivated_QString)(const QString&);
+    typedef void (QComboBox::*SignalCurrentIndexChanged_int)(int);
+    typedef void (QComboBox::*SignalCurrentIndexChanged_QString)(const QString&);
+    typedef void (QComboBox::*SignalHighlighted_int)(int);
+    typedef void (QComboBox::*SignalHighlighted_QString)(const QString&);
 
-    template<typename PARENT_TYPE>
-    static const PARENT_TYPE* constFindParent(const QObject* object);
-
-    template<typename PARENT_TYPE>
-    static PARENT_TYPE* findParent(QObject* object);
+    static SignalActivated_int signalActivated_int();
+    static SignalActivated_QString signalActivated_QString();
+    static SignalCurrentIndexChanged_int signalCurrentIndexChanged_int();
+    static SignalCurrentIndexChanged_QString signalCurrentIndexChanged_QString();
+    static SignalHighlighted_int signalHighlighted_int();
+    static SignalHighlighted_QString signalHighlighted_QString();
 };
 
 } // namespace qttools
-
-// --
-// -- Implementation
-// --
-
-#include <QtCore/QObject>
-
-namespace qttools {
-
-template<typename PARENT_TYPE>
-const PARENT_TYPE* QObjectTools::constFindParent(const QObject* object)
-{
-    return findParent<PARENT_TYPE>(const_cast<QObject*>(object));
-}
-
-template<typename PARENT_TYPE>
-PARENT_TYPE* QObjectTools::findParent(QObject* object)
-{
-    QObject* it = object;
-    while (it != NULL && qobject_cast<PARENT_TYPE*>(it) == NULL)
-        it = it->parent();
-    return qobject_cast<PARENT_TYPE*>(it);
-}
-
-} // namespace qttools
-
-#endif // QTTOOLS_QOBJECT_TOOLS_H

@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QML_TOOLS_H
-#define QTTOOLS_QML_TOOLS_H
+#pragma once
 
 #include "qml.h"
 #include <QtCore/QObject>
@@ -48,23 +47,21 @@ class QDeclarativeContext;
 
 namespace qttools {
 
-class QTTOOLS_QML_EXPORT QmlTools : public QObject
+class QTTOOLS_QML_EXPORT QmlUtils : public QObject
 {
     Q_OBJECT
 
 public:
-    QmlTools(QObject* parent = NULL);
+    QmlUtils(QObject* parent = NULL);
 
     Q_INVOKABLE void setOverrideCursor(int shape);
     Q_INVOKABLE void restoreOverrideCursor();
 
 #if QT_VERSION >= 0x050000
-    static void declareObject(QQmlContext* context, QmlTools* obj);
+    static void declareObject(QQmlContext* context, QmlUtils* obj);
 #else
-    static void declareObject(QDeclarativeContext* context, QmlTools* obj);
+    static void declareObject(QDeclarativeContext* context, QmlUtils* obj);
 #endif // QT_VERSION
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_QML_TOOLS_H

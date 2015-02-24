@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QWIDGET_TOOLS_H
-#define QTTOOLS_QWIDGET_TOOLS_H
+#pragma once
 
 #include "gui.h"
 #include <QtCore/QPair>
@@ -47,7 +46,7 @@ class QWidget;
 
 namespace qttools {
 
-class QTTOOLS_GUI_EXPORT QWidgetTools
+class QTTOOLS_GUI_EXPORT QWidgetUtils
 {
 public:
     template<typename PARENT_WIDGET>
@@ -81,7 +80,7 @@ namespace qttools {
 
 //! Searches up in the direct parents of \p widget the first ancestor being of type \c PARENT_WIDGET
 template<typename PARENT_WIDGET>
-PARENT_WIDGET* QWidgetTools::findFirstParentWidget(QWidget* widget)
+PARENT_WIDGET* QWidgetUtils::findFirstParentWidget(QWidget* widget)
 {
     PARENT_WIDGET* foundParentWidget = NULL;
     QWidget* iteratorWidget = widget;
@@ -94,7 +93,7 @@ PARENT_WIDGET* QWidgetTools::findFirstParentWidget(QWidget* widget)
 
 //! Searches up in the direct parents of \p widget the last ancestor being of type \c PARENT_WIDGET
 template<typename PARENT_WIDGET>
-PARENT_WIDGET* QWidgetTools::findLastParentWidget(QWidget* widget)
+PARENT_WIDGET* QWidgetUtils::findLastParentWidget(QWidget* widget)
 {
     PARENT_WIDGET* foundParentWidget = NULL;
     QWidget* iteratorWidget = widget;
@@ -108,5 +107,3 @@ PARENT_WIDGET* QWidgetTools::findLastParentWidget(QWidget* widget)
 }
 
 } // namespace qttools
-
-#endif // QTTOOLS_QWIDGET_TOOLS_H

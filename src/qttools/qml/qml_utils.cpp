@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qml_tools.h"
+#include "qml_utils.h"
 
 #include <QtGui/QCursor>
 
@@ -84,12 +84,12 @@ static Qt::CursorShape toQtCursorShape(int shape)
 
 } // namespace internal
 
-QmlTools::QmlTools(QObject* parent)
+QmlUtils::QmlUtils(QObject* parent)
     : QObject(parent)
 {
 }
 
-void QmlTools::setOverrideCursor(int shape)
+void QmlUtils::setOverrideCursor(int shape)
 {
 #if QT_VERSION >= 0x050000
     QGuiApplication::setOverrideCursor(QCursor(internal::toQtCursorShape(shape)));
@@ -98,7 +98,7 @@ void QmlTools::setOverrideCursor(int shape)
 #endif // QT_VERSION
 }
 
-void QmlTools::restoreOverrideCursor()
+void QmlUtils::restoreOverrideCursor()
 {
 #if QT_VERSION >= 0x050000
     QGuiApplication::restoreOverrideCursor();
@@ -108,13 +108,13 @@ void QmlTools::restoreOverrideCursor()
 }
 
 #if QT_VERSION >= 0x050000
-void QmlTools::declareObject(QQmlContext* context, QmlTools* obj)
+void QmlUtils::declareObject(QQmlContext* context, QmlUtils* obj)
 #else
-void QmlTools::declareObject(QDeclarativeContext* context, QmlTools* obj)
+void QmlUtils::declareObject(QDeclarativeContext* context, QmlUtils* obj)
 #endif // QT_VERSION
 {
     if (obj != NULL)
-        context->setContextProperty(QLatin1String("qttools_QmlTools"), obj);
+        context->setContextProperty(QLatin1String("qttools_QmlUtils"), obj);
 }
 
 } // namespace qttools

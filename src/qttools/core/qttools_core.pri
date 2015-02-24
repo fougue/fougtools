@@ -42,16 +42,9 @@ HEADERS += \
     $$PWD/core.h \
     $$PWD/grid_numbering.h \
     $$PWD/grid_struct.h \
-    $$PWD/item_model_tools.h \
     $$PWD/log.h \
     $$PWD/log_unqualified.h \
-    $$PWD/qatomic_tools.h \
-    $$PWD/qlocale_tools.h \
-    $$PWD/qobject_tools.h \
     $$PWD/qobject_wrap.h \
-    $$PWD/qsignal_mapper_tools.h \
-    $$PWD/qstring_tools.h \
-    $$PWD/qvariant_tools.h \
     $$PWD/qt_plugin_def.h \
     $$PWD/runtime_error.h \
     $$PWD/scoped_connection.h \
@@ -64,22 +57,23 @@ HEADERS += \
     $$PWD/plugins_loader_instance_iface_filter.h \
     \
     $$PWD/internal/wait_loop_p.h \
-    $$PWD/internal/wait_loop_time_out_stop_condition.h
+    $$PWD/internal/wait_loop_time_out_stop_condition.h \
+    $$PWD/item_model_utils.h \
+    $$PWD/qatomic_utils.h \
+    $$PWD/qlocale_utils.h \
+    $$PWD/qobject_utils.h \
+    $$PWD/qsignal_mapper_utils.h \
+    $$PWD/qstring_utils.h \
+    $$PWD/qvariant_utils.h
 
 SOURCES += \
     $$PWD/abstract_cipher.cpp \
     $$PWD/plugins_loader.cpp \
     $$PWD/abstract_signal_dispatch.cpp \
     $$PWD/log.cpp \
-    $$PWD/qatomic_tools.cpp \
-    $$PWD/qlocale_tools.cpp \
-    $$PWD/qobject_tools.cpp \
-    $$PWD/qsignal_mapper_tools.cpp \
-    $$PWD/qstring_tools.cpp \
     $$PWD/runtime_error.cpp \
     $$PWD/scoped_connection.cpp \
     $$PWD/sleep.cpp \
-    $$PWD/item_model_tools.cpp \
     $$PWD/grid_numbering.cpp \
     $$PWD/grid_struct.cpp \
     $$PWD/wait_loop.cpp \
@@ -89,4 +83,10 @@ SOURCES += \
     $$PWD/plugins_loader_instance_iface_filter.cpp \
     \
     $$PWD/internal/wait_loop_p.cpp \
-    $$PWD/internal/wait_loop_time_out_stop_condition.cpp
+    $$PWD/internal/wait_loop_time_out_stop_condition.cpp \
+    $$PWD/item_model_utils.cpp \
+    $$PWD/qatomic_utils.cpp \
+    $$PWD/qlocale_utils.cpp \
+    $$PWD/qobject_utils.cpp \
+    $$PWD/qsignal_mapper_utils.cpp \
+    $$PWD/qstring_utils.cpp

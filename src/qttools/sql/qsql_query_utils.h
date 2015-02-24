@@ -35,8 +35,7 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QSQL_QUERY_TOOLS_H
-#define QTTOOLS_QSQL_QUERY_TOOLS_H
+#pragma once
 
 #include "sql.h"
 #include <stdexcept>
@@ -68,5 +67,3 @@ QTTOOLS_SQL_EXPORT
 void throwIfError(const QSqlQuery& qry);
 
 } // namespace qttools
-
-#endif // QTTOOLS_QSQL_QUERY_TOOLS_H

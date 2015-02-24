@@ -35,24 +35,24 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QLOCALE_TOOLS_H
-#define QTTOOLS_QLOCALE_TOOLS_H
+#pragma once
 
-#include "core.h"
+#include "gui.h"
 #include <QtCore/QVector>
-#include <QtCore/QLocale>
+class QAbstractItemView;
+class QSortFilterProxyModel;
 
 namespace qttools {
 
-class QTTOOLS_CORE_EXPORT QLocaleTools
+class QTTOOLS_GUI_EXPORT ItemViewUtils
 {
 public:
-    static QLocale::MeasurementSystem toMeasurementSystem(int measSys);
+    static QVector<int> selectedRows(const QAbstractItemView* view, int col = -1);
+    static void selectRows(QAbstractItemView* view, const QVector<int>& rows);
 
-    static QLocale::Country toCountry(int code);
-    static QVector<QLocale::Country> allCountries();
+    static int mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow);
+    static int mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow);
 };
 
 } // namespace qttools
 
-#endif // QTTOOLS_QLOCALE_TOOLS_H

@@ -35,7 +35,7 @@
 **
 ****************************************************************************/
 
-#include "qwidget_tools.h"
+#include "qwidget_utils.h"
 
 // QtWidgets
 #include <QAbstractScrollArea>
@@ -47,10 +47,10 @@
 
 namespace qttools {
 
-/*! \class QWidgetTools
+/*! \class QWidgetUtils
  *  \brief Provides a collection of tools around QWidget
  *
- *  \headerfile qwidget_tools.h <qttools/gui/qwidget_tools.h>
+ *  \headerfile qwidget_utils.h <qttools/gui/qwidget_utils.h>
  *  \ingroup qttools_gui
  */
 
@@ -60,7 +60,7 @@ namespace qttools {
  *  wrapWidgetInDialog() will try to find if \p widget contains a QDialogButtonBox, if so
  *  then it connects to \p dialog 's accept()/reject() slots.
  */
-void QWidgetTools::wrapWidgetInDialog(QWidget *widget, QDialog *dialog)
+void QWidgetUtils::wrapWidgetInDialog(QWidget *widget, QDialog *dialog)
 {
     if (widget != NULL && dialog != NULL) {
         dialog->setWindowTitle(widget->windowTitle());
@@ -86,7 +86,7 @@ void QWidgetTools::wrapWidgetInDialog(QWidget *widget, QDialog *dialog)
  *
  *  If \p containerWidget is empty, a QBoxLayout is created to receive \p contentsWidget
  */
-void QWidgetTools::addContentsWidget(QWidget *containerWidget, QWidget *contentsWidget)
+void QWidgetUtils::addContentsWidget(QWidget *containerWidget, QWidget *contentsWidget)
 {
     if (containerWidget != NULL && contentsWidget != NULL) {
         if (containerWidget->layout() == NULL) {
@@ -102,7 +102,7 @@ void QWidgetTools::addContentsWidget(QWidget *containerWidget, QWidget *contents
  *
  *  \returns Null point (ie. with coordinates (0, 0)) if \p widget is null
  */
-QPoint QWidgetTools::globalPos(const QWidget *widget, Qt::Corner widgetCorner)
+QPoint QWidgetUtils::globalPos(const QWidget *widget, Qt::Corner widgetCorner)
 {
     if (widget != NULL) {
         const QRect geom = widget->frameGeometry();
@@ -118,7 +118,7 @@ QPoint QWidgetTools::globalPos(const QWidget *widget, Qt::Corner widgetCorner)
 
 /*! \brief Move position of \p widget so it is displayed stuck to the right of \p nextTo
   */
-void QWidgetTools::moveWidgetRightTo(QWidget* widget, const QWidget* nextTo)
+void QWidgetUtils::moveWidgetRightTo(QWidget* widget, const QWidget* nextTo)
 {
     const QRect frameGeom = nextTo->frameGeometry();
     widget->move(nextTo->mapToGlobal(QPoint(frameGeom.width(), 0)));
@@ -126,7 +126,7 @@ void QWidgetTools::moveWidgetRightTo(QWidget* widget, const QWidget* nextTo)
 
 /*! \brief Move position of \p widget so it is displayed stuck to the left of \p nextTo
  */
-void QWidgetTools::moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo)
+void QWidgetUtils::moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo)
 {
     //const QRect nextToFrameGeom = nextTo->frameGeometry();
     const QRect widgetFrameGeom = widget->frameGeometry();
@@ -135,7 +135,7 @@ void QWidgetTools::moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo)
 
 /*! \brief Current slide positions of the horizontal and vertical scroll bars
  */
-QPair<int, int> QWidgetTools::horizAndVertScrollValue(const QAbstractScrollArea* area)
+QPair<int, int> QWidgetUtils::horizAndVertScrollValue(const QAbstractScrollArea* area)
 {
     return qMakePair(area->horizontalScrollBar()->value(),
                      area->verticalScrollBar()->value());
@@ -143,7 +143,7 @@ QPair<int, int> QWidgetTools::horizAndVertScrollValue(const QAbstractScrollArea*
 
 /*! \brief Set the current slide positions of the horizontal and vertical scroll bars to \p values
  */
-void QWidgetTools::setHorizAndVertScrollValue(QAbstractScrollArea* area,
+void QWidgetUtils::setHorizAndVertScrollValue(QAbstractScrollArea* area,
                                               const QPair<int, int>& values)
 {
     area->horizontalScrollBar()->setValue(values.first);

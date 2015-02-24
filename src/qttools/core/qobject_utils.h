@@ -35,50 +35,48 @@
 **
 ****************************************************************************/
 
-#include "qatomic_tools.h"
+#pragma once
 
-#include <QtCore/QAtomicInt>
-#include <QtCore/QAtomicPointer>
-#include <QtCore/QtDebug>
+#include "core.h"
+class QObject;
 
 namespace qttools {
 
-/*! \class QAtomicTools
- *  \brief Provides a collection of tools around QAtomicInt and QAtomicPointer
- *
- *  QAtomicTools mainly provides common operations for QAtomicInt and QAtomicPointer. It is useful
- *  when portability for Qt4 / Qt5 is required because the API of these two classes have changed.
- *
- *  \headerfile qatomic_tools.h <qttools/core/qatomic_tools.h>
- *  \ingroup qttools_core
- *
- */
-
-int QAtomicTools::loadRelaxed(const QAtomicInt &atomInt)
+class QTTOOLS_CORE_EXPORT QObjectUtils
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-    return atomInt.load();
-#else
-    return atomInt;
-#endif
+public:
+    static void forwardSignal(const QObject* sender, const QObject* resender, const char* signal);
+
+    template<typename PARENT_TYPE>
+    static const PARENT_TYPE* constFindParent(const QObject* object);
+
+    template<typename PARENT_TYPE>
+    static PARENT_TYPE* findParent(QObject* object);
+};
+
+} // namespace qttools
+
+// --
+// -- Implementation
+// --
+
+#include <QtCore/QObject>
+
+namespace qttools {
+
+template<typename PARENT_TYPE>
+const PARENT_TYPE* QObjectUtils::constFindParent(const QObject* object)
+{
+    return findParent<PARENT_TYPE>(const_cast<QObject*>(object));
 }
 
-void QAtomicTools::storeRelaxed(QAtomicInt* atomInt, int newVal)
+template<typename PARENT_TYPE>
+PARENT_TYPE* QObjectUtils::findParent(QObject* object)
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-    atomInt->store(newVal);
-#else
-    atomInt->fetchAndStoreRelaxed(newVal);
-#endif
-}
-
-void QAtomicTools::storeRelease(QAtomicInt* atomInt, int newVal)
-{
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-    atomInt->storeRelease(newVal);
-#else
-    atomInt->fetchAndStoreRelease(newVal);
-#endif
+    QObject* it = object;
+    while (it != NULL && qobject_cast<PARENT_TYPE*>(it) == NULL)
+        it = it->parent();
+    return qobject_cast<PARENT_TYPE*>(it);
 }
 
 } // namespace qttools

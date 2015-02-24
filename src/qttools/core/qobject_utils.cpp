@@ -35,26 +35,22 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_ITEM_VIEW_TOOLS_H
-#define QTTOOLS_ITEM_VIEW_TOOLS_H
+#include "qobject_utils.h"
 
-#include "gui.h"
-#include <QtCore/QVector>
-class QAbstractItemView;
-class QSortFilterProxyModel;
+#include <QtCore/QObject>
 
 namespace qttools {
 
-class QTTOOLS_GUI_EXPORT ItemViewTools
-{
-public:
-    static QVector<int> selectedRows(const QAbstractItemView* view, int col = -1);
-    static void selectRows(QAbstractItemView* view, const QVector<int>& rows);
+/*! \class QObjectUtils
+ *  \brief Provides a collection of tools around QObject
+ *  \headerfile qobject_utils.h <qttools/core/qobject_utils.h>
+ *  \ingroup qttools_core
+ *
+ */
 
-    static int mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow);
-    static int mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow);
-};
+void QObjectUtils::forwardSignal(const QObject* sender, const QObject* resender, const char* signal)
+{
+    QObject::connect(sender, signal, resender, signal);
+}
 
 } // namespace qttools
-
-#endif // QTTOOLS_ITEM_VIEW_TOOLS_H

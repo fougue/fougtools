@@ -1,6 +1,6 @@
 #include "test_qttools_core.h"
 
-#include "../src/qttools/core/qlocale_tools.h"
+#include "../src/qttools/core/qlocale_utils.h"
 #include "../src/qttools/core/wait_loop.h"
 
 #include <QtCore/QtDebug>
@@ -83,7 +83,7 @@ void TestQtToolsCore::WaitLoop_test()
 void TestQtToolsCore::QLocaleTools_test()
 {
     QCOMPARE(static_cast<int>(QLocale::France), 74);
-    QCOMPARE(qttools::QLocaleTools::toCountry(74), QLocale::France);
+    QCOMPARE(qttools::QLocaleUtils::toCountry(74), QLocale::France);
     //  foreach (auto country, qttools::QLocaleTools::allCountries()) {
     //    qDebug() << QLocale::countryToString(country);
     //  }

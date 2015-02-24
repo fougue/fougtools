@@ -45,7 +45,7 @@
 #include <QtCore/QMutexLocker>
 #include <QtCore/QTextStream>
 #include <QtCore/QUuid>
-#include "qsql_query_tools.h"
+#include "qsql_query_utils.h"
 
 namespace qttools {
 

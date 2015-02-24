@@ -35,35 +35,45 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_QSIGNAL_MAPPER_TOOLS_H
-#define QTTOOLS_QSIGNAL_MAPPER_TOOLS_H
-
-#include "core.h"
-
-#include <QtCore/QSignalMapper>
+#include "qcombo_box_utils.h"
 
 namespace qttools {
 
-class QTTOOLS_CORE_EXPORT QSignalMapperTools
+/*!
+ * \class QComboBoxUtils
+ * \brief Provides a collection of tools around QComboBox
+ * \headerfile qcombo_box_utils.h <qttools/gui/qcombo_box_utils.h>
+ * \ingroup qttools_gui
+ */
+
+QComboBoxUtils::SignalActivated_int QComboBoxUtils::signalActivated_int()
 {
-public:
-    typedef void (QSignalMapper::*SignalMapped_int)(int);
-    typedef void (QSignalMapper::*SignalMapped_QString)(const QString&);
-    typedef void (QSignalMapper::*SignalMapped_QWidgetPtr)(QWidget*);
-    typedef void (QSignalMapper::*SignalMapped_QObjectPtr)(QObject*);
+    return (QComboBoxUtils::SignalActivated_int)&QComboBox::activated;
+}
 
-    typedef void (QSignalMapper::*SlotMap)();
-    typedef void (QSignalMapper::*SlotMap_QObjectPtr)(QObject*);
+QComboBoxUtils::SignalActivated_QString QComboBoxUtils::signalActivated_QString()
+{
+    return (QComboBoxUtils::SignalActivated_QString)&QComboBox::activated;
+}
 
-    static SignalMapped_int signalMapped_int();
-    static SignalMapped_QString signalMapped_QString();
-    static SignalMapped_QWidgetPtr signalMapped_QWidgetPtr();
-    static SignalMapped_QObjectPtr signalMapped_QObjectPtr();
+QComboBoxUtils::SignalCurrentIndexChanged_int QComboBoxUtils::signalCurrentIndexChanged_int()
+{
+    return (QComboBoxUtils::SignalCurrentIndexChanged_int)&QComboBox::currentIndexChanged;
+}
 
-    static SlotMap slotMap();
-    static SlotMap_QObjectPtr slotMap_QObjectPtr();
-};
+QComboBoxUtils::SignalCurrentIndexChanged_QString QComboBoxUtils::signalCurrentIndexChanged_QString()
+{
+    return (QComboBoxUtils::SignalCurrentIndexChanged_QString)&QComboBox::currentIndexChanged;
+}
+
+QComboBoxUtils::SignalHighlighted_int QComboBoxUtils::signalHighlighted_int()
+{
+    return (QComboBoxUtils::SignalHighlighted_int)&QComboBox::highlighted;
+}
+
+QComboBoxUtils::SignalHighlighted_QString QComboBoxUtils::signalHighlighted_QString()
+{
+    return (QComboBoxUtils::SignalHighlighted_QString)&QComboBox::highlighted;
+}
 
 } // namespace qttools
-
-#endif // QTTOOLS_QSIGNAL_MAPPER_TOOLS_H

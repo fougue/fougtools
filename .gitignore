@@ -3,7 +3,7 @@ _*
 Makefile*
 debug
 release
-*.pro.user
+*.pro.user*
 bin
 *.pdb
 *.o
@@ -11,3 +11,4 @@ bin
 moc_*
 object_script.*
 doc/*.tags
+doc/html

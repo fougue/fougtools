@@ -37,8 +37,6 @@
 
 #include "database_settings.h"
 
-#include "../core/abstract_cipher.h"
-
 #include <QtCore/QSettings>
 #include <QtSql/QSqlDatabase>
 
@@ -66,7 +64,7 @@ void DatabaseSettings::setHost(const QString& host)
 
 /*! \sa QSqlDatabase::hostName()
  */
-QString DatabaseSettings::host() const
+const QString& DatabaseSettings::host() const
 {
     return m_host;
 }
@@ -108,7 +106,7 @@ void DatabaseSettings::setUserName(const QString& userName)
 
 /*! \sa QSqlDatabase::userName()
  */
-QString DatabaseSettings::userName() const
+const QString& DatabaseSettings::userName() const
 {
     return m_userName;
 }
@@ -122,18 +120,18 @@ void DatabaseSettings::setPassword(const QString& password)
 
 /*! \sa QSqlDatabase::password()
  */
-QString DatabaseSettings::password() const
+const QString& DatabaseSettings::password() const
 {
     return m_password;
 }
 
 /*! \brief Load settings from the persistent storage
- *  \param passwordCipher Encrypt/decrypt algorithm used to decrypt the password. If \c null then
+ *  \param pwdCipherFunc Function used to decrypt the password. If \c null then
  *         the default password is returned (see parameter \p defValues)
  *  \param defValues Default values when all or some persistent settings could not be retrieved
  */
 void DatabaseSettings::load(const QSettings* settings,
-                            const AbstractCipher* passwordCipher,
+                            CipherFunction&& pwdCipherFunc,
                             const ValuesHash& defValues)
 {
     if (settings == NULL)
@@ -150,9 +148,9 @@ void DatabaseSettings::load(const QSettings* settings,
     this->setPort(settings->value("database/port", defPort).toInt());
     this->setUserName(settings->value("database/user", defUser).toString());
 
-    if (passwordCipher != NULL && settings->contains("database/password")) {
+    if (pwdCipherFunc && settings->contains("database/password")) {
         const QByteArray decryptedPwd =
-                passwordCipher->decrypted(settings->value("database/password").toByteArray());
+                pwdCipherFunc(settings->value("database/password").toByteArray());
         this->setPassword(decryptedPwd);
     }
     else {
@@ -161,12 +159,11 @@ void DatabaseSettings::load(const QSettings* settings,
 }
 
 /*! \brief Write settings to persistent storage
- *  \param passwordCipher Encrypt/decrypt algorithm used to encrypt the password. If \c null then an
- *         empty password is stored. Otherwise the password() is reprensented as a UTF-8 byte array
- *         and passed to AbstractCipher::encrypted()
+ *  \param pwdCipherFunc Function used to encrypt the password. If \c null then an
+ *         empty password is stored. Otherwise the password() is reprensented as
+ *         a UTF-8 byte array and passed to pwdCipherFunc
  */
-void DatabaseSettings::write(QSettings* settings,
-                             const AbstractCipher* passwordCipher) const
+void DatabaseSettings::write(QSettings* settings, CipherFunction&& pwdCipherFunc) const
 {
     if (settings == NULL)
         return;
@@ -176,9 +173,9 @@ void DatabaseSettings::write(QSettings* settings,
     settings->setValue("database/port", this->port());
     settings->setValue("database/user", this->userName());
 
-    if (passwordCipher != NULL) {
+    if (pwdCipherFunc) {
         const QByteArray pwd = this->password().toUtf8();
-        settings->setValue("database/password", passwordCipher->encrypted(pwd));
+        settings->setValue("database/password", pwdCipherFunc(pwd));
     }
     else {
         settings->setValue("database/password", QString());

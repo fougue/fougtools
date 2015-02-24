@@ -36,7 +36,6 @@
 #############################################################################
 
 HEADERS += \
-    $$PWD/abstract_cipher.h \
     $$PWD/plugins_loader.h \
     $$PWD/abstract_signal_dispatch.h \
     $$PWD/core.h \
@@ -63,7 +62,6 @@ HEADERS += \
     $$PWD/qvariant_utils.h
 
 SOURCES += \
-    $$PWD/abstract_cipher.cpp \
     $$PWD/plugins_loader.cpp \
     $$PWD/abstract_signal_dispatch.cpp \
     $$PWD/log.cpp \

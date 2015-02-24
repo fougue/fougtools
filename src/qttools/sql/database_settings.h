@@ -35,27 +35,28 @@
 **
 ****************************************************************************/
 
-#ifndef QTTOOLS_SQL_DATABASE_SETTINGS_H
-#define QTTOOLS_SQL_DATABASE_SETTINGS_H
+#pragma once
 
-#include "sql.h"
-#include <QtCore/QHash>
-#include <QtCore/QVariant>
 class QSettings;
 class QSqlDatabase;
 
-namespace qttools {
+#include "sql.h"
+#include <QtCore/QByteArray>
+#include <QtCore/QHash>
+#include <QtCore/QVariant>
+#include <functional>
 
-class AbstractCipher;
+namespace qttools {
 
 class QTTOOLS_SQL_EXPORT DatabaseSettings
 {
 public:
+    typedef std::function<QByteArray (const QByteArray&)> CipherFunction;
     typedef QHash<QString, QVariant> ValuesHash;
 
     DatabaseSettings();
 
-    QString host() const;
+    const QString& host() const;
     void setHost(const QString& host);
 
     QString databaseName() const;
@@ -64,19 +65,19 @@ public:
     int port() const;
     void setPort(int port);
 
-    QString userName() const;
+    const QString& userName() const;
     void setUserName(const QString& userName);
 
-    QString password() const;
+    const QString& password() const;
     void setPassword(const QString& password);
 
     void applyTo(QSqlDatabase* db) const;
 
     void load(const QSettings* settings,
-              const AbstractCipher* passwordCipher = NULL,
+              CipherFunction&& pwdCipherFunc,
               const ValuesHash& defValues = ValuesHash());
     void write(QSettings* settings,
-               const AbstractCipher* passwordCipher = NULL) const;
+               CipherFunction&& pwdCipherFunc) const;
 
 private:
     QString m_host;
@@ -87,5 +88,3 @@ private:
 };
 
 } // namespace qttools
-
-#endif // QTTOOLS_SQL_DATABASE_SETTINGS_H

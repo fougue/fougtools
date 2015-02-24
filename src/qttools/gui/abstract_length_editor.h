@@ -64,8 +64,8 @@ public:
 
     AbstractLengthEditor();
 
-    double qtyValue() const;
-    void setQtyValue(double v);
+    double qtyValue() const Q_DECL_OVERRIDE;
+    void setQtyValue(double v) Q_DECL_OVERRIDE;
 
     virtual double length() const = 0;
     virtual void setLength(double v) = 0;

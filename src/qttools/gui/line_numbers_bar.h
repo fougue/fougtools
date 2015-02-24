@@ -58,8 +58,8 @@ public:
     void setTextEdit(QTextEdit* edit);
 
 protected:
-    void paintEvent(QPaintEvent* event);
-    bool event(QEvent *event);
+    void paintEvent(QPaintEvent* event) Q_DECL_OVERRIDE;
+    bool event(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
     class Private;

@@ -56,10 +56,10 @@ public:
     ~LengthDoubleSpinBox();
 
     double length() const;
-    Q_SLOT void setLength(double v);
+    Q_SLOT void setLength(double v) Q_DECL_OVERRIDE;
 
 public slots:
-    void updateEditor(QLocale::MeasurementSystem newSys);
+    void updateEditor(QLocale::MeasurementSystem newSys) Q_DECL_OVERRIDE;
 
 private:
     class Private;

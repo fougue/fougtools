@@ -69,15 +69,15 @@ public:
     Aspect_GraphicCallbackStruct* paintCallbackData() const;
 #endif
 
-    QPaintEngine* paintEngine() const;
+    QPaintEngine* paintEngine() const Q_DECL_OVERRIDE;
 
 public slots:
     void redraw();
     void fitAll();
 
 protected:
-    void paintEvent(QPaintEvent* event);
-    void resizeEvent(QResizeEvent* event);
+    void paintEvent(QPaintEvent* event) Q_DECL_OVERRIDE;
+    void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
 
 private:
     friend int occ_QtView_paintCallBack(Aspect_Drawable, void*, Aspect_GraphicCallbackStruct*);

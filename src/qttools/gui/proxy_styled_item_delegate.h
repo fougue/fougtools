@@ -53,22 +53,31 @@ public:
     QStyledItemDelegate* sourceDelegate() const;
     void setSourceDelegate(QStyledItemDelegate* srcDelegate);
 
-    void paint(QPainter *painter,
-               const QStyleOptionViewItem &option,
-               const QModelIndex &index) const;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    QString displayText(const QVariant &value, const QLocale &locale) const;
+    void paint(
+            QPainter *painter,
+            const QStyleOptionViewItem &option,
+            const QModelIndex &index) const Q_DECL_OVERRIDE;
+    QSize sizeHint(
+            const QStyleOptionViewItem &option,
+            const QModelIndex &index) const Q_DECL_OVERRIDE;
+    QString displayText(
+            const QVariant &value,
+            const QLocale &locale) const Q_DECL_OVERRIDE;
 
-    QWidget *createEditor(QWidget *parent,
-                          const QStyleOptionViewItem &option,
-                          const QModelIndex &index) const;
-    void setEditorData(QWidget *editor, const QModelIndex &index) const;
-    void setModelData(QWidget *editor,
-                      QAbstractItemModel *model,
-                      const QModelIndex &index) const;
-    void updateEditorGeometry(QWidget *editor,
-                              const QStyleOptionViewItem &option,
-                              const QModelIndex &index) const;
+    QWidget *createEditor(
+            QWidget *parent,
+            const QStyleOptionViewItem &option,
+            const QModelIndex &index) const Q_DECL_OVERRIDE;
+    void setEditorData(
+            QWidget *editor, const QModelIndex &index) const Q_DECL_OVERRIDE;
+    void setModelData(
+            QWidget *editor,
+            QAbstractItemModel *model,
+            const QModelIndex &index) const Q_DECL_OVERRIDE;
+    void updateEditorGeometry(
+            QWidget *editor,
+            const QStyleOptionViewItem &option,
+            const QModelIndex &index) const Q_DECL_OVERRIDE;
 
 private:
     QStyledItemDelegate* m_sourceDelegate;

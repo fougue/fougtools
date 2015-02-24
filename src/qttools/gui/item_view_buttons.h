@@ -80,7 +80,7 @@ public:
     // View control
     QAbstractItemView* itemView() const;
 
-    bool eventFilter(QObject *object, QEvent *event);
+    bool eventFilter(QObject *object, QEvent *event) Q_DECL_OVERRIDE;
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
     // Button management

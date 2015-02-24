@@ -40,54 +40,54 @@
 require 'getoptlong'
 
 def isWinPlatform()
-  return RUBY_PLATFORM =~ /mingw|mswin/
+    return RUBY_PLATFORM =~ /mingw|mswin/
 end
 
 def checkFileExists(file)
-  if not File.exists?(file) then
-    puts "Warning: '#{file}' does not exist"
-  end
+    if not File.exists?(file) then
+        puts "Warning: '#{file}' does not exist"
+    end
 end
 
 def asQMakePath(file)
-  if isWinPlatform() then
-    return file.gsub("\\", "/")
-  else
-    return file
-  end
+    if isWinPlatform() then
+        return file.gsub("\\", "/")
+    else
+        return file
+    end
 end
 
 def printHelp()
-  puts "Usage: configure.rb [--help|-h]"
-  puts ""
-  puts "         --prefix <dir> ............. This will install everything relative to <dir>"
-  puts "                                      (default PWD/local)"
-  puts ""
-  puts "         --occ-debug-dir ............ Open Cascade root directory, debug variant"
-  puts "                                      Useful only with --occtools"
-  puts "         --occ-release-dir .......... Open Cascade root directory, release variant"
-  puts "                                      Useful only with --occtools"
-  puts ""
-  puts "      *  --no-occtools .............. Do not compile occtools"
-  puts "         --occtools ................. Compile occtools"
-  puts "                                      Requires OpenCascade (see --occ-dir)"
-  puts ""
-  puts "      *  --shared-libs .............. Build shared libraries (DLL)"
-  puts "         --static-libs .............. Build static libraries"
-  puts ""
+    puts "Usage: configure.rb [--help|-h]"
+    puts ""
+    puts "         --prefix <dir> ............. This will install everything relative to <dir>"
+    puts "                                      (default PWD/local)"
+    puts ""
+    puts "         --occ-debug-dir ............ Open Cascade root directory, debug variant"
+    puts "                                      Useful only with --occtools"
+    puts "         --occ-release-dir .......... Open Cascade root directory, release variant"
+    puts "                                      Useful only with --occtools"
+    puts ""
+    puts "      *  --no-occtools .............. Do not compile occtools"
+    puts "         --occtools ................. Compile occtools"
+    puts "                                      Requires OpenCascade (see --occ-dir)"
+    puts ""
+    puts "      *  --shared-libs .............. Build shared libraries (DLL)"
+    puts "         --static-libs .............. Build static libraries"
+    puts ""
 end
 
 # Parse command line
 configArgs = ARGV.join(' ')
 opts = GetoptLong.new(
-  ['--help', '-h', GetoptLong::NO_ARGUMENT],
-  ['--prefix', GetoptLong::REQUIRED_ARGUMENT],
-  ['--occ-debug-dir', GetoptLong::REQUIRED_ARGUMENT],
-  ['--occ-release-dir', GetoptLong::REQUIRED_ARGUMENT],
-  ['--no-occtools', GetoptLong::NO_ARGUMENT],
-  ['--occtools', GetoptLong::NO_ARGUMENT],
-  ['--shared-libs', GetoptLong::NO_ARGUMENT],
-  ['--static-libs', GetoptLong::NO_ARGUMENT])
+    ['--help', '-h', GetoptLong::NO_ARGUMENT],
+    ['--prefix', GetoptLong::REQUIRED_ARGUMENT],
+    ['--occ-debug-dir', GetoptLong::REQUIRED_ARGUMENT],
+    ['--occ-release-dir', GetoptLong::REQUIRED_ARGUMENT],
+    ['--no-occtools', GetoptLong::NO_ARGUMENT],
+    ['--occtools', GetoptLong::NO_ARGUMENT],
+    ['--shared-libs', GetoptLong::NO_ARGUMENT],
+    ['--static-libs', GetoptLong::NO_ARGUMENT])
 
 options = { :prefix => "$$PWD/local",
             :occDebugDir => "/opt/def/occ_debug",
@@ -95,51 +95,51 @@ options = { :prefix => "$$PWD/local",
             :occTools => false,
             :sharedLibs => true}
 opts.each do |opt, arg|
-  case opt
-    when '--help'
-      printHelp()
-      exit
-    when '-h'
-      printHelp()
-      exit
-    when '--prefix'
-      options[:prefix] = arg
-    when '--occ-debug-dir'
-      options[:occDebugDir] = arg
-    when '--occ-release-dir'
-      options[:occReleaseDir] = arg
-    when '--no-occtools'
-      options[:occTools] = false
-    when '--occtools'
-      options[:occTools] = true
-    when '--shared-libs'
-      options[:sharedLibs] = true
-    when '--static-libs'
-      options[:sharedLibs] = false
-  end
+    case opt
+        when '--help'
+            printHelp()
+            exit
+        when '-h'
+            printHelp()
+            exit
+        when '--prefix'
+            options[:prefix] = arg
+        when '--occ-debug-dir'
+            options[:occDebugDir] = arg
+        when '--occ-release-dir'
+            options[:occReleaseDir] = arg
+        when '--no-occtools'
+            options[:occTools] = false
+        when '--occtools'
+            options[:occTools] = true
+        when '--shared-libs'
+            options[:sharedLibs] = true
+        when '--static-libs'
+            options[:sharedLibs] = false
+    end
 end
 
 File.open('_local_config.pri', 'w') do |f|
-  f.puts("PREFIX_DIR = #{asQMakePath(File.expand_path(options[:prefix]))}")
-  if options[:occTools] then
-    checkFileExists(options[:occDebugDir])
-    checkFileExists(options[:occReleaseDir])
-    f.puts("CONFIG += occtools")
-    f.puts("CONFIG(debug, debug|release) {")
-    f.puts("  CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occDebugDir]))}")
-    f.puts("} else {")
-    f.puts("  CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occReleaseDir]))}")
-    f.puts("}")
-  end
+    f.puts("PREFIX_DIR = #{asQMakePath(File.expand_path(options[:prefix]))}")
+    if options[:occTools] then
+        checkFileExists(options[:occDebugDir])
+        checkFileExists(options[:occReleaseDir])
+        f.puts("CONFIG += occtools")
+        f.puts("CONFIG(debug, debug|release) {")
+        f.puts("    CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occDebugDir]))}")
+        f.puts("} else {")
+        f.puts("    CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occReleaseDir]))}")
+        f.puts("}")
+    end
 
-  if options[:sharedLibs] then
-    f.puts("CONFIG += shared_libs")
-  else
-    f.puts("CONFIG += static_libs")
-  end
+    if options[:sharedLibs] then
+        f.puts("CONFIG += shared_libs")
+    else
+        f.puts("CONFIG += static_libs")
+    end
 end
 
 # Output configure cache
 File.open('_configure.cache', 'w') do |f|
-  f.puts("configure.rb #{configArgs}")
+    f.puts("configure.rb #{configArgs}")
 end

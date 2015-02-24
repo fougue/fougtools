@@ -63,9 +63,6 @@ private:
     class LineNumberArea;
     class Private;
     Private* const d;
-    Q_PRIVATE_SLOT(d, void updateLineNumberAreaWidth(int))
-    Q_PRIVATE_SLOT(d, void highlightCurrentLine())
-    Q_PRIVATE_SLOT(d, void updateLineNumberArea(const QRect&, int))
 };
 
 } // namespace qttools

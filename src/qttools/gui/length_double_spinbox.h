@@ -55,7 +55,7 @@ public:
     LengthDoubleSpinBox(QWidget* parent = NULL);
     ~LengthDoubleSpinBox();
 
-    double length() const;
+    double length() const Q_DECL_OVERRIDE;
     Q_SLOT void setLength(double v) Q_DECL_OVERRIDE;
 
 public slots:

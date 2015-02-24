@@ -40,6 +40,8 @@
 #include <QtGui/QPainter>
 #include <QtGui/QTextBlock>
 
+#include <algorithm>
+
 namespace qttools {
 
 /*! \class CodeEditor::Private
@@ -70,10 +72,10 @@ class CodeEditor::LineNumberArea : public QWidget
 public:
     LineNumberArea(CodeEditor::Private *editor);
 
-    QSize sizeHint() const;
+    QSize sizeHint() const Q_DECL_OVERRIDE;
 
 protected:
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private:
     CodeEditor::Private* m_codeEditor;
@@ -104,7 +106,7 @@ CodeEditor::Private::Private(CodeEditor* backPtr)
 int CodeEditor::Private::lineNumberAreaWidth()
 {
     int digits = 1;
-    int max = qMax(1, m_backPtr->blockCount());
+    int max = std::max(1, m_backPtr->blockCount());
     while (max >= 10) {
         max /= 10;
         ++digits;
@@ -185,9 +187,14 @@ CodeEditor::CodeEditor(QWidget *parent)
     : QPlainTextEdit(parent),
       d(new Private(this))
 {
-    connect(this, SIGNAL(blockCountChanged(int)), this, SLOT(updateLineNumberAreaWidth(int)));
-    connect(this, SIGNAL(updateRequest(QRect, int)), this, SLOT(updateLineNumberArea(QRect, int)));
-    connect(this, SIGNAL(cursorPositionChanged()), this, SLOT(highlightCurrentLine()));
+    QObject::connect(this, &CodeEditor::blockCountChanged,
+                     [=](int c) { d->updateLineNumberAreaWidth(c); } );
+
+    QObject::connect(this, &CodeEditor::updateRequest,
+                     [=](const QRect &rect, int dy) { d->updateLineNumberArea(rect, dy); } );
+
+    QObject::connect(this, &CodeEditor::cursorPositionChanged,
+                     [=] { d->highlightCurrentLine(); } );
 
     d->updateLineNumberAreaWidth(0);
     d->highlightCurrentLine();
@@ -208,5 +215,3 @@ void CodeEditor::resizeEvent(QResizeEvent *e)
 }
 
 } // namespace qttools
-
-#include "moc_code_editor.cpp"

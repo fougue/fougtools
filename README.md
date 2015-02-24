@@ -19,6 +19,9 @@ be built and define the following variables, depending on your needs:
     # Everything will be installed here
     PREFIX_DIR = /opt/lib/fougtools/install
 
+    # Build static libraries (use "+= shared_libs" for DLLs)
+    CONFIG += static_libs
+
     # If you want to build occtools (optional)
     CONFIG += occtools
     occtools:CONFIG(debug, debug|release) {
@@ -30,7 +33,7 @@ be built and define the following variables, depending on your needs:
     }
 
     # If you want to build unit tests and examples
-    CONFIG += build_utest  build_exmaples
+    CONFIG += build_utest  build_examples
 ~~~~~~~~~~~~~
 
 Or use Ruby configure script `qmake/configure.rb`.

@@ -72,6 +72,9 @@ def printHelp()
   puts "         --occtools ................. Compile occtools"
   puts "                                      Requires OpenCascade (see --occ-dir)"
   puts ""
+  puts "      *  --shared-libs .............. Build shared libraries (DLL)"
+  puts "         --static-libs .............. Build static libraries"
+  puts ""
 end
 
 # Parse command line
@@ -82,12 +85,15 @@ opts = GetoptLong.new(
   ['--occ-debug-dir', GetoptLong::REQUIRED_ARGUMENT],
   ['--occ-release-dir', GetoptLong::REQUIRED_ARGUMENT],
   ['--no-occtools', GetoptLong::NO_ARGUMENT],
-  ['--occtools', GetoptLong::NO_ARGUMENT])
+  ['--occtools', GetoptLong::NO_ARGUMENT],
+  ['--shared-libs', GetoptLong::NO_ARGUMENT],
+  ['--static-libs', GetoptLong::NO_ARGUMENT])
 
-options = { :prefix=> "$$PWD/local",
+options = { :prefix => "$$PWD/local",
             :occDebugDir => "/opt/def/occ_debug",
             :occReleaseDir => "/opt/def/occ_release",
-            :occTools => false }
+            :occTools => false,
+            :sharedLibs => true}
 opts.each do |opt, arg|
   case opt
     when '--help'
@@ -103,15 +109,19 @@ opts.each do |opt, arg|
     when '--occ-release-dir'
       options[:occReleaseDir] = arg
     when '--no-occtools'
-      options[:occtools] = false
+      options[:occTools] = false
     when '--occtools'
-      options[:occtools] = true
+      options[:occTools] = true
+    when '--shared-libs'
+      options[:sharedLibs] = true
+    when '--static-libs'
+      options[:sharedLibs] = false
   end
 end
 
 File.open('_local_config.pri', 'w') do |f|
   f.puts("PREFIX_DIR = #{asQMakePath(File.expand_path(options[:prefix]))}")
-  if options[:occtools] then
+  if options[:occTools] then
     checkFileExists(options[:occDebugDir])
     checkFileExists(options[:occReleaseDir])
     f.puts("CONFIG += occtools")
@@ -120,6 +130,12 @@ File.open('_local_config.pri', 'w') do |f|
     f.puts("} else {")
     f.puts("  CASCADE_ROOT = #{asQMakePath(File.expand_path(options[:occReleaseDir]))}")
     f.puts("}")
+  end
+
+  if options[:sharedLibs] then
+    f.puts("CONFIG += shared_libs")
+  else
+    f.puts("CONFIG += static_libs")
   end
 end
 

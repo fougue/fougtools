@@ -1,7 +1,13 @@
 include(../config.pri)
+
+TEMPLATE = lib
+
+TARGET = qttools_script$$TARGET_SUFFIX
+
 CONFIG += dll
-#DEFINES += DEBUG_ABSTRACT_PLUGIN_LOADER
-include(../../src/qttools/script/build_qttools_script.pri)
+CONFIG(dll):DEFINES += QTTOOLS_SCRIPT_DLL QTTOOLS_SCRIPT_MAKE_DLL
+
+include(../../src/qttools/script/qttools_script.pri)
 
 qttools_script_include.path  = $$QTTOOLS_INC_PATH/qttools/script
 qttools_script_include.files = ../../src/qttools/script/*.h

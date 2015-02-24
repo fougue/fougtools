@@ -1,6 +1,15 @@
 include(../config.pri)
+
+TEMPLATE = lib
+TARGET = occtools$$TARGET_SUFFIX
+
+QT += gui
+isEqual(QT_MAJOR_VERSION, 5): QT += widgets
+
 CONFIG += dll
-include(../../src/occtools/build_occtools.pri)
+CONFIG(dll):DEFINES += OCCTOOLS_DLL OCCTOOLS_MAKE_DLL
+
+include(../../src/occtools/occtools.pri)
 
 QMAKE_RPATHDIR += $$CASCADE_LIB_PATH
 

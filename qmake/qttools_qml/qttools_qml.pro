@@ -1,6 +1,13 @@
 include(../config.pri)
+
+TEMPLATE = lib
+
+TARGET = qttools_qml$$TARGET_SUFFIX
+
 CONFIG += dll
-include(../../src/qttools/qml/build_qttools_qml.pri)
+CONFIG(dll):DEFINES += QTTOOLS_QML_DLL QTTOOLS_QML_MAKE_DLL
+
+include(../../src/qttools/qml/qttools_qml.pri)
 
 qttools_qml_include.path  = $$QTTOOLS_INC_PATH/qttools/qml
 qttools_qml_include.files = ../../src/qttools/qml/*.h

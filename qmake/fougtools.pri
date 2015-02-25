@@ -8,6 +8,7 @@ FOUGTOOLS_LIBLIST = qttools_core \
                     qttools_network \
                     qttools_script \
                     qttools_sql \
+                    qttools_task \
                     occtools
 
 for(fouglib, FOUGTOOLS) {
@@ -16,6 +17,7 @@ for(fouglib, FOUGTOOLS) {
   LIBS += -l$${fouglib}$$TARGET_SUFFIX
 }
 contains(FOUGTOOLS, qttools_core): QT += core
+contains(FOUGTOOLS, qttools_task): QT += core
 
 contains(FOUGTOOLS, qttools_gui) {
   QT += gui

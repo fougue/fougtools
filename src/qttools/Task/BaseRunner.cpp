@@ -41,8 +41,8 @@ const Progress &BaseRunner::progress() const
 
 void BaseRunner::run(std::function<void()>&& func)
 {
-    if (func) {
-        m_func = func;
+    m_func = func;
+    if (m_func) {
         m_signals.emitAboutToRun();
         launch();
     }

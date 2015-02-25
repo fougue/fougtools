@@ -46,13 +46,13 @@ HEADERS += $$PWD/io.h \
            $$PWD/point_on_faces_projector.h \
            $$PWD/qt_view.h \
            $$PWD/qt_view_controller.h \
-           $$PWD/qt_occ.h \
            $$PWD/down_cast.h \
     $$PWD/ais_utils.h \
     $$PWD/geom_utils.h \
     $$PWD/kernel_utils.h \
     $$PWD/math_utils.h \
-    $$PWD/topods_utils.h
+    $$PWD/topods_utils.h \
+    $$PWD/qt_utils.h
 
 SOURCES += \
            $$PWD/io.cpp \
@@ -62,12 +62,12 @@ SOURCES += \
            $$PWD/point_on_faces_projector.cpp \
            $$PWD/qt_view.cpp \
            $$PWD/qt_view_controller.cpp \
-           $$PWD/qt_occ.cpp \
     $$PWD/ais_utils.cpp \
     $$PWD/geom_utils.cpp \
     $$PWD/kernel_utils.cpp \
     $$PWD/math_utils.cpp \
-    $$PWD/topods_utils.cpp
+    $$PWD/topods_utils.cpp \
+    $$PWD/qt_utils.cpp
 
 LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
         -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim -lTKService -lTKShHealing \

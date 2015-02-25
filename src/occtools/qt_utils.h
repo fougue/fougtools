@@ -35,69 +35,59 @@
 **
 ****************************************************************************/
 
-#include "qt_occ.h"
+#pragma once
+
+#include "occtools.h"
+
+#include <Quantity_Color.hxx>
+#include <Quantity_NameOfColor.hxx>
+#include <TCollection_AsciiString.hxx>
+#include <TCollection_ExtendedString.hxx>
+
+#include <QtCore/QString>
+#include <QtGui/QColor>
 
 namespace occ {
 
-//! Conversion of the Quantity_Color \p c to a QColor
-QColor toQtColor(const Quantity_Color& c)
+class OCCTOOLS_EXPORT QtUtils
 {
-    return QColor(c.Red() * 255., c.Green() * 255., c.Blue() * 255.);
-}
+public:
+    // --- Color conversion
 
-//! Conversion of the Quantity_NameOfColor \p c to a QColor
-QColor toQtColor(const Quantity_NameOfColor c)
-{
-    Quantity_Color qc(c);
-    return toQtColor(qc);
-}
+    static QColor toQColor(const Quantity_Color& c);
+    static QColor toQColor(const Quantity_NameOfColor c);
+    static Quantity_Color toOccColor(const QColor& c);
+    static Quantity_NameOfColor toOccNameOfColor(const QColor& c);
 
-//! Conversion of the QColor \p c to a Quantity_Color
-Quantity_Color toOccColor(const QColor& c)
-{
-    return Quantity_Color(c.red() / 255., c.green() / 255., c.blue() / 255., Quantity_TOC_RGB);
-}
+    // --- String conversion
 
-//! Conversion of the QColor object \p c to a Quantity_NameOfColor
-Quantity_NameOfColor toNamedOccColor(const QColor& c)
-{
-    return toOccColor(c).Name();
-}
+    static Standard_CString toOccCString(const QString& str);
+    static TCollection_AsciiString toOccAsciiString(const QString& str);
+    static Standard_ExtString toOccExtString(const QString& str);
+    static TCollection_ExtendedString toOccExtendedString(const QString& str);
 
-//! Conversion of the QString \p str to an OCC CString
-Standard_CString toCString(const QString& str)
-{
-    return str.toLocal8Bit().constData();
-}
+    static QString toQString(const TCollection_AsciiString& str);
+    static QString toQString(const TCollection_ExtendedString& str);
 
-//! Conversion of the QString \p str to an OCC TCollection_AsciiString
-TCollection_AsciiString toAsciiString(const QString& str)
-{
-    return TCollection_AsciiString(toCString(str));
-}
+    template<typename OCC_PNT_VEC>
+    static QString toQString(const OCC_PNT_VEC& pv,
+                             const QString& format = QLatin1String("(%x, %y, %z)"),
+                             char realFormat = 'g',
+                             unsigned prec = 6);
+};
 
-//! Conversion of the QString \p str to an OCC ExtString
-Standard_ExtString toExtString(const QString& str)
-{
-    return reinterpret_cast<Standard_ExtString>(str.utf16());
-}
+//
+// --- Implementation
+//
 
-//! Conversion of the QString \p str to an OCC TCollection_ExtendedString
-TCollection_ExtendedString toOccExtendedString(const QString& str)
+template<typename OCC_PNT_VEC>
+QString QtUtils::toQString(
+        const OCC_PNT_VEC& pv, const QString& format, char realFormat, unsigned prec)
 {
-    return TCollection_ExtendedString(toExtString(str));
-}
-
-//! Conversion of the OCC TCollection_AsciiString \p str to a QString
-QString toQString(const TCollection_AsciiString& str)
-{
-    return QString::fromLatin1(str.ToCString(), str.Length());
-}
-
-//! Conversion of the OCC TCollection_ExtendedString \p str to a QString
-QString toQString(const TCollection_ExtendedString& str)
-{
-    return QString::fromUtf16(reinterpret_cast<const ushort*>(str.ToExtString()), str.Length());
+    QString result = format;
+    result.replace(QLatin1String("%x"), QString::number(pv.X(), realFormat, prec));
+    result.replace(QLatin1String("%y"), QString::number(pv.Y(), realFormat, prec));
+    return result.replace(QLatin1String("%z"), QString::number(pv.Z(), realFormat, prec));
 }
 
 } // namespace occ

@@ -4,6 +4,7 @@
 
 #include <QtCore/QObject>
 
+#include <atomic>
 #include <unordered_map>
 
 namespace Task {
@@ -24,13 +25,12 @@ public:
     /*! \brief Create a ready-to-launch Runner object
      *
      *  The created Runner will be automatically deleted at the end of execution.
-     *  TODO: make this function reentrant
      */
     template<typename SELECTOR = QThread, typename ... ARGS>
     Runner<SELECTOR>* newTask(ARGS ... args)
     {
         auto runner = new Runner<SELECTOR>(this, args ...);
-        runner->m_taskId = ++m_taskIdSeq;
+        runner->m_taskId = m_taskIdSeq.fetch_add(1);
         return runner;
     }
 
@@ -50,7 +50,7 @@ private:
 
     void onAboutToRun(BaseRunner* runner);
 
-    quint64 m_taskIdSeq;
+    std::atomic<quint64> m_taskIdSeq;
     std::unordered_map<quint64, Progress*> m_taskIdToProgress;
 };
 

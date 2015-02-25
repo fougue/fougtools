@@ -18,9 +18,9 @@ public:
           BaseRunner(mgr),
           m_priority(priority)
     {
-        QObject::connect(this, &QThread::finished, this, &QObject::deleteLater);
     }
 
+protected:
     bool isAbortRequested() override
     { return this->isInterruptionRequested(); }
 
@@ -30,7 +30,9 @@ public:
     void launch() override
     { this->start(m_priority); }
 
-protected:
+    void destroy() override
+    { this->deleteLater(); }
+
     void run() override // -- QThread
     {
         QTimer::singleShot(0, [=] {

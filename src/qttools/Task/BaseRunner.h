@@ -38,6 +38,7 @@ protected:
     virtual bool isAbortRequested();
     virtual void requestAbort();
     virtual void launch();
+    virtual void destroy();
 
 private:
     friend class BaseRunnerSignals;
@@ -55,7 +56,6 @@ private:
 
 template<typename SELECTOR>
 class Runner : public BaseRunner
-{
-};
+{ };
 
 } // namespace Task

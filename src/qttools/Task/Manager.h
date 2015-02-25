@@ -34,6 +34,7 @@ public:
         return runner;
     }
 
+    QString taskTitle(quint64 taskId) const;
     const Progress* taskProgress(quint64 taskId) const;
 
     void requestAbort(quint64 taskId);
@@ -49,9 +50,12 @@ private:
     friend class BaseRunnerSignals;
 
     void onAboutToRun(BaseRunner* runner);
+    void onDestroyRequest(BaseRunner* runner);
+    BaseRunner* getRunner(quint64 taskId);
+    const BaseRunner* getRunner(quint64 taskId) const;
 
     std::atomic<quint64> m_taskIdSeq;
-    std::unordered_map<quint64, Progress*> m_taskIdToProgress;
+    std::unordered_map<quint64, BaseRunner*> m_taskIdToRunner;
 };
 
 } // namespace Task

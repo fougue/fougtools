@@ -25,6 +25,7 @@ public:
     void emitProgress(int pct);
     void emitMessage(const QString &msg);
     void emitEnded();
+    void emitDestroyRequest();
 
 signals:
     void aboutToRun(BaseRunner* runner);
@@ -33,6 +34,7 @@ signals:
     void progress(quint64 taskId, int pct);
     void message(quint64 taskId, const QString& msg);
     void ended(quint64 taskId);
+    void destroyRequest(BaseRunner* runner);
 
 private:
     BaseRunner* m_runner;

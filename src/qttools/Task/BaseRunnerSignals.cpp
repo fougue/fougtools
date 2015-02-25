@@ -15,6 +15,7 @@ BaseRunnerSignals::BaseRunnerSignals(BaseRunner* runner, QObject *parent)
     QObject::connect(this, &BaseRunnerSignals::progress, runner->m_mgr, &Manager::progress);
     QObject::connect(this, &BaseRunnerSignals::message, runner->m_mgr, &Manager::message);
     QObject::connect(this, &BaseRunnerSignals::ended, runner->m_mgr, &Manager::ended);
+    QObject::connect(this, &BaseRunnerSignals::destroyRequest, runner->m_mgr, &Manager::onDestroyRequest);
 }
 
 void BaseRunnerSignals::emitAboutToRun()
@@ -45,6 +46,11 @@ void BaseRunnerSignals::emitMessage(const QString &msg)
 void BaseRunnerSignals::emitEnded()
 {
     emit ended(m_runner->m_taskId);
+}
+
+void BaseRunnerSignals::emitDestroyRequest()
+{
+    emit destroyRequest(m_runner);
 }
 
 } // namespace Task

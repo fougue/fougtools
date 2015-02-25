@@ -18,10 +18,9 @@ public:
         : BaseRunner(mgr),
           m_isAbortRequested(false),
           m_policy(policy)
-    {
-        // TODO: destroy StdAsyncRunner on task end
-    }
+    { }
 
+protected:
     bool isAbortRequested() override
     { return m_isAbortRequested; }
 

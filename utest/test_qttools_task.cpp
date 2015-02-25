@@ -70,7 +70,9 @@ void TestQtToolsTask::Manager_test()
             (*it).second = true;
 
         if (Internal::debugOutput)
-            qDebug() << "Ended:" << taskId << " taskCount=" << taskCount;
+            qDebug() << "Ended:" << taskId << taskMgr.taskTitle(taskId);
+
+        QVERIFY(taskMgr.taskProgress(taskId) != nullptr);
     } );
 
     for (auto task : taskVec)
@@ -87,5 +89,6 @@ void TestQtToolsTask::Manager_test()
     QCOMPARE(taskWorkDone.size(), taskVec.size());
     for (const auto& mapPair : taskWorkDone) {
         QVERIFY(mapPair.second);
+        QCOMPARE(taskMgr.taskProgress(mapPair.first), static_cast<Task::Progress*>(nullptr));
     }
 }

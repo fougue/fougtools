@@ -23,7 +23,7 @@ public:
           m_isAbortRequested(false),
           m_priority(priority)
     {
-        this->setAutoDelete(true);
+        this->setAutoDelete(false);
     }
 
     void run() override // -- QRunnable

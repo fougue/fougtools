@@ -17,6 +17,7 @@ public:
           m_isAbortRequested(false)
     { }
 
+protected:
     bool isAbortRequested() override
     { return m_isAbortRequested; }
 

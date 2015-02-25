@@ -58,6 +58,7 @@ void BaseRunner::execRunnableFunc()
     m_signals.emitStarted(m_taskTitle);
     m_func();
     m_signals.emitEnded();
+    m_signals.emitDestroyRequest();
 }
 
 bool BaseRunner::isAbortRequested()
@@ -70,5 +71,10 @@ void BaseRunner::requestAbort()
 
 void BaseRunner::launch()
 { }
+
+void BaseRunner::destroy()
+{
+    delete this;
+}
 
 } // namespace Task

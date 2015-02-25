@@ -29,20 +29,20 @@ static Task::BaseRunner* newTaskRunner(
 
 void TestQtToolsTask::Manager_test()
 {
-    Task::Manager taskMgr;
-    QObject::connect(&taskMgr, &Task::Manager::started,
+    auto taskMgr = Task::Manager::globalInstance();
+    QObject::connect(taskMgr, &Task::Manager::started,
                      [](quint64 taskId, const QString& title) {
         if (Internal::debugOutput)
             qDebug() << "Started:" << taskId << title;
     } );
 
-    QObject::connect(&taskMgr, &Task::Manager::progressStep,
+    QObject::connect(taskMgr, &Task::Manager::progressStep,
                      [](quint64 taskId, const QString& title) {
         if (Internal::debugOutput)
             qDebug() << "Step:" << taskId << title;
     } );
 
-    QObject::connect(&taskMgr, &Task::Manager::message,
+    QObject::connect(taskMgr, &Task::Manager::message,
                      [](quint64 taskId, const QString& msg) {
         if (Internal::debugOutput)
             qDebug() << "Message:" << taskId << msg;
@@ -50,10 +50,10 @@ void TestQtToolsTask::Manager_test()
 
     std::vector<Task::BaseRunner*> taskVec;
     for (int i = 0; i < 5; ++i) {
-        taskVec.push_back(Internal::newTaskRunner<QThreadPool>(&taskMgr, "QThreadPool"));
-        taskVec.push_back(Internal::newTaskRunner<QThread>(&taskMgr, "QThread", QThread::HighestPriority));
-        taskVec.push_back(Internal::newTaskRunner<Task::StdAsync>(&taskMgr, "std::async()"));
-        taskVec.push_back(Internal::newTaskRunner<Task::CurrentThread>(&taskMgr, "CurrentThread"));
+        taskVec.push_back(Internal::newTaskRunner<QThreadPool>(taskMgr, "QThreadPool"));
+        taskVec.push_back(Internal::newTaskRunner<QThread>(taskMgr, "QThread", QThread::HighestPriority));
+        taskVec.push_back(Internal::newTaskRunner<Task::StdAsync>(taskMgr, "std::async()"));
+        taskVec.push_back(Internal::newTaskRunner<Task::CurrentThread>(taskMgr, "CurrentThread"));
     }
 
     std::size_t taskCount = taskVec.size();
@@ -61,7 +61,7 @@ void TestQtToolsTask::Manager_test()
     for (const auto task : taskVec)
         taskWorkDone.emplace(task->taskId(), false);
 
-    QObject::connect(&taskMgr, &Task::Manager::ended,
+    QObject::connect(taskMgr, &Task::Manager::ended,
                      [&](quint64 taskId) {
         --taskCount;
 
@@ -70,9 +70,9 @@ void TestQtToolsTask::Manager_test()
             (*it).second = true;
 
         if (Internal::debugOutput)
-            qDebug() << "Ended:" << taskId << taskMgr.taskTitle(taskId);
+            qDebug() << "Ended:" << taskId << taskMgr->taskTitle(taskId);
 
-        QVERIFY(taskMgr.taskProgress(taskId) != nullptr);
+        QVERIFY(taskMgr->taskProgress(taskId) != nullptr);
     } );
 
     for (auto task : taskVec)
@@ -89,6 +89,6 @@ void TestQtToolsTask::Manager_test()
     QCOMPARE(taskWorkDone.size(), taskVec.size());
     for (const auto& mapPair : taskWorkDone) {
         QVERIFY(mapPair.second);
-        QCOMPARE(taskMgr.taskProgress(mapPair.first), static_cast<Task::Progress*>(nullptr));
+        QCOMPARE(taskMgr->taskProgress(mapPair.first), static_cast<Task::Progress*>(nullptr));
     }
 }

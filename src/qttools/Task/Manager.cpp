@@ -2,6 +2,8 @@
 
 #include "BaseRunner.h"
 
+#include <QtCore/QGlobalStatic>
+
 namespace Task {
 
 Manager::Manager(QObject *parent)
@@ -30,6 +32,13 @@ void Manager::requestAbort(quint64 taskId)
     auto runner = this->getRunner(taskId);
     if (runner != nullptr)
         runner->requestAbort();
+}
+
+Q_GLOBAL_STATIC(Manager, mgrGlobalInstance)
+
+Manager *Manager::globalInstance()
+{
+    return mgrGlobalInstance();
 }
 
 void Manager::onAboutToRun(BaseRunner *runner)

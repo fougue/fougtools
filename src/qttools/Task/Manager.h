@@ -24,7 +24,16 @@ public:
 
     /*! \brief Create a ready-to-launch Runner object
      *
-     *  The created Runner will be automatically deleted at the end of execution.
+     *  Typical use:
+     *  \code
+     *      auto task = Task::Manager::globalInstance()->newTask();
+     *      task->run( [] { someFunction(task->progress()); } );
+     *  \endcode
+     *
+     *  The created Runner object will be automatically deleted at the end
+     *  of BaseRunner::run().
+     *  If for any reason BaseRunner::run() is not called, the Runner object
+     *  has to be deleted by the caller.
      */
     template<typename SELECTOR = QThread, typename ... ARGS>
     Runner<SELECTOR>* newTask(ARGS ... args)
@@ -38,6 +47,8 @@ public:
     const Progress* taskProgress(quint64 taskId) const;
 
     void requestAbort(quint64 taskId);
+
+    static Manager* globalInstance();
 
 signals:
     void started(quint64 taskId, const QString& title);

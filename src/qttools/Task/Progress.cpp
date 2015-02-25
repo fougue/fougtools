@@ -7,21 +7,18 @@ namespace Task {
 Progress::Progress(BaseRunner *runner)
     : m_runner(runner),
       m_value(0)
-{
-}
+{ }
 
 Progress::~Progress()
 { }
 
 int Progress::value() const
 {
-    //return qttools::QAtomicTools::loadRelaxed(d->m_value);
     return m_value;
 }
 
 void Progress::setValue(int pct)
 {
-    //    qttools::QAtomicTools::storeRelaxed(&d->m_value, pct);
     m_value = pct;
     m_runner->qtSignals()->emitProgress(pct);
 }

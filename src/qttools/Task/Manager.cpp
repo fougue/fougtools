@@ -9,7 +9,7 @@ Manager::Manager(QObject *parent)
       m_taskIdSeq(0)
 {
     QObject::connect(this, &Manager::ended,
-                     [=](const quint64 taskId) { m_taskIdToProgress.erase(taskId); } );
+                     [=](quint64 taskId) { m_taskIdToProgress.erase(taskId); } );
 }
 
 Manager::~Manager()

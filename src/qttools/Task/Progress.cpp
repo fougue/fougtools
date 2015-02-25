@@ -11,8 +11,7 @@ Progress::Progress(BaseRunner *runner)
 }
 
 Progress::~Progress()
-{
-}
+{ }
 
 int Progress::value() const
 {

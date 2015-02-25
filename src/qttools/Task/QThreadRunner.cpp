@@ -9,17 +9,23 @@ QThreadRunner::QThreadRunner(const Manager *mgr, QThread::Priority priority)
       BaseRunner(mgr),
       m_priority(priority)
 {
-    QObject::connect(this, &QThreadRunner::finished, [=] { this->deleteLater(); } );
+    QObject::connect(this, &QThreadRunner::finished, this, &QObject::deleteLater);
 }
 
 bool QThreadRunner::isAbortRequested()
-{ return this->isInterruptionRequested(); }
+{
+    return this->isInterruptionRequested();
+}
 
 void QThreadRunner::requestAbort()
-{ this->requestInterruption(); }
+{
+    this->requestInterruption();
+}
 
 void QThreadRunner::launch()
-{ this->start(m_priority); }
+{
+    this->start(m_priority);
+}
 
 void QThreadRunner::run()
 {

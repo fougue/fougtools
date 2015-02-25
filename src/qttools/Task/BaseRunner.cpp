@@ -41,7 +41,7 @@ const Progress &BaseRunner::progress() const
 
 void BaseRunner::run(std::function<void()>&& func)
 {
-    if (func != nullptr) {
+    if (func) {
         m_func = func;
         m_signals.emitAboutToRun();
         launch();
@@ -56,7 +56,9 @@ void BaseRunner::execRunnableFunc()
 }
 
 bool BaseRunner::isAbortRequested()
-{ return false; }
+{
+    return false;
+}
 
 void BaseRunner::requestAbort()
 { }

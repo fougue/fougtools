@@ -23,18 +23,28 @@ void RunnerSignals::emitAboutToRun()
 }
 
 void RunnerSignals::emitStarted(const QString &title)
-{ emit started(m_runner->m_taskId, title); }
+{
+    emit started(m_runner->m_taskId, title);
+}
 
 void RunnerSignals::emitProgressStep(const QString &title)
-{ emit progressStep(m_runner->m_taskId, title); }
+{
+    emit progressStep(m_runner->m_taskId, title);
+}
 
 void RunnerSignals::emitProgress(int pct)
-{ emit progress(m_runner->m_taskId, pct); }
+{
+    emit progress(m_runner->m_taskId, pct);
+}
 
 void RunnerSignals::emitMessage(const QString &msg)
-{ emit message(m_runner->m_taskId, msg); }
+{
+    emit message(m_runner->m_taskId, msg);
+}
 
 void RunnerSignals::emitEnded()
-{ emit ended(m_runner->m_taskId); }
+{
+    emit ended(m_runner->m_taskId);
+}
 
 } // namespace Task

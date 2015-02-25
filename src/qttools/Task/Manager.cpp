@@ -13,8 +13,7 @@ Manager::Manager(QObject *parent)
 }
 
 Manager::~Manager()
-{
-}
+{ }
 
 const Progress *Manager::taskProgress(quint64 taskId) const
 {

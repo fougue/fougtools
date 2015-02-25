@@ -13,8 +13,7 @@ QThreadPoolRunner::QThreadPoolRunner(const Manager *mgr, int priority)
 }
 
 QThreadPoolRunner::~QThreadPoolRunner()
-{
-}
+{ }
 
 void QThreadPoolRunner::run()
 {
@@ -22,12 +21,18 @@ void QThreadPoolRunner::run()
 }
 
 bool QThreadPoolRunner::isAbortRequested()
-{ return m_isAbortRequested; }
+{
+    return m_isAbortRequested;
+}
 
 void QThreadPoolRunner::requestAbort()
-{ m_isAbortRequested = true; }
+{
+    m_isAbortRequested = true;
+}
 
 void QThreadPoolRunner::launch()
-{ QThreadPool::globalInstance()->start(this, m_priority); }
+{
+    QThreadPool::globalInstance()->start(this, m_priority);
+}
 
 } // namespace Task

@@ -8,12 +8,18 @@ CurrentThreadRunner::CurrentThreadRunner(const Manager *mgr)
 { }
 
 bool CurrentThreadRunner::isAbortRequested()
-{ return m_isAbortRequested; }
+{
+    return m_isAbortRequested;
+}
 
 void CurrentThreadRunner::requestAbort()
-{ m_isAbortRequested = true; }
+{
+    m_isAbortRequested = true;
+}
 
 void CurrentThreadRunner::launch()
-{ this->execRunnableFunc(); }
+{
+    this->execRunnableFunc();
+}
 
 } // namespace Task

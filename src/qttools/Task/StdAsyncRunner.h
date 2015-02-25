@@ -12,6 +12,7 @@ class StdAsyncRunner : public BaseRunner
 {
 public:
     StdAsyncRunner(const Manager* mgr, std::launch policy = std::launch::async);
+    // TODO: destroy StdAsyncRunner on task end
 
     bool isAbortRequested() override;
     void requestAbort() override;

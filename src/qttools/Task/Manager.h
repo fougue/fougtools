@@ -27,7 +27,7 @@ public:
      *  Typical use:
      *  \code
      *      auto task = Task::Manager::globalInstance()->newTask();
-     *      task->run( [] { someFunction(task->progress()); } );
+     *      task->run( [=] { someFunction(task->progress()); } );
      *  \endcode
      *
      *  The created Runner object will be automatically deleted at the end

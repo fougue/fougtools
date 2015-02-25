@@ -1,6 +1,5 @@
 #include "Manager.h"
 
-#include "Runnable.h"
 #include "BaseRunner.h"
 
 namespace Task {
@@ -27,7 +26,12 @@ void Manager::requestAbort(quint64 taskId)
 {
     auto it = m_taskIdToProgress.find(taskId);
     if (it != m_taskIdToProgress.end())
-        (*it).second->m_runnable->m_taskRunner->requestAbort();
+        (*it).second->m_runner->requestAbort();
+}
+
+void Manager::onAboutToRun(BaseRunner *runner)
+{
+    m_taskIdToProgress.emplace(runner->m_taskId, &runner->m_progress);
 }
 
 } // namespace Task

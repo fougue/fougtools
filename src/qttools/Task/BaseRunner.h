@@ -1,10 +1,13 @@
 #pragma once
 
-#include "RunnableSignals.h"
+#include "Progress.h"
+#include "RunnerSignals.h"
+
+#include <functional>
 
 namespace Task {
 
-class Runnable;
+class Manager;
 
 /*! \brief Base class for all runner objects
  *
@@ -13,26 +16,43 @@ class Runnable;
 class BaseRunner
 {
 public:
-    BaseRunner(Runnable* runnable);
     virtual ~BaseRunner();
 
-    inline RunnableSignals* taskSignals()
-    { return &m_signals; }
+    quint64 taskId() const;
 
-    inline Runnable* runnable()
-    { return m_runnable; }
+    const QString& taskTitle() const;
+    void setTaskTitle(const QString& title);
+
+    Progress& progress();
+    const Progress& progress() const;
+
+    void run(std::function<void()>&& func);
+
+protected:
+    BaseRunner(const Manager* mgr);
+
+    inline RunnerSignals* taskSignals()
+    { return &m_signals; }
 
     void execRunnableFunc();
 
     virtual bool isAbortRequested();
-
     virtual void requestAbort();
-
     virtual void launch();
 
 private:
-    RunnableSignals m_signals;
-    Runnable* m_runnable;
+    friend class Runnable;
+    friend class RunnerSignals;
+    friend class Manager;
+    friend class Progress;
+
+    const Manager* m_mgr;
+    quint64 m_taskId;
+    QString m_taskTitle;
+    std::function<void()> m_func;
+
+    RunnerSignals m_signals;
+    Progress m_progress;
 };
 
 } // namespace Task

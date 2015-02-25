@@ -1,7 +1,6 @@
 #pragma once
 
 #include "QThreadRunner.h"
-#include "Runnable.h"
 
 #include <QtCore/QObject>
 
@@ -10,7 +9,6 @@
 namespace Task {
 
 class BaseRunner;
-class Runnable;
 class Progress;
 
 /*! \brief Central class providing management of tasks and notifications
@@ -29,11 +27,11 @@ public:
      *  TODO: make this function reentrant
      */
     template<typename RUNNER = QThreadRunner, typename ... ARGS>
-    Runnable* newTask(ARGS ... args)
+    BaseRunner* newTask(ARGS ... args)
     {
-        auto runnable = new Runnable(this, ++m_taskIdSeq);
-        runnable->m_taskRunner = new RUNNER(runnable, args ...);
-        return runnable;
+        auto runner = new RUNNER(this, args ...);
+        runner->m_taskId = ++m_taskIdSeq;
+        return runner;
     }
 
     const Progress* taskProgress(quint64 taskId) const;
@@ -48,7 +46,9 @@ signals:
     void ended(quint64 taskId);
 
 private:
-    friend class Runnable;
+    friend class RunnerSignals;
+
+    void onAboutToRun(BaseRunner* runner);
 
     quint64 m_taskIdSeq;
     std::unordered_map<quint64, Progress*> m_taskIdToProgress;

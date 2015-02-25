@@ -2,8 +2,8 @@
 
 #include "../src/qttools/Task/CurrentThreadRunner.h"
 #include "../src/qttools/Task/QThreadPoolRunner.h"
+#include "../src/qttools/Task/StdAsyncRunner.h"
 #include "../src/qttools/Task/Manager.h"
-#include "../src/qttools/Task/Runnable.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QtDebug>
@@ -13,7 +13,7 @@
 #include <unordered_map>
 
 namespace Internal {
-static const bool debugOutput = false;
+static const bool debugOutput = true;
 } // namespace Internal
 
 void TestQtToolsTask::Manager_test()
@@ -37,16 +37,17 @@ void TestQtToolsTask::Manager_test()
             qDebug() << "Message:" << taskId << msg;
     } );
 
-    std::vector<Task::Runnable*> taskVec;
+    std::vector<Task::BaseRunner*> taskVec;
     for (int i = 0; i < 10; ++i) {
         const auto isPair = i % 2 == 0;
-        taskVec.push_back(
-                    isPair ? taskMgr.newTask<Task::QThreadPoolRunner>() :
-                             taskMgr.newTask<Task::QThreadRunner>(QThread::HighestPriority));
-        taskVec.back()->setTaskTitle(
-                    QString(isPair ? "Tâche [QThreadPool] %1" : "Tâche [QThread] %1").arg(i));
+//        taskVec.push_back(
+//                    isPair ? taskMgr.newTask<Task::QThreadPoolRunner>() :
+//                             taskMgr.newTask<Task::QThreadRunner>(QThread::HighestPriority));
+//        taskVec.back()->setTaskTitle(
+//                    QString(isPair ? "Tâche [QThreadPool] %1" : "Tâche [QThread] %1").arg(i));
+        taskVec.push_back(taskMgr.newTask<Task::StdAsyncRunner>());
 //        taskVec.push_back(taskMgr.newTask<Task::CurrentThreadRunner>());
-//        taskVec.back()->setTaskTitle(QString("Tâche %1").arg(taskVec.back()->taskId()));
+        taskVec.back()->setTaskTitle(QString("Tâche %1").arg(taskVec.back()->taskId()));
     }
 
     std::size_t taskCount = taskVec.size();
@@ -67,9 +68,9 @@ void TestQtToolsTask::Manager_test()
     } );
 
     for (auto task : taskVec)
-        task->run( [&] {
-            task->progress()->outputMessage(QString("-- Function %1 --")
-                                            .arg(task->taskId()));
+        task->run( [=] {
+            task->progress().outputMessage(QString("-- Function %1 --")
+                                           .arg(task->taskId()));
         } );
 
     QTime chrono;

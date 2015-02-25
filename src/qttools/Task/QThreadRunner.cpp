@@ -4,16 +4,12 @@
 
 namespace Task {
 
-QThreadRunner::QThreadRunner(Runnable *runnable, QThread::Priority priority)
+QThreadRunner::QThreadRunner(const Manager *mgr, QThread::Priority priority)
     : QThread(nullptr),
-      BaseRunner(runnable),
+      BaseRunner(mgr),
       m_priority(priority)
 {
-    QObject::connect(this, &QThreadRunner::finished,
-                     [=] {
-        this->deleteLater();
-        delete runnable;
-    } );
+    QObject::connect(this, &QThreadRunner::finished, [=] { this->deleteLater(); } );
 }
 
 bool QThreadRunner::isAbortRequested()

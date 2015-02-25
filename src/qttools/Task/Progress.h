@@ -7,9 +7,9 @@
 
 namespace Task {
 
-class Runnable;
+class BaseRunner;
 
-/*! \brief Provides feedback on the progress of an executing operation (Runnable)
+/*! \brief Provides feedback on the progress of an executing operation
  */
 class Progress
 {
@@ -30,12 +30,12 @@ public:
     bool isAbortRequested() const;
 
 private:
-    Progress(Runnable* runnable);
-
     friend class Manager;
-    friend class Runnable;
+    friend class BaseRunner;
 
-    Runnable* m_runnable;
+    Progress(BaseRunner* runner);
+
+    BaseRunner* m_runner;
     std::unordered_map<int, QVariant> m_dataHash;
     int m_value;
     QString m_step;

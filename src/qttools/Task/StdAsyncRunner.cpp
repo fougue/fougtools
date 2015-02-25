@@ -2,8 +2,8 @@
 
 namespace Task {
 
-StdAsyncRunner::StdAsyncRunner(Runnable *runner, std::launch policy)
-    : BaseRunner(runner),
+StdAsyncRunner::StdAsyncRunner(const Manager *mgr, std::launch policy)
+    : BaseRunner(mgr),
       m_isAbortRequested(false),
       m_policy(policy)
 { }
@@ -20,7 +20,7 @@ void StdAsyncRunner::requestAbort()
 
 void StdAsyncRunner::launch()
 {
-    std::async(m_policy, &BaseRunner::execRunnableFunc, this);
+    std::async(m_policy, [=] { this->execRunnableFunc(); } );
 }
 
 } // namespace Task

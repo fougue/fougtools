@@ -11,7 +11,7 @@ namespace Task {
 class QThreadRunner : public QThread, public BaseRunner
 {
 public:
-    QThreadRunner(Runnable* runnable,
+    QThreadRunner(const Manager* mgr,
                   QThread::Priority priority = QThread::InheritPriority);
 
     bool isAbortRequested() override;

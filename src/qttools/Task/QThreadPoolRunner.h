@@ -16,7 +16,7 @@ public:
     /*! \param priority Same meaning as the second parameter of
      *                  QThreadPool::start(QRunnable*, int priority)
      */
-    QThreadPoolRunner(Runnable* runnable, int priority = 0);
+    QThreadPoolRunner(const Manager* mgr, int priority = 0);
     ~QThreadPoolRunner();
 
     void run() override; // -- QRunnable

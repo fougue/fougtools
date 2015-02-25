@@ -9,7 +9,7 @@ namespace Task {
 class CurrentThreadRunner : public BaseRunner
 {
 public:
-    CurrentThreadRunner(Runnable* runner);
+    CurrentThreadRunner(const Manager* mgr);
 
     bool isAbortRequested() override;
     void requestAbort() override;

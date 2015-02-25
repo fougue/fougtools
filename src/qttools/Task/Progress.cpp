@@ -1,12 +1,11 @@
 #include "Progress.h"
 
 #include "BaseRunner.h"
-#include "Runnable.h"
 
 namespace Task {
 
-Progress::Progress(Runnable *runnable)
-    : m_runnable(runnable),
+Progress::Progress(BaseRunner *runner)
+    : m_runner(runner),
       m_value(0)
 {
 }
@@ -25,7 +24,7 @@ void Progress::setValue(int pct)
 {
     //    qttools::QAtomicTools::storeRelaxed(&d->m_value, pct);
     m_value = pct;
-    m_runnable->m_taskRunner->taskSignals()->emitProgress(pct);
+    m_runner->taskSignals()->emitProgress(pct);
 }
 
 const QString& Progress::step() const
@@ -36,12 +35,12 @@ const QString& Progress::step() const
 void Progress::setStep(const QString &title)
 {
     m_step = title;
-    m_runnable->m_taskRunner->taskSignals()->emitProgressStep(title);
+    m_runner->taskSignals()->emitProgressStep(title);
 }
 
 void Progress::outputMessage(const QString &msg)
 {
-    m_runnable->m_taskRunner->taskSignals()->emitMessage(msg);
+    m_runner->taskSignals()->emitMessage(msg);
 }
 
 /*! \brief Returns this progress' custom data for the key \p key as a QVariant
@@ -68,7 +67,7 @@ void Progress::setData(int key, const QVariant &value)
 
 bool Progress::isAbortRequested() const
 {
-    return m_runnable->m_taskRunner->isAbortRequested();
+    return m_runner->isAbortRequested();
 }
 
 } // namespace Task

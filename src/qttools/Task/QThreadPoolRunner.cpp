@@ -4,8 +4,8 @@
 
 namespace Task {
 
-QThreadPoolRunner::QThreadPoolRunner(Runnable *runnable, int priority)
-    : BaseRunner(runnable),
+QThreadPoolRunner::QThreadPoolRunner(const Manager *mgr, int priority)
+    : BaseRunner(mgr),
       m_isAbortRequested(false),
       m_priority(priority)
 {
@@ -14,7 +14,6 @@ QThreadPoolRunner::QThreadPoolRunner(Runnable *runnable, int priority)
 
 QThreadPoolRunner::~QThreadPoolRunner()
 {
-    delete this->runnable();
 }
 
 void QThreadPoolRunner::run()

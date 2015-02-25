@@ -11,7 +11,7 @@ namespace Task {
 class StdAsyncRunner : public BaseRunner
 {
 public:
-    StdAsyncRunner(Runnable* runner, std::launch policy = std::launch::async);
+    StdAsyncRunner(const Manager* mgr, std::launch policy = std::launch::async);
 
     bool isAbortRequested() override;
     void requestAbort() override;

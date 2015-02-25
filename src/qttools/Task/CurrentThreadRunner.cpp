@@ -2,8 +2,8 @@
 
 namespace Task {
 
-CurrentThreadRunner::CurrentThreadRunner(Runnable *runner)
-    : BaseRunner(runner),
+CurrentThreadRunner::CurrentThreadRunner(const Manager *mgr)
+    : BaseRunner(mgr),
       m_isAbortRequested(false)
 { }
 

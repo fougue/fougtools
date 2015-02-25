@@ -61,13 +61,19 @@ public:
 
     // --- String conversion
 
-    static Standard_CString toOccCString(const QString& str);
-    static TCollection_AsciiString toOccAsciiString(const QString& str);
+    static TCollection_AsciiString toOccLatin1String(const QString& str);
+    static TCollection_AsciiString toOccLocal8BitString(const QString& str);
+    static TCollection_AsciiString toOccUtf8String(const QString& str);
     static Standard_ExtString toOccExtString(const QString& str);
     static TCollection_ExtendedString toOccExtendedString(const QString& str);
 
-    static QString toQString(const TCollection_AsciiString& str);
+    static QString fromLatin1ToQString(const TCollection_AsciiString& str);
+    static QString fromLocal8BitToQString(const TCollection_AsciiString& str);
+    static QString fromUtf8ToQString(const TCollection_AsciiString& str);
+    static QString toQString(Standard_ExtString unicodeStr, int size = -1);
     static QString toQString(const TCollection_ExtendedString& str);
+
+    // TODO: add conversion for NCollection_String.hxx
 
     template<typename OCC_PNT_VEC>
     static QString toQString(const OCC_PNT_VEC& pv,

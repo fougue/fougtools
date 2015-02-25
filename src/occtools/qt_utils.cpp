@@ -64,16 +64,25 @@ Quantity_NameOfColor QtUtils::toOccNameOfColor(const QColor& c)
     return QtUtils::toOccColor(c).Name();
 }
 
-//! Conversion of the QString \p str to an OCC CString
-Standard_CString QtUtils::toOccCString(const QString& str)
+//! Conversion of the QString \p str to an OCC TCollection_AsciiString
+//! containing the latin1 representation of \p str
+TCollection_AsciiString QtUtils::toOccLatin1String(const QString &str)
 {
-    return str.toLocal8Bit().constData();
+    return TCollection_AsciiString(str.toLatin1().constData());
 }
 
 //! Conversion of the QString \p str to an OCC TCollection_AsciiString
-TCollection_AsciiString QtUtils::toOccAsciiString(const QString& str)
+//! containing the local8bit representation of \p str
+TCollection_AsciiString QtUtils::toOccLocal8BitString(const QString& str)
 {
-    return TCollection_AsciiString(QtUtils::toOccCString(str));
+    return TCollection_AsciiString(str.toLocal8Bit().constData());
+}
+
+//! Conversion of the QString \p str to an OCC TCollection_AsciiString
+//! containing the utf8 representation of \p str
+TCollection_AsciiString QtUtils::toOccUtf8String(const QString &str)
+{
+    return TCollection_AsciiString(str.toUtf8().constData());
 }
 
 //! Conversion of the QString \p str to an OCC ExtString
@@ -88,16 +97,41 @@ TCollection_ExtendedString QtUtils::toOccExtendedString(const QString& str)
     return TCollection_ExtendedString(QtUtils::toOccExtString(str));
 }
 
-//! Conversion of the OCC TCollection_AsciiString \p str to a QString
-QString QtUtils::toQString(const TCollection_AsciiString& str)
+//! Conversion of the TCollection_AsciiString \p str to a QString.
+//! \p str is assumed to contain latin1 characters
+QString QtUtils::fromLatin1ToQString(const TCollection_AsciiString& str)
 {
     return QString::fromLatin1(str.ToCString(), str.Length());
+}
+
+//! Conversion of the TCollection_AsciiString \p str to a QString.
+//! \p str is assumed to contain local8bit characters
+QString QtUtils::fromLocal8BitToQString(const TCollection_AsciiString &str)
+{
+    return QString::fromLocal8Bit(str.ToCString(), str.Length());
+}
+
+//! Conversion of the TCollection_AsciiString \p str to a QString.
+//! \p str is assumed to contain utf8 characters
+QString QtUtils::fromUtf8ToQString(const TCollection_AsciiString &str)
+{
+    return QString::fromUtf8(str.ToCString(), str.Length());
+}
+
+/*! \brief Conversion of the OCC Standard_ExtString \p str to a QString
+ *  \param unicodeStr Contains unicode(utf16) characters
+ *  \param size Length of \p str (count of characters).
+ *              If -1 then \p str must be terminated with a 0
+ */
+QString QtUtils::toQString(Standard_ExtString unicodeStr, int size)
+{
+    return QString::fromUtf16(reinterpret_cast<const ushort*>(unicodeStr), size);
 }
 
 //! Conversion of the OCC TCollection_ExtendedString \p str to a QString
 QString QtUtils::toQString(const TCollection_ExtendedString& str)
 {
-    return QString::fromUtf16(reinterpret_cast<const ushort*>(str.ToExtString()), str.Length());
+    return QtUtils::toQString(str.ToExtString(), str.Length());
 }
 
 } // namespace occ

@@ -1,21 +1,17 @@
 INCLUDEPATH *= $$PWD/.. $$PWD/../..
 
 HEADERS += \
-    $$PWD/QThreadPoolRunner.h \
-    $$PWD/QThreadRunner.h \
-    $$PWD/CurrentThreadRunner.h \
     $$PWD/BaseRunner.h \
+    $$PWD/BaseRunnerSignals.h \
     $$PWD/Manager.h \
     $$PWD/Progress.h \
-    $$PWD/StdAsyncRunner.h \
-    $$PWD/RunnerSignals.h
+    $$PWD/RunnerCurrentThread.h \
+    $$PWD/RunnerQThreadPool.h \
+    $$PWD/RunnerQThread.h \
+    $$PWD/RunnerStdAsync.h
 
 SOURCES += \
-    $$PWD/QThreadPoolRunner.cpp \
-    $$PWD/QThreadRunner.cpp \
-    $$PWD/CurrentThreadRunner.cpp \
     $$PWD/BaseRunner.cpp \
+    $$PWD/BaseRunnerSignals.cpp \
     $$PWD/Manager.cpp \
-    $$PWD/Progress.cpp \
-    $$PWD/StdAsyncRunner.cpp \
-    $$PWD/RunnerSignals.cpp
+    $$PWD/Progress.cpp

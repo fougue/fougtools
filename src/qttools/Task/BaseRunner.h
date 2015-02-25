@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Progress.h"
-#include "RunnerSignals.h"
+#include "BaseRunnerSignals.h"
 
 #include <functional>
 
@@ -31,8 +31,7 @@ public:
 protected:
     BaseRunner(const Manager* mgr);
 
-    inline RunnerSignals* taskSignals()
-    { return &m_signals; }
+    BaseRunnerSignals* qtSignals();
 
     void execRunnableFunc();
 
@@ -41,8 +40,7 @@ protected:
     virtual void launch();
 
 private:
-    friend class Runnable;
-    friend class RunnerSignals;
+    friend class BaseRunnerSignals;
     friend class Manager;
     friend class Progress;
 
@@ -51,8 +49,13 @@ private:
     QString m_taskTitle;
     std::function<void()> m_func;
 
-    RunnerSignals m_signals;
+    BaseRunnerSignals m_signals;
     Progress m_progress;
+};
+
+template<typename SELECTOR>
+class Runner : public BaseRunner
+{
 };
 
 } // namespace Task

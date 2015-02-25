@@ -48,6 +48,11 @@ void BaseRunner::run(std::function<void()>&& func)
     }
 }
 
+BaseRunnerSignals *BaseRunner::qtSignals()
+{
+    return &m_signals;
+}
+
 void BaseRunner::execRunnableFunc()
 {
     m_signals.emitStarted(m_taskTitle);

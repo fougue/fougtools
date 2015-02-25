@@ -9,15 +9,15 @@ class Manager;
 
 /*! \brief Provides task Qt signals, to be forwarded to the Manager object
  *
- *  RunnerSignals allows BaseRunner to not have to inherit from QObject, instead
- *  BaseRunner embeds RunnerSignals instance.
+ *  BaseRunnerSignals allows BaseRunner to not have to inherit from QObject, instead
+ *  BaseRunner embeds a BaseRunnerSignals instance.
  */
-class RunnerSignals : public QObject
+class BaseRunnerSignals : public QObject
 {
     Q_OBJECT
 
 public:
-    RunnerSignals(BaseRunner* runner, QObject* parent = nullptr);
+    BaseRunnerSignals(BaseRunner* runner, QObject* parent = nullptr);
 
     void emitAboutToRun();
     void emitStarted(const QString& title);

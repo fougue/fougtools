@@ -23,7 +23,7 @@ void Progress::setValue(int pct)
 {
     //    qttools::QAtomicTools::storeRelaxed(&d->m_value, pct);
     m_value = pct;
-    m_runner->taskSignals()->emitProgress(pct);
+    m_runner->qtSignals()->emitProgress(pct);
 }
 
 const QString& Progress::step() const
@@ -34,12 +34,12 @@ const QString& Progress::step() const
 void Progress::setStep(const QString &title)
 {
     m_step = title;
-    m_runner->taskSignals()->emitProgressStep(title);
+    m_runner->qtSignals()->emitProgressStep(title);
 }
 
 void Progress::outputMessage(const QString &msg)
 {
-    m_runner->taskSignals()->emitMessage(msg);
+    m_runner->qtSignals()->emitMessage(msg);
 }
 
 /*! \brief Returns this progress' custom data for the key \p key as a QVariant

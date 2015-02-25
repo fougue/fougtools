@@ -1,6 +1,6 @@
 #pragma once
 
-#include "QThreadRunner.h"
+#include "RunnerQThread.h"
 
 #include <QtCore/QObject>
 
@@ -21,15 +21,15 @@ public:
     Manager(QObject* parent = nullptr);
     ~Manager();
 
-    /*! \brief Create a ready-to-launch Runnable object
+    /*! \brief Create a ready-to-launch Runner object
      *
-     *  The created Runnable will be automatically deleted at the end of execution.
+     *  The created Runner will be automatically deleted at the end of execution.
      *  TODO: make this function reentrant
      */
-    template<typename RUNNER = QThreadRunner, typename ... ARGS>
-    BaseRunner* newTask(ARGS ... args)
+    template<typename SELECTOR = QThread, typename ... ARGS>
+    Runner<SELECTOR>* newTask(ARGS ... args)
     {
-        auto runner = new RUNNER(this, args ...);
+        auto runner = new Runner<SELECTOR>(this, args ...);
         runner->m_taskId = ++m_taskIdSeq;
         return runner;
     }
@@ -46,7 +46,7 @@ signals:
     void ended(quint64 taskId);
 
 private:
-    friend class RunnerSignals;
+    friend class BaseRunnerSignals;
 
     void onAboutToRun(BaseRunner* runner);
 

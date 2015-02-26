@@ -1,52 +1,35 @@
-#include <QtCore/QCoreApplication>
-#include <QtCore/QList>
-#include <QtCore/QtDebug>
-
 #include "test_cpptools.h"
-#include "test_qttools_core.h"
-#include "test_qttools_gui.h"
-#include "test_qttools_script.h"
+#include "test_qttools.h"
 
 #ifdef FOUGTOOLS_HAVE_OCCTOOLS
 # include "test_occtools.h"
 #endif // FOUGTOOLS_HAVE_OCCTOOLS
 
-#ifdef FOUGTOOLS_HAVE_QTTOOLS_TASK
-# include "test_qttools_task.h"
-#endif // FOUGTOOLS_HAVE_QTTOOLS_TASK
+#include <QtCore/QCoreApplication>
+#include <QtCore/QtDebug>
 
 #include <iostream>
+#include <vector>
 
 int main(int argc, char** argv)
 {
     QCoreApplication app(argc, argv);
     Q_UNUSED(app);
 
-    // Parse command line
-    QStringList argList;
-    for (int i = 0; i < argc; ++i)
-        argList.append(QString(argv[i]));
-
     // Run tests
-    QList<QObject*> testObjects;
-    testObjects << new TestCppTools
-                << new TestQtToolsCore
-                << new TestQtToolsGui
-                << new TestQtToolsScript;
+    std::vector<QObject*> testObjects;
+    testObjects.push_back(new TestCppTools);
+    testObjects.push_back(new TestQtTools);
 #ifdef FOUGTOOLS_HAVE_OCCTOOLS
-    testObjects << new TestOccTools;
+    testObjects.push_back(new TestOccTools);
 #endif // FOUGTOOLS_HAVE_OCCTOOLS
 
-#ifdef FOUGTOOLS_HAVE_QTTOOLS_TASK
-    testObjects << new TestQtToolsTask;
-#endif // FOUGTOOLS_HAVE_QTTOOLS_TASK
-
     int exitCode = 0;
-    foreach (QObject* iTestObject, testObjects)
-        exitCode += QTest::qExec(iTestObject, argList);
-
+    for (auto testObj : testObjects) {
+        exitCode += QTest::qExec(testObj, argc, argv);
+        delete testObj;
+    }
     if (exitCode != 0)
         std::cout << exitCode << " failed" << std::endl;
-    qDeleteAll(testObjects);
     return exitCode;
 }

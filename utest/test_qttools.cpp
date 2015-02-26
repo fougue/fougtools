@@ -1,16 +1,91 @@
-#include "test_qttools_task.h"
+#include "test_qttools.h"
 
-#include "../src/qttools/Task/RunnerCurrentThread.h"
-#include "../src/qttools/Task/RunnerQThreadPool.h"
-#include "../src/qttools/Task/RunnerStdAsync.h"
-#include "../src/qttools/Task/Manager.h"
+#include "../src/qttools/core/qlocale_utils.h"
+#include "../src/qttools/gui/qstandard_item_explorer.h"
+#include "../src/qttools/script/calculator.h"
+
+#ifdef FOUGTOOLS_HAVE_QTTOOLS_TASK
+# include "../src/qttools/Task/RunnerCurrentThread.h"
+# include "../src/qttools/Task/RunnerQThreadPool.h"
+# include "../src/qttools/Task/RunnerStdAsync.h"
+# include "../src/qttools/Task/Manager.h"
+#endif // FOUGTOOLS_HAVE_QTTOOLS_TASK
+
+#include "../src/mathtools/consts.h"
 
 #include <QtCore/QCoreApplication>
 #include <QtCore/QtDebug>
 #include <QtCore/QTime>
 #include <QtCore/QTimer>
+#include <QtGui/QStandardItem>
+#include <QtGui/QStandardItemModel>
 
+#include <cmath>
 #include <unordered_map>
+
+void TestQtTools::core_QLocaleUtils_test()
+{
+    QCOMPARE(static_cast<int>(QLocale::France), 74);
+    QCOMPARE(qttools::QLocaleUtils::toCountry(74), QLocale::France);
+    //  foreach (auto country, qttools::QLocaleTools::allCountries()) {
+    //    qDebug() << QLocale::countryToString(country);
+    //  }
+}
+
+void TestQtTools::gui_QStandardItemExplorer_test()
+{
+    QStandardItemModel itemModel;
+
+    auto rootItem = new QStandardItem(QLatin1String("root"));
+    itemModel.appendRow(rootItem);
+
+    auto item1 = new QStandardItem(QLatin1String("item_1"));
+    item1->appendRow(new QStandardItem(QLatin1String("item_1_1")));
+    item1->appendRow(new QStandardItem(QLatin1String("item_1_2")));
+    item1->appendRow(new QStandardItem(QLatin1String("item_1_3")));
+    item1->appendRow(new QStandardItem(QLatin1String("item_1_4")));
+
+    auto item2 = new QStandardItem(QLatin1String("item_2"));
+
+    rootItem->appendRow(item1);
+    rootItem->appendRow(item2);
+
+    qttools::QStandardItemExplorer explorer(&itemModel);
+    QCOMPARE(explorer.current(), itemModel.invisibleRootItem());
+    explorer.goNext();
+    QCOMPARE(explorer.current(), rootItem);
+    explorer.goNext();
+    QCOMPARE(explorer.current(), item1);
+    explorer.goNext();
+    QCOMPARE(explorer.current(), item2);
+    explorer.goNext();
+    for (int i = 0; i < item1->rowCount(); ++i) {
+        QCOMPARE(explorer.current(), item1->child(i));
+        explorer.goNext();
+    }
+    QCOMPARE(explorer.atEnd(), true);
+}
+
+void TestQtTools::script_Calculator_test()
+{
+    qttools::Calculator calc;
+    QVERIFY(calc.hasResult() && calc.lastErrorText().isEmpty());
+
+    calc.evaluate("2*3");
+    QVERIFY(calc.hasResult());
+    QCOMPARE(calc.lastResult(), 6.0);
+
+    calc.evaluate("sin(PI/4)");
+    QVERIFY(calc.hasResult());
+    QCOMPARE(calc.lastResult(), std::sin(math::pi / 4.0));
+
+    calc.evaluate("4*");
+    QVERIFY(!calc.hasResult());
+    QVERIFY(!calc.lastErrorText().isEmpty());
+    //qDebug() << calc.lastErrorText();
+}
+
+#ifdef FOUGTOOLS_HAVE_QTTOOLS_TASK
 
 namespace Internal {
 
@@ -27,7 +102,7 @@ static Task::BaseRunner* newTaskRunner(
 
 } // namespace Internal
 
-void TestQtToolsTask::Manager_test()
+void TestQtTools::task_Manager_test()
 {
     auto taskMgr = Task::Manager::globalInstance();
     QObject::connect(taskMgr, &Task::Manager::started,
@@ -92,3 +167,4 @@ void TestQtToolsTask::Manager_test()
         QCOMPARE(taskMgr->taskProgress(mapPair.first), static_cast<Task::Progress*>(nullptr));
     }
 }
+#endif // FOUGTOOLS_HAVE_QTTOOLS_TASK

@@ -46,7 +46,6 @@
 #include <V3d_View.hxx>
 
 #include <QtCore/QtDebug>
-#include <QtCore/QHash>
 
 #include <QApplication>
 #include <QtGui/QLinearGradient>
@@ -65,6 +64,9 @@
 # include <X11/X.h>
 #endif
 
+#include <vector>
+#include <unordered_map>
+
 namespace occ {
 
 //! QtView's pimpl
@@ -81,8 +83,13 @@ public:
     bool m_needsResize;
 
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
-    QList<QtView::PaintCallback> m_paintCallbacks;
-    QHash<int, QList<QtView::PaintCallback>::iterator> m_paintCallbackMapping;
+    struct PaintCallbackData
+    {
+        int id;
+        QtView::PaintCallback callback;
+    };
+
+    std::vector<PaintCallbackData> m_paintCallbacks;
 #endif
     int m_paintCallbackLastId;
     Aspect_GraphicCallbackStruct* m_callbackData;
@@ -102,8 +109,8 @@ int occ_QtView_paintCallBack(Aspect_Drawable drawable,
     QtView::Private* d = reinterpret_cast<QtView::Private*>(pointer);
     d->m_callbackData = data;
 
-    foreach (const QtView::PaintCallback& callback, d->m_paintCallbacks)
-        callback();
+    for (const auto& cbData : d->m_paintCallbacks)
+        cbData.callback();
 
     d->m_callbackData = NULL;
 #endif // !OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
@@ -222,17 +229,22 @@ void QtView::redraw()
 int QtView::addPaintCallback(const PaintCallback &callback)
 {
     if (callback) {
-        d->m_paintCallbacks.append(callback);
-        d->m_paintCallbackMapping.insert(d->m_paintCallbackLastId, --(d->m_paintCallbacks.end()));
-        return ++(d->m_paintCallbackLastId);
+        Private::PaintCallbackData cbData;
+        cbData.id = ++(d->m_paintCallbackLastId);
+        cbData.callback = callback;
+        d->m_paintCallbacks.push_back(cbData);
+        return cbData.id;
     }
     return -1;
 }
 
 void QtView::removePaintCallback(int callbackId)
 {
-    QList<PaintCallback>::iterator callbackIt =
-            d->m_paintCallbackMapping.value(callbackId, d->m_paintCallbacks.end());
+    auto callbackIt =
+            std::find_if(
+                d->m_paintCallbacks.begin(),
+                d->m_paintCallbacks.end(),
+                [=] (const Private::PaintCallbackData& cbData) { return cbData.id == callbackId; } );
     if (callbackIt != d->m_paintCallbacks.end())
         d->m_paintCallbacks.erase(callbackIt);
 }

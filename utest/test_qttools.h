@@ -16,9 +16,6 @@ private slots:
     // Script
     void script_Calculator_test();
 
-    // Sql
-    void sql_SqlCppEnumMap_test();
-
 #ifdef FOUGTOOLS_HAVE_QTTOOLS_TASK
     // Task
     void task_Manager_test();

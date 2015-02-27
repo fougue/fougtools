@@ -11,10 +11,11 @@ HEADERS += \
     $$PWD/test_cpptools.h \
     $$PWD/test_qttools.h \
     \
+    $$PWD/../src/cpptools/enum_string_map.h \
+    \
     $$PWD/../src/qttools/core/qlocale_utils.h \
     $$PWD/../src/qttools/gui/qstandard_item_explorer.h \
-    $$PWD/../src/qttools/script/calculator.h \
-    $$PWD/../src/qttools/sql/enum_string_map.h
+    $$PWD/../src/qttools/script/calculator.h
 
 SOURCES += \
     $$PWD/main.cpp \

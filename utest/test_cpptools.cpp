@@ -3,6 +3,7 @@
 #include "../src/cpptools/basic_shared_pointer.h"
 #include "../src/cpptools/c_array_utils.h"
 #include "../src/cpptools/circular_iterator.h"
+#include "../src/cpptools/enum_string_map.h"
 #include "../src/cpptools/hash_fnv.h"
 #include "../src/cpptools/memory_utils.h"
 #include "../src/cpptools/pusher.h"
@@ -249,6 +250,43 @@ void TestCppTools::hash_fnv_test()
         QCOMPARE(hash64(testData.byteSeq, byteSeqLen), testData.hash64_fnv_1a);
         QCOMPARE(hash64(testData.byteSeq, testData.byteSeq + byteSeqLen), testData.hash64_fnv_1a);
     }
+}
+
+namespace Internal {
+
+enum class Status
+{
+    Started,
+    Running,
+    Finished
+};
+
+} // namespace Internal
+
+void TestCppTools::EnumStringMap_test()
+{
+    cpp::EnumStringMap<Internal::Status> enumMap;
+    enumMap.map(Internal::Status::Started, "status_started");
+    enumMap.map(Internal::Status::Running, "status_running");
+    enumMap.map(Internal::Status::Finished, "status_finished");
+
+    QCOMPARE(enumMap.size(), static_cast<std::size_t>(3));
+
+    QCOMPARE(enumMap.index(Internal::Status::Started), static_cast<std::size_t>(0));
+    QCOMPARE(enumMap.index(Internal::Status::Running), static_cast<std::size_t>(1));
+    QCOMPARE(enumMap.index(Internal::Status::Finished), static_cast<std::size_t>(2));
+
+    QCOMPARE(enumMap.valueAt(0), Internal::Status::Started);
+    QCOMPARE(enumMap.valueAt(1), Internal::Status::Running);
+    QCOMPARE(enumMap.valueAt(2), Internal::Status::Finished);
+
+    QCOMPARE(enumMap.value("status_started"), Internal::Status::Started);
+    QCOMPARE(enumMap.value("status_running"), Internal::Status::Running);
+    QCOMPARE(enumMap.value("status_finished"), Internal::Status::Finished);
+
+    QCOMPARE(enumMap.string(Internal::Status::Started), "status_started");
+    QCOMPARE(enumMap.string(Internal::Status::Running), "status_running");
+    QCOMPARE(enumMap.string(Internal::Status::Finished), "status_finished");
 }
 
 // --

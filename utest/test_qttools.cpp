@@ -3,7 +3,6 @@
 #include "../src/qttools/core/qlocale_utils.h"
 #include "../src/qttools/gui/qstandard_item_explorer.h"
 #include "../src/qttools/script/calculator.h"
-#include "../src/qttools/sql/enum_string_map.h"
 
 #ifdef FOUGTOOLS_HAVE_QTTOOLS_TASK
 # include "../src/qttools/Task/RunnerCurrentThread.h"
@@ -84,43 +83,6 @@ void TestQtTools::script_Calculator_test()
     QVERIFY(!calc.hasResult());
     QVERIFY(!calc.lastErrorText().isEmpty());
     //qDebug() << calc.lastErrorText();
-}
-
-namespace Internal {
-
-enum class Status
-{
-    Started,
-    Running,
-    Finished
-};
-
-} // namespace Internal
-
-void TestQtTools::sql_SqlCppEnumMap_test()
-{
-    qttools::EnumStringMap<Internal::Status> enumMap;
-    enumMap.map(Internal::Status::Started, "status_started");
-    enumMap.map(Internal::Status::Running, "status_running");
-    enumMap.map(Internal::Status::Finished, "status_finished");
-
-    QCOMPARE(enumMap.size(), static_cast<std::size_t>(3));
-
-    QCOMPARE(enumMap.index(Internal::Status::Started), static_cast<std::size_t>(0));
-    QCOMPARE(enumMap.index(Internal::Status::Running), static_cast<std::size_t>(1));
-    QCOMPARE(enumMap.index(Internal::Status::Finished), static_cast<std::size_t>(2));
-
-    QCOMPARE(enumMap.valueAt(0), Internal::Status::Started);
-    QCOMPARE(enumMap.valueAt(1), Internal::Status::Running);
-    QCOMPARE(enumMap.valueAt(2), Internal::Status::Finished);
-
-    QCOMPARE(enumMap.value("status_started"), Internal::Status::Started);
-    QCOMPARE(enumMap.value("status_running"), Internal::Status::Running);
-    QCOMPARE(enumMap.value("status_finished"), Internal::Status::Finished);
-
-    QCOMPARE(enumMap.string(Internal::Status::Started), "status_started");
-    QCOMPARE(enumMap.string(Internal::Status::Running), "status_running");
-    QCOMPARE(enumMap.string(Internal::Status::Finished), "status_finished");
 }
 
 #ifdef FOUGTOOLS_HAVE_QTTOOLS_TASK

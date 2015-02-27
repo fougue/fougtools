@@ -37,15 +37,12 @@
 
 #pragma once
 
-#include "../../cpptools/hash_fnv.h"
+#include "hash_fnv.h"
 
-#include <algorithm>
-#include <cassert>
-#include <cstring>
 #include <unordered_map>
 #include <vector>
 
-namespace qttools {
+namespace cpp {
 
 /*! \brief Provides mapping between a C++ enum type values and C strings
  *
@@ -64,8 +61,8 @@ namespace qttools {
  *      assert(std::strcmp(statusStrMap.string(Status::Running), "status_running") == 0);
  *  \endcode
  *
- *  \headerfile enum_string_map.h <qttools/sql/enum_string_map.h>
- *  \ingroup qttools_sql
+ *  \headerfile enum_string_map.h <cpptools/enum_string_map.h>
+ *  \ingroup cpptools
  */
 template<typename ENUM>
 class EnumStringMap
@@ -100,15 +97,17 @@ private:
     std::vector<Mapping> m_mappingVec;
 };
 
-} // namespace qttools
+} // namespace cpp
 
 // --
 // -- Implementation
 // --
 
 #include <algorithm>
+#include <cassert>
+#include <cstring>
 
-namespace qttools {
+namespace cpp {
 
 template<typename ENUM>
 EnumStringMap<ENUM>::EnumStringMap()
@@ -179,4 +178,4 @@ bool EnumStringMap<ENUM>::StrEqual::operator()(const char *lhs, const char *rhs)
     return std::strcmp(lhs, rhs) == 0;
 }
 
-} // namespace qttools
+} // namespace cpp

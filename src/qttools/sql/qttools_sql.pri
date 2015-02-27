@@ -5,9 +5,7 @@ HEADERS += \
     $$PWD/database_manager.h \
     $$PWD/sql.h \
     $$PWD/composite_type_helper.h \
-    $$PWD/qsql_query_utils.h \
-    $$PWD/enum_string_map.h \
-    $$PWD/enum_string_map_fwd.h
+    $$PWD/qsql_query_utils.h
 
 SOURCES += \
     $$PWD/database_settings.cpp \

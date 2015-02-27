@@ -39,9 +39,9 @@
 
 #include "../../cpptools/hash_fnv.h"
 
+#include <algorithm>
 #include <cassert>
 #include <cstring>
-#include <string>
 #include <unordered_map>
 #include <vector>
 
@@ -70,9 +70,21 @@ private:
 
     typedef cpp::hash_fnv_1a<> StrHash;
 
-    std::unordered_map<CPP_ENUM, const char*> m_cppSqlMap;
+    struct CppSql
+    {
+        CPP_ENUM cpp;
+        const char* sql;
+    };
+    typename std::vector<CppSql>::const_iterator findCppSql(CPP_ENUM cppVal) const
+    {
+        auto it = std::find_if(m_mapVec.begin(), m_mapVec.end(),
+                               [=] (const CppSql& val) { return val.cpp == cppVal; } );
+        assert(it != m_mapVec.end());
+        return it;
+    }
+
     std::unordered_map<const char*, CPP_ENUM, StrHash, StrEqual> m_sqlCppMap;
-    std::vector<CPP_ENUM> m_intMap;
+    std::vector<CppSql> m_mapVec;
 };
 
 } // namespace qttools
@@ -100,28 +112,30 @@ SqlCppEnumMap<CPP_ENUM>::SqlCppEnumMap()
 template<typename CPP_ENUM>
 void SqlCppEnumMap<CPP_ENUM>::addMapping(CPP_ENUM cppVal, const char *sqlVal)
 {
-    m_cppSqlMap.emplace(cppVal, sqlVal);
     m_sqlCppMap.emplace(sqlVal, cppVal);
-    m_intMap.push_back(cppVal);
+    CppSql val;
+    val.cpp = cppVal;
+    val.sql = sqlVal;
+    m_mapVec.push_back(val);
 }
 
 template<typename CPP_ENUM>
 std::size_t SqlCppEnumMap<CPP_ENUM>::size() const
 {
-    return m_intMap.size();
+    return m_mapVec.size();
 }
 
 template<typename CPP_ENUM>
 std::size_t SqlCppEnumMap<CPP_ENUM>::index(CPP_ENUM cppVal) const
 {
-    return std::find(m_intMap.begin(), m_intMap.end(), cppVal) - m_intMap.begin();
+    return this->findCppSql(cppVal) - m_mapVec.begin();
 }
 
 template<typename CPP_ENUM>
 CPP_ENUM SqlCppEnumMap<CPP_ENUM>::cppValueAt(std::size_t i) const
 {
-    assert(i < m_intMap.size());
-    return m_intMap.at(i);
+    assert(i < m_mapVec.size());
+    return m_mapVec.at(i).cpp;
 }
 
 template<typename CPP_ENUM>
@@ -135,9 +149,8 @@ CPP_ENUM SqlCppEnumMap<CPP_ENUM>::cppValue(const char *sqlVal) const
 template<typename CPP_ENUM>
 const char *SqlCppEnumMap<CPP_ENUM>::sqlValue(CPP_ENUM cppVal) const
 {
-    auto it = m_cppSqlMap.find(cppVal);
-    assert(it != m_cppSqlMap.cend());
-    return (*it).second;
+    auto it = this->findCppSql(cppVal);
+    return (*it).sql;
 }
 
 template<typename CPP_ENUM>

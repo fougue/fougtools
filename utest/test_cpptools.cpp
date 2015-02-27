@@ -224,21 +224,26 @@ void TestCppTools::hash_fnv_test()
 {
     // TODO: fill testDataVec with http://www.isthe.com/chongo/src/fnv/test_fnv.c
     const TestData testDataVec[] =
-    { { "", 0x811c9dc5UL, 0xcbf29ce484222325ULL },
-      { "a", 0xe40c292cUL, 0xaf63dc4c8601ec8cULL },
-      { "b", 0xe70c2de5UL, 0xaf63df4c8601f1a5ULL },
-      { "c", 0xe60c2c52UL, 0xaf63de4c8601eff2ULL },
-      { "d", 0xe10c2473UL, 0xaf63d94c8601e773ULL },
-      { "e", 0xe00c22e0UL, 0xaf63d84c8601e5c0ULL }
+    {
+        { "", 0x811c9dc5UL, 0xcbf29ce484222325ULL },
+        { "a", 0xe40c292cUL, 0xaf63dc4c8601ec8cULL },
+        { "b", 0xe70c2de5UL, 0xaf63df4c8601f1a5ULL },
+        { "c", 0xe60c2c52UL, 0xaf63de4c8601eff2ULL },
+        { "d", 0xe10c2473UL, 0xaf63d94c8601e773ULL },
+        { "e", 0xe00c22e0UL, 0xaf63d84c8601e5c0ULL }
     };
     for (const auto& testData : testDataVec) {
         cpp::hash32_fnv_1a hash32;
         cpp::hash64_fnv_1a hash64;
         const auto byteSeqLen = std::strlen(testData.byteSeq);
+
         QCOMPARE(hash32(testData.byteSeq), testData.hash32_fnv_1a);
         QCOMPARE(hash32(testData.byteSeq, byteSeqLen), testData.hash32_fnv_1a);
+        QCOMPARE(hash32(testData.byteSeq, testData.byteSeq + byteSeqLen), testData.hash32_fnv_1a);
+
         QCOMPARE(hash64(testData.byteSeq), testData.hash64_fnv_1a);
         QCOMPARE(hash64(testData.byteSeq, byteSeqLen), testData.hash64_fnv_1a);
+        QCOMPARE(hash64(testData.byteSeq, testData.byteSeq + byteSeqLen), testData.hash64_fnv_1a);
     }
 }
 

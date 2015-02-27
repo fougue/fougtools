@@ -79,6 +79,7 @@ private:
 public:
     typedef typename helper_t::uint_type uint_type;
 
+    //! Hash on byte sequence \p byteSeq of length \p len
     template<typename BYTE>
     uint_type operator()(const BYTE* byteSeq, std::size_t len) const
     {
@@ -88,12 +89,23 @@ public:
         return hash;
     }
 
+    //! Hash on byte sequence \p byteSeq which must be null terminated
     template<typename BYTE>
     uint_type operator()(const BYTE* byteSeq) const
     {
         auto hash = helper_t::offsetBasis;
         for (; *byteSeq != 0; ++byteSeq)
             hashStep(hash, *byteSeq);
+        return hash;
+    }
+
+    //! Hash on byte sequence delimited by begin/end iterators
+    template<typename ITERATOR>
+    uint_type operator()(ITERATOR begin, ITERATOR end) const
+    {
+        auto hash = helper_t::offsetBasis;
+        for (; begin != end; ++begin)
+            hashStep(hash, *begin);
         return hash;
     }
 

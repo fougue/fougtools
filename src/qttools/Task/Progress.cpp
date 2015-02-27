@@ -1,6 +1,6 @@
-#include "Progress.h"
+#include "progress.h"
 
-#include "BaseRunner.h"
+#include "base_runner.h"
 
 namespace Task {
 

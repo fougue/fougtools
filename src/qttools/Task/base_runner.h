@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Progress.h"
-#include "BaseRunnerSignals.h"
+#include "progress.h"
+#include "base_runner_signals.h"
 
 #include <functional>
 

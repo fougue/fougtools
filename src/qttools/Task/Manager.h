@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RunnerQThread.h"
+#include "runner_qthread.h"
 
 #include <QtCore/QObject>
 

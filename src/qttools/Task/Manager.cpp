@@ -1,6 +1,6 @@
-#include "Manager.h"
+#include "manager.h"
 
-#include "BaseRunner.h"
+#include "base_runner.h"
 
 #include <QtCore/QGlobalStatic>
 

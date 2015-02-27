@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseRunner.h"
+#include "base_runner.h"
 
 #include <QtCore/QRunnable>
 #include <QtCore/QThreadPool>

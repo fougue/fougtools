@@ -1,7 +1,7 @@
-#include "BaseRunnerSignals.h"
+#include "base_runner_signals.h"
 
-#include "BaseRunner.h"
-#include "Manager.h"
+#include "base_runner.h"
+#include "manager.h"
 
 namespace Task {
 

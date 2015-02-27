@@ -92,8 +92,8 @@ namespace Internal {
 static const bool debugOutput = true;
 
 template<typename SELECTOR, typename ... ARGS>
-static Task::BaseRunner* newTaskRunner(
-        Task::Manager* mgr, const char* selectorName, ARGS ... args)
+static qttask::BaseRunner* newTaskRunner(
+        qttask::Manager* mgr, const char* selectorName, ARGS ... args)
 {
     auto runner = mgr->newTask<SELECTOR>(args ...);
     runner->setTaskTitle(QString("Tâche [%1] %2").arg(selectorName).arg(runner->taskId()));
@@ -104,31 +104,31 @@ static Task::BaseRunner* newTaskRunner(
 
 void TestQtTools::task_Manager_test()
 {
-    auto taskMgr = Task::Manager::globalInstance();
-    QObject::connect(taskMgr, &Task::Manager::started,
+    auto taskMgr = qttask::Manager::globalInstance();
+    QObject::connect(taskMgr, &qttask::Manager::started,
                      [](quint64 taskId, const QString& title) {
         if (Internal::debugOutput)
             qDebug() << "Started:" << taskId << title;
     } );
 
-    QObject::connect(taskMgr, &Task::Manager::progressStep,
+    QObject::connect(taskMgr, &qttask::Manager::progressStep,
                      [](quint64 taskId, const QString& title) {
         if (Internal::debugOutput)
             qDebug() << "Step:" << taskId << title;
     } );
 
-    QObject::connect(taskMgr, &Task::Manager::message,
+    QObject::connect(taskMgr, &qttask::Manager::message,
                      [](quint64 taskId, const QString& msg) {
         if (Internal::debugOutput)
             qDebug() << "Message:" << taskId << msg;
     } );
 
-    std::vector<Task::BaseRunner*> taskVec;
+    std::vector<qttask::BaseRunner*> taskVec;
     for (int i = 0; i < 5; ++i) {
         taskVec.push_back(Internal::newTaskRunner<QThreadPool>(taskMgr, "QThreadPool"));
         taskVec.push_back(Internal::newTaskRunner<QThread>(taskMgr, "QThread", QThread::HighestPriority));
-        taskVec.push_back(Internal::newTaskRunner<Task::StdAsync>(taskMgr, "std::async()"));
-        taskVec.push_back(Internal::newTaskRunner<Task::CurrentThread>(taskMgr, "CurrentThread"));
+        taskVec.push_back(Internal::newTaskRunner<qttask::StdAsync>(taskMgr, "std::async()"));
+        taskVec.push_back(Internal::newTaskRunner<qttask::CurrentThread>(taskMgr, "CurrentThread"));
     }
 
     std::size_t taskCount = taskVec.size();
@@ -136,7 +136,7 @@ void TestQtTools::task_Manager_test()
     for (const auto task : taskVec)
         taskWorkDone.emplace(task->taskId(), false);
 
-    QObject::connect(taskMgr, &Task::Manager::ended,
+    QObject::connect(taskMgr, &qttask::Manager::ended,
                      [&](quint64 taskId) {
         --taskCount;
 
@@ -164,7 +164,7 @@ void TestQtTools::task_Manager_test()
     QCOMPARE(taskWorkDone.size(), taskVec.size());
     for (const auto& mapPair : taskWorkDone) {
         QVERIFY(mapPair.second);
-        QCOMPARE(taskMgr->taskProgress(mapPair.first), static_cast<Task::Progress*>(nullptr));
+        QCOMPARE(taskMgr->taskProgress(mapPair.first), static_cast<qttask::Progress*>(nullptr));
     }
 }
 #endif // FOUGTOOLS_HAVE_QTTOOLS_TASK

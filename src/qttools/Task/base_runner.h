@@ -5,7 +5,7 @@
 
 #include <functional>
 
-namespace Task {
+namespace qttask {
 
 class Manager;
 
@@ -58,4 +58,4 @@ template<typename SELECTOR>
 class Runner : public BaseRunner
 { };
 
-} // namespace Task
+} // namespace qttask

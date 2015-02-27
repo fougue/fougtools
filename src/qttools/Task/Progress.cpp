@@ -2,7 +2,7 @@
 
 #include "base_runner.h"
 
-namespace Task {
+namespace qttask {
 
 Progress::Progress(BaseRunner *runner)
     : m_runner(runner),
@@ -66,4 +66,4 @@ bool Progress::isAbortRequested() const
     return m_runner->isAbortRequested();
 }
 
-} // namespace Task
+} // namespace qttask

@@ -2,7 +2,7 @@
 
 #include "manager.h"
 
-namespace Task {
+namespace qttask {
 
 BaseRunner::BaseRunner(const Manager *mgr)
     : m_mgr(mgr),
@@ -77,4 +77,4 @@ void BaseRunner::destroy()
     delete this;
 }
 
-} // namespace Task
+} // namespace qttask

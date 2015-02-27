@@ -5,7 +5,7 @@
 
 #include <unordered_map>
 
-namespace Task {
+namespace qttask {
 
 class BaseRunner;
 
@@ -41,4 +41,4 @@ private:
     QString m_step;
 };
 
-} // namespace Task
+} // namespace qttask

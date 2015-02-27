@@ -2,7 +2,7 @@
 
 #include "base_runner.h"
 
-namespace Task {
+namespace qttask {
 
 struct CurrentThread { };
 
@@ -31,4 +31,4 @@ private:
     bool m_isAbortRequested;
 };
 
-} // namespace Task
+} // namespace qttask

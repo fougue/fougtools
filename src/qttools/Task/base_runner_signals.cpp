@@ -3,7 +3,7 @@
 #include "base_runner.h"
 #include "manager.h"
 
-namespace Task {
+namespace qttask {
 
 BaseRunnerSignals::BaseRunnerSignals(BaseRunner* runner, QObject *parent)
     : QObject(parent),
@@ -53,4 +53,4 @@ void BaseRunnerSignals::emitDestroyRequest()
     emit destroyRequest(m_runner);
 }
 
-} // namespace Task
+} // namespace qttask

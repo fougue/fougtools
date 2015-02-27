@@ -4,7 +4,7 @@
 
 #include <future>
 
-namespace Task {
+namespace qttask {
 
 struct StdAsync { };
 
@@ -35,4 +35,4 @@ private:
     std::launch m_policy;
 };
 
-} // namespace Task
+} // namespace qttask

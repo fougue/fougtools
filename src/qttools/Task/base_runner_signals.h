@@ -2,7 +2,7 @@
 
 #include <QtCore/QObject>
 
-namespace Task {
+namespace qttask {
 
 class BaseRunner;
 class Manager;
@@ -40,4 +40,4 @@ private:
     BaseRunner* m_runner;
 };
 
-} // namespace Task
+} // namespace qttask

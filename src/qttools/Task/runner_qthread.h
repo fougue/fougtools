@@ -5,7 +5,7 @@
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
 
-namespace Task {
+namespace qttask {
 
 /*! \brief Task runner based on QThread
  */
@@ -47,4 +47,4 @@ private:
     QThread::Priority m_priority;
 };
 
-} // namespace Task
+} // namespace qttask

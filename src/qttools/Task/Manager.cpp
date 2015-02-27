@@ -4,7 +4,7 @@
 
 #include <QtCore/QGlobalStatic>
 
-namespace Task {
+namespace qttask {
 
 Manager::Manager(QObject *parent)
     : QObject(parent),
@@ -63,4 +63,4 @@ const BaseRunner *Manager::getRunner(quint64 taskId) const
     return it != m_taskIdToRunner.end() ? (*it).second : nullptr;
 }
 
-} // namespace Task
+} // namespace qttask

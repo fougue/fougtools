@@ -5,7 +5,7 @@
 #include <QtCore/QRunnable>
 #include <QtCore/QThreadPool>
 
-namespace Task {
+namespace qttask {
 
 /*! \brief Task runner using the global instance of QThreadPool
  *
@@ -43,4 +43,4 @@ private:
     int m_priority;
 };
 
-} // namespace Task
+} // namespace qttask

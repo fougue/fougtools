@@ -7,7 +7,7 @@
 #include <atomic>
 #include <unordered_map>
 
-namespace Task {
+namespace qttask {
 
 class BaseRunner;
 class Progress;
@@ -69,4 +69,4 @@ private:
     std::unordered_map<quint64, BaseRunner*> m_taskIdToRunner;
 };
 
-} // namespace Task
+} // namespace qttask

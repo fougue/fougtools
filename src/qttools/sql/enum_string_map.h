@@ -47,10 +47,32 @@
 
 namespace qttools {
 
+/*! \brief Provides mapping between a C++ enum type values and C strings
+ *
+ *  \code
+ *      enum class Status {
+ *          Started,
+ *          Running,
+ *          Finished
+ *      };
+ *
+ *      cpp::EnumStringMap<Status> statusStrMap;
+ *      statusStrMap.map(Status::Started,  "status_started");
+ *      statusStrMap.map(Status::Running,  "status_running");
+ *      statusStrMap.map(Status::Finished, "status_finished");
+ *      assert(statusStrMap.value("status_running") == Status::Running);
+ *      assert(std::strcmp(statusStrMap.string(Status::Running), "status_running") == 0);
+ *  \endcode
+ *
+ *  \headerfile enum_string_map.h <qttools/sql/enum_string_map.h>
+ *  \ingroup qttools_sql
+ */
 template<typename ENUM>
 class EnumStringMap
 {
 public:
+    typedef std::pair<ENUM, const char*> Mapping;
+
     EnumStringMap();
 
     void map(ENUM eval, const char* str);
@@ -62,6 +84,8 @@ public:
     ENUM value(const char* str) const;
     const char* string(ENUM eval) const;
 
+    Mapping mapping(std::size_t i) const;
+
 private:
     struct StrEqual
     {
@@ -70,15 +94,7 @@ private:
 
     typedef cpp::hash_fnv_1a<> StrHash;
 
-    typedef std::pair<ENUM, const char*> Mapping;
-
-    typename std::vector<Mapping>::const_iterator findCppSql(ENUM eval) const
-    {
-        auto it = std::find_if(m_mappingVec.cbegin(), m_mappingVec.cend(),
-                               [=] (const Mapping& map) { return map.first == eval; } );
-        assert(it != m_mappingVec.cend());
-        return it;
-    }
+    typename std::vector<Mapping>::const_iterator findCppSql(ENUM eval) const;
 
     std::unordered_map<const char*, ENUM, StrHash, StrEqual> m_strEnumMap;
     std::vector<Mapping> m_mappingVec;
@@ -93,26 +109,6 @@ private:
 #include <algorithm>
 
 namespace qttools {
-
-/*! \class EnumStringMap
- *  \brief Provides mapping between a C++ enum type values and C strings
- *
- *  \code
- *      enum class Status {
- *          Started,
- *          Running,
- *          Finished
- *      };
- *
- *      cpp::EnumStringMap<Status> statusStrMap;
- *      statusStrMap.map(Status::Started,  "status_started");
- *      statusStrMap.map(Status::Running,  "status_running");
- *      statusStrMap.map(Status::Finished, "status_finished");
- *  \endcode
- *
- *  \headerfile enum_string_map.h <qttools/sql/enum_string_map.h>
- *  \ingroup qttools_sql
- */
 
 template<typename ENUM>
 EnumStringMap<ENUM>::EnumStringMap()
@@ -158,6 +154,23 @@ const char *EnumStringMap<ENUM>::string(ENUM eval) const
 {
     auto it = this->findCppSql(eval);
     return (*it).second;
+}
+
+template<typename ENUM>
+typename EnumStringMap<ENUM>::Mapping EnumStringMap<ENUM>::mapping(std::size_t i) const
+{
+    assert(i < m_mappingVec.size());
+    return m_mappingVec.at(i);
+}
+
+template<typename ENUM>
+typename std::vector<typename EnumStringMap<ENUM>::Mapping>::const_iterator
+EnumStringMap<ENUM>::findCppSql(ENUM eval) const
+{
+    auto it = std::find_if(m_mappingVec.cbegin(), m_mappingVec.cend(),
+                           [=] (const Mapping& map) { return map.first == eval; } );
+    assert(it != m_mappingVec.cend());
+    return it;
 }
 
 template<typename ENUM>

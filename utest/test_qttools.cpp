@@ -3,7 +3,7 @@
 #include "../src/qttools/core/qlocale_utils.h"
 #include "../src/qttools/gui/qstandard_item_explorer.h"
 #include "../src/qttools/script/calculator.h"
-#include "../src/qttools/sql/cpp_sql_enum_map.h"
+#include "../src/qttools/sql/enum_string_map.h"
 
 #ifdef FOUGTOOLS_HAVE_QTTOOLS_TASK
 # include "../src/qttools/Task/RunnerCurrentThread.h"

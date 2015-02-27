@@ -14,7 +14,7 @@ HEADERS += \
     $$PWD/../src/qttools/core/qlocale_utils.h \
     $$PWD/../src/qttools/gui/qstandard_item_explorer.h \
     $$PWD/../src/qttools/script/calculator.h \
-    $$PWD/../src/qttools/sql/cpp_sql_enum_map.h
+    $$PWD/../src/qttools/sql/enum_string_map.h
 
 SOURCES += \
     $$PWD/main.cpp \

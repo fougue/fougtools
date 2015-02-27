@@ -5,10 +5,10 @@
 #include "../src/qttools/script/calculator.h"
 
 #ifdef FOUGTOOLS_HAVE_QTTOOLS_TASK
-# include "../src/qttools/Task/runner_current_thread.h"
-# include "../src/qttools/Task/runner_qthreadpool.h"
-# include "../src/qttools/Task/runner_stdasync.h"
-# include "../src/qttools/Task/manager.h"
+# include "../src/qttools/task/runner_current_thread.h"
+# include "../src/qttools/task/runner_qthreadpool.h"
+# include "../src/qttools/task/runner_stdasync.h"
+# include "../src/qttools/task/manager.h"
 #endif // FOUGTOOLS_HAVE_QTTOOLS_TASK
 
 #include "../src/mathtools/consts.h"

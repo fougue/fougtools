@@ -48,5 +48,5 @@ occtools {
 
 qttools_task {
     DEFINES += FOUGTOOLS_HAVE_QTTOOLS_TASK
-    include(../src/qttools/Task/qttools_task.pri)
+    include(../src/qttools/task/qttools_task.pri)
 } # qttools_task

@@ -26,7 +26,7 @@ public:
      *
      *  Typical use:
      *  \code
-     *      auto task = Task::Manager::globalInstance()->newTask();
+     *      auto task = qttask::Manager::globalInstance()->newTask();
      *      task->run( [=] { someFunction(task->progress()); } );
      *  \endcode
      *

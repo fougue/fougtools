@@ -37,11 +37,9 @@
 
 #pragma once
 
-#include "null.h"
-
 namespace cpp {
 
-template<typename NUMERIC_TRAITS, typename TRAIT = cpp::VoidNull>
+template<typename NUMERIC_TRAITS, typename TRAIT = void>
 class Quantity
 {
 public:

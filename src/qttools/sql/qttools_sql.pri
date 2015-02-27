@@ -1,13 +1,13 @@
 QT += sql
 
 HEADERS += \
-    $$PWD/cpp_sql_enum_map.h \
-    $$PWD/cpp_sql_enum_map_fwd.h \
     $$PWD/database_settings.h \
     $$PWD/database_manager.h \
     $$PWD/sql.h \
     $$PWD/composite_type_helper.h \
-    $$PWD/qsql_query_utils.h
+    $$PWD/qsql_query_utils.h \
+    $$PWD/enum_string_map.h \
+    $$PWD/enum_string_map_fwd.h
 
 SOURCES += \
     $$PWD/database_settings.cpp \

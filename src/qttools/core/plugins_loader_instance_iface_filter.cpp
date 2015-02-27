@@ -42,7 +42,7 @@
 
 #include "../../cpptools/memory_utils.h"
 
-namespace qttools {
+namespace qtcore {
 namespace internal {
 
 void PluginsLoader_InstanceIFaceFilter_Helper::setRootComponentNullError(QString *error,
@@ -54,7 +54,7 @@ void PluginsLoader_InstanceIFaceFilter_Helper::setRootComponentNullError(QString
 void PluginsLoader_InstanceIFaceFilter_Helper::setRootComponentIncompatibleError(QString *error,
                                                                                  const char *iid)
 {
-    cpp::checkedAssign(error, QCoreApplication::translate("qttools::PluginsLoader",
+    cpp::checkedAssign(error, QCoreApplication::translate("qtcore::PluginsLoader",
                                                           "Root component has incompatible interface"
                                                           "(required: \"%1\"").arg(iid));
 }
@@ -65,4 +65,4 @@ QObject *PluginsLoader_InstanceIFaceFilter_Helper::rootComponent(QPluginLoader *
 }
 
 } // namespace internal
-} // namespace qttools
+} // namespace qtcore

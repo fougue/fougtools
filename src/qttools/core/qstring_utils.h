@@ -40,7 +40,7 @@
 #include "core.h"
 #include <QtCore/QString>
 
-namespace qttools {
+namespace qtcore {
 
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareEqual
 {
@@ -72,7 +72,7 @@ struct QTTOOLS_CORE_EXPORT QStringLocaleAwareGreaterEqual
     bool operator()(const QString& lhs, const QString& rhs) const;
 };
 
-} // namespace qttools
+} // namespace qtcore
 
 QTTOOLS_CORE_EXPORT
 std::size_t hash_value(QString const& str);

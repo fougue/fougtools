@@ -40,7 +40,7 @@
 #include "network.h"
 #include <QtCore/QString>
 
-namespace qttools {
+namespace qtnetwork {
 
 class Message;
 class SmtpAccount;
@@ -64,4 +64,4 @@ private:
     Private* const d;
 };
 
-} // namespace qttools
+} // namespace qtnetwork

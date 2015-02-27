@@ -40,7 +40,7 @@
 #include <QtCore/QSettings>
 #include <QtSql/QSqlDatabase>
 
-namespace qttools {
+namespace qtsql {
 
 /*!
  * \class DatabaseSettings
@@ -196,4 +196,4 @@ void DatabaseSettings::applyTo(QSqlDatabase* db) const
     }
 }
 
-} // namespace qttools
+} // namespace qtsql

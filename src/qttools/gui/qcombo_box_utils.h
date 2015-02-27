@@ -41,7 +41,7 @@
 
 #include <QtWidgets/QComboBox>
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT QComboBoxUtils
 {
@@ -61,4 +61,4 @@ public:
     static SignalHighlighted_QString signalHighlighted_QString();
 };
 
-} // namespace qttools
+} // namespace qtgui

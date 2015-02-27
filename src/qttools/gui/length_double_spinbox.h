@@ -42,7 +42,7 @@
 // QtWidgets
 #include <QDoubleSpinBox>
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT LengthDoubleSpinBox :
         public QDoubleSpinBox,
@@ -67,4 +67,4 @@ private:
     Q_PRIVATE_SLOT(d, void onValueChanged(double))
 };
 
-} // namespace qttools
+} // namespace qtgui

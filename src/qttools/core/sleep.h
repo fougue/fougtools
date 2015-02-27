@@ -39,10 +39,10 @@
 
 #include "core.h"
 
-namespace qttools {
+namespace qtcore {
 
 QTTOOLS_CORE_EXPORT void mSecSleep(unsigned msec);
 QTTOOLS_CORE_EXPORT void waitForMSec(unsigned msec);
 
-} // namespace qttools
+} // namespace qtcore
 

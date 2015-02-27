@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
 class QResizeEvent;
 QT_END_NAMESPACE
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT CodeEditor : public QPlainTextEdit
 {
@@ -65,5 +65,5 @@ private:
     Private* const d;
 };
 
-} // namespace qttools
+} // namespace qtgui
 

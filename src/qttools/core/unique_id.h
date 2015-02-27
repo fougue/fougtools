@@ -41,7 +41,7 @@
 
 #include <climits>
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT UniqueId
 {
@@ -55,5 +55,5 @@ public:
     static bool isRegistered(int id);
 };
 
-} // namespace qttools
+} // namespace qtcore
 

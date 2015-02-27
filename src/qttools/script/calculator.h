@@ -40,7 +40,7 @@
 #include "script.h"
 #include <QtScript/QScriptEngine>
 
-namespace qttools {
+namespace qtscript {
 
 class QTTOOLS_SCRIPT_EXPORT Calculator
 {
@@ -59,4 +59,4 @@ private:
     QScriptValue m_lastResult;
 };
 
-} // namespace qttools
+} // namespace qtscript

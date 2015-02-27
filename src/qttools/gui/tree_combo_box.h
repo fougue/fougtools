@@ -44,7 +44,7 @@
 #include <QComboBox>
 class QTreeView;
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT TreeComboBox : public QComboBox
 {
@@ -66,4 +66,4 @@ public:
     Q_SLOT void setCurrentModelIndex(const QModelIndex& modelIndex);
 };
 
-} // namespace qttools
+} // namespace qtgui

@@ -40,7 +40,7 @@
 #include "gui.h"
 #include <QtCore/QLocale>
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT AbstractQuantityEditor
 {
@@ -57,4 +57,4 @@ protected:
     QLocale::MeasurementSystem measurementSystem() const;
 };
 
-} // namespace qttools
+} // namespace qtgui

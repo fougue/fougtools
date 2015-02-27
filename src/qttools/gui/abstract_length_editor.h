@@ -41,7 +41,7 @@
 #include "abstract_quantity_editor.h"
 #include <QtCore/QVector>
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT AbstractLengthEditor : public AbstractQuantityEditor
 {
@@ -87,9 +87,9 @@ private:
     ImperialUnit m_prefImperialUnit;
 };
 
-} // namespace qttools
+} // namespace qtgui
 
 #include <QtCore/QMetaType>
-Q_DECLARE_METATYPE(qttools::AbstractLengthEditor::MetricUnit)
-Q_DECLARE_METATYPE(qttools::AbstractLengthEditor::ImperialUnit)
+Q_DECLARE_METATYPE(qtgui::AbstractLengthEditor::MetricUnit)
+Q_DECLARE_METATYPE(qtgui::AbstractLengthEditor::ImperialUnit)
 

@@ -42,7 +42,7 @@
 #include <QtCore/QString>
 #include <QtCore/QTextStream>
 
-namespace qttools {
+namespace qtcore {
 
 // --
 // -- class Log
@@ -126,7 +126,7 @@ public:
     LogDispatcher(QObject* parent = NULL);
     void handle(Log::MessageType msgType, const QString& msg);
 signals:
-    void log(qttools::Log::MessageType msgType, const QString& msg);
+    void log(qtcore::Log::MessageType msgType, const QString& msg);
 };
 
 // --
@@ -139,4 +139,4 @@ Log& Log::operator<<(const T* ptr)
     return *this << QString("0x%1").arg(reinterpret_cast<std::size_t>(ptr), 0, 16);
 }
 
-} // namespace qttools
+} // namespace qtcore

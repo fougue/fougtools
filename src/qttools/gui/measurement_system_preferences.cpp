@@ -37,7 +37,7 @@
 
 #include "measurement_system_preferences.h"
 
-namespace qttools {
+namespace qtgui {
 
 /*!
  * \class MeasurementSystemPreferences
@@ -81,4 +81,4 @@ void MeasurementSystemPreferences::setImperialUnit(AbstractLengthEditor::Imperia
     m_imperialUnit = unit;
 }
 
-} // namespace qttools
+} // namespace qtgui

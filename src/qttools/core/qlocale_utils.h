@@ -41,7 +41,7 @@
 #include <QtCore/QVector>
 #include <QtCore/QLocale>
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT QLocaleUtils
 {
@@ -52,4 +52,4 @@ public:
     static QVector<QLocale::Country> allCountries();
 };
 
-} // namespace qttools
+} // namespace qtcore

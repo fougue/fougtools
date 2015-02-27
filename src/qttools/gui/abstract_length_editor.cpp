@@ -39,7 +39,7 @@
 
 #include "quantity_editor_manager.h"
 
-namespace qttools {
+namespace qtgui {
 
 /*!
  * \class AbstractLengthEditor
@@ -143,11 +143,11 @@ QString AbstractLengthEditor::unitText(ImperialUnit unit)
 double AbstractLengthEditor::asMetricLength(double len, MetricUnit unit)
 {
     switch (unit) {
-    case qttools::AbstractLengthEditor::MeterUnit :
+    case qtgui::AbstractLengthEditor::MeterUnit :
         return len / 1000.;
-    case qttools::AbstractLengthEditor::CentimeterUnit :
+    case qtgui::AbstractLengthEditor::CentimeterUnit :
         return len / 10.;
-    case qttools::AbstractLengthEditor::MillimeterUnit :
+    case qtgui::AbstractLengthEditor::MillimeterUnit :
         return len;
     }
     return len;
@@ -156,14 +156,14 @@ double AbstractLengthEditor::asMetricLength(double len, MetricUnit unit)
 double AbstractLengthEditor::asImperialLength(double len, ImperialUnit unit)
 {
     switch (unit) {
-    case qttools::AbstractLengthEditor::InchUnit :
+    case qtgui::AbstractLengthEditor::InchUnit :
         return len / 25.4;
-    case qttools::AbstractLengthEditor::FootUnit :
+    case qtgui::AbstractLengthEditor::FootUnit :
         return (len / 25.4) / 12.;
-    case qttools::AbstractLengthEditor::YardUnit :
+    case qtgui::AbstractLengthEditor::YardUnit :
         return (len / 25.4) / 36.;
     }
     return len;
 }
 
-} // namespace qttools
+} // namespace qtgui

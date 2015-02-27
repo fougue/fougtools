@@ -41,7 +41,7 @@
 #include <QtCore/Qt>
 #include <QtCore/QVector>
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT GridNumbering
 {
@@ -73,4 +73,4 @@ private:
     SweepMode m_sweepMode;
 };
 
-} // namespace qttools
+} // namespace qtcore

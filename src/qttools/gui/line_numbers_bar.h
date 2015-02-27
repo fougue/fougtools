@@ -42,7 +42,7 @@
 #include <QWidget>
 class QTextEdit;
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT LineNumbersBar : public QWidget
 {
@@ -66,4 +66,4 @@ private:
     Private* const d;
 };
 
-} //namespace qttools
+} //namespace qtgui

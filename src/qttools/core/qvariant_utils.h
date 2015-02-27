@@ -40,7 +40,7 @@
 #include "core.h"
 #include <QtCore/QVariant>
 
-namespace qttools {
+namespace qtcore {
 
 /*! \brief Provides a collection of tools around QVariant
  *  \headerfile qvariant_utils.h <qttools/core/qvariant_utils.h>
@@ -57,7 +57,7 @@ public:
     static CONTAINER<QVariant> toContainerOfVariants(const CONTAINER<T>& typeds);
 };
 
-} // namespace qttools
+} // namespace qtcore
 
 // --
 // -- Implementation
@@ -67,7 +67,7 @@ public:
 #include <functional>
 #include <iterator>
 
-namespace qttools {
+namespace qtcore {
 
 /*! \brief Converts a container of QVariant to a container of typed data (\c T)
  *
@@ -103,6 +103,6 @@ CONTAINER<QVariant> QVariantUtils::toContainerOfVariants(const CONTAINER<T>& typ
     return variants;
 }
 
-} // namespace qttools
+} // namespace qtcore
 
 #endif // QTTOOLS_QVARIANT_TOOLS_H

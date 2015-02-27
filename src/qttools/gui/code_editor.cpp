@@ -42,7 +42,7 @@
 
 #include <algorithm>
 
-namespace qttools {
+namespace qtgui {
 
 /*! \class CodeEditor::Private
  *  \brief Pimpl of CodeEditor (internal)
@@ -214,4 +214,4 @@ void CodeEditor::resizeEvent(QResizeEvent *e)
                                            d->lineNumberAreaWidth(), cr.height()));
 }
 
-} // namespace qttools
+} // namespace qtgui

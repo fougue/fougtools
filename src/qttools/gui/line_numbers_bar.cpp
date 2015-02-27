@@ -48,7 +48,7 @@
 #include <QTextEdit>
 #include <QToolTip>
 
-namespace qttools {
+namespace qtgui {
 
 /*! \class LineNumbersBar::Private
  *  \brief Internal (pimpl of LineNumbersBar)
@@ -203,4 +203,4 @@ bool LineNumbersBar::event(QEvent* event)
     return QWidget::event(event);
 }
 
-} // namespace qttools
+} // namespace qtgui

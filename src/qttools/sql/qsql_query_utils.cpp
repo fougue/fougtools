@@ -39,7 +39,7 @@
 
 #include <QtCore/QVariant>
 
-namespace qttools {
+namespace qtsql {
 
 /*!
  * \class SqlQueryError
@@ -86,12 +86,12 @@ QSqlQuery execSqlCode(const QString& sqlCode, const QSqlDatabase& db)
     }
 
     QSqlQuery qry = db.exec(sqlCode);
-    qttools::throwIfError(qry);
+    qtsql::throwIfError(qry);
     return qry;
 }
 
-/*! \brief Same as qttools::execSqlCode() but execution performs inside a transaction
- *  \note Any SqlQueryError exceptions thrown by qttools::execSqlCode() is catched (transaction
+/*! \brief Same as qtsql::execSqlCode() but execution performs inside a transaction
+ *  \note Any SqlQueryError exceptions thrown by qtsql::execSqlCode() is catched (transaction
  *        is rolled back then)
  */
 QSqlQuery execSqlCodeInTransaction(const QString& sqlCode, QSqlDatabase db)
@@ -100,7 +100,7 @@ QSqlQuery execSqlCodeInTransaction(const QString& sqlCode, QSqlDatabase db)
 
     QSqlQuery sqlQry;
     try {
-        sqlQry = qttools::execSqlCode(sqlCode, db);
+        sqlQry = qtsql::execSqlCode(sqlCode, db);
         db.commit();
     }
     catch (const SqlQueryError& err) {
@@ -118,4 +118,4 @@ void throwIfError(const QSqlQuery& qry)
         throw SqlQueryError(qry);
 }
 
-} // namespace qttools
+} // namespace qtsql

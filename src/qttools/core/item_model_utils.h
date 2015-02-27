@@ -44,7 +44,7 @@ class QAbstractItemModel;
 #include <QtCore/QVariant>
 #include <QtCore/QVector>
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT ItemModelUtils
 {
@@ -73,7 +73,7 @@ public:
     static void removeRows(QAbstractItemModel* model, const INT_CONTAINER& rows);
 };
 
-} // namespace qttools
+} // namespace qtcore
 
 // --
 // -- Implementation
@@ -83,7 +83,7 @@ public:
 #include <functional>
 #include <QtCore/QAbstractItemModel>
 
-namespace qttools {
+namespace qtcore {
 
 template<typename INT_CONTAINER>
 bool ItemModelUtils::validRows(const QAbstractItemModel* model,
@@ -113,4 +113,4 @@ void ItemModelUtils::removeRows(QAbstractItemModel* model, const INT_CONTAINER& 
         model->removeRow(row);
 }
 
-} // namespace qttools
+} // namespace qtcore

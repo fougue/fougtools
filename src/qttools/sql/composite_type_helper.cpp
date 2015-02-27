@@ -40,7 +40,7 @@
 #include <QtCore/QStringList>
 #include <QtCore/QtDebug>
 
-namespace qttools {
+namespace qtsql {
 
 /*!
  * \class CompositeTypeHelper
@@ -90,4 +90,4 @@ QStringList CompositeTypeHelper::toValues(const QString& row)
     return sqlRow.split(QLatin1Char(','));
 }
 
-} // namespace qttools
+} // namespace qtsql

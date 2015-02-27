@@ -46,7 +46,7 @@ class QSqlDatabase;
 #include <QtCore/QVariant>
 #include <functional>
 
-namespace qttools {
+namespace qtsql {
 
 class QTTOOLS_SQL_EXPORT DatabaseSettings
 {
@@ -87,4 +87,4 @@ private:
     QString m_password;
 };
 
-} // namespace qttools
+} // namespace qtsql

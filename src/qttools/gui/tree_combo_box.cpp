@@ -42,7 +42,7 @@
 #include <QHeaderView>
 #include <QTreeView>
 
-namespace qttools {
+namespace qtgui {
 
 /*!
  * \class TreeComboBox
@@ -54,7 +54,7 @@ namespace qttools {
  */
 
 /*! \example qttools/tree_combo_box/main.cpp
- *  Example of how to use class qttools::TreeComboBox
+ *  Example of how to use class qtgui::TreeComboBox
  */
 
 TreeComboBox::TreeComboBox(QWidget *parent)
@@ -111,4 +111,4 @@ void TreeComboBox::setCurrentModelIndex(const QModelIndex &modelIndex)
     this->setCurrentIndex(modelIndex.row());
 }
 
-} // namespace qttools
+} // namespace qtgui

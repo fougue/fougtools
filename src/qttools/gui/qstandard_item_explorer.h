@@ -44,7 +44,7 @@
 #include <QtGui/QStandardItem>
 class QStandardItemModel;
 
-namespace qttools {
+namespace qtgui {
 
 struct QStandardItemTreeBfsModel
 {
@@ -69,4 +69,4 @@ public:
     QStandardItemExplorer(QStandardItemModel* model);
 };
 
-} // namespace qttools
+} // namespace qtgui

@@ -41,7 +41,7 @@
 // QtWidgets
 #include <QDialog>
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT WaitDialog : public QDialog
 {
@@ -67,4 +67,4 @@ private:
     Private* const d;
 };
 
-} // namespace qttools
+} // namespace qtgui

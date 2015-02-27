@@ -44,7 +44,7 @@
 // QtWidgets
 #include <QAbstractItemView>
 
-namespace qttools {
+namespace qtgui {
 
 /*! \class ItemViewUtils
  *  \brief Provides a collection of tools around QAbstractItemView
@@ -102,4 +102,4 @@ int ItemViewUtils::mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, 
     return proxyModel->mapToSource(proxyModel->index(proxyRow, 0)).row();
 }
 
-} // namespace qttools
+} // namespace qtgui

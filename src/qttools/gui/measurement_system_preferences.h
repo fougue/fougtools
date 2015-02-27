@@ -40,7 +40,7 @@
 #include "gui.h"
 #include "abstract_length_editor.h"
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT MeasurementSystemPreferences
 {
@@ -60,4 +60,4 @@ private:
     AbstractLengthEditor::ImperialUnit m_imperialUnit;
 };
 
-} // namespace qttools
+} // namespace qtgui

@@ -58,14 +58,14 @@ int main(int argc, char** argv)
     treeView.expand(rootItem->index());
 
     // Create buttons
-    qttools::ItemViewButtons viewBtns(&treeView);
+    qtgui::ItemViewButtons viewBtns(&treeView);
     viewBtns.installDefaultItemDelegate();
 
     QIcon iconAdd(":/images/add.png");
     iconAdd.addPixmap(QPixmap(":/images/add_active.png"), QIcon::Active);
     viewBtns.addButton(ButtonAddChildBtn, iconAdd, QString("Add child item"));
     viewBtns.setButtonDetection(ButtonAddChildBtn, ItemTypeRole, ModelRootItemTag);
-    viewBtns.setButtonDisplayModes(ButtonAddChildBtn, qttools::ItemViewButtons::DisplayPermanent);
+    viewBtns.setButtonDisplayModes(ButtonAddChildBtn, qtgui::ItemViewButtons::DisplayPermanent);
 
     QIcon iconRem(":/images/remove.png");
     iconRem.addPixmap(QPixmap(":/images/remove_active.png"), QIcon::Active);
@@ -75,7 +75,7 @@ int main(int argc, char** argv)
     // Connect button "clicked" signal to handler
     QObject::connect(
                 &viewBtns,
-                &qttools::ItemViewButtons::buttonClicked,
+                &qtgui::ItemViewButtons::buttonClicked,
                 [&](int btnId, const QModelIndex& index) {
         handleItemViewButtonClicked(&model, btnId, index);
     } );

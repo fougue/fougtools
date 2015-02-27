@@ -41,7 +41,7 @@
 #include <QStackedWidget>
 #include <QBoxLayout>
 
-namespace qttools {
+namespace qtgui {
 
 class StrictStackWidget::Private
 {
@@ -139,4 +139,4 @@ QWidget *StrictStackWidget::topWidget() const
         return NULL;
 }
 
-} // namespace qttools
+} // namespace qtgui

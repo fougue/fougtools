@@ -38,8 +38,8 @@
 #pragma once
 
 #include "log.h"
-using qttools::debugLog;
-using qttools::infoLog;
-using qttools::warningLog;
-using qttools::criticalLog;
-using qttools::fatalLog;
+using qtcore::debugLog;
+using qtcore::infoLog;
+using qtcore::warningLog;
+using qtcore::criticalLog;
+using qtcore::fatalLog;

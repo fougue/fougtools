@@ -46,7 +46,7 @@
 #include <QLabel>
 #include <QProgressBar>
 
-namespace qttools {
+namespace qtgui {
 
 class WaitDialog::Private
 {
@@ -153,4 +153,4 @@ void WaitDialog::updateProgress()
     QApplication::processEvents();
 }
 
-} // namespace qttools
+} // namespace qtgui

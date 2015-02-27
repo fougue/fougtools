@@ -40,7 +40,7 @@
 #include "network.h"
 #include <QtCore/QString>
 
-namespace qttools {
+namespace qtnetwork {
 
 class QTTOOLS_NETWORK_EXPORT SmtpAccount
 {
@@ -92,4 +92,4 @@ private:
     QString m_password;
 };
 
-} // namespace qttools
+} // namespace qtnetwork

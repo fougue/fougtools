@@ -45,7 +45,7 @@ class QQmlContext;
 class QDeclarativeContext;
 #endif // QT_VERSION
 
-namespace qttools {
+namespace qtqml {
 
 class QTTOOLS_QML_EXPORT QmlUtils : public QObject
 {
@@ -64,4 +64,4 @@ public:
 #endif // QT_VERSION
 };
 
-} // namespace qttools
+} // namespace qtqml

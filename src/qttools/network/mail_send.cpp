@@ -45,7 +45,7 @@
 # include <QtNetwork/QSslSocket>
 #else
 # define QTTOOLS_MAILSEND_SSL_WARNING \
-    __FILE__": SSL is disabled in Qt, qttools::MailSend will use regular QTcpSocket"
+    __FILE__": SSL is disabled in Qt, qtnetwork::MailSend will use regular QTcpSocket"
 # if defined(Q_CC_GNU)
 #  warning QTTOOLS_MAILSEND_SSL_WARNING
 # elif defined(Q_CC_MSVC)
@@ -58,7 +58,7 @@
 # include <QtCore/QtDebug>
 #endif // QTTOOLS_MAILSEND_TRACE
 
-namespace qttools {
+namespace qtnetwork {
 
 /*! \class MailSend::Private
  *  \brief Private (pimpl of MailSend)
@@ -218,8 +218,8 @@ bool MailSend::connectToSmtpServer(const SmtpAccount& account)
 #endif // QTTOOLS_MAILSEND_TRACE
 
     // Hello to the SMTP server
-    if (!d->sendSmtpCommand("EHLO qttools::MailSend", 250)) {
-        if (!d->sendSmtpCommand("HELO qttools::MailSend", 250))
+    if (!d->sendSmtpCommand("EHLO qtnetwork::MailSend", 250)) {
+        if (!d->sendSmtpCommand("HELO qtnetwork::MailSend", 250))
             return false;
     }
 
@@ -313,6 +313,6 @@ QString MailSend::errorString() const
     return d->m_error;
 }
 
-} // namespace qttools
+} // namespace qtnetwork
 
 #include "mail_send.moc"

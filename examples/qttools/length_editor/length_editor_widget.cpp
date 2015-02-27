@@ -26,16 +26,16 @@ void LengthEditorWidget::onSystemComboBoxChanged(int id)
 {
     m_ui->unitCombo->clear();
     if (id == 0) {
-        qttools::QuantityEditorManager::globalInstance()->setMeasurementSystem(QLocale::MetricSystem);
-        foreach (qttools::AbstractLengthEditor::MetricUnit unit, qttools::AbstractLengthEditor::allMetricUnits())
-            m_ui->unitCombo->addItem(qttools::AbstractLengthEditor::unitText(unit), QVariant::fromValue(unit));
-        this->selectPreferredUnit(qttools::AbstractLengthEditor::unitText(m_ui->lenSpin->preferredMetricUnit()));
+        qtgui::QuantityEditorManager::globalInstance()->setMeasurementSystem(QLocale::MetricSystem);
+        foreach (qtgui::AbstractLengthEditor::MetricUnit unit, qtgui::AbstractLengthEditor::allMetricUnits())
+            m_ui->unitCombo->addItem(qtgui::AbstractLengthEditor::unitText(unit), QVariant::fromValue(unit));
+        this->selectPreferredUnit(qtgui::AbstractLengthEditor::unitText(m_ui->lenSpin->preferredMetricUnit()));
     }
     else if (id == 1) {
-        qttools::QuantityEditorManager::globalInstance()->setMeasurementSystem(QLocale::ImperialSystem);
-        foreach (qttools::AbstractLengthEditor::ImperialUnit unit, qttools::AbstractLengthEditor::allImperialUnits())
-            m_ui->unitCombo->addItem(qttools::AbstractLengthEditor::unitText(unit), QVariant::fromValue(unit));
-        this->selectPreferredUnit(qttools::AbstractLengthEditor::unitText(m_ui->lenSpin->preferredImperialUnit()));
+        qtgui::QuantityEditorManager::globalInstance()->setMeasurementSystem(QLocale::ImperialSystem);
+        foreach (qtgui::AbstractLengthEditor::ImperialUnit unit, qtgui::AbstractLengthEditor::allImperialUnits())
+            m_ui->unitCombo->addItem(qtgui::AbstractLengthEditor::unitText(unit), QVariant::fromValue(unit));
+        this->selectPreferredUnit(qtgui::AbstractLengthEditor::unitText(m_ui->lenSpin->preferredImperialUnit()));
     }
 }
 
@@ -43,11 +43,11 @@ void LengthEditorWidget::onUnitComboBoxChanged(int id)
 {
     if (m_ui->systemCombo->currentIndex() == 0) {
         m_ui->lenSpin->setPreferredMetricUnit(
-                    m_ui->unitCombo->itemData(id).value<qttools::AbstractLengthEditor::MetricUnit>());
+                    m_ui->unitCombo->itemData(id).value<qtgui::AbstractLengthEditor::MetricUnit>());
     }
     else if (m_ui->systemCombo->currentIndex() == 1) {
         m_ui->lenSpin->setPreferredImperialUnit(
-                    m_ui->unitCombo->itemData(id).value<qttools::AbstractLengthEditor::ImperialUnit>());
+                    m_ui->unitCombo->itemData(id).value<qtgui::AbstractLengthEditor::ImperialUnit>());
     }
 }
 

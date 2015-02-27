@@ -43,7 +43,7 @@
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>
 
-namespace qttools {
+namespace qtsql {
 
 class QTTOOLS_SQL_EXPORT SqlQueryError : public std::runtime_error
 {
@@ -66,4 +66,4 @@ QSqlQuery execSqlCodeInTransaction(const QString& sqlCode, QSqlDatabase db);
 QTTOOLS_SQL_EXPORT
 void throwIfError(const QSqlQuery& qry);
 
-} // namespace qttools
+} // namespace qtsql

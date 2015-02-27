@@ -40,7 +40,7 @@
 #include <QtCore/QAtomicPointer>
 #include <QtCore/QMutex>
 
-namespace qttools {
+namespace qtcore {
 
 template<typename T>
 class Singleton
@@ -80,10 +80,10 @@ void Singleton<T>::release()
     m_mutex.unlock();
 }
 
-} // namespace qttools
+} // namespace qtcore
 
 template<typename T>
-QAtomicPointer<T> qttools::Singleton<T>::m_instance;
+QAtomicPointer<T> qtcore::Singleton<T>::m_instance;
 
 template<typename T>
-QMutex qttools::Singleton<T>::m_mutex;
+QMutex qtcore::Singleton<T>::m_mutex;

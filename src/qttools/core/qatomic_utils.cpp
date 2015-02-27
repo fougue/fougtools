@@ -41,7 +41,7 @@
 #include <QtCore/QAtomicPointer>
 #include <QtCore/QtDebug>
 
-namespace qttools {
+namespace qtcore {
 
 /*! \class QAtomicUtils
  *  \brief Provides a collection of tools around QAtomicInt and QAtomicPointer
@@ -81,4 +81,4 @@ void QAtomicUtils::storeRelease(QAtomicInt* atomInt, int newVal)
 #endif
 }
 
-} // namespace qttools
+} // namespace qtcore

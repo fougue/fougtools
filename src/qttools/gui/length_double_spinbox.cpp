@@ -40,32 +40,32 @@
 #include "../../cpptools/scoped_value.h"
 #include "quantity_editor_manager.h"
 
-namespace qttools {
+namespace qtgui {
 
 namespace internal {
 
-static double toMmValue(double v, qttools::LengthDoubleSpinBox::MetricUnit unit)
+static double toMmValue(double v, qtgui::LengthDoubleSpinBox::MetricUnit unit)
 {
     switch (unit) {
-    case qttools::LengthDoubleSpinBox::MeterUnit:
+    case qtgui::LengthDoubleSpinBox::MeterUnit:
         return v * 1000.;
-    case qttools::LengthDoubleSpinBox::CentimeterUnit:
+    case qtgui::LengthDoubleSpinBox::CentimeterUnit:
         return v * 10.;
-    case qttools::LengthDoubleSpinBox::MillimeterUnit:
+    case qtgui::LengthDoubleSpinBox::MillimeterUnit:
         return v;
     default:
         return v;
     }
 }
 
-static double toMmValue(double v, qttools::LengthDoubleSpinBox::ImperialUnit unit)
+static double toMmValue(double v, qtgui::LengthDoubleSpinBox::ImperialUnit unit)
 {
     switch (unit) {
-    case qttools::LengthDoubleSpinBox::InchUnit:
+    case qtgui::LengthDoubleSpinBox::InchUnit:
         return v * 25.4;
-    case qttools::LengthDoubleSpinBox::FootUnit:
+    case qtgui::LengthDoubleSpinBox::FootUnit:
         return (v * 25.4) * 12.;
-    case qttools::LengthDoubleSpinBox::YardUnit:
+    case qtgui::LengthDoubleSpinBox::YardUnit:
         return (v * 25.4) * 36.;
     default:
         return v;
@@ -186,6 +186,6 @@ void LengthDoubleSpinBox::updateEditor(QLocale::MeasurementSystem newSys)
     QDoubleSpinBox::setValue(newLengthUnit);
 }
 
-} // namespace qttools
+} // namespace qtgui
 
 #include "moc_length_double_spinbox.cpp"

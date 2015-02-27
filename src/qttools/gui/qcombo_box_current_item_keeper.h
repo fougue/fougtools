@@ -42,7 +42,7 @@
 #include <QtCore/QVariant>
 class QComboBox;
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT QComboBoxCurrentItemKeeper : public QObject
 {
@@ -71,4 +71,4 @@ private:
     int m_columnForModelRowIdentifier;
 };
 
-} // namespace qttools
+} // namespace qtgui

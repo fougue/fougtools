@@ -37,7 +37,7 @@
 
 #include "qcombo_box_utils.h"
 
-namespace qttools {
+namespace qtgui {
 
 /*!
  * \class QComboBoxUtils
@@ -76,4 +76,4 @@ QComboBoxUtils::SignalHighlighted_QString QComboBoxUtils::signalHighlighted_QStr
     return (QComboBoxUtils::SignalHighlighted_QString)&QComboBox::highlighted;
 }
 
-} // namespace qttools
+} // namespace qtgui

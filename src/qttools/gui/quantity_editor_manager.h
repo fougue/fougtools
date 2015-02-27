@@ -41,7 +41,7 @@
 #include <QtCore/QLocale>
 #include <QtCore/QSet>
 
-namespace qttools {
+namespace qtgui {
 
 class AbstractQuantityEditor;
 
@@ -74,4 +74,4 @@ private:
     QLocale::MeasurementSystem m_measureSys;
 };
 
-} // namespace qttools
+} // namespace qtgui

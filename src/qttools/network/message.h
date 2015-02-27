@@ -41,7 +41,7 @@
 #include <QtCore/QDateTime>
 #include <QtCore/QStringList>
 
-namespace qttools {
+namespace qtnetwork {
 
 class QTTOOLS_NETWORK_EXPORT Message
 {
@@ -71,4 +71,4 @@ private:
     QString m_body;
 };
 
-} // namespace qttools
+} // namespace qtnetwork

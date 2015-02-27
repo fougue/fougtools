@@ -41,7 +41,7 @@
 
 #include <QtCore/QObject>
 
-namespace qttools {
+namespace qtcore {
 
 namespace internal {
 
@@ -85,4 +85,4 @@ public:
     }
 };
 
-} // namespace qttools
+} // namespace qtcore

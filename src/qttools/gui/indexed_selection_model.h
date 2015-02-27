@@ -41,7 +41,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QSet>
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT IndexedSelectionModel : public QObject
 {
@@ -74,4 +74,4 @@ private:
     bool m_hadSelection;
 };
 
-} // namespace qttools
+} // namespace qtgui

@@ -51,7 +51,7 @@ class QStyleOptionViewItem;
 #include <QtCore/QFlags>
 #include <QtGui/QIcon>
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT ItemViewButtons : public QObject
 {
@@ -129,6 +129,6 @@ private:
     Private* const d;
 };
 
-} // namespace qttools
+} // namespace qtgui
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(qttools::ItemViewButtons::DisplayModes)
+Q_DECLARE_OPERATORS_FOR_FLAGS(qtgui::ItemViewButtons::DisplayModes)

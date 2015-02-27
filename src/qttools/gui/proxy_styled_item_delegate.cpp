@@ -37,7 +37,7 @@
 
 #include "proxy_styled_item_delegate.h"
 
-namespace qttools {
+namespace qtgui {
 
 /*!
  * \class ProxyStyledItemDelegate
@@ -140,4 +140,4 @@ void ProxyStyledItemDelegate::updateEditorGeometry(QWidget *editor,
         QStyledItemDelegate::updateEditorGeometry(editor, option, index);
 }
 
-} // namespace qttools
+} // namespace qtgui

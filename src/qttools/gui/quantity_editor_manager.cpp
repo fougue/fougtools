@@ -39,7 +39,7 @@
 
 #include "abstract_quantity_editor.h"
 
-namespace qttools {
+namespace qtgui {
 
 namespace internal {
 
@@ -108,4 +108,4 @@ void QuantityEditorManager::setMeasurementSystem(QLocale::MeasurementSystem sys)
     emit currentMeasurementSytemChanged(sys);
 }
 
-} // namespace qttools
+} // namespace qtgui

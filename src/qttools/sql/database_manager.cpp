@@ -47,7 +47,7 @@
 #include <QtCore/QUuid>
 #include "qsql_query_utils.h"
 
-namespace qttools {
+namespace qtsql {
 
 /*! \class DatabaseManager::Private
  *  \brief Internal (pimpl of DatabaseManager)
@@ -136,14 +136,14 @@ QSqlDatabase DatabaseManager::createDatabase(const QThread* inThread)
 QSqlQuery DatabaseManager::execSqlCode(const QString& sqlCode, const QThread* inThread) const
 {
     this->logSql(sqlCode, inThread);
-    return qttools::execSqlCode(sqlCode, this->database(inThread));
+    return qtsql::execSqlCode(sqlCode, this->database(inThread));
 }
 
 QSqlQuery DatabaseManager::execSqlCodeInTransaction(const QString& sqlCode,
                                                     const QThread* inThread) const
 {
     this->logSql(sqlCode, inThread);
-    return qttools::execSqlCodeInTransaction(sqlCode, this->database(inThread));
+    return qtsql::execSqlCodeInTransaction(sqlCode, this->database(inThread));
 }
 
 bool DatabaseManager::isSqlOutputEnabled() const
@@ -182,4 +182,4 @@ void DatabaseManager::logSql(const QString &sqlCode, const QThread *inThread) co
     }
 }
 
-} // namespace qttools
+} // namespace qtsql

@@ -37,7 +37,7 @@
 
 #include "message.h"
 
-namespace qttools {
+namespace qtnetwork {
 
 /*!
  * \class Message
@@ -102,4 +102,4 @@ void Message::setBody(const QString& text)
     m_body = text;
 }
 
-} // namespace qttools
+} // namespace qtnetwork

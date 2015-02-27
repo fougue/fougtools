@@ -43,7 +43,7 @@
 #include <QtSql/QSqlQuery>
 class QIODevice;
 
-namespace qttools {
+namespace qtsql {
 
 class QTTOOLS_SQL_EXPORT DatabaseManager
 {
@@ -78,4 +78,4 @@ private:
     Private* const d;
 };
 
-} // namespace qttools
+} // namespace qtsql

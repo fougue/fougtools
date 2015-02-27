@@ -42,7 +42,7 @@
 class QAbstractItemView;
 class QSortFilterProxyModel;
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT ItemViewUtils
 {
@@ -54,5 +54,5 @@ public:
     static int mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow);
 };
 
-} // namespace qttools
+} // namespace qtgui
 

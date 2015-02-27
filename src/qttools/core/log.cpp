@@ -42,28 +42,28 @@
 #include <QtCore/QMetaType>
 #include <QtCore/QPair>
 
-namespace qttools {
+namespace qtcore {
 
 namespace internal {
 
-static QList<qttools::AbstractLogHandler*>* globalLogHandlers()
+static QList<AbstractLogHandler*>* globalLogHandlers()
 {
-    static QList<qttools::AbstractLogHandler*> object;
+    static QList<AbstractLogHandler*> object;
     return &object;
 }
 
-typedef QPair<qttools::Log::MessageType, QString> PendingLogMessage;
+typedef QPair<Log::MessageType, QString> PendingLogMessage;
 static QLinkedList<PendingLogMessage>* globalPendingMessages()
 {
     static QLinkedList<PendingLogMessage> object;
     return &object;
 }
 
-static void handleLogMessage(qttools::Log::MessageType msgType, const QString& msg)
+static void handleLogMessage(Log::MessageType msgType, const QString& msg)
 {
     if (globalLogHandlers()->isEmpty())
         globalPendingMessages()->append(qMakePair(msgType, msg));
-    foreach (qttools::AbstractLogHandler* logHandler, *(globalLogHandlers()))
+    foreach (AbstractLogHandler* logHandler, *(globalLogHandlers()))
         logHandler->handle(msgType, msg );
 }
 
@@ -235,7 +235,7 @@ void Log::registerMetaTypes()
     static bool alreadyRegistered = false;
     if (!alreadyRegistered) {
         qRegisterMetaType<MessageType>("Log::MessageType");
-        qRegisterMetaType<MessageType>("qttools::Log::MessageType");
+        qRegisterMetaType<MessageType>("qtcore::Log::MessageType");
         alreadyRegistered = true;
     }
 }
@@ -300,7 +300,7 @@ AbstractLogHandler::AbstractLogHandler()
 AbstractLogHandler::~AbstractLogHandler()
 {
     if (m_autoDetach)
-        qttools::detachGlobalLogHandler(this);
+        qtcore::detachGlobalLogHandler(this);
 }
 
 /*! \fn void AbstractLogHandler::handle(Log::MessageType, const QString&)
@@ -371,4 +371,4 @@ void LogDispatcher::handle(Log::MessageType msgType, const QString& msg)
     emit log(msgType, msg);
 }
 
-} // namespace qttools
+} // namespace qtcore

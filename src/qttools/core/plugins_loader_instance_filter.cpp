@@ -38,7 +38,7 @@
 #include "plugins_loader_instance_filter.h"
 #include <QtCore/QPluginLoader>
 
-namespace qttools {
+namespace qtcore {
 
 /*! \class PluginsLoader_InstanceFilter
  *  \brief Provides plugin filter to be used with PluginsLoader
@@ -68,4 +68,4 @@ bool PluginsLoader_InstanceFilter::accepts(QPluginLoader *loader, QString *error
     return loader != NULL;
 }
 
-} // namespace qttools
+} // namespace qtcore

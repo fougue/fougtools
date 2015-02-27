@@ -42,7 +42,7 @@
 // QtWidgets
 #include <QStyledItemDelegate>
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT ProxyStyledItemDelegate : public QStyledItemDelegate
 {
@@ -83,4 +83,4 @@ private:
     QStyledItemDelegate* m_sourceDelegate;
 };
 
-} // namespace qttools
+} // namespace qtgui

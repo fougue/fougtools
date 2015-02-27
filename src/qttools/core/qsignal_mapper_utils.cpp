@@ -37,7 +37,7 @@
 
 #include "qsignal_mapper_utils.h"
 
-namespace qttools {
+namespace qtcore {
 
 /*!
  * \class QSignalMapperUtils
@@ -60,7 +60,7 @@ namespace qttools {
  *                       this, &MyClass:onSigMapped);
  *
  *      // More readable :
- *      QObject::connect(sigMap, qttools::QSignalMapperUtils::signalMapped_int(),
+ *      QObject::connect(sigMap, qtcore::QSignalMapperUtils::signalMapped_int(),
  *                       this, &MyClass:onSigMapped);
  *  \endcode
  *
@@ -109,7 +109,7 @@ QSignalMapperUtils::SignalMapped_QObjectPtr QSignalMapperUtils::signalMapped_QOb
  *
  *      // More readable :
  *      QObject::connect(action, &QAction::triggered,
- *                       sigMap, qttools::QSignalMapperUtils::slotMap());
+ *                       sigMap, qtcore::QSignalMapperUtils::slotMap());
  *  \endcode
  */
 QSignalMapperUtils::SlotMap QSignalMapperUtils::slotMap()
@@ -125,4 +125,4 @@ QSignalMapperUtils::SlotMap_QObjectPtr QSignalMapperUtils::slotMap_QObjectPtr()
     return (QSignalMapperUtils::SlotMap_QObjectPtr)&QSignalMapper::map;
 }
 
-} // namespace qttools
+} // namespace qtcore

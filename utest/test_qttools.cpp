@@ -26,7 +26,7 @@
 void TestQtTools::core_QLocaleUtils_test()
 {
     QCOMPARE(static_cast<int>(QLocale::France), 74);
-    QCOMPARE(qttools::QLocaleUtils::toCountry(74), QLocale::France);
+    QCOMPARE(qtcore::QLocaleUtils::toCountry(74), QLocale::France);
     //  foreach (auto country, qttools::QLocaleTools::allCountries()) {
     //    qDebug() << QLocale::countryToString(country);
     //  }
@@ -50,7 +50,7 @@ void TestQtTools::gui_QStandardItemExplorer_test()
     rootItem->appendRow(item1);
     rootItem->appendRow(item2);
 
-    qttools::QStandardItemExplorer explorer(&itemModel);
+    qtgui::QStandardItemExplorer explorer(&itemModel);
     QCOMPARE(explorer.current(), itemModel.invisibleRootItem());
     explorer.goNext();
     QCOMPARE(explorer.current(), rootItem);
@@ -68,7 +68,7 @@ void TestQtTools::gui_QStandardItemExplorer_test()
 
 void TestQtTools::script_Calculator_test()
 {
-    qttools::Calculator calc;
+    qtscript::Calculator calc;
     QVERIFY(calc.hasResult() && calc.lastErrorText().isEmpty());
 
     calc.evaluate("2*3");

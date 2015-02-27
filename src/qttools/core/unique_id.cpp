@@ -41,7 +41,7 @@
 #include <QtCore/QMutexLocker>
 #include <QtCore/QSet>
 
-namespace qttools {
+namespace qtcore {
 
 namespace internal {
 
@@ -116,4 +116,4 @@ bool UniqueId::isRegistered(int id)
     return reg->m_set.contains(id);
 }
 
-} // namespace qttools
+} // namespace qtcore

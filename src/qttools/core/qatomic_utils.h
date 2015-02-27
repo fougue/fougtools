@@ -42,7 +42,7 @@
 #include <QtCore/QAtomicPointer>
 class QAtomicInt;
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT QAtomicUtils
 {
@@ -93,4 +93,4 @@ template<typename T>  void QAtomicUtils::storeRelease(QAtomicPointer<T>* atomPtr
 #endif
 }
 
-} // namespace qttools
+} // namespace qtcore

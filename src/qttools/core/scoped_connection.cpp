@@ -39,7 +39,7 @@
 
 #include <QtCore/QObject>
 
-namespace qttools {
+namespace qtcore {
 
 /*!
  * \class ScopedConnect
@@ -99,4 +99,4 @@ ScopedDisconnect::~ScopedDisconnect()
     QObject::connect(m_sender, m_signal, m_receiver, m_slot, m_type);
 }
 
-} // namespace qttools
+} // namespace qtcore

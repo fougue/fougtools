@@ -44,7 +44,7 @@ class QAbstractScrollArea;
 class QDialog;
 class QWidget;
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT QWidgetUtils
 {
@@ -67,7 +67,7 @@ public:
                                            const QPair<int, int>& values);
 };
 
-} // namespace qttools
+} // namespace qtgui
 
 // --
 // -- Implementation
@@ -76,7 +76,7 @@ public:
 // QtWidgets
 #include <QWidget>
 
-namespace qttools {
+namespace qtgui {
 
 //! Searches up in the direct parents of \p widget the first ancestor being of type \c PARENT_WIDGET
 template<typename PARENT_WIDGET>
@@ -106,4 +106,4 @@ PARENT_WIDGET* QWidgetUtils::findLastParentWidget(QWidget* widget)
     return foundParentWidget;
 }
 
-} // namespace qttools
+} // namespace qtgui

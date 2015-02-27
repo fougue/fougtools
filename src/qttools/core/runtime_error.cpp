@@ -37,7 +37,7 @@
 
 #include "runtime_error.h"
 
-namespace qttools {
+namespace qtcore {
 
 /*!
  * \class RuntimeError
@@ -61,4 +61,4 @@ QString RuntimeError::message() const
     return m_err;
 }
 
-} // namespace qttools
+} // namespace qtcore

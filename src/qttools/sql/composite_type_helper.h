@@ -41,7 +41,7 @@
 #include <QtCore/QList>
 #include <QtCore/QVariant>
 
-namespace qttools {
+namespace qtsql {
 
 class QTTOOLS_SQL_EXPORT CompositeTypeHelper
 {
@@ -53,4 +53,4 @@ public:
     static QStringList toValues(const QString& row);
 };
 
-} // namespace qttools
+} // namespace qtsql

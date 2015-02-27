@@ -42,7 +42,7 @@
 #include <QtCore/QString>
 #include <stdexcept>
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT RuntimeError : public std::runtime_error
 {
@@ -56,5 +56,5 @@ private:
     QString m_err;
 };
 
-} // namespace qttools
+} // namespace qtcore
 

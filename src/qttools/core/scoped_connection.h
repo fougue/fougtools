@@ -41,7 +41,7 @@
 #include <QtCore/Qt>
 class QObject;
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT ScopedConnect
 {
@@ -74,4 +74,4 @@ private:
     const Qt::ConnectionType m_type;
 };
 
-} // namespace qttools
+} // namespace qtcore

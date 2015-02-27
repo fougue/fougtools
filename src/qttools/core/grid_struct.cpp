@@ -37,7 +37,7 @@
 
 #include "grid_struct.h"
 
-namespace qttools {
+namespace qtcore {
 
 /*!
  * \class GridStruct
@@ -96,14 +96,14 @@ void GridStruct::setColumnCount(int count)
     m_colCount = count;
 }
 
-const qttools::GridNumbering& GridStruct::itemNumbering() const
+const GridNumbering& GridStruct::itemNumbering() const
 {
     return m_gridNb;
 }
 
-void GridStruct::setItemNumbering(const qttools::GridNumbering& gridNb)
+void GridStruct::setItemNumbering(const GridNumbering& gridNb)
 {
     m_gridNb = gridNb;
 }
 
-} // namespace qttools
+} // namespace qtcore

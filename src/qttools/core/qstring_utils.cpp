@@ -37,7 +37,7 @@
 
 #include "qstring_utils.h"
 
-namespace qttools {
+namespace qtcore {
 
 /*!
  * \class QStringLocaleAwareEqual
@@ -117,7 +117,7 @@ bool QStringLocaleAwareGreaterEqual::operator()(const QString &lhs, const QStrin
     return QString::localeAwareCompare(lhs, rhs) >= 0;
 }
 
-} // namespace qttools
+} // namespace qtcore
 
 #include <QtCore/QHash>
 

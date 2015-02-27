@@ -41,7 +41,7 @@
 // QtWidgets
 #include <QComboBox>
 
-namespace qttools {
+namespace qtgui {
 
 /*!
  * \class QComboBoxCurrentItemKeeper
@@ -137,4 +137,4 @@ QVariant QComboBoxCurrentItemKeeper::identifierValue(int row) const
     return model->data(model->index(row, this->columnForModelRowIdentifier()));
 }
 
-} // namespace qttools
+} // namespace qtgui

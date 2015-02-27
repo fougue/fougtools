@@ -31,7 +31,7 @@ int main(int argc, char** argv)
     QStandardItemModel* treeModel = new QStandardItemModel;
     treeModel->appendRow(itemRegnum);
 
-    qttools::TreeComboBox treeCombo;
+    qtgui::TreeComboBox treeCombo;
     treeCombo.setModel(treeModel);
     treeCombo.show();
     return app.exec();

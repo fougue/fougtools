@@ -39,7 +39,7 @@
 
 #include <QtCore/QObject>
 
-namespace qttools {
+namespace qtcore {
 
 template<typename T>
 class QObjectWrap : public QObject
@@ -102,7 +102,7 @@ const T* QObjectWrap<T>::wrapped() const
 
 /*! \brief Create a QObjectWrap<T> owning \p object
  *
- *  This is equivalent to qttools::QObjectWrap<T>(\p object, \p parent), but usually requires less
+ *  This is equivalent to qtcore::QObjectWrap<T>(\p object, \p parent), but usually requires less
  *  typing
  *  \relates QObjectWrap
  */
@@ -112,4 +112,4 @@ QObjectWrap<T>* wrapAsQObject(T* object, QObject* parent)
     return new QObjectWrap<T>(object, parent);
 }
 
-} // namespace qttools
+} // namespace qtcore

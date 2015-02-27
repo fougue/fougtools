@@ -44,7 +44,7 @@
 #include <QtCore/QString>
 #include <QtCore/QVector>
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT PluginsLoader
 {
@@ -102,4 +102,4 @@ QVector<INTERFACE *> PluginsLoader::castPlugins() const
     return typPlugins;
 }
 
-} // namespace qttools
+} // namespace qtcore

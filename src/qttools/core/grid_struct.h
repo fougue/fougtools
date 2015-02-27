@@ -40,7 +40,7 @@
 #include "core.h"
 #include "grid_numbering.h"
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT GridStruct
 {
@@ -59,13 +59,13 @@ public:
     int columnCount() const;
     void setColumnCount(int count);
 
-    const qttools::GridNumbering& itemNumbering() const;
-    void setItemNumbering(const qttools::GridNumbering& gridNb);
+    const GridNumbering& itemNumbering() const;
+    void setItemNumbering(const GridNumbering& gridNb);
 
 private:
     int m_rowCount;
     int m_colCount;
-    qttools::GridNumbering m_gridNb;
+    GridNumbering m_gridNb;
 };
 
-} // namespace qttools
+} // namespace qtcore

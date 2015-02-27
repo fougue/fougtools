@@ -39,7 +39,7 @@
 
 #include "quantity_editor_manager.h"
 
-namespace qttools {
+namespace qtgui {
 
 /*! \class AbstractQuantityEditor
  *  \brief Base abstract class for editor of quantities, works in coordination
@@ -78,4 +78,4 @@ QLocale::MeasurementSystem AbstractQuantityEditor::measurementSystem() const
     return QuantityEditorManager::globalInstance()->measurementSytem();
 }
 
-} // namespace qttools
+} // namespace qtgui

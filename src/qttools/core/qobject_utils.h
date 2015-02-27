@@ -40,7 +40,7 @@
 #include "core.h"
 class QObject;
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT QObjectUtils
 {
@@ -54,7 +54,7 @@ public:
     static PARENT_TYPE* findParent(QObject* object);
 };
 
-} // namespace qttools
+} // namespace qtcore
 
 // --
 // -- Implementation
@@ -62,7 +62,7 @@ public:
 
 #include <QtCore/QObject>
 
-namespace qttools {
+namespace qtcore {
 
 template<typename PARENT_TYPE>
 const PARENT_TYPE* QObjectUtils::constFindParent(const QObject* object)
@@ -79,4 +79,4 @@ PARENT_TYPE* QObjectUtils::findParent(QObject* object)
     return qobject_cast<PARENT_TYPE*>(it);
 }
 
-} // namespace qttools
+} // namespace qtcore

@@ -45,7 +45,7 @@
 #include <QLabel>
 #include <QStyle>
 
-namespace qttools {
+namespace qtgui {
 
 /*!
  * \class MessageDialog
@@ -117,4 +117,4 @@ void MessageDialog::setDetailsWidget(QWidget* widget)
     m_detailsWidget->setLayout(layout);
 }
 
-} // namespace qttools
+} // namespace qtgui

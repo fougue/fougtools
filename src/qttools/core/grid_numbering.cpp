@@ -38,7 +38,7 @@
 #include "grid_numbering.h"
 #include <algorithm>
 
-namespace qttools {
+namespace qtcore {
 
 /*!
  * \class GridNumbering
@@ -164,4 +164,4 @@ QVector< QVector<int> > GridNumbering::gridIndexes(const GridNumbering& gridNb,
     return grid;
 }
 
-} // namespace qttools
+} // namespace qtcore

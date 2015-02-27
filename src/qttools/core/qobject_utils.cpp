@@ -39,7 +39,7 @@
 
 #include <QtCore/QObject>
 
-namespace qttools {
+namespace qtcore {
 
 /*! \class QObjectUtils
  *  \brief Provides a collection of tools around QObject
@@ -53,4 +53,4 @@ void QObjectUtils::forwardSignal(const QObject* sender, const QObject* resender,
     QObject::connect(sender, signal, resender, signal);
 }
 
-} // namespace qttools
+} // namespace qtcore

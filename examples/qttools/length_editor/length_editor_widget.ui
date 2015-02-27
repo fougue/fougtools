@@ -69,7 +69,7 @@
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="qttools::LengthDoubleSpinBox" name="lenSpin">
+    <widget class="qtgui::LengthDoubleSpinBox" name="lenSpin">
      <property name="maximum">
       <double>10000.000000000000000</double>
      </property>
@@ -92,7 +92,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>qttools::LengthDoubleSpinBox</class>
+   <class>qtgui::LengthDoubleSpinBox</class>
    <extends>QDoubleSpinBox</extends>
    <header location="global">qttools/gui/length_double_spinbox.h</header>
   </customwidget>

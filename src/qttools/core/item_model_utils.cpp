@@ -37,7 +37,7 @@
 
 #include "item_model_utils.h"
 
-namespace qttools {
+namespace qtcore {
 
 /*! \class ItemModelUtils
  *  \brief Provides a collection of tools around QAbstractItemModel
@@ -84,4 +84,4 @@ QVariant ItemModelUtils::tableData(const QAbstractItemModel* model, int row, int
     return QVariant();
 }
 
-} // namespace qttools
+} // namespace qtcore

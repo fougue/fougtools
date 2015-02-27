@@ -49,7 +49,7 @@
 
 #include "../../cpptools/memory_utils.h"
 
-namespace qttools {
+namespace qtgui {
 
 /*! \class ItemViewButtonsPrivate
  *  \brief Internal (pimpl of ItemViewButtons)
@@ -205,12 +205,12 @@ void ItemViewButtons::Private::resetButtonUnderMouseState()
  * \class ItemViewButtons
  * \brief Provides buttons integrated to items displayed by QAbstractItemView
  *
- * qttools::ItemViewButtons allows to add buttons inside any QAbstractItemView without subclassing
+ * qtgui::ItemViewButtons allows to add buttons inside any QAbstractItemView without subclassing
  * the item-view class.
  *
  * It only requires that its paint() method is called whenever any view item has to be drawn. If
  * you have a custom delegate (eg. a subclass of QStyledItemDelegate) then just call at some point
- * qttools::ItemViewButtons::paint() inside the delegate's paint() method :
+ * qtgui::ItemViewButtons::paint() inside the delegate's paint() method :
  * \code
  * void MyCustomDeleagate::paint(QPainter* painter,
  *                               const QStyleOptionViewItem& option,
@@ -614,4 +614,4 @@ int ItemViewButtons::buttonAtModelIndex(const QModelIndex &index) const
     return -1;
 }
 
-} // namespace qttools
+} // namespace qtgui

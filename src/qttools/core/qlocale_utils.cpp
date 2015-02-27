@@ -40,7 +40,7 @@
 #include <QtCore/QMetaObject>
 #include <QtCore/QMetaEnum>
 
-namespace qttools {
+namespace qtcore {
 
 /*! \class QLocaleUtils
  *  \brief Provides a collection of tools around QLocale
@@ -94,4 +94,4 @@ QVector<QLocale::Country> QLocaleUtils::allCountries()
     return countryVec;
 }
 
-} // namespace qttools
+} // namespace qtcore

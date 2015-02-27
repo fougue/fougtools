@@ -40,7 +40,7 @@
 #include <QtGui/QStandardItem>
 #include <QtGui/QStandardItemModel>
 
-namespace qttools {
+namespace qtgui {
 
 /*!
  * \class QStandardItemExplorer
@@ -80,4 +80,4 @@ bool QStandardItemTreeBfsModel::isDeeper(const QStandardItem *current,
     return current->index().parent() != previous->index().parent();
 }
 
-} // namespace qttools
+} // namespace qtgui

@@ -43,7 +43,7 @@
 #include <QDialogButtonBox>
 class QLabel;
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT MessageDialog : public QDialog
 {
@@ -71,4 +71,4 @@ private:
     QWidget* m_detailsWidget;
 };
 
-} // namespace qttools
+} // namespace qtgui

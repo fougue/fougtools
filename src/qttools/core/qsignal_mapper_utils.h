@@ -41,7 +41,7 @@
 
 #include <QtCore/QSignalMapper>
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT QSignalMapperUtils
 {
@@ -63,4 +63,4 @@ public:
     static SlotMap_QObjectPtr slotMap_QObjectPtr();
 };
 
-} // namespace qttools
+} // namespace qtcore

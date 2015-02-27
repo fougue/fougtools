@@ -37,7 +37,7 @@
 
 #include "indexed_selection_model.h"
 
-namespace qttools {
+namespace qtgui {
 
 /*!
  * \class IndexedSelectionModel
@@ -124,4 +124,4 @@ void IndexedSelectionModel::endClear()
         emit selectionCleared();
 }
 
-} // namespace qttools
+} // namespace qtgui

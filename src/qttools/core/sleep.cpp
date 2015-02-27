@@ -41,7 +41,7 @@
 #include <QtCore/QThread>
 #include <QtCore/QTimer>
 
-namespace qttools {
+namespace qtcore {
 
 namespace internal {
 
@@ -88,4 +88,4 @@ void waitForMSec(unsigned msec)
     }
 }
 
-} // namespace qttools
+} // namespace qtcore

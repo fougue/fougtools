@@ -37,7 +37,7 @@
 
 #include "calculator.h"
 
-namespace qttools {
+namespace qtscript {
 
 /*!
  * \class Calculator
@@ -117,4 +117,4 @@ QString Calculator::lastResultText() const
     return m_lastResult.toString();
 }
 
-} // namespace qttools
+} // namespace qtscript

@@ -47,7 +47,7 @@
 # include <QtGui/QApplication>
 #endif // QT_VERSION
 
-namespace qttools {
+namespace qtqml {
 
 namespace internal {
 
@@ -114,7 +114,7 @@ void QmlUtils::declareObject(QDeclarativeContext* context, QmlUtils* obj)
 #endif // QT_VERSION
 {
     if (obj != NULL)
-        context->setContextProperty(QLatin1String("qttools_QmlUtils"), obj);
+        context->setContextProperty(QLatin1String("qtqml_QmlUtils"), obj);
 }
 
-} // namespace qttools
+} // namespace qtqml

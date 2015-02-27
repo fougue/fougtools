@@ -47,7 +47,7 @@
 
 #include <QtCore/QtDebug>
 
-namespace qttools {
+namespace qtcore {
 
 /*! \brief Internal (pimpl of PluginsLoader)
  */
@@ -279,7 +279,7 @@ void PluginsLoader::loadPlugins(const QList<InstanceFilter *> &filters, QStringL
                 if (errors != NULL) {
                     //: %1 holds the path to a plugin (DLL)
                     //: %2 holds an error description
-                    errors->append(QCoreApplication::translate("qttools::PluginsLoader",
+                    errors->append(QCoreApplication::translate("qtcore::PluginsLoader",
                                                                "Failed to load plugin %1, error : %2")
                                    .arg(pluginLoader->fileName())
                                    .arg(!filterError.isEmpty() ? filterError : pluginLoader->errorString()));
@@ -307,4 +307,4 @@ void PluginsLoader::discardPlugin(QObject* plugin)
     d->m_pluginFileNames.remove(plugin);
 }
 
-} // namespace qttools
+} // namespace qtcore

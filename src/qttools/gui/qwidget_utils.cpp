@@ -45,7 +45,7 @@
 #include <QScrollBar>
 #include <QWidget>
 
-namespace qttools {
+namespace qtgui {
 
 /*! \class QWidgetUtils
  *  \brief Provides a collection of tools around QWidget
@@ -150,4 +150,4 @@ void QWidgetUtils::setHorizAndVertScrollValue(QAbstractScrollArea* area,
     area->verticalScrollBar()->setValue(values.second);
 }
 
-} // namespace qttools
+} // namespace qtgui

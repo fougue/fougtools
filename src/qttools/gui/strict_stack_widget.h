@@ -40,7 +40,7 @@
 #include "gui.h"
 #include <QWidget>
 
-namespace qttools {
+namespace qtgui {
 
 class QTTOOLS_GUI_EXPORT StrictStackWidget : public QWidget
 {
@@ -61,4 +61,4 @@ private:
     Private* const d;
 };
 
-} // namespace qttools
+} // namespace qtgui

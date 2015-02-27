@@ -40,7 +40,7 @@
 #include "core.h"
 class QPluginLoader;
 
-namespace qttools {
+namespace qtcore {
 
 class QTTOOLS_CORE_EXPORT PluginsLoader_InstanceFilter
 {
@@ -48,4 +48,4 @@ public:
     virtual bool accepts(QPluginLoader* loader, QString* error = NULL) const;
 };
 
-} // namespace qttools
+} // namespace qtcore

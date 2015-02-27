@@ -37,7 +37,7 @@
 
 #include "smtp_account.h"
 
-namespace qttools {
+namespace qtnetwork {
 
 /*!
  * \class SmtpAccount
@@ -153,4 +153,4 @@ SmtpAccount::ConnectionSecurity SmtpAccount::toConnectionSecurity(int id, bool* 
     }
 }
 
-} // namespace qttools
+} // namespace qtnetwork

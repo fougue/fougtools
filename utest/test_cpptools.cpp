@@ -213,6 +213,8 @@ void TestCppTools::pusher_test()
     QCOMPARE(intq.front(), 10);
 }
 
+namespace hash_fnv_test {
+
 struct TestData
 {
     const char* byteSeq;
@@ -220,10 +222,12 @@ struct TestData
     std::uint64_t hash64_fnv_1a;
 };
 
+} // namespace hash_fnv_test
+
 void TestCppTools::hash_fnv_test()
 {
     // TODO: fill testDataVec with http://www.isthe.com/chongo/src/fnv/test_fnv.c
-    const TestData testDataVec[] =
+    const hash_fnv_test::TestData testDataVec[] =
     {
         { "", 0x811c9dc5UL, 0xcbf29ce484222325ULL },
         { "a", 0xe40c292cUL, 0xaf63dc4c8601ec8cULL },

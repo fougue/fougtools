@@ -23,7 +23,9 @@ HEADERS += \
     $$PWD/abstract_quantity_editor.h \
     $$PWD/item_view_utils.h \
     $$PWD/qcombo_box_utils.h \
-    $$PWD/qwidget_utils.h
+    $$PWD/qwidget_utils.h \
+    \
+    $$PWD/../core/qsignal_mapper_utils.h
 
 SOURCES += \
     $$PWD/abstract_length_editor.cpp \
@@ -44,4 +46,6 @@ SOURCES += \
     $$PWD/abstract_quantity_editor.cpp \
     $$PWD/item_view_utils.cpp \
     $$PWD/qcombo_box_utils.cpp \
-    $$PWD/qwidget_utils.cpp
+    $$PWD/qwidget_utils.cpp \
+    \
+    $$PWD/../core/qsignal_mapper_utils.cpp

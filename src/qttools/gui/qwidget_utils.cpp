@@ -76,8 +76,8 @@ void QWidgetUtils::wrapWidgetInDialog(QWidget *widget, QDialog *dialog)
 
         QDialogButtonBox* btnBox = widget->findChild<QDialogButtonBox*>();
         if (btnBox != NULL) {
-            QObject::connect(btnBox, SIGNAL(accepted()), dialog, SLOT(accept()));
-            QObject::connect(btnBox, SIGNAL(rejected()), dialog, SLOT(reject()));
+            QObject::connect(btnBox, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
+            QObject::connect(btnBox, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
         }
     }
 }

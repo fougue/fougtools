@@ -37,6 +37,8 @@
 
 #include "message_dialog.h"
 
+#include "../core/qsignal_mapper_utils.h"
+
 #include <QtCore/QSignalMapper>
 // QtWidgets
 #include <QApplication>
@@ -96,9 +98,10 @@ MessageDialog::MessageDialog(Icon icon,
     QSignalMapper* sigMapper = new QSignalMapper(this);
     foreach (QAbstractButton* btn, btnBox->buttons()) {
         sigMapper->setMapping(btn, btnBox->standardButton(btn));
-        connect(btn, SIGNAL(clicked()), sigMapper, SLOT(map()));
+        QObject::connect(btn, &QAbstractButton::clicked,
+                         sigMapper, qtcore::QSignalMapperUtils::slotMap());
     }
-    connect(sigMapper, SIGNAL(mapped(int)), this, SLOT(done(int)));
+    QObject::connect(sigMapper, qtcore::QSignalMapperUtils::signalMapped_int(), this, &QDialog::done);
 }
 
 QWidget *MessageDialog::detailsWidget() const

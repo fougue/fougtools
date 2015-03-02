@@ -17,7 +17,8 @@ QtViewController::QtViewController(occ::QtView *qtView)
     if (qtView != NULL) {
         qtView->installEventFilter(this);
         qtView->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(qtView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(showActionMenu(QPoint)));
+        QObject::connect(qtView, &QWidget::customContextMenuRequested,
+                         this, &QtViewController::showActionMenu);
     }
 }
 

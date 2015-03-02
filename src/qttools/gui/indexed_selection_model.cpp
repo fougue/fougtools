@@ -54,8 +54,10 @@ IndexedSelectionModel::IndexedSelectionModel(QObject* parent)
     : QObject(parent),
       m_hadSelection(false)
 {
-    connect(this, SIGNAL(selectionCleared()), this, SIGNAL(selectionChanged()));
-    connect(this, SIGNAL(itemToggled(int,bool)), this, SIGNAL(selectionChanged()));
+    QObject::connect(this, &IndexedSelectionModel::selectionCleared,
+                     this, &IndexedSelectionModel::selectionChanged);
+    QObject::connect(this, &IndexedSelectionModel::itemToggled,
+                     this, &IndexedSelectionModel::selectionChanged);
 }
 
 //! Indexes of the items being selected in the view

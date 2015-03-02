@@ -117,14 +117,16 @@ void LineNumbersBar::setBugLine(int lineno)
 
 void LineNumbersBar::setTextEdit(QTextEdit* edit)
 {
+    auto docLayout = edit->document()->documentLayout();
+    auto widgetUpdateSlot = reinterpret_cast<void (QWidget::*)()>(&QWidget::update);
     if (d->m_edit != NULL) {
-        disconnect(edit->document()->documentLayout(), SIGNAL(update(QRectF)), this, SLOT(update()));
-        disconnect(edit->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(update()));
+        QObject::disconnect(docLayout, &QAbstractTextDocumentLayout::update, this, widgetUpdateSlot);
+        QObject::disconnect(edit->verticalScrollBar(), &QScrollBar::valueChanged, this, widgetUpdateSlot);
     }
     d->m_edit = edit;
     if (edit != NULL) {
-        connect(edit->document()->documentLayout(), SIGNAL(update(QRectF)), this, SLOT(update()));
-        connect(edit->verticalScrollBar(), SIGNAL(valueChanged(int)), this, SLOT(update()));
+        QObject::connect(docLayout, &QAbstractTextDocumentLayout::update, this, widgetUpdateSlot);
+        QObject::connect(edit->verticalScrollBar(), &QScrollBar::valueChanged, this, widgetUpdateSlot);
     }
 }
 
@@ -135,7 +137,7 @@ void LineNumbersBar::paintEvent(QPaintEvent* event)
         return;
     }
 
-    QAbstractTextDocumentLayout* layout = d->m_edit->document()->documentLayout();
+    auto layout = d->m_edit->document()->documentLayout();
     const int contentsY = d->m_edit->verticalScrollBar()->value();
     const qreal pageBottom = contentsY + d->m_edit->viewport()->height();
     const QFontMetrics fm = this->fontMetrics();

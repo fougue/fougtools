@@ -100,7 +100,7 @@ WaitDialog::WaitDialog(QWidget* parent)
 
     // Configure
     this->setWindowModality(Qt::ApplicationModal);
-    connect(d->m_updateTimer, SIGNAL(timeout()), this, SLOT(updateProgress()));
+    QObject::connect(d->m_updateTimer, &QTimer::timeout, this, &WaitDialog::updateProgress);
     d->m_updateTimer->setInterval(500);
 }
 

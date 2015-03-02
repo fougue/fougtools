@@ -62,9 +62,10 @@ QComboBoxCurrentItemKeeper::QComboBoxCurrentItemKeeper(QComboBox* comboBox)
     if (comboBox == NULL)
         return;
     const QAbstractItemModel* model = comboBox->model();
-    connect(model, SIGNAL(modelAboutToBeReset()),
-            this, SLOT(onModelAboutToBeReset()));
-    connect(model, SIGNAL(modelReset()), this, SLOT(onModelReset()));
+    QObject::connect(model, &QAbstractItemModel::modelAboutToBeReset,
+                     this, &QComboBoxCurrentItemKeeper::onModelAboutToBeReset);
+    QObject::connect(model, &QAbstractItemModel::modelReset,
+                     this, &QComboBoxCurrentItemKeeper::onModelReset);
 }
 
 int QComboBoxCurrentItemKeeper::columnForModelRowIdentifier() const

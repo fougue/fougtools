@@ -113,7 +113,8 @@ LengthDoubleSpinBox::LengthDoubleSpinBox(QWidget* parent)
       d(new Private)
 {
     this->updateEditor(this->measurementSystem());
-    connect(this, SIGNAL(valueChanged(double)), this, SLOT(onValueChanged(double)));
+    QObject::connect(this, reinterpret_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                     [=](double v) { d->onValueChanged(v); } );
 }
 
 LengthDoubleSpinBox::~LengthDoubleSpinBox()

@@ -14,6 +14,7 @@ HEADERS += \
     $$FOUGTOOLS_SRCDIR/qttools/gui/abstract_quantity_editor.h \
     $$FOUGTOOLS_SRCDIR/qttools/gui/length_double_spinbox.h \
     $$FOUGTOOLS_SRCDIR/qttools/gui/quantity_editor_manager.h \
+    $$FOUGTOOLS_SRCDIR/qttools/gui/qcombo_box_utils.h \
     $$PWD/length_editor_widget.h
 
 SOURCES += \
@@ -21,6 +22,7 @@ SOURCES += \
     $$FOUGTOOLS_SRCDIR/qttools/gui/abstract_quantity_editor.cpp \
     $$FOUGTOOLS_SRCDIR/qttools/gui/length_double_spinbox.cpp \
     $$FOUGTOOLS_SRCDIR/qttools/gui/quantity_editor_manager.cpp \
+    $$FOUGTOOLS_SRCDIR/qttools/gui/qcombo_box_utils.cpp \
     $$PWD/main.cpp \
     $$PWD/length_editor_widget.cpp
 

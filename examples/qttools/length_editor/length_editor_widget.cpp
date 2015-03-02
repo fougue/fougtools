@@ -4,16 +4,17 @@
 #include <QtCore/QtDebug>
 #include <qttools/gui/abstract_length_editor.h>
 #include <qttools/gui/quantity_editor_manager.h>
+#include <qttools/gui/qcombo_box_utils.h>
 
 LengthEditorWidget::LengthEditorWidget(QWidget *parent)
     : QWidget(parent),
       m_ui(new Ui::LengthEditorWidget)
 {
     m_ui->setupUi(this);
-    connect(m_ui->systemCombo, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(onSystemComboBoxChanged(int)));
-    connect(m_ui->unitCombo, SIGNAL(activated(int)),
-            this, SLOT(onUnitComboBoxChanged(int)));
+    QObject::connect(m_ui->systemCombo, qtgui::QComboBoxUtils::signalCurrentIndexChanged_int(),
+                     this, &LengthEditorWidget::onSystemComboBoxChanged);
+    QObject::connect(m_ui->unitCombo, qtgui::QComboBoxUtils::signalActivated_int(),
+                     this, &LengthEditorWidget::onUnitComboBoxChanged);
     this->onSystemComboBoxChanged(0);
 }
 

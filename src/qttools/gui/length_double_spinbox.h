@@ -64,7 +64,6 @@ public slots:
 private:
     class Private;
     Private* const d;
-    Q_PRIVATE_SLOT(d, void onValueChanged(double))
 };
 
 } // namespace qtgui

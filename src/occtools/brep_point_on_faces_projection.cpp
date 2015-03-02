@@ -129,27 +129,27 @@ void BRepPointOnFacesProjection::prepare(const TopoDS_Shape& faces)
         const TopoDS_Face& iFace = TopoDS::Face(exp.Current());
         const Handle_Geom_Surface& iSurf = BRep_Tool::Surface(iFace);
         d->m_projectors.push_back(
-                    Private::ProjectorInfo(new GeomAPI_ProjectPointOnSurf(occ::origin3d, iSurf), iFace));
+                    Private::ProjectorInfo(
+                        new GeomAPI_ProjectPointOnSurf(occ::origin3d, iSurf), iFace));
     }
 }
 
 void BRepPointOnFacesProjection::releaseMemory()
 {
     // Destroy allocated projectors
-    for (unsigned i = 0; i < d->m_projectors.size(); ++i) {
-        if (d->m_projectors.at(i).first != NULL)
-            delete d->m_projectors.at(i).first;
-    }
+    for (auto proj : d->m_projectors)
+        delete proj.first;
     d->m_projectors.clear();
 }
 
 BRepPointOnFacesProjection& BRepPointOnFacesProjection::compute(const gp_Pnt& point)
 {
-    for (unsigned i = 0; i < d->m_projectors.size(); ++i)
-        d->m_projectors.at(i).first->Perform(point);
+    for (auto proj : d->m_projectors)
+        proj.first->Perform(point);
 
-    std::vector<Private::ProjectorInfo>::const_iterator iResult =
-            std::min_element(d->m_projectors.begin(), d->m_projectors.end(), Private::ProjectorCompare());
+    auto iResult = std::min_element(d->m_projectors.begin(),
+                                    d->m_projectors.end(),
+                                    Private::ProjectorCompare());
     assert(iResult != d->m_projectors.end() && "always_a_minimum");
     d->m_solProjector = *iResult;
     return *this;

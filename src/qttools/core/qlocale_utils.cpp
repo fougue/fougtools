@@ -76,18 +76,20 @@ QLocale::Country QLocaleUtils::toCountry(int code)
 }
 
 //! All enumerator values of QLocale::Country returned in a single array
-QVector<QLocale::Country> QLocaleUtils::allCountries()
+std::vector<QLocale::Country> QLocaleUtils::allCountries()
 {
-    QVector<QLocale::Country> countryVec;
+    std::vector<QLocale::Country> countryVec;
     const int countryEnumIndex = QLocale::staticMetaObject.indexOfEnumerator("Country");
     if (countryEnumIndex != -1) {
         const QMetaEnum countryEnum = QLocale::staticMetaObject.enumerator(countryEnumIndex);
+        countryVec.reserve(countryEnum.keyCount());
         for (int i = 0; i < countryEnum.keyCount(); ++i) {
             const int countryEnumValue = countryEnum.value(i);
             if (countryEnumValue != -1) {
-                const QLocale::Country country = static_cast<QLocale::Country>(countryEnumValue);
-                if (!countryVec.contains(country))
-                    countryVec.append(country);
+                const auto country = static_cast<QLocale::Country>(countryEnumValue);
+                auto itCountry = std::find(countryVec.begin(), countryVec.end(), country);
+                if (itCountry == countryVec.cend())
+                    countryVec.push_back(country);
             }
         }
     }

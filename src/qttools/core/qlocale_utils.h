@@ -38,8 +38,8 @@
 #pragma once
 
 #include "core.h"
-#include <QtCore/QVector>
 #include <QtCore/QLocale>
+#include <vector>
 
 namespace qtcore {
 
@@ -49,7 +49,7 @@ public:
     static QLocale::MeasurementSystem toMeasurementSystem(int measSys);
 
     static QLocale::Country toCountry(int code);
-    static QVector<QLocale::Country> allCountries();
+    static std::vector<QLocale::Country> allCountries();
 };
 
 } // namespace qtcore

@@ -26,14 +26,22 @@ build_utest:SUBDIRS += utest
 build_examples:SUBDIRS += examples
 
 HEADERS += ../src/fougtools_global.h
-OTHER_FILES += configure.rb \
-               ../README.md \
-               ../doc/Doxyfile
+
+FOUGTOOLS_QMAKE_PATH = $$PWD # QMake substitution does not expand $$PWD correctly
+fougtools_pri.input = $$PWD/fougtools.pri.in
+fougtools_pri.output = $$PREFIX_DIR/qmake/fougtools.pri
+QMAKE_SUBSTITUTES += fougtools_pri
+
+OTHER_FILES += \
+    configure.rb \
+    fougtools.pri.body \
+    fougtools.pri.in \
+    ../README.md \
+    ../doc/Doxyfile
 
 # INSTALLS for globals
 globals_qmake.path  = $$PREFIX_DIR/qmake
 globals_qmake.files = compiler_config.pri \
-                      fougtools.pri \
                       func_cleanpath.pri \
                       func_systempath.pri
 

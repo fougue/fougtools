@@ -1,0 +1,3 @@
+FOUGTOOLS_LIB_CONFIG = $$find(CONFIG, .*_libs)
+
+$$cat($$FOUGTOOLS_QMAKE_PATH/fougtools.pri.body, blob)

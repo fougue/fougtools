@@ -12,8 +12,8 @@ FOUGTOOLS_LIBLIST = qttools_core \
                     occtools
 
 for(fouglib, FOUGTOOLS) {
-  !contains(FOUGTOOLS_LIBLIST, $${fouglib}): error(Invalid FougTools module name : $${fouglib})
-  DEFINES += $$upper($${fouglib})_DLL
+  !contains(FOUGTOOLS_LIBLIST, $${fouglib}):error(Invalid FougTools module name : $${fouglib})
+  contains(FOUGTOOLS_LIB_CONFIG, shared_libs):DEFINES += $$upper($${fouglib})_DLL
   LIBS += -l$${fouglib}$$TARGET_SUFFIX
 }
 contains(FOUGTOOLS, qttools_core): QT += core

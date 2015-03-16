@@ -12,22 +12,22 @@ FOUGTOOLS_LIBLIST = qttools_core \
                     occtools
 
 for(fouglib, FOUGTOOLS) {
-  !contains(FOUGTOOLS_LIBLIST, $${fouglib}):error(Invalid FougTools module name : $${fouglib})
-  contains(FOUGTOOLS_LIB_CONFIG, shared_libs):DEFINES += $$upper($${fouglib})_DLL
-  LIBS += -l$${fouglib}$$TARGET_SUFFIX
+    !contains(FOUGTOOLS_LIBLIST, $${fouglib}):error(Invalid FougTools module name : $${fouglib})
+    contains(FOUGTOOLS_LIB_CONFIG, shared_libs):DEFINES += $$upper($${fouglib})_DLL
+    LIBS += -l$${fouglib}$$TARGET_SUFFIX
 }
 contains(FOUGTOOLS, qttools_core): QT += core
 contains(FOUGTOOLS, qttools_task): QT += core
 
 contains(FOUGTOOLS, qttools_gui) {
-  QT += gui
-  isEqual(QT_MAJOR_VERSION, 5): QT += widgets
+    QT += gui
+    isEqual(QT_MAJOR_VERSION, 5): QT += widgets
 }
 
 contains(FOUGTOOLS, qttools_qml) {
-  QT += gui
-  isEqual(QT_MAJOR_VERSION, 4): QT += declarative
-  isEqual(QT_MAJOR_VERSION, 5): QT += qml
+    QT += gui
+    isEqual(QT_MAJOR_VERSION, 4): QT += declarative
+    isEqual(QT_MAJOR_VERSION, 5): QT += qml
 }
 
 contains(FOUGTOOLS, qttools_network): QT += network
@@ -35,9 +35,9 @@ contains(FOUGTOOLS, qttools_script):  QT += script
 contains(FOUGTOOLS, qttools_sql):     QT += sql
 
 contains(FOUGTOOLS, occtools) {
-  include(occ.pri)
-  LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
-          -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim -lTKService -lTKShHealing \
-          -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -lTKSTEP209 -lTKSTL -lTKTopAlgo \
-          -lTKV3d -lTKXSBase
+    include(occ.pri)
+    LIBS += -lTKBRep -lTKernel -lTKG2d -lTKG3d -lTKGeomAlgo -lTKGeomBase \
+            -lTKIGES -lTKMath -lTKMesh -lTKOpenGl -lTKPrim -lTKService -lTKShHealing \
+            -lTKSTEP -lTKSTEPAttr -lTKSTEPBase -lTKSTEP209 -lTKSTL -lTKTopAlgo \
+            -lTKV3d -lTKXSBase
 }

@@ -3,22 +3,22 @@ CONFIG += warn_on stl rtti exceptions
 
 # Enable C++11
 isEqual(QT_MAJOR_VERSION, 5) {
- CONFIG += c++11
+    CONFIG += c++11
 } else {
-  *-g++*:QMAKE_CXXFLAGS +=-std=c++0x
+    *-g++*:QMAKE_CXXFLAGS +=-std=c++0x
 }
 
 CONFIG(debug, debug|release) {
-  DEFINES += _DEBUG_CONFIG_
-  CONFIG  += console
+    DEFINES += _DEBUG_CONFIG_
+    CONFIG  += console
 }
 else {
-  CONFIG  -= console
-  DEFINES += QT_NO_DEBUG_OUTPUT
+    CONFIG  -= console
+    DEFINES += QT_NO_DEBUG_OUTPUT
 }
 
 CONFIG(warn_on) {
-  *-g++*:QMAKE_CXXFLAGS *= -Wextra
+    *-g++*:QMAKE_CXXFLAGS *= -Wextra
 }
 
 win32-msvc20*:QMAKE_CXXFLAGS *= -wd4996 -wd4290 -wd4503

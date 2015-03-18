@@ -24,7 +24,7 @@ def revNum(rcsType, workDir)
   end
 
   if not File.exists?(workDir) then
-    puts "Director '#{workDir}' does not exist"
+    puts "Directory '#{workDir}' does not exist"
     return ""
   end
   Dir.chdir(workDir)

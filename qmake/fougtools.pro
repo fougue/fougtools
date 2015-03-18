@@ -43,7 +43,8 @@ OTHER_FILES += \
 globals_qmake.path  = $$PREFIX_DIR/qmake
 globals_qmake.files = compiler_config.pri \
                       func_cleanpath.pri \
-                      func_systempath.pri
+                      func_systempath.pri \
+                      func_vcs_revnum.pri
 
 globals_include.path  = $$PREFIX_DIR/include
 globals_include.files = ../src/*.h
@@ -69,12 +70,9 @@ INSTALLS += scripts
 VER_MAJ = 0
 VER_MIN = 7
 VER_PAT = 0
-!isActiveConfig(no_ruby) {
-    _REV_NUM = $$system(ruby ../scripts/rev_num.rb  --rcs git  --workdir $$PWD)
-} else {
-    _REV_NUM = norev
-}
-_FOUGTOOLS_VERSION = "$$VER_MAJ"."$$VER_MIN"."$$VER_PAT"dev-$$_REV_NUM
+include(func_vcs_revnum.pri)
+_FOUGTOOLS_VERSION = "$$VER_MAJ"."$$VER_MIN"."$$VER_PAT"dev-$$vcs_revnum(git, $$PWD)
+message(FougTools v$$_FOUGTOOLS_VERSION)
 
 # Add custom "doc" target
 _CMD_SEP = ;

@@ -1,7 +1,7 @@
 #############################################################################
 ##
 ##  FougTools
-##  Copyright FougSys (1 Mar. 2011)
+##  Copyright Fougue (30 Mar. 2015)
 ##  contact@fougsys.fr
 ##
 ## This software is a computer program whose purpose is to provide utility

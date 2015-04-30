@@ -103,10 +103,3 @@ struct QTTOOLS_CORE_EXPORT QStringLocaleAwareGreaterEqual
 };
 
 } // namespace qtcore
-
-#include <QtCore/QHash>
-
-/*! Implementation of Boost's hash function for QString */
-inline std::size_t hash_value(QString const& key)
-{ return qHash(key); }
-

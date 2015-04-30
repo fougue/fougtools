@@ -19,6 +19,7 @@ HEADERS += \
     $$PWD/qlocale_utils.h \
     $$PWD/qobject_utils.h \
     $$PWD/qsignal_mapper_utils.h \
+    $$PWD/qstring_hfunc.h \
     $$PWD/qstring_utils.h \
     $$PWD/qvariant_utils.h
 

@@ -9,6 +9,7 @@ class TestQtTools : public QObject
 private slots:
     // Core
     void core_QLocaleUtils_test();
+    void core_QStringHFunc_test();
 
     // Gui
     void gui_QStandardItemExplorer_test();

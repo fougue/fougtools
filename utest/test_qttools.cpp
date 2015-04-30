@@ -1,6 +1,7 @@
 #include "test_qttools.h"
 
 #include "../src/qttools/core/qlocale_utils.h"
+#include "../src/qttools/core/qstring_hfunc.h"
 #include "../src/qttools/gui/qstandard_item_explorer.h"
 #include "../src/qttools/script/calculator.h"
 
@@ -30,6 +31,15 @@ void TestQtTools::core_QLocaleUtils_test()
     //  foreach (auto country, qttools::QLocaleTools::allCountries()) {
     //    qDebug() << QLocale::countryToString(country);
     //  }
+}
+
+void TestQtTools::core_QStringHFunc_test()
+{
+    std::unordered_map<QString, int> map;
+    map.emplace(QString::fromLatin1("test1"), 1);
+    map.emplace(QString::fromLatin1("test2"), 2);
+    QCOMPARE(map.at(QString::fromLatin1("test1")), 1);
+    QCOMPARE(map.at(QString::fromLatin1("test2")), 2);
 }
 
 void TestQtTools::gui_QStandardItemExplorer_test()

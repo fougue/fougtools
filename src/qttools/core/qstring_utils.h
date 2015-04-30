@@ -42,37 +42,71 @@
 
 namespace qtcore {
 
+/*! Functor wrapper around QString::localeAwareCompare(lhs, rhs) == 0
+ *  \headerfile qstring_utils.h <qttools/core/qstring_utils.h>
+ *  \ingroup qttools_core
+ */
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareEqual
 {
-    bool operator()(const QString& lhs, const QString& rhs) const;
+    inline bool operator()(const QString& lhs, const QString& rhs) const
+    { return QString::localeAwareCompare(lhs, rhs) == 0; }
 };
 
+/*! Functor wrapper around QString::localeAwareCompare(lhs, rhs) != 0
+ *  \headerfile qstring_utils.h <qttools/core/qstring_utils.h>
+ *  \ingroup qttools_core
+ */
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareNotEqual
 {
-    bool operator()(const QString& lhs, const QString& rhs) const;
+    inline bool operator()(const QString& lhs, const QString& rhs) const
+    { return QString::localeAwareCompare(lhs, rhs) != 0; }
 };
 
+/*! Functor wrapper around QString::localeAwareCompare(lhs, rhs) < 0
+ *  \headerfile qstring_utils.h <qttools/core/qstring_utils.h>
+ *  \ingroup qttools_core
+ */
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareLess
 {
-    bool operator()(const QString& lhs, const QString& rhs) const;
+    inline bool operator()(const QString& lhs, const QString& rhs) const
+    { return QString::localeAwareCompare(lhs, rhs) < 0; }
 };
 
+/*! Functor wrapper around QString::localeAwareCompare(lhs, rhs) <= 0
+ *  \headerfile qstring_utils.h <qttools/core/qstring_utils.h>
+ *  \ingroup qttools_core
+ */
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareLessEqual
 {
-    bool operator()(const QString& lhs, const QString& rhs) const;
+    inline bool operator()(const QString& lhs, const QString& rhs) const
+    { return QString::localeAwareCompare(lhs, rhs) <= 0; }
 };
 
+/*! Functor wrapper around QString::localeAwareCompare(lhs, rhs) > 0
+ *  \headerfile qstring_utils.h <qttools/core/qstring_utils.h>
+ *  \ingroup qttools_core
+ */
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareGreater
 {
-    bool operator()(const QString& lhs, const QString& rhs) const;
+    inline bool operator()(const QString& lhs, const QString& rhs) const
+    { return QString::localeAwareCompare(lhs, rhs) > 0; }
 };
 
+/*! Functor wrapper around QString::localeAwareCompare(lhs, rhs) >= 0
+ *  \headerfile qstring_utils.h <qttools/core/qstring_utils.h>
+ *  \ingroup qttools_core
+ */
 struct QTTOOLS_CORE_EXPORT QStringLocaleAwareGreaterEqual
 {
-    bool operator()(const QString& lhs, const QString& rhs) const;
+    inline bool operator()(const QString& lhs, const QString& rhs) const
+    { return QString::localeAwareCompare(lhs, rhs) >= 0; }
 };
 
 } // namespace qtcore
 
-QTTOOLS_CORE_EXPORT
-std::size_t hash_value(QString const& str);
+#include <QtCore/QHash>
+
+/*! Implementation of Boost's hash function for QString */
+inline std::size_t hash_value(QString const& key)
+{ return qHash(key); }
+

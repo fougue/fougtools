@@ -41,75 +41,71 @@
 
 namespace qtcore {
 
+/*! Wraps (adapts) any class object into a QObject instance
+ *
+ *  This class is useful to let Qt handle the lifecycle of a non QObject : wrap
+ *  an instance to a QObject and then let its parent takes ownership
+ *
+ * \headerfile qobject_wrap.h <qttools/core/qobject_wrap.h>
+ * \ingroup qttools_core
+ */
 template<typename T>
 class QObjectWrap : public QObject
 {
 public:
-    QObjectWrap(T* object, QObject* parent = NULL);
-    ~QObjectWrap();
+    QObjectWrap(const T& value, QObject* parent = nullptr);
+    QObjectWrap(T&& value, QObject* parent = nullptr);
 
-    T* wrapped();
-    const T* wrapped() const;
+    const T& value() const;
+    void setValue(const T& val);
+    void setValue(T&& val);
 
 private:
-    T* m_wrapped;
+    T m_value;
 };
 
+/*! Create a QObjectWrap<T> owning \p value
+ *
+ *  This is equivalent to qtcore::QObjectWrap<T>(\p value, \p parent), but
+ *  usually requires less typing
+ *  \relates QObjectWrap
+ */
 template<typename T>
-QObjectWrap<T>* wrapAsQObject(T* object, QObject* parent = NULL);
-
+QObjectWrap<T>* wrapAsQObject(const T& value, QObject* parent = nullptr);
 
 
 // --
 // -- Implementation
 // --
 
-/*!
- * \class QObjectWrap
- * \brief Wraps (adapts) any class object into a QObject instance
- *
- *  This class is useful to let Qt handle the lifecycle of a non QObject : wrap an instance to a
- *  QObject and then let its parent takes ownership
- *
- * \headerfile qobject_wrap.h <qttools/core/qobject_wrap.h>
- * \ingroup qttools_core
- */
-
 template<typename T>
-QObjectWrap<T>::QObjectWrap(T* object, QObject* parent)
+QObjectWrap<T>::QObjectWrap(const T& value, QObject* parent)
     : QObject(parent),
-      m_wrapped(object)
-{
-}
+      m_value(value)
+{ }
 
 template<typename T>
-QObjectWrap<T>::~QObjectWrap()
-{
-    delete m_wrapped;
-}
+QObjectWrap<T>::QObjectWrap(T&& value, QObject* parent)
+    : QObject(parent),
+      m_value(value)
+{ }
 
 template<typename T>
-T* QObjectWrap<T>::wrapped()
-{
-    return m_wrapped;
-}
+const T& QObjectWrap<T>::value() const
+{ return m_value; }
 
 template<typename T>
-const T* QObjectWrap<T>::wrapped() const
-{
-    return m_wrapped;
-}
+void QObjectWrap<T>::setValue(const T& val)
+{ m_value = val; }
 
-/*! \brief Create a QObjectWrap<T> owning \p object
- *
- *  This is equivalent to qtcore::QObjectWrap<T>(\p object, \p parent), but usually requires less
- *  typing
- *  \relates QObjectWrap
- */
 template<typename T>
-QObjectWrap<T>* wrapAsQObject(T* object, QObject* parent)
+void QObjectWrap<T>::setValue(T&& val)
+{ m_value = val; }
+
+template<typename T>
+QObjectWrap<T>* wrapAsQObject(const T& value, QObject* parent)
 {
-    return new QObjectWrap<T>(object, parent);
+    return new QObjectWrap<T>(value, parent);
 }
 
 } // namespace qtcore

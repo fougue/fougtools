@@ -1,6 +1,7 @@
 #include "test_qttools.h"
 
 #include "../src/qttools/core/qlocale_utils.h"
+#include "../src/qttools/core/qobject_wrap.h"
 #include "../src/qttools/core/qstring_hfunc.h"
 #include "../src/qttools/gui/qstandard_item_explorer.h"
 #include "../src/qttools/script/calculator.h"
@@ -40,6 +41,20 @@ void TestQtTools::core_QStringHFunc_test()
     map.emplace(QString::fromLatin1("test2"), 2);
     QCOMPARE(map.at(QString::fromLatin1("test1")), 1);
     QCOMPARE(map.at(QString::fromLatin1("test2")), 2);
+}
+
+void TestQtTools::core_QObjectWrap_test()
+{
+    const int a = 50;
+    auto wrap1 = qtcore::wrapAsQObject(a);
+    QCOMPARE(wrap1->value(), a);
+    delete wrap1;
+
+    const QLatin1String str("core_QObjectWrap_test()");
+    const QString qstr = str;
+    auto wrap2 = qtcore::wrapAsQObject(std::move(qstr));
+    QCOMPARE(wrap2->value(), QString(str));
+    delete wrap2;
 }
 
 void TestQtTools::gui_QStandardItemExplorer_test()

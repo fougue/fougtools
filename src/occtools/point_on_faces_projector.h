@@ -52,7 +52,9 @@ public:
     struct OCCTOOLS_EXPORT Result
     {
         Result();
-        Result(const TopoDS_Face& sFace, const gp_Pnt& sPoint, const gp_Vec& sNormal);
+        Result(const TopoDS_Face& sFace,
+               const gp_Pnt& sPoint,
+               const gp_Vec& sNormal);
         const bool isValid;
         const TopoDS_Face face;
         const gp_Pnt point;

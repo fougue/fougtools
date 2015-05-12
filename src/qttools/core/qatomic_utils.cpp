@@ -46,8 +46,9 @@ namespace qtcore {
 /*! \class QAtomicUtils
  *  \brief Provides a collection of tools around QAtomicInt and QAtomicPointer
  *
- *  QAtomicUtils mainly provides common operations for QAtomicInt and QAtomicPointer. It is useful
- *  when portability for Qt4 / Qt5 is required because the API of these two classes have changed.
+ *  QAtomicUtils mainly provides common operations for QAtomicInt and
+ *  QAtomicPointer. It is useful when portability for Qt4 / Qt5 is required
+ *  because the API of these two classes have changed.
  *
  *  \headerfile qatomic_utils.h <qttools/core/qatomic_utils.h>
  *  \ingroup qttools_core

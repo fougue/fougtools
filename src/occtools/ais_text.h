@@ -87,11 +87,16 @@ public:
 
     // --- Implementation
 protected:
-    void Compute(const Handle_PrsMgr_PresentationManager3d& pm,
-                 const Handle_Prs3d_Presentation& pres,
-                 const Standard_Integer mode);
-    void Compute(const Handle_Prs3d_Projector& proj, const Handle_Prs3d_Presentation& pres);
-    void ComputeSelection(const Handle_SelectMgr_Selection& sel, const Standard_Integer mode);
+    void Compute(
+            const Handle_PrsMgr_PresentationManager3d& pm,
+            const Handle_Prs3d_Presentation& pres,
+            const Standard_Integer mode);
+    void Compute(
+            const Handle_Prs3d_Projector& proj,
+            const Handle_Prs3d_Presentation& pres);
+    void ComputeSelection(
+            const Handle_SelectMgr_Selection& sel,
+            const Standard_Integer mode);
 
 private:
     class Private;

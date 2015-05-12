@@ -60,9 +60,10 @@ public:
     };
 
     static Format partFormat(FileNameLocal8Bit fileName);
-    static Format partFormatFromContents(const char* contentsBegin,
-                                         std::size_t contentsBeginSize,
-                                         std::size_t fullContentsSizeHint = 0);
+    static Format partFormatFromContents(
+            const char* contentsBegin,
+            std::size_t contentsBeginSize,
+            std::size_t fullContentsSizeHint = 0);
 
     static TopoDS_Shape loadPartFile(
             FileNameLocal8Bit fileName,
@@ -95,8 +96,10 @@ public:
             FileNameLocal8Bit fileName,
             Handle_Message_ProgressIndicator indicator = NULL);
 
-    static void writeAsciiStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName);
-    static void writeBinaryStlFile(const TopoDS_Shape& shape, FileNameLocal8Bit fileName);
+    static void writeAsciiStlFile(
+            const TopoDS_Shape& shape, FileNameLocal8Bit fileName);
+    static void writeBinaryStlFile(
+            const TopoDS_Shape& shape, FileNameLocal8Bit fileName);
 };
 
 } // namespace occ

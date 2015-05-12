@@ -99,12 +99,11 @@ private:
 };
 
 //! Callback executed each time a paint is requested (on paintEvent())
-int occ_QtView_paintCallBack(Aspect_Drawable drawable,
-                             void* pointer,
-                             Aspect_GraphicCallbackStruct* data)
+int occ_QtView_paintCallBack(
+        Aspect_Drawable /*drawable*/,
+        void* pointer,
+        Aspect_GraphicCallbackStruct* data)
 {
-    Q_UNUSED(drawable);
-
 #ifndef OCCTOOLS_QTVIEW_NO_PAINTCALLBACK
     QtView::Private* d = reinterpret_cast<QtView::Private*>(pointer);
     d->m_callbackData = data;
@@ -118,7 +117,8 @@ int occ_QtView_paintCallBack(Aspect_Drawable drawable,
     return 0;
 }
 
-QtView::Private::Private(const Handle_AIS_InteractiveContext &context3d, QtView* backPtr)
+QtView::Private::Private(
+        const Handle_AIS_InteractiveContext &context3d, QtView* backPtr)
     : m_context(context3d),
       m_isInitialized(false),
       m_needsResize(false),
@@ -135,27 +135,30 @@ void QtView::Private::initialize()
 
 #if defined(Q_OS_WIN32)
         Aspect_Handle winHandle = (Aspect_Handle)m_backPtr->winId();
-        Handle(WNT_Window) hWnd = new WNT_Window(winHandle);
+        Handle_WNT_Window hWnd = new WNT_Window(winHandle);
 #elif defined(Q_OS_MAC) && !defined(MACOSX_USE_GLX)
         NSView* viewHandle = (NSView*)m_backPtr->winId();
         Handle_Cocoa_Window hWnd = new Cocoa_Window(viewHandle);
 #else
         Window winHandle = (Window)m_backPtr->winId();
-        Handle_Aspect_DisplayConnection dispConnection = m_context->CurrentViewer()->Driver()->GetDisplayConnection();
+        Handle_Aspect_DisplayConnection dispConnection =
+                m_context->CurrentViewer()->Driver()->GetDisplayConnection();
         Handle_Xw_Window hWnd = new Xw_Window(dispConnection, winHandle);
 #endif
         m_internalView->SetWindow(hWnd, NULL, &occ_QtView_paintCallBack, this);
         if (!hWnd->IsMapped())
             hWnd->Map();
 
-        m_internalView->SetBgGradientColors(Quantity_Color(0.5, 0.58, 1., Quantity_TOC_RGB),
-                                            Quantity_NOC_WHITE,
-                                            Aspect_GFM_VER);
+        m_internalView->SetBgGradientColors(
+                    Quantity_Color(0.5, 0.58, 1., Quantity_TOC_RGB),
+                    Quantity_NOC_WHITE,
+                    Aspect_GFM_VER);
 
-        m_internalView->TriedronDisplay(Aspect_TOTP_LEFT_LOWER,
-                                        Quantity_NOC_GRAY50,
-                                        0.1,
-                                        V3d_ZBUFFER);
+        m_internalView->TriedronDisplay(
+                    Aspect_TOTP_LEFT_LOWER,
+                    Quantity_NOC_GRAY50,
+                    0.1,
+                    V3d_ZBUFFER);
 
         m_internalView->MustBeResized();
         m_isInitialized = true;
@@ -166,8 +169,8 @@ void QtView::Private::initialize()
 /*! \class QtView
  *  \brief Qt wrapper around the V3d_View class
  *
- *  QtView widgets are explicitely bound to a context ie an AIS_InteractiveContext. The context
- *  can be retrieved with context().
+ *  QtView widgets are explicitely bound to a context ie an
+ *  AIS_InteractiveContext. The context can be retrieved with context().
  *
  *  QtView does not handle input devices interaction like keyboard and mouse.
  *
@@ -175,15 +178,16 @@ void QtView::Private::initialize()
  *  \ingroup occtools
  */
 
-//! Construct a QtView bound to the interactive context \p context3d, and having \p parent as its
-//! Qt widget parent
+//! Construct a QtView bound to the interactive context \p context3d, and having
+//! \p parent as its Qt widget parent
 QtView::QtView(const Handle_AIS_InteractiveContext& context3d, QWidget* parent)
     : QWidget(parent),
       d(new Private(context3d, this))
 {
     this->setMouseTracking(true);
 
-    // Avoid Qt background clears to improve resizing speed, along with a couple of other attributes
+    // Avoid Qt background clears to improve resizing speed, along with a couple
+    // of other attributes
     this->setAutoFillBackground(false);
     this->setAttribute(Qt::WA_NoSystemBackground);
 
@@ -244,7 +248,9 @@ void QtView::removePaintCallback(int callbackId)
             std::find_if(
                 d->m_paintCallbacks.begin(),
                 d->m_paintCallbacks.end(),
-                [=] (const Private::PaintCallbackData& cbData) { return cbData.id == callbackId; } );
+                [=] (const Private::PaintCallbackData& cbData) {
+        return cbData.id == callbackId;
+    } );
     if (callbackIt != d->m_paintCallbacks.end())
         d->m_paintCallbacks.erase(callbackIt);
 }
@@ -265,22 +271,19 @@ void QtView::fitAll()
 }
 
 //! Reimplemented from QWidget::paintEvent()
-void QtView::paintEvent(QPaintEvent* event)
+void QtView::paintEvent(QPaintEvent* /*event*/)
 {
-    Q_UNUSED(event);
-
     d->initialize();
     if (!d->m_context->CurrentViewer().IsNull())
         this->redraw();
 }
 
 /*! \brief Reimplemented from QWidget::resizeEvent()
- *  Called when the widget needs to resize itself, but seeing as a paint event always follows a
- *  resize event, we'll move the work into the paint event
+ *  Called when the widget needs to resize itself, but seeing as a paint event
+ *  always follows a resize event, we'll move the work into the paint event
  */
-void QtView::resizeEvent(QResizeEvent* event)
+void QtView::resizeEvent(QResizeEvent* /*event*/)
 {
-    Q_UNUSED(event);
     d->m_needsResize = true;
 }
 

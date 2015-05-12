@@ -51,8 +51,10 @@ namespace internal {
 class QTTOOLS_CORE_EXPORT PluginsLoader_InstanceIFaceFilter_Helper
 {
 protected:
-    static void setRootComponentNullError(QString* error, const QPluginLoader* loader);
-    static void setRootComponentIncompatibleError(QString* error, const char* iid);
+    static void setRootComponentNullError(
+            QString* error, const QPluginLoader* loader);
+    static void setRootComponentIncompatibleError(
+            QString* error, const char* iid);
     static QObject* rootComponent(QPluginLoader* loader);
 };
 
@@ -61,7 +63,8 @@ protected:
 /*! \brief Generic plugin filter that keeps only root components satisfying an interface
  *
  *  \tparam INTERFACE Type of the interface (declared with Q_DECLARE_INTERFACE())
- *  \headerfile plugins_loader_instance_iface_filter.h <qttools/core/plugins_loader_instance_iface_filter.h>
+ *  \headerfile plugins_loader_instance_iface_filter.h
+ *              <qttools/core/plugins_loader_instance_iface_filter.h>
  *  \ingroup qttools_core
  */
 template<typename INTERFACE>
@@ -73,10 +76,13 @@ public:
     bool accepts(QPluginLoader *loader, QString* error = NULL) const
     {
         if (rootComponent(loader) != NULL) {
-            if (qobject_cast<INTERFACE*>(rootComponent(loader)) != NULL)
+            if (qobject_cast<INTERFACE*>(rootComponent(loader)) != NULL) {
                 return true;
-            else
-                setRootComponentIncompatibleError(error, qobject_interface_iid<INTERFACE>());
+            }
+            else {
+                setRootComponentIncompatibleError(
+                            error, qobject_interface_iid<INTERFACE>());
+            }
         }
         else {
             setRootComponentNullError(error, loader);

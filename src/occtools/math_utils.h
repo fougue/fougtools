@@ -51,10 +51,9 @@ class OCCTOOLS_EXPORT MathUtils
 {
 public:
     static gp_Pnt projectPointOnPlane(const gp_Pnt& p, const gp_Vec& n);
-    static std::pair<gp_Pnt, bool> projectPointOnTriangle(const gp_Pnt& p,
-                                                          const gp_Pnt& v0,
-                                                          const gp_Pnt& v1,
-                                                          const gp_Pnt& v2);
+    static std::pair<gp_Pnt, bool> projectPointOnTriangle(
+            const gp_Pnt& p,
+            const gp_Pnt& v0, const gp_Pnt& v1, const gp_Pnt& v2);
 
     static Standard_Real euclideanNorm(const gp_Vec& vec);
     static Standard_Real squaredEuclideanNorm(const gp_Vec& vec);
@@ -64,9 +63,10 @@ public:
     template<typename NORM>
     static bool isNull(const gp_Vec& vec, const NORM& norm);
 
-    static gp_Vec triangleNormal(const TColgp_Array1OfPnt& nodes,
-                                 const Poly_Triangle& triangle,
-                                 TopAbs_Orientation ori = TopAbs_FORWARD);
+    static gp_Vec triangleNormal(
+            const TColgp_Array1OfPnt& nodes,
+            const Poly_Triangle& triangle,
+            TopAbs_Orientation ori = TopAbs_FORWARD);
 
     template<typename OCC_PNT_VEC, typename TEXT_STREAM>
     static TEXT_STREAM& printOccPntVec(TEXT_STREAM& ts, const OCC_PNT_VEC& v);

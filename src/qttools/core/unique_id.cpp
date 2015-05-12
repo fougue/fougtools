@@ -58,7 +58,7 @@ Q_GLOBAL_STATIC(internal::UniqueIdRegistration, uniqueIdRegistrationHelper)
 
 /*!
  * \class UniqueId
- * \brief Provides services around creation of (app execution scope) unique indexes
+ * Provides services around creation of (app execution scope) unique indexes
  *
  * \headerfile unique_id.h <qttools/core/unique_id.h>
  * \ingroup qttools_core

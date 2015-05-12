@@ -46,13 +46,15 @@ namespace qtcore {
  * \ingroup qttools_core
  */
 
-/*! \brief Returns the member function pointer(Qt signal) to QSignalMapper::mapped(int)
+/*! Returns the member function pointer(Qt signal) to QSignalMapper::mapped(int)
  *
- *  This is a helper to disambiguate and choose the right QSignalMapper::mapped() signal overload.
+ *  This is a helper to disambiguate and choose the right
+ *  QSignalMapper::mapped() signal overload.
  *  It is particularly useful for the new Qt5 QObject::connect() syntax. \n
  *  Example :
  *  \code
- *      // Error: the compiler doesn't know the right QSignalMapper::mapped() overload to pick
+ *      // Error: the compiler doesn't know the right QSignalMapper::mapped()
+ *      // overload to pick
  *      QObject::connect(sigMap, &QSignalMapper::mapped, this, &MyClass:onSigMapped);
  *
  *      // You have to specify the signal overload :
@@ -70,37 +72,48 @@ QSignalMapperUtils::SignalMapped_int QSignalMapperUtils::signalMapped_int()
     return (QSignalMapperUtils::SignalMapped_int)&QSignalMapper::mapped;
 }
 
-/*! \brief Returns the member function pointer(Qt signal) to QSignalMapper::mapped(const QString&)
+/*! Returns the member function pointer(Qt signal) to
+ *  QSignalMapper::mapped(const QString&)
+ *
  *  \sa QSignalMapperUtils::signalMapped_int()
  */
-QSignalMapperUtils::SignalMapped_QString QSignalMapperUtils::signalMapped_QString()
+QSignalMapperUtils::SignalMapped_QString
+QSignalMapperUtils::signalMapped_QString()
 {
     return (QSignalMapperUtils::SignalMapped_QString)&QSignalMapper::mapped;
 }
 
-/*! \brief Returns the member function pointer(Qt signal) to QSignalMapper::mapped(QWidget*)
+/*! Returns the member function pointer(Qt signal) to
+ *  QSignalMapper::mapped(QWidget*)
+ *
  *  \sa QSignalMapperUtils::signalMapped_int()
  */
-QSignalMapperUtils::SignalMapped_QWidgetPtr QSignalMapperUtils::signalMapped_QWidgetPtr()
+QSignalMapperUtils::SignalMapped_QWidgetPtr
+QSignalMapperUtils::signalMapped_QWidgetPtr()
 {
     return (QSignalMapperUtils::SignalMapped_QWidgetPtr)&QSignalMapper::mapped;
 }
 
-/*! \brief Returns the member function pointer(Qt signal) to QSignalMapper::mapped(QObject*)
+/*! Returns the member function pointer(Qt signal) to
+ *  QSignalMapper::mapped(QObject*)
+ *
  *  \sa QSignalMapperUtils::signalMapped_int()
  */
-QSignalMapperUtils::SignalMapped_QObjectPtr QSignalMapperUtils::signalMapped_QObjectPtr()
+QSignalMapperUtils::SignalMapped_QObjectPtr
+QSignalMapperUtils::signalMapped_QObjectPtr()
 {
     return (QSignalMapperUtils::SignalMapped_QObjectPtr)&QSignalMapper::mapped;
 }
 
 /*! \brief Returns the member function pointer(Qt slot) to QSignalMapper::map()
  *
- *  This is a helper to disambiguate and choose the right QSignalMapper::map() slot overload.
+ *  This is a helper to disambiguate and choose the right QSignalMapper::map()
+ *  slot overload.
  *  It is particularly useful for the new Qt5 QObject::connect() syntax. \n
  *  Example :
  *  \code
- *      // Error: the compiler doesn't know the right QSignalMapper::map() overload to pick
+ *      // Error: the compiler doesn't know the right QSignalMapper::map()
+ *      // overload to pick
  *      QObject::connect(action, &QAction::triggered, sigMap, &QSignalMapper::map);
  *
  *      // You have to specify the slot overload :
@@ -117,7 +130,7 @@ QSignalMapperUtils::SlotMap QSignalMapperUtils::slotMap()
     return (QSignalMapperUtils::SlotMap)&QSignalMapper::map;
 }
 
-/*! \brief Returns the member function pointer(Qt slot) to QSignalMapper::map(QObject*)
+/*! Returns the member function pointer(Qt slot) to QSignalMapper::map(QObject*)
  *  \sa QSignalMapperUtils::slotMap()
  */
 QSignalMapperUtils::SlotMap_QObjectPtr QSignalMapperUtils::slotMap_QObjectPtr()

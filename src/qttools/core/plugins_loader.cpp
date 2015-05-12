@@ -58,9 +58,10 @@ public:
 
     void releasePlugins();
 
-    static bool filterAccepts(const QList<InstanceFilter*>& filters,
-                              QPluginLoader* pluginLoader,
-                              QString* filterError);
+    static bool filterAccepts(
+            const QList<InstanceFilter*>& filters,
+            QPluginLoader* pluginLoader,
+            QString* filterError);
     static bool isLibrary(const QString &path);
 
     QVector<QObject*> m_plugins;
@@ -93,9 +94,10 @@ void PluginsLoader::Private::releasePlugins()
     m_pluginFileNames.clear();
 }
 
-bool PluginsLoader::Private::filterAccepts(const QList<InstanceFilter *> &filters,
-                                           QPluginLoader* pluginLoader,
-                                           QString* filterError)
+bool PluginsLoader::Private::filterAccepts(
+        const QList<InstanceFilter *> &filters,
+        QPluginLoader* pluginLoader,
+        QString* filterError)
 {
     foreach (InstanceFilter* filter, filters) {
         if (!filter->accepts(pluginLoader, filterError))
@@ -112,7 +114,9 @@ bool PluginsLoader::Private::isLibrary(const QString &path)
 #elif defined(Q_OS_LINUX) || defined(Q_OS_UNIX)
     suffixList << QLatin1String(".so");
 #elif defined(Q_OS_MAC)
-    suffixList << QLatin1String(".dylib") << QLatin1String(".bundle") << QLatin1String(".so");
+    suffixList << QLatin1String(".dylib")
+               << QLatin1String(".bundle")
+               << QLatin1String(".so");
 #endif
 
     foreach (const QString& suffix, suffixList)
@@ -143,8 +147,8 @@ PluginsLoader::~PluginsLoader()
 /*!
  * \brief Is auto-deletion of plugins enabled ?
  *
- * If plugins auto-deletion is enabled, PluginsLoader will automatically delete plugins on
- * destruction of this object.
+ * If plugins auto-deletion is enabled, PluginsLoader will automatically delete
+ * plugins on destruction of this object.
  *
  * \note autoDeletePlugins() is enabled by default.
  *
@@ -156,7 +160,9 @@ bool PluginsLoader::autoDeletePlugins() const
 }
 
 /*!
- * \brief Enables plugins auto-deletion if \p on is true; otherwise auto-deletion is disabled
+ * Enables plugins auto-deletion if \p on is true; otherwise auto-deletion is
+ * disabled
+ *
  * \sa autoDeletePlugins()
  */
 void PluginsLoader::setAutoDeletePlugins(bool on)
@@ -195,7 +201,8 @@ QStringList PluginsLoader::paths() const
 /*!
  * \brief Sets the list of directories to search when loading plugins to \p paths
  *
- * All existing paths will be deleted and the path list will consist of the paths given in \p paths.
+ * All existing paths will be deleted and the path list will consist of the
+ * paths given in \p paths.
  * \sa addPath(), removePath(), paths()
  */
 void PluginsLoader::setPaths(const QStringList &paths)
@@ -213,7 +220,8 @@ QStringList PluginsLoader::fileNameFilters() const
 
 /*! \brief Sets the name filters used by loadPlugins()
  *
- *  Each name filter is a wildcard (globbing) filter that understands * and ? wildcards.
+ *  Each name filter is a wildcard (globbing) filter that understands * and ?
+ *  wildcards.
  *
  *  \sa QDir::setNameFilters()
  */
@@ -223,13 +231,14 @@ void PluginsLoader::setFileNameFilters(const QStringList &nameFilters)
 }
 
 /*!
- * \brief Returns file name of a loaded plugin object (e.g. libmy_plugin.so, other_plugin.dll, ...)
+ * Returns file name of a loaded plugin object (e.g. libmy_plugin.so,
+ * other_plugin.dll, ...)
  *
  *  \p plugin must have been successfully loaded with loadPlugins()
  */
 QString PluginsLoader::pluginFileName(const QObject* plugin) const
 {
-    QHash<const QObject*, QString>::ConstIterator it = d->m_pluginFileNames.find(plugin);
+    auto it = d->m_pluginFileNames.find(plugin);
     if (it != d->m_pluginFileNames.constEnd())
         return it.value();
     return QString();
@@ -253,21 +262,25 @@ void PluginsLoader::loadPlugins(InstanceFilter *filter, QStringList *errors)
 /*!
  * \brief Loads plugins, any error is reported in \p errors
  */
-void PluginsLoader::loadPlugins(const QList<InstanceFilter *> &filters, QStringList *errors)
+void PluginsLoader::loadPlugins(
+        const QList<InstanceFilter *> &filters, QStringList *errors)
 {
     d->releasePlugins();
 
     foreach (const QString& path, d->m_pluginPaths) {
         QDir pluginDir(path);
-        const QStringList entryList(pluginDir.entryList(d->m_fileNameFilters, QDir::Files));
+        const QStringList entryList(
+                    pluginDir.entryList(d->m_fileNameFilters, QDir::Files));
         foreach (const QString& entry, entryList) {
             if (!Private::isLibrary(entry))
                 continue;
 
             // Test plugin loader against filters
-            QPluginLoader* pluginLoader = new QPluginLoader(pluginDir.absoluteFilePath(entry));
+            auto pluginLoader =
+                    new QPluginLoader(pluginDir.absoluteFilePath(entry));
             QString filterError;
-            const bool pluginAccepted = Private::filterAccepts(filters, pluginLoader, &filterError);
+            const bool pluginAccepted =
+                    Private::filterAccepts(filters, pluginLoader, &filterError);
 
             if (pluginAccepted) {
                 QObject* pluginInstance = pluginLoader->instance();
@@ -279,10 +292,14 @@ void PluginsLoader::loadPlugins(const QList<InstanceFilter *> &filters, QStringL
                 if (errors != NULL) {
                     //: %1 holds the path to a plugin (DLL)
                     //: %2 holds an error description
-                    errors->append(QCoreApplication::translate("qtcore::PluginsLoader",
-                                                               "Failed to load plugin %1, error : %2")
-                                   .arg(pluginLoader->fileName())
-                                   .arg(!filterError.isEmpty() ? filterError : pluginLoader->errorString()));
+                    errors->append(
+                                QCoreApplication::translate(
+                                    "qtcore::PluginsLoader",
+                                    "Failed to load plugin %1, error : %2")
+                                .arg(pluginLoader->fileName())
+                                .arg(!filterError.isEmpty() ?
+                                         filterError :
+                                         pluginLoader->errorString()));
                 }
                 pluginLoader->unload();
                 delete pluginLoader;

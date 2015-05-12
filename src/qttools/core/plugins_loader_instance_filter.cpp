@@ -51,20 +51,22 @@ namespace qtcore {
 
 /*! \brief Keep or discard the root component of QPluginLoader \p loader
  *
- *  Sub-classes can require access to the root component, other can avoid loading by using
- *  QPluginLoader::metaData()
+ *  Sub-classes can require access to the root component, other can avoid
+ *  loading by using QPluginLoader::metaData()
  *
  *  By default this functions does nothing apart checking \p loader is non null.
  *
- *  \param[in,out] loader The plugin loader providing the root component. The root component is not
- *                        loaded, the filter might load it with QPluginLoader::instance()
- *  \param[out] error Used to report error in case the root component is filtered out
+ *  \param[in,out] loader The plugin loader providing the root component. The
+ *                 root component is not loaded, the filter might load it with
+ *                 QPluginLoader::instance()
+ *  \param[out] error Used to report error in case the root component is
+ *              filtered out
  *
  *  \return Returns true is the root component can be kept
  */
-bool PluginsLoader_InstanceFilter::accepts(QPluginLoader *loader, QString *error) const
+bool PluginsLoader_InstanceFilter::accepts(
+        QPluginLoader *loader, QString* /*error*/) const
 {
-    Q_UNUSED(error);
     return loader != NULL;
 }
 

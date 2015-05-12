@@ -66,7 +66,8 @@ public:
     void setFileNameFilters(const QStringList& nameFilters);
 
     void loadPlugins(InstanceFilter* filter, QStringList* errors = NULL);
-    void loadPlugins(const QList<InstanceFilter*>& filters, QStringList* errors = NULL);
+    void loadPlugins(
+            const QList<InstanceFilter*>& filters, QStringList* errors = NULL);
     void discardPlugin(QObject* plugin);
 
     QString pluginFileName(const QObject* plugin) const;
@@ -85,7 +86,9 @@ private:
 // --
 
 /*!
- * \brief Returns all loaded plugin root components casted (with qobject_cast<>) to INTERFACE*
+ * Returns all loaded plugin root components casted (with qobject_cast<>) to
+ * INTERFACE*
+ *
  * \tparam INTERFACE Interface type used with qobject_cast<>
  *
  * NULL plugins are not added to the result vector

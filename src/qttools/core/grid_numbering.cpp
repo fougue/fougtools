@@ -61,7 +61,8 @@ GridNumbering::GridNumbering()
 {
 }
 
-GridNumbering::GridNumbering(Qt::Corner corner, Qt::Orientation orientation, SweepMode sweep)
+GridNumbering::GridNumbering(
+        Qt::Corner corner, Qt::Orientation orientation, SweepMode sweep)
     : m_startCorner(corner),
       m_orientation(orientation),
       m_sweepMode(sweep)
@@ -122,9 +123,8 @@ void GridNumbering::setSweepMode(SweepMode sweepMode)
  * \param colCount Count of columns in the grid
  * \param startIndex The first index to start from (usually 0 or 1)
  */
-QVector< QVector<int> > GridNumbering::gridIndexes(const GridNumbering& gridNb,
-                                                   int rowCount, int colCount,
-                                                   int startIndex)
+QVector< QVector<int> > GridNumbering::gridIndexes(
+        const GridNumbering& gridNb, int rowCount, int colCount, int startIndex)
 {
     const bool isZigZag = gridNb.sweepMode() == ZigZag;
     const Qt::Corner nbCorner = gridNb.startCorner();

@@ -54,12 +54,14 @@ class OCCTOOLS_EXPORT GeomUtils
 public:
     static gp_Pnt geomCurveD0(const Handle_Geom_Curve& curve, Standard_Real u);
     static Standard_Real curveLength(const Handle_Geom_Curve& curve);
-    static Standard_Real curveLengthBetweenParams(const Handle_Geom_Curve& curve,
-                                                  Standard_Real firstU,
-                                                  Standard_Real lastU);
-    static gp_Vec normalToSurfaceAtUV(const Handle_Geom_Surface& surface,
-                                      Standard_Real u,
-                                      Standard_Real v);
+    static Standard_Real curveLengthBetweenParams(
+            const Handle_Geom_Curve& curve,
+            Standard_Real firstU,
+            Standard_Real lastU);
+    static gp_Vec normalToSurfaceAtUV(
+            const Handle_Geom_Surface& surface,
+            Standard_Real u,
+            Standard_Real v);
 };
 
 } // namespace occ

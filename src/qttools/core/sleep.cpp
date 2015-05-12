@@ -73,7 +73,8 @@ void mSecSleep(unsigned msec)
 /*!
  * \brief Waits until \p msec milliseconds have elapsed
  *
- * Internally a QEventLoop is used, so the Qt event system is not blocked while waiting
+ * Internally a QEventLoop is used, so the Qt event system is not blocked while
+ * waiting.
  *
  * \sa mSecSleep()
  *

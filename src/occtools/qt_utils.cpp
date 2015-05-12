@@ -55,7 +55,9 @@ QColor QtUtils::toQColor(const Quantity_NameOfColor c)
 //! Conversion of the QColor \p c to a Quantity_Color
 Quantity_Color QtUtils::toOccColor(const QColor& c)
 {
-    return Quantity_Color(c.red() / 255., c.green() / 255., c.blue() / 255., Quantity_TOC_RGB);
+    return Quantity_Color(
+                c.red() / 255., c.green() / 255., c.blue() / 255.,
+                Quantity_TOC_RGB);
 }
 
 //! Conversion of the QColor object \p c to a Quantity_NameOfColor

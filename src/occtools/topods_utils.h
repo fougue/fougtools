@@ -54,22 +54,27 @@ class OCCTOOLS_EXPORT TopoDsUtils
 {
 public:
     template<typename FWD_ITERATOR>
-    static TopoDS_Compound makeCompoundFromShapeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
+    static TopoDS_Compound makeCompoundFromShapeRange(
+            FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
 
     template<typename CONTAINER>
     static TopoDS_Compound makeCompoundFromShapeContainer(CONTAINER cnter);
 
     template<typename FWD_ITERATOR>
-    static TopoDS_Wire makeWireFromEdgeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
+    static TopoDS_Wire makeWireFromEdgeRange(
+            FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
 
-    static gp_Vec normalToFaceAtUV(const TopoDS_Face& face, Standard_Real u, Standard_Real v);
+    static gp_Vec normalToFaceAtUV(
+            const TopoDS_Face& face, Standard_Real u, Standard_Real v);
 
     static std::string shapeToString(const TopoDS_Shape& shape);
     static TopoDS_Shape shapeFromString(const std::string& str);
 
 private:
     static Handle_ShapeExtend_WireData createShapeExtendWireData();
-    static void addEdge(const Handle_ShapeExtend_WireData& wireData, const TopoDS_Edge& edge);
+    static void addEdge(
+            const Handle_ShapeExtend_WireData& wireData,
+            const TopoDS_Edge& edge);
     static TopoDS_Wire fixedWire(const Handle_ShapeExtend_WireData& wireData);
 };
 
@@ -79,13 +84,15 @@ private:
 // -- Implementation
 // --
 
-/*! \brief Builds a topologic compound of shapes denoted between the begin and end iterators
- *         \p iBegin and \p iEnd
+/*! Builds a topologic compound of shapes denoted between the begin and end
+ *  iterators \p iBegin and \p iEnd
  *
- *  \note The value type of \p iBegin and \p iEnd (accessed with operator*) must be TopoDS_Shape
+ *  \note The value type of \p iBegin and \p iEnd (accessed with operator*) must
+ *        be TopoDS_Shape
  */
 template<typename FWD_ITERATOR>
-TopoDS_Compound TopoDsUtils::makeCompoundFromShapeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
+TopoDS_Compound TopoDsUtils::makeCompoundFromShapeRange(
+        FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
 {
     TopoDS_Compound cmpd;
     BRep_Builder builder;
@@ -106,15 +113,18 @@ TopoDS_Compound TopoDsUtils::makeCompoundFromShapeContainer(CONTAINER cnter)
     return TopoDsUtils::makeCompoundFromShapeRange(cnter.begin(), cnter.end());
 }
 
-/*! \brief Build a topologic wire of edges denoted between the begin and end iterators \p iBegin
- *         and \p iEnd
+/*! Build a topologic wire of edges denoted between the begin and end
+ *  iterators \p iBegin and \p iEnd
  *
- * \note The value type of \p iBegin and \p iEnd (accessed with operator*) must be TopoDS_Edge
+ * \note The value type of \p iBegin and \p iEnd (accessed with operator*) must
+ *       be TopoDS_Edge
  */
 template<typename FWD_ITERATOR>
-TopoDS_Wire TopoDsUtils::makeWireFromEdgeRange(FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
+TopoDS_Wire TopoDsUtils::makeWireFromEdgeRange(
+        FWD_ITERATOR iBegin, FWD_ITERATOR iEnd)
 {
-    Handle_ShapeExtend_WireData wireData = TopoDsUtils::createShapeExtendWireData();
+    Handle_ShapeExtend_WireData wireData =
+            TopoDsUtils::createShapeExtendWireData();
     while (iBegin != iEnd) {
         TopoDsUtils::addEdge(wireData, *iBegin);
         ++iBegin;

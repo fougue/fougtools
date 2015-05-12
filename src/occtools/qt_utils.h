@@ -76,10 +76,11 @@ public:
     // TODO: add conversion for NCollection_String.hxx
 
     template<typename OCC_PNT_VEC>
-    static QString toQString(const OCC_PNT_VEC& pv,
-                             const QString& format = QLatin1String("(%x, %y, %z)"),
-                             char realFormat = 'g',
-                             unsigned prec = 6);
+    static QString toQString(
+            const OCC_PNT_VEC& pv,
+            const QString& format = QLatin1String("(%x, %y, %z)"),
+            char realFormat = 'g',
+            unsigned prec = 6);
 };
 
 //
@@ -88,12 +89,18 @@ public:
 
 template<typename OCC_PNT_VEC>
 QString QtUtils::toQString(
-        const OCC_PNT_VEC& pv, const QString& format, char realFormat, unsigned prec)
+        const OCC_PNT_VEC& pv,
+        const QString& format,
+        char realFormat,
+        unsigned prec)
 {
     QString result = format;
-    result.replace(QLatin1String("%x"), QString::number(pv.X(), realFormat, prec));
-    result.replace(QLatin1String("%y"), QString::number(pv.Y(), realFormat, prec));
-    return result.replace(QLatin1String("%z"), QString::number(pv.Z(), realFormat, prec));
+    result.replace(
+                QLatin1String("%x"), QString::number(pv.X(), realFormat, prec));
+    result.replace(
+                QLatin1String("%y"), QString::number(pv.Y(), realFormat, prec));
+    return result.replace(
+                QLatin1String("%z"), QString::number(pv.Z(), realFormat, prec));
 }
 
 } // namespace occ

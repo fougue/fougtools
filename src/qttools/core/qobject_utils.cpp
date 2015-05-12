@@ -48,7 +48,8 @@ namespace qtcore {
  *
  */
 
-void QObjectUtils::forwardSignal(const QObject* sender, const QObject* resender, const char* signal)
+void QObjectUtils::forwardSignal(
+        const QObject* sender, const QObject* resender, const char* signal)
 {
     QObject::connect(sender, signal, resender, signal);
 }

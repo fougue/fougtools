@@ -55,12 +55,14 @@ namespace occ {
  *  \ingroup occtools
  */
 
-/*! \brief Returns the oriented normal of \p face at parametric coords (\p u, \p v )
+/*! Returns the oriented normal of \p face at parametric coords (\p u, \p v )
  *
- *  \note This function is slow if called many successive times on the same face (because it
- *        constructs internally a BRepLProp_SLProps and BRepAdaptor_Surface instance)
+ *  \note This function is slow if called many successive times on the same face
+ *        (because it constructs internally a BRepLProp_SLProps and
+ *        BRepAdaptor_Surface instance)
  */
-gp_Vec TopoDsUtils::normalToFaceAtUV(const TopoDS_Face &face, Standard_Real u, Standard_Real v)
+gp_Vec TopoDsUtils::normalToFaceAtUV(
+        const TopoDS_Face &face, Standard_Real u, Standard_Real v)
 {
     BRepLProp_SLProps localSurfaceProps(1, 1e-6);
     localSurfaceProps.SetSurface(BRepAdaptor_Surface(face));
@@ -75,7 +77,7 @@ gp_Vec TopoDsUtils::normalToFaceAtUV(const TopoDS_Face &face, Standard_Real u, S
     return gp_Vec(0, 0, 1);
 }
 
-/*! \brief Returns the string representation of a TopoDS_Shape
+/*! Returns the string representation of a TopoDS_Shape
  *
  *  Uses BRepTools::Write() internally
  */
@@ -86,8 +88,8 @@ std::string TopoDsUtils::shapeToString(const TopoDS_Shape &shape)
     return oss.str();
 }
 
-/*! \brief Constructs the TopoDS_Shape from the string representation \p str (previously generated
- *         with shapeToString())
+/*! Constructs the TopoDS_Shape from the string representation \p str
+ *  (previously generated with shapeToString())
  *
  *  Uses BRepTools::Read() internally
  */
@@ -106,7 +108,8 @@ Handle_ShapeExtend_WireData TopoDsUtils::createShapeExtendWireData()
     return new ShapeExtend_WireData;
 }
 
-void TopoDsUtils::addEdge(const Handle_ShapeExtend_WireData &wireData, const TopoDS_Edge &edge)
+void TopoDsUtils::addEdge(
+        const Handle_ShapeExtend_WireData &wireData, const TopoDS_Edge &edge)
 {
     wireData->Add(edge);
 }

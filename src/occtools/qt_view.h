@@ -56,7 +56,8 @@ class OCCTOOLS_EXPORT QtView : public QWidget
     Q_OBJECT
 
 public:
-    QtView(const Handle_AIS_InteractiveContext& context3d, QWidget* parent = NULL);
+    QtView(const Handle_AIS_InteractiveContext& context3d,
+           QWidget* parent = NULL);
     ~QtView();
 
     Handle_AIS_InteractiveContext context() const;
@@ -69,18 +70,19 @@ public:
     Aspect_GraphicCallbackStruct* paintCallbackData() const;
 #endif
 
-    QPaintEngine* paintEngine() const Q_DECL_OVERRIDE;
+    QPaintEngine* paintEngine() const override;
 
 public slots:
     void redraw();
     void fitAll();
 
 protected:
-    void paintEvent(QPaintEvent* event) Q_DECL_OVERRIDE;
-    void resizeEvent(QResizeEvent* event) Q_DECL_OVERRIDE;
+    void paintEvent(QPaintEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
 
 private:
-    friend int occ_QtView_paintCallBack(Aspect_Drawable, void*, Aspect_GraphicCallbackStruct*);
+    friend int occ_QtView_paintCallBack(
+            Aspect_Drawable, void*, Aspect_GraphicCallbackStruct*);
     class Private;
     Private* const d;
 };

@@ -47,7 +47,8 @@ namespace qtcore {
 class QTTOOLS_CORE_EXPORT QObjectUtils
 {
 public:
-    static void forwardSignal(const QObject* sender, const QObject* resender, const char* signal);
+    static void forwardSignal(
+            const QObject* sender, const QObject* resender, const char* signal);
 
     template<typename PARENT_TYPE>
     static const PARENT_TYPE* constFindParent(const QObject* object);

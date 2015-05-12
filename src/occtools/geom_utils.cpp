@@ -67,9 +67,8 @@ Standard_Real GeomUtils::curveLength(const Handle_Geom_Curve& curve)
     return 0;
 }
 
-Standard_Real GeomUtils::curveLengthBetweenParams(const Handle_Geom_Curve& curve,
-                                                  Standard_Real firstU,
-                                                  Standard_Real lastU)
+Standard_Real GeomUtils::curveLengthBetweenParams(
+        const Handle_Geom_Curve& curve, Standard_Real firstU, Standard_Real lastU)
 {
     if (!curve.IsNull()) {
         GeomAdaptor_Curve adaptor(curve);
@@ -78,9 +77,8 @@ Standard_Real GeomUtils::curveLengthBetweenParams(const Handle_Geom_Curve& curve
     return 0;
 }
 
-gp_Vec GeomUtils::normalToSurfaceAtUV(const Handle_Geom_Surface& surface,
-                                      Standard_Real u,
-                                      Standard_Real v)
+gp_Vec GeomUtils::normalToSurfaceAtUV(
+        const Handle_Geom_Surface& surface, Standard_Real u, Standard_Real v)
 {
     gp_Pnt point;
     gp_Vec d1u, d1v;

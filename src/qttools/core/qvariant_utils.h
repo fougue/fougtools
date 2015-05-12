@@ -71,8 +71,9 @@ namespace qtcore {
 
 /*! \brief Converts a container of QVariant to a container of typed data (\c T)
  *
- * The container can be of any type (std::list<>, QVector<>, ...) the only restriction is that it
- * must satisfy the concept of Back Insertion Sequence (see http://www.sgi.com/tech/stl/BackInsertionSequence.html)
+ * The container can be of any type (std::list<>, QVector<>, ...) the only
+ * restriction is that it must satisfy the concept of Back Insertion Sequence
+ * (see http://www.sgi.com/tech/stl/BackInsertionSequence.html)
  *
  * \sa toContainerOfVariants()
  */
@@ -88,8 +89,9 @@ CONTAINER<T> QVariantUtils::toTypedContainer(const CONTAINER<QVariant>& variants
 
 /*! \brief Converts a container of typed data (\c T) to a container of QVariant
  *
- * The container can be of any type (std::list<>, QVector<>, ...) the only restriction is that it
- * must satisfy the concept of Back Insertion Sequence (see http://www.sgi.com/tech/stl/BackInsertionSequence.html)
+ * The container can be of any type (std::list<>, QVector<>, ...) the only
+ * restriction is that it must satisfy the concept of Back Insertion Sequence
+ * (see http://www.sgi.com/tech/stl/BackInsertionSequence.html)
  *
  * \sa toTypedContainer()
  */

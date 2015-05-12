@@ -54,7 +54,8 @@ namespace qtcore {
 //! Safe cast of an integer to QLocale::MeasurementSystem
 QLocale::MeasurementSystem QLocaleUtils::toMeasurementSystem(int measSys)
 {
-    return QObjectUtils::toQEnumValue<QLocale, QLocale::MeasurementSystem>("MeasurementSystem", measSys);
+    return QObjectUtils::toQEnumValue<QLocale, QLocale::MeasurementSystem>(
+                "MeasurementSystem", measSys);
 }
 
 //! Safe cast of an integer to QLocale::Country

@@ -53,7 +53,8 @@ public:
     };
 
     GridNumbering();
-    GridNumbering(Qt::Corner corner, Qt::Orientation orientation, SweepMode sweep);
+    GridNumbering(
+            Qt::Corner corner, Qt::Orientation orientation, SweepMode sweep);
 
     Qt::Corner startCorner() const;
     void setStartCorner(Qt::Corner corner);
@@ -64,9 +65,11 @@ public:
     SweepMode sweepMode() const;
     void setSweepMode(SweepMode sweepMode);
 
-    static QVector< QVector<int> > gridIndexes(const GridNumbering& gridNb,
-                                               int rowCount, int colCount,
-                                               int startIndex = 0);
+    static QVector< QVector<int> > gridIndexes(
+            const GridNumbering& gridNb,
+            int rowCount,
+            int colCount,
+            int startIndex = 0);
 private:
     Qt::Corner m_startCorner;
     Qt::Orientation m_orientation;

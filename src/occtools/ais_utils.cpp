@@ -50,8 +50,9 @@ namespace occ {
  *  \ingroup occtools
  */
 
-void AisUtils::eraseObjectFromContext(const Handle_AIS_InteractiveObject &object,
-                                      const Handle_AIS_InteractiveContext &context)
+void AisUtils::eraseObjectFromContext(
+        const Handle_AIS_InteractiveObject &object,
+        const Handle_AIS_InteractiveContext &context)
 {
     if (!object.IsNull()) {
         context->Erase(object, Standard_False);

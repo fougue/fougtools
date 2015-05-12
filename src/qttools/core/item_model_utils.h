@@ -49,28 +49,34 @@ namespace qtcore {
 class QTTOOLS_CORE_EXPORT ItemModelUtils
 {
 public:
-    static bool isValidRow(const QAbstractItemModel* model,
-                           int row,
-                           const QModelIndex& parent = QModelIndex());
+    static bool isValidRow(
+            const QAbstractItemModel* model,
+            int row,
+            const QModelIndex& parent = QModelIndex());
 
-    static bool isValidColumn(const QAbstractItemModel* model,
-                              int col,
-                              const QModelIndex& parent = QModelIndex());
-
-    template<typename INT_CONTAINER>
-    static bool validRows(const QAbstractItemModel* model,
-                          const INT_CONTAINER& rows,
-                          const QModelIndex& parent = QModelIndex());
-
-    static int findDataInRow(const QAbstractItemModel* model, int col, const QVariant& value);
-
-    static QVariant tableData(const QAbstractItemModel* model,
-                              int row,
-                              int col,
-                              int role = Qt::DisplayRole);
+    static bool isValidColumn(
+            const QAbstractItemModel* model,
+            int col,
+            const QModelIndex& parent = QModelIndex());
 
     template<typename INT_CONTAINER>
-    static void removeRows(QAbstractItemModel* model, const INT_CONTAINER& rows);
+    static bool validRows(
+            const QAbstractItemModel* model,
+            const INT_CONTAINER& rows,
+            const QModelIndex& parent = QModelIndex());
+
+    static int findDataInRow(
+            const QAbstractItemModel* model, int col, const QVariant& value);
+
+    static QVariant tableData(
+            const QAbstractItemModel* model,
+            int row,
+            int col,
+            int role = Qt::DisplayRole);
+
+    template<typename INT_CONTAINER>
+    static void removeRows(
+            QAbstractItemModel* model, const INT_CONTAINER& rows);
 };
 
 } // namespace qtcore
@@ -86,11 +92,12 @@ public:
 namespace qtcore {
 
 template<typename INT_CONTAINER>
-bool ItemModelUtils::validRows(const QAbstractItemModel* model,
-                               const INT_CONTAINER& rows,
-                               const QModelIndex& parent)
+bool ItemModelUtils::validRows(
+        const QAbstractItemModel* model,
+        const INT_CONTAINER& rows,
+        const QModelIndex& parent)
 {
-    for (typename INT_CONTAINER::const_iterator iRow = rows.begin(); iRow != rows.end(); ++iRow) {
+    for (auto iRow = rows.begin(); iRow != rows.end(); ++iRow) {
         if (!ItemModelUtils::isValidRow(model, *iRow, parent))
             return false;
     }
@@ -98,13 +105,14 @@ bool ItemModelUtils::validRows(const QAbstractItemModel* model,
 }
 
 template<typename INT_CONTAINER>
-void ItemModelUtils::removeRows(QAbstractItemModel* model, const INT_CONTAINER& rows)
+void ItemModelUtils::removeRows(
+        QAbstractItemModel* model, const INT_CONTAINER& rows)
 {
     if (model == NULL)
         return;
     // Delete rows by descending order
     QVector<int> descRows;
-    for (typename INT_CONTAINER::const_iterator it = rows.begin(); it != rows.end(); ++it) {
+    for (auto it = rows.begin(); it != rows.end(); ++it) {
         if (ItemModelUtils::isValidRow(model, *it))
             descRows.append(*it);
     }

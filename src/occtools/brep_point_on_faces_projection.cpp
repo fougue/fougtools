@@ -59,7 +59,8 @@ public:
     typedef std::pair<GeomAPI_ProjectPointOnSurf*, TopoDS_Face> ProjectorInfo;
     struct ProjectorCompare
     {
-        bool operator()(const ProjectorInfo& lhs, const ProjectorInfo& rhs) const;
+        bool operator()(
+                const ProjectorInfo& lhs, const ProjectorInfo& rhs) const;
     };
 
     Private();
@@ -73,8 +74,9 @@ BRepPointOnFacesProjection::Private::Private()
 {
 }
 
-bool BRepPointOnFacesProjection::Private::ProjectorCompare::operator()(const ProjectorInfo &lhs,
-                                                                       const ProjectorInfo &rhs) const
+bool BRepPointOnFacesProjection::Private::ProjectorCompare::operator()(
+        const ProjectorInfo &lhs,
+        const ProjectorInfo &rhs) const
 {
     double p1Dist = std::numeric_limits<double>::max();
     double p2Dist = std::numeric_limits<double>::max();
@@ -89,10 +91,11 @@ bool BRepPointOnFacesProjection::Private::ProjectorCompare::operator()(const Pro
  *  \brief Framework to perform normal point projection on a soup of topologic faces
  *
  *  Internally, the utility class GeomAPI_ProjectPointOnSurf is heavily used.
- *  \n The algorithmics are pretty slow : for a point to be projected, the projection of that point
- *  is performed on each loaded TopoDS_Face with the help of GeomAPI_ProjectPointOnSurf.\n
- *  The minimal distance amongst all the projection candidates is computed to get the final
- *  projected point
+ *  \n The algorithmics are pretty slow : for a point to be projected, the
+ *  projection of that point is performed on each loaded TopoDS_Face with the
+ *  help of GeomAPI_ProjectPointOnSurf.\n
+ *  The minimal distance amongst all the projection candidates is computed to
+ *  get the final projected point
  *
  *  \headerfile brep_point_on_faces_projection.h <occtools/brep_point_on_faces_projection.h>
  *  \ingroup occtools
@@ -128,9 +131,8 @@ void BRepPointOnFacesProjection::prepare(const TopoDS_Shape& faces)
     for (TopExp_Explorer exp(faces, TopAbs_FACE); exp.More(); exp.Next()) {
         const TopoDS_Face& iFace = TopoDS::Face(exp.Current());
         const Handle_Geom_Surface& iSurf = BRep_Tool::Surface(iFace);
-        d->m_projectors.push_back(
-                    Private::ProjectorInfo(
-                        new GeomAPI_ProjectPointOnSurf(occ::origin3d, iSurf), iFace));
+        auto projector = new GeomAPI_ProjectPointOnSurf(occ::origin3d, iSurf);
+        d->m_projectors.push_back(Private::ProjectorInfo(projector, iFace));
     }
 }
 
@@ -147,9 +149,10 @@ BRepPointOnFacesProjection& BRepPointOnFacesProjection::compute(const gp_Pnt& po
     for (auto proj : d->m_projectors)
         proj.first->Perform(point);
 
-    auto iResult = std::min_element(d->m_projectors.begin(),
-                                    d->m_projectors.end(),
-                                    Private::ProjectorCompare());
+    auto iResult = std::min_element(
+                d->m_projectors.begin(),
+                d->m_projectors.end(),
+                Private::ProjectorCompare());
     assert(iResult != d->m_projectors.end() && "always_a_minimum");
     d->m_solProjector = *iResult;
     return *this;

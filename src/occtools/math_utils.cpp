@@ -60,10 +60,8 @@ gp_Pnt MathUtils::projectPointOnPlane(const gp_Pnt &p, const gp_Vec &n)
     return p.Translated(-dotVN * n);
 }
 
-std::pair<gp_Pnt, bool> MathUtils::projectPointOnTriangle(const gp_Pnt &p,
-                                                          const gp_Pnt &v0,
-                                                          const gp_Pnt &v1,
-                                                          const gp_Pnt &v2)
+std::pair<gp_Pnt, bool> MathUtils::projectPointOnTriangle(
+        const gp_Pnt &p, const gp_Pnt &v0, const gp_Pnt &v1, const gp_Pnt &v2)
 {
     const gp_Vec e0(v0, v1);
     const gp_Vec e1(v0, v2);
@@ -145,8 +143,9 @@ std::pair<gp_Pnt, bool> MathUtils::projectPointOnTriangle(const gp_Pnt &p,
     }
     } // end switch
 
-    return std::make_pair(v0.Translated(e0 * s).Translated(e1 * t),
-                          region == 0);
+    return std::make_pair(
+                v0.Translated(e0 * s).Translated(e1 * t),
+                region == 0);
 }
 
 Standard_Real MathUtils::euclideanNorm(const gp_Vec &vec)
@@ -167,7 +166,9 @@ Standard_Real MathUtils::manhattanNorm(const gp_Vec &vec)
 /*! \brief Returns the component of \p vec having the maximum absolute value */
 Standard_Real MathUtils::maximumNorm(const gp_Vec &vec)
 {
-    return std::max(std::fabs(vec.X()), std::max(std::fabs(vec.Y()), std::fabs(vec.Z())));
+    return std::max(
+                std::fabs(vec.X()),
+                std::max(std::fabs(vec.Y()), std::fabs(vec.Z())));
 }
 
 /*! \brief Returns the oriented normal of a triangle
@@ -176,11 +177,13 @@ Standard_Real MathUtils::maximumNorm(const gp_Vec &vec)
  *
  *  \param nodes  Vertices of the triangulation that \p triangle belongs to
  *  \param triangle  Triangle whose normal has to be computed
- *  \param ori  Orientation of the triangle (generally inherited from the triangulated face)
+ *  \param ori  Orientation of the triangle (generally inherited from the
+ *              triangulated face)
  */
-gp_Vec MathUtils::triangleNormal(const TColgp_Array1OfPnt &nodes,
-                                 const Poly_Triangle &triangle,
-                                 TopAbs_Orientation ori)
+gp_Vec MathUtils::triangleNormal(
+        const TColgp_Array1OfPnt &nodes,
+        const Poly_Triangle &triangle,
+        TopAbs_Orientation ori)
 {
     Standard_Integer n1, n2, n3;
     if (ori == TopAbs_REVERSED)

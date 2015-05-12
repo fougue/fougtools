@@ -146,7 +146,8 @@ occ_AIS_Text::occ_AIS_Text()
 }
 
 //! Constructs a fully initialized occ_AIS_Text
-occ_AIS_Text::occ_AIS_Text(const TCollection_ExtendedString &text, const gp_Pnt& pos)
+occ_AIS_Text::occ_AIS_Text(
+        const TCollection_ExtendedString &text, const gp_Pnt& pos)
     : d(new Private)
 {
     internal::TextProperties defaultProps;
@@ -178,13 +179,15 @@ Handle_Graphic3d_AspectText3d occ_AIS_Text::graphicTextAspect(unsigned i) const
 //! Returns the position of the \p i-th text displayed
 gp_Pnt occ_AIS_Text::position(unsigned i) const
 {
-    return this->isValidTextIndex(i) ? d->m_textProps.at(i).m_position : gp_Pnt();
+    return this->isValidTextIndex(i) ?
+                d->m_textProps.at(i).m_position : gp_Pnt();
 }
 
 //! Returns the \p i-th text displayed
 TCollection_ExtendedString occ_AIS_Text::text(unsigned i) const
 {
-    return this->isValidTextIndex(i) ? d->m_textProps.at(i).m_text : TCollection_ExtendedString();
+    return this->isValidTextIndex(i) ?
+                d->m_textProps.at(i).m_text : TCollection_ExtendedString();
 }
 
 //! Is \p i a valid index to query some text ?
@@ -203,7 +206,8 @@ unsigned occ_AIS_Text::textsCount() const
  *
  *   Other text attributes are defaulted
  */
-void occ_AIS_Text::addText(const TCollection_ExtendedString &text, const gp_Pnt& pos)
+void occ_AIS_Text::addText(
+        const TCollection_ExtendedString &text, const gp_Pnt& pos)
 {
     internal::TextProperties newProps;
     d->m_textProps.push_back(newProps);
@@ -283,22 +287,31 @@ void occ_AIS_Text::setDefaultTextStyle(Aspect_TypeOfStyleText style)
 // --- Implementation
 
 //! -- from PrsMgr_PresentableObject
-void occ_AIS_Text::Compute(const Handle_PrsMgr_PresentationManager3d& /*pm*/,
-                           const Handle_Prs3d_Presentation& pres,
-                           const Standard_Integer /*mode*/)
+void occ_AIS_Text::Compute(
+        const Handle_PrsMgr_PresentationManager3d& /*pm*/,
+        const Handle_Prs3d_Presentation& pres,
+        const Standard_Integer /*mode*/)
 {
-    for (unsigned i = 0; i < this->textsCount(); ++i)
-        Prs3d_Text::Draw(pres, this->presentationTextAspect(i), this->text(i), this->position(i));
+    const auto txtCount = this->textsCount();
+    for (unsigned i = 0; i < txtCount; ++i) {
+        Prs3d_Text::Draw(
+                    pres,
+                    this->presentationTextAspect(i),
+                    this->text(i),
+                    this->position(i));
+    }
 }
 
 //! -- from PrsMgr_PresentableObject
-void occ_AIS_Text::Compute(const Handle_Prs3d_Projector& /*proj*/,
-                           const Handle_Prs3d_Presentation& /*pres*/)
+void occ_AIS_Text::Compute(
+        const Handle_Prs3d_Projector& /*proj*/,
+        const Handle_Prs3d_Presentation& /*pres*/)
 {
 }
 
 //! -- from SelectMgr_SelectableObject
-void occ_AIS_Text::ComputeSelection(const Handle_SelectMgr_Selection& /*sel*/,
-                                    const Standard_Integer /*mode*/)
+void occ_AIS_Text::ComputeSelection(
+        const Handle_SelectMgr_Selection& /*sel*/,
+        const Standard_Integer /*mode*/)
 {
 }

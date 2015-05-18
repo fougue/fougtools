@@ -35,17 +35,15 @@
 **
 ****************************************************************************/
 
-#ifndef FOUGTOOLS_GLOBAL_H
-#define FOUGTOOLS_GLOBAL_H
+#pragma once
 
-/*! Expands to a numeric value of the form 0xMMNNPP (MM = major, NN = minor, PP = patch) that
- *  specifies FougTools's version number.
+/*! Expands to a numeric value of the form 0xMMNNPP (MM = major, NN = minor,
+ *  PP = patch) that specifies FougTools's version number.
  */
 #define FOUGTOOLS_VERSION      0x000700
 
-/*! Expands to a string that specifies FougTools's version number (for example, "0.4.0"). This is
- *  the version against which the application is compiled.
+/*! Expands to a string that specifies FougTools's version number (for
+ *  example, "0.4.0"). This is the version against which the application is
+ *  compiled.
  */
 #define FOUGTOOLS_VERSION_STR  "0.7.0"
-
-#endif // FOUGTOOLS_GLOBAL_H

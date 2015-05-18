@@ -48,7 +48,7 @@
 #include <Handle_Prs3d_Presentation.hxx>
 #include <Handle_Prs3d_Projector.hxx>
 #include <Handle_Prs3d_TextAspect.hxx>
-#include <Handle_PrsMgr_PresentationManager3d.hxx>
+#include <PrsMgr_PresentationManager3d.hxx>
 #include <Handle_SelectMgr_Selection.hxx>
 #include <Quantity_Color.hxx>
 #include <TCollection_ExtendedString.hxx>

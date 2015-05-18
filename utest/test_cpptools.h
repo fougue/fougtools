@@ -17,6 +17,7 @@ private slots:
     void pusher_test();
     void hash_fnv_test();
     void EnumStringMap_test();
+    void tupleUtils_test();
 
     void Quantity_test();
     void Quantity_operators_test();

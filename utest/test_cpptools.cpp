@@ -9,6 +9,7 @@
 #include "../src/cpptools/pusher.h"
 #include "../src/cpptools/quantity.h"
 #include "../src/cpptools/scoped_value.h"
+#include "../src/cpptools/tuple_utils.h"
 
 #include <QtCore/QScopedPointer>
 #include <QtCore/QtDebug>
@@ -287,6 +288,66 @@ void TestCppTools::EnumStringMap_test()
     QCOMPARE(enumMap.string(Internal::Status::Started), "status_started");
     QCOMPARE(enumMap.string(Internal::Status::Running), "status_running");
     QCOMPARE(enumMap.string(Internal::Status::Finished), "status_finished");
+}
+
+namespace tupleUtils_test {
+
+struct RecordInts
+{
+    RecordInts(std::vector<int>* intVec)
+        : m_intVec(intVec)
+    { }
+
+    void operator()(int val)
+    {
+        m_intVec->push_back(val);
+    }
+
+    void operator()(const char*)
+    { }
+
+private:
+    std::vector<int>* m_intVec;
+};
+
+} // namespace tupleUtils_test
+
+void TestCppTools::tupleUtils_test()
+{
+    std::vector<int> intVec;
+    const auto tuple1 = std::make_tuple(10, 20, "test", 30);
+    cpp::tuple_for_each(
+                tuple1, tupleUtils_test::RecordInts(&intVec));
+    QCOMPARE(intVec.size(), std::tuple_size<decltype(tuple1)>::value - 1);
+    QCOMPARE(intVec.at(0), std::get<0>(tuple1));
+    QCOMPARE(intVec.at(1), std::get<1>(tuple1));
+    QCOMPARE(intVec.at(2), std::get<3>(tuple1));
+
+    intVec.clear();
+    const auto tuple2 = std::make_tuple(30, "test", 20, 10);
+    cpp::tuple_reversed_for_each(
+                tuple2, tupleUtils_test::RecordInts(&intVec));
+    QCOMPARE(intVec.size(), std::tuple_size<decltype(tuple2)>::value - 1);
+    QCOMPARE(intVec.at(0), std::get<3>(tuple2));
+    QCOMPARE(intVec.at(1), std::get<2>(tuple2));
+    QCOMPARE(intVec.at(2), std::get<0>(tuple2));
+
+    // Test with a singleton
+    intVec.clear();
+    cpp::tuple_for_each(
+                std::make_tuple(50), tupleUtils_test::RecordInts(&intVec));
+    QCOMPARE(intVec.size(), static_cast<std::size_t>(1));
+    QCOMPARE(intVec.at(0), 50);
+
+    // Test with empty tuple
+    intVec.clear();
+    const auto tupleEmpty = std::make_tuple();
+    cpp::tuple_for_each(
+                tupleEmpty, tupleUtils_test::RecordInts(&intVec));
+    QVERIFY(intVec.empty());
+    cpp::tuple_reversed_for_each(
+                tupleEmpty, tupleUtils_test::RecordInts(&intVec));
+    QVERIFY(intVec.empty());
 }
 
 // --

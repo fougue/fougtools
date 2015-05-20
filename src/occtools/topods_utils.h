@@ -41,6 +41,8 @@
 
 #include <BRep_Builder.hxx>
 #include <Handle_ShapeExtend_WireData.hxx>
+#include <TopAbs_ShapeEnum.hxx>
+#include <TopExp_Explorer.hxx>
 #include <TopoDS_Compound.hxx>
 #include <TopoDS_Face.hxx>
 #include <TopoDS_Wire.hxx>
@@ -53,6 +55,7 @@ namespace occ {
 class OCCTOOLS_EXPORT TopoDsUtils
 {
 public:
+    // Make facilities
     template<typename FWD_ITERATOR>
     static TopoDS_Compound makeCompoundFromShapeRange(
             FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
@@ -64,11 +67,21 @@ public:
     static TopoDS_Wire makeWireFromEdgeRange(
             FWD_ITERATOR iBegin, FWD_ITERATOR iEnd);
 
-    static gp_Vec normalToFaceAtUV(
-            const TopoDS_Face& face, Standard_Real u, Standard_Real v);
-
+    // TopoDS_Shape <-> std::string
     static std::string shapeToString(const TopoDS_Shape& shape);
     static TopoDS_Shape shapeFromString(const std::string& str);
+
+    // TopExp_Explorer facilities
+    template<typename FUNC>
+    static void forEach(
+            const TopoDS_Shape& shape, TopAbs_ShapeEnum shapeType, FUNC fn);
+
+    template<typename FUNC>
+    static void forEach(TopExp_Explorer& explorer, FUNC fn);
+
+    // Misc
+    static gp_Vec normalToFaceAtUV(
+            const TopoDS_Face& face, Standard_Real u, Standard_Real v);
 
 private:
     static Handle_ShapeExtend_WireData createShapeExtendWireData();
@@ -130,6 +143,24 @@ TopoDS_Wire TopoDsUtils::makeWireFromEdgeRange(
         ++iBegin;
     }
     return TopoDsUtils::fixedWire(wireData);
+}
+
+/*! Applies function \p fn to each explored shape inside \p shape */
+template<typename FUNC>
+void TopoDsUtils::forEach(
+        const TopoDS_Shape &shape, TopAbs_ShapeEnum shapeType, FUNC fn)
+{
+    TopoDsUtils::forEach(TopExp_Explorer(shape, shapeType), std::move(fn));
+}
+
+/*! Applies function \p fn to each explored shape with \p explorer */
+template<typename FUNC>
+void TopoDsUtils::forEach(TopExp_Explorer &explorer, FUNC fn)
+{
+    while (explorer.More()) {
+        fn(explorer.Current());
+        explorer.Next();
+    }
 }
 
 } // namespace occ

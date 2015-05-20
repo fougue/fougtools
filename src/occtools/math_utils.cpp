@@ -53,6 +53,34 @@ namespace occ {
  *  \ingroup occtools
  */
 
+gp_Trsf MathUtils::displacement(const gp_Ax3 &srcSys, const gp_Ax3 &dstSys)
+{
+    gp_Trsf trsf;
+    trsf.SetDisplacement(srcSys, dstSys);
+    return trsf;
+}
+
+gp_Trsf MathUtils::transformation(const gp_Ax3 &srcSys, const gp_Ax3 &dstSys)
+{
+    gp_Trsf trsf;
+    trsf.SetTransformation(srcSys, dstSys);
+    return trsf;
+}
+
+gp_Trsf MathUtils::transformation(const gp_Ax3 &dstSys)
+{
+    gp_Trsf trsf;
+    trsf.SetTransformation(dstSys);
+    return trsf;
+}
+
+gp_Trsf MathUtils::transformation(const gp_Quaternion &q, const gp_Vec &vec)
+{
+    gp_Trsf trsf;
+    trsf.SetTransformation(q, vec);
+    return trsf;
+}
+
 gp_Pnt MathUtils::projectPointOnPlane(const gp_Pnt &p, const gp_Vec &n)
 {
     const gp_Vec pVec(p.X(), p.Y(), p.Z());

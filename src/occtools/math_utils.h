@@ -40,7 +40,9 @@
 #include "occtools.h"
 
 #include <utility>
+#include <gp_Ax3.hxx>
 #include <gp_Vec.hxx>
+#include <gp_Trsf.hxx>
 #include <TopAbs_Orientation.hxx>
 class Poly_Triangle;
 class TColgp_Array1OfPnt;
@@ -50,6 +52,11 @@ namespace occ {
 class OCCTOOLS_EXPORT MathUtils
 {
 public:
+    static gp_Trsf displacement(const gp_Ax3& srcSys, const gp_Ax3& dstSys);
+    static gp_Trsf transformation(const gp_Ax3& srcSys, const gp_Ax3& dstSys);
+    static gp_Trsf transformation(const gp_Ax3& dstSys);
+    static gp_Trsf transformation(const gp_Quaternion& q, const gp_Vec& vec);
+
     static gp_Pnt projectPointOnPlane(const gp_Pnt& p, const gp_Vec& n);
     static std::pair<gp_Pnt, bool> projectPointOnTriangle(
             const gp_Pnt& p,

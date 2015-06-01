@@ -42,6 +42,7 @@
 #include <QBoxLayout>
 #include <QDialog>
 #include <QDialogButtonBox>
+#include <QMenu>
 #include <QScrollBar>
 #include <QWidget>
 
@@ -148,6 +149,67 @@ void QWidgetUtils::setHorizAndVertScrollValue(QAbstractScrollArea* area,
 {
     area->horizontalScrollBar()->setValue(values.first);
     area->verticalScrollBar()->setValue(values.second);
+}
+
+/*! Executes \p dialog asynchronously */
+void QWidgetUtils::asyncDialogExec(QDialog *dialog)
+{
+    if (dialog != NULL) {
+        dialog->setModal(true);
+        QObject::connect(
+                    dialog, &QDialog::finished,
+                    dialog, &QObject::deleteLater,
+                    Qt::UniqueConnection);
+        dialog->show();
+    }
+}
+
+/*! Executes \p menu asynchronously */
+void QWidgetUtils::asyncMenuExec(QMenu *menu, const QPoint &pos)
+{
+    if (menu != NULL) {
+        QObject::connect(menu, &QMenu::aboutToHide, menu, &QObject::deleteLater);
+        menu->popup(pos);
+    }
+}
+
+/*! Executes message box information asynchronously */
+QMessageBox* QWidgetUtils::asyncMsgBoxInfo(
+        QWidget* parent,
+        const QString& title,
+        const QString& text,
+        QMessageBox::StandardButtons buttons)
+{
+    auto msgBox = new QMessageBox(QMessageBox::Information,
+                                  title, text, buttons, parent);
+    QWidgetUtils::asyncDialogExec(msgBox);
+    return msgBox;
+}
+
+/*! Executes message box warning asynchronously */
+QMessageBox* QWidgetUtils::asyncMsgBoxWarning(
+        QWidget *parent,
+        const QString &title,
+        const QString &text,
+        QMessageBox::StandardButtons buttons)
+{
+    auto msgBox = new QMessageBox(QMessageBox::Warning,
+                                  title, text, buttons, parent);
+    QWidgetUtils::asyncDialogExec(msgBox);
+    return msgBox;
+}
+
+/*! Executes message box critical asynchronously */
+QMessageBox* QWidgetUtils::asyncMsgBoxCritical(
+        QWidget* parent,
+        const QString& title,
+        const QString& text,
+        QMessageBox::StandardButtons buttons)
+{
+    auto msgBox = new QMessageBox(QMessageBox::Critical,
+                                  title, text, buttons, parent);
+    QWidgetUtils::asyncDialogExec(msgBox);
+    return msgBox;
 }
 
 } // namespace qtgui

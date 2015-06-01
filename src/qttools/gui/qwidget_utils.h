@@ -40,8 +40,11 @@
 #include "gui.h"
 #include <QtCore/QPair>
 #include <QtCore/QPoint>
+#include <QMessageBox>
+
 class QAbstractScrollArea;
 class QDialog;
+class QMenu;
 class QWidget;
 
 namespace qtgui {
@@ -65,6 +68,24 @@ public:
     static QPair<int, int> horizAndVertScrollValue(const QAbstractScrollArea* area);
     static void setHorizAndVertScrollValue(QAbstractScrollArea* area,
                                            const QPair<int, int>& values);
+
+    static void asyncDialogExec(QDialog* dialog);
+    static void asyncMenuExec(QMenu* menu, const QPoint& pos = QCursor::pos());
+    static QMessageBox* asyncMsgBoxInfo(
+            QWidget* parent,
+            const QString& title,
+            const QString& text,
+            QMessageBox::StandardButtons buttons = QMessageBox::Ok);
+    static QMessageBox* asyncMsgBoxWarning(
+            QWidget* parent,
+            const QString& title,
+            const QString& text,
+            QMessageBox::StandardButtons buttons = QMessageBox::Ok);
+    static QMessageBox* asyncMsgBoxCritical(
+            QWidget* parent,
+            const QString& title,
+            const QString& text,
+            QMessageBox::StandardButtons buttons = QMessageBox::Ok);
 };
 
 } // namespace qtgui

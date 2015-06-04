@@ -79,6 +79,18 @@ public:
     template<typename FUNC>
     static void forEach(TopExp_Explorer& explorer, FUNC fn);
 
+    template<typename FUNC>
+    static void forEachVertex(const TopoDS_Shape& shape, FUNC fn);
+
+    template<typename FUNC>
+    static void forEachEdge(const TopoDS_Shape& shape, FUNC fn);
+
+    template<typename FUNC>
+    static void forEachWire(const TopoDS_Shape& shape, FUNC fn);
+
+    template<typename FUNC>
+    static void forEachFace(const TopoDS_Shape& shape, FUNC fn);
+
     // Misc
     static gp_Vec normalToFaceAtUV(
             const TopoDS_Face& face, Standard_Real u, Standard_Real v);
@@ -161,6 +173,30 @@ void TopoDsUtils::forEach(TopExp_Explorer &explorer, FUNC fn)
         fn(explorer.Current());
         explorer.Next();
     }
+}
+
+template<typename FUNC>
+void TopoDsUtils::forEachVertex(const TopoDS_Shape& shape, FUNC fn)
+{
+    TopoDsUtils::forEach(shape, TopAbs_VERTEX, std::move(fn));
+}
+
+template<typename FUNC>
+void TopoDsUtils::forEachEdge(const TopoDS_Shape& shape, FUNC fn)
+{
+    TopoDsUtils::forEach(shape, TopAbs_EDGE, std::move(fn));
+}
+
+template<typename FUNC>
+void TopoDsUtils::forEachWire(const TopoDS_Shape& shape, FUNC fn)
+{
+    TopoDsUtils::forEach(shape, TopAbs_WIRE, std::move(fn));
+}
+
+template<typename FUNC>
+void TopoDsUtils::forEachFace(const TopoDS_Shape& shape, FUNC fn)
+{
+    TopoDsUtils::forEach(shape, TopAbs_FACE, std::move(fn));
 }
 
 } // namespace occ

@@ -49,7 +49,7 @@
 #include <Handle_Prs3d_Projector.hxx>
 #include <Handle_Prs3d_TextAspect.hxx>
 #include <PrsMgr_PresentationManager3d.hxx>
-#include <Handle_SelectMgr_Selection.hxx>
+#include <SelectMgr_Selection.hxx>
 #include <Quantity_Color.hxx>
 #include <TCollection_ExtendedString.hxx>
 

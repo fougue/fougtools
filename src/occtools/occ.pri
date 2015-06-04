@@ -51,6 +51,7 @@ else {
 # Set CASCADE_SUB_LIB_PATH
 equals(OCC_VERSION_STR, 6.7.1) \
     | equals(OCC_VERSION_STR, 6.8.0) \
+    | equals(OCC_VERSION_STR, 6.9.0) \
 {
   win32:CASCADE_SUB_LIB_PATH = win$${ARCH_BITS_SIZE}/vc$$MSVC_VERSION/lib
   linux-*:CASCADE_SUB_LIB_PATH = lin$${ARCH_BITS_SIZE}/gcc/lib

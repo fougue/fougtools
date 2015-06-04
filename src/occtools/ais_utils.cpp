@@ -40,6 +40,7 @@
 #include <AIS_InteractiveContext.hxx>
 #include <AIS_InteractiveObject.hxx>
 #include <SelectMgr_SelectionManager.hxx>
+#include <Standard_Version.hxx>
 
 namespace occ {
 
@@ -57,7 +58,11 @@ void AisUtils::eraseObjectFromContext(
     if (!object.IsNull()) {
         context->Erase(object, Standard_False);
         context->Remove(object, Standard_False);
+#if OCC_VERSION_HEX < 0x060900
         context->Clear(object, Standard_False); // Remove() can be used too
+#else
+        context->ClearPrs(object, 0, Standard_False);
+#endif
         context->SelectionManager()->Remove(object);
 
         Handle_AIS_InteractiveObject objectHCopy = object;

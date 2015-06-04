@@ -37,16 +37,17 @@
 
 include(occ.pri)
 
-HEADERS += $$PWD/io.h \
-           $$PWD/occtools.h \
-           $$PWD/ais_text.h \
-           $$PWD/handle_ais_text.h \
-           $$PWD/brep_point_on_faces_projection.h \
-           $$PWD/gcpnts_uniform_abscissa_const_iterator.h \
-           $$PWD/point_on_faces_projector.h \
-           $$PWD/qt_view.h \
-           $$PWD/qt_view_controller.h \
-           $$PWD/down_cast.h \
+HEADERS += \
+    $$PWD/io.h \
+    $$PWD/occtools.h \
+    $$PWD/ais_text.h \
+    $$PWD/handle_ais_text.h \
+    $$PWD/brep_point_on_faces_projection.h \
+    $$PWD/gcpnts_uniform_abscissa_const_iterator.h \
+    $$PWD/point_on_faces_projector.h \
+    $$PWD/qt_view.h \
+    $$PWD/qt_view_controller.h \
+    $$PWD/down_cast.h \
     $$PWD/ais_utils.h \
     $$PWD/geom_utils.h \
     $$PWD/kernel_utils.h \
@@ -55,13 +56,13 @@ HEADERS += $$PWD/io.h \
     $$PWD/qt_utils.h
 
 SOURCES += \
-           $$PWD/io.cpp \
-           $$PWD/ais_text.cpp \
-           $$PWD/brep_point_on_faces_projection.cpp \
-           $$PWD/gcpnts_uniform_abscissa_const_iterator.cpp \
-           $$PWD/point_on_faces_projector.cpp \
-           $$PWD/qt_view.cpp \
-           $$PWD/qt_view_controller.cpp \
+    $$PWD/io.cpp \
+    $$PWD/ais_text.cpp \
+    $$PWD/brep_point_on_faces_projection.cpp \
+    $$PWD/gcpnts_uniform_abscissa_const_iterator.cpp \
+    $$PWD/point_on_faces_projector.cpp \
+    $$PWD/qt_view.cpp \
+    $$PWD/qt_view_controller.cpp \
     $$PWD/ais_utils.cpp \
     $$PWD/geom_utils.cpp \
     $$PWD/kernel_utils.cpp \

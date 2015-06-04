@@ -11,7 +11,11 @@
 #include <AIS_Shape.hxx>
 #include <Aspect_DisplayConnection.hxx>
 #include <Graphic3d_GraphicDriver.hxx>
-#include <Graphic3d.hxx>
+#if OCC_VERSION_HEX <= 0x60701
+#  include <Graphic3d.hxx>
+#else
+#  include <OpenGl_GraphicDriver.hxx>
+#endif
 #include <TCollection_ExtendedString.hxx>
 #include <TopoDS_Shape.hxx>
 #include <V3d_Viewer.hxx>
@@ -29,10 +33,17 @@ static Handle_V3d_Viewer createOccViewer()
     Handle_Graphic3d_GraphicDriver gpxDriver;
 
     Handle_Aspect_DisplayConnection dispConnection;
-#if !defined(Q_OS_WIN32) && (!defined(Q_OS_MAC) || defined(MACOSX_USE_GLX))
-    dispConnection  = new Aspect_DisplayConnection(std::getenv("DISPLAY"));
+#if (!defined(Q_OS_WIN32) && (!defined(Q_OS_MAC) || defined(MACOSX_USE_GLX)))
+    dispConnection = new Aspect_DisplayConnection(std::getenv("DISPLAY"));
 #endif
+
+#if OCC_VERSION_HEX >= 0x060800
+    if (dispConnection.IsNull())
+        dispConnection = new Aspect_DisplayConnection;
+    gpxDriver = new OpenGl_GraphicDriver(dispConnection);
+#else
     gpxDriver = Graphic3d::InitGraphicDriver(dispConnection);
+#endif
 
     // Create the named OCC 3d viewer
     Handle_V3d_Viewer occViewer = new V3d_Viewer(gpxDriver, (short*)("Viewer3d"));

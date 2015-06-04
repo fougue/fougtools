@@ -39,7 +39,6 @@
 
 #include <vector>
 
-#include <Aspect_TypeOfText.hxx>
 #include <Quantity_Factor.hxx>
 #include <Quantity_PlaneAngle.hxx>
 #include <SelectMgr_SelectableObject.hxx>

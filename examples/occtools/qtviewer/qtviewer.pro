@@ -19,4 +19,4 @@ SOURCES += \
     $$PWD/qt_view_controller.cpp
 
 include(../../../src/occtools/occ.pri)
-LIBS += -lTKernel -lTKMath -lTKBRep -lTKService -lTKV3d
+LIBS += -lTKernel -lTKMath -lTKBRep -lTKOpenGl -lTKService -lTKV3d

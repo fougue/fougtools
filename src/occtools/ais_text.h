@@ -53,12 +53,14 @@
 #include <Quantity_Color.hxx>
 #include <TCollection_ExtendedString.hxx>
 
-class OCCTOOLS_EXPORT occ_AIS_Text : public AIS_InteractiveObject
+namespace occ {
+
+class OCCTOOLS_EXPORT AIS_Text : public AIS_InteractiveObject
 {
 public:
-    occ_AIS_Text();
-    occ_AIS_Text(const TCollection_ExtendedString& text, const gp_Pnt& pos);
-    virtual ~occ_AIS_Text();
+    AIS_Text();
+    AIS_Text(const TCollection_ExtendedString& text, const gp_Pnt& pos);
+    virtual ~AIS_Text();
 
     //  DEFINE_STANDARD_RTTI(AIS_Text)
 
@@ -90,15 +92,17 @@ protected:
     void Compute(
             const Handle_PrsMgr_PresentationManager3d& pm,
             const Handle_Prs3d_Presentation& pres,
-            const Standard_Integer mode);
+            const Standard_Integer mode) override;
     void Compute(
             const Handle_Prs3d_Projector& proj,
-            const Handle_Prs3d_Presentation& pres);
+            const Handle_Prs3d_Presentation& pres) override;
     void ComputeSelection(
             const Handle_SelectMgr_Selection& sel,
-            const Standard_Integer mode);
+            const Standard_Integer mode) override;
 
 private:
     class Private;
     Private* const d;
 };
+
+} // namespace occ

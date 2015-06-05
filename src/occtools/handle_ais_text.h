@@ -41,4 +41,6 @@
 #include <Handle_AIS_InteractiveObject.hxx>
 #include <Standard_Macro.hxx>
 
-DEFINE_STANDARD_HANDLE(occ_AIS_Text, AIS_InteractiveObject)
+namespace occ {
+DEFINE_STANDARD_HANDLE(AIS_Text, AIS_InteractiveObject)
+}

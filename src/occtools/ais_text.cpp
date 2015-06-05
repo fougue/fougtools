@@ -50,7 +50,9 @@
 #include <Standard_Transient.hxx>
 #include <TCollection_AsciiString.hxx>
 
-IMPLEMENT_STANDARD_HANDLE(occ_AIS_Text, AIS_InteractiveObject)
+namespace occ {
+IMPLEMENT_STANDARD_HANDLE(AIS_Text, AIS_InteractiveObject)
+
 //IMPLEMENT_STANDARD_RTTI(AIS_Text)
 //
 // Foreach ancestors, we add a IMPLEMENT_STANDARD_SUPERTYPE&&
@@ -58,7 +60,8 @@ IMPLEMENT_STANDARD_HANDLE(occ_AIS_Text, AIS_InteractiveObject)
 // We must respect the order: from the direct ancestor class
 // to the base class.
 //
-IMPLEMENT_STANDARD_TYPE(occ_AIS_Text);
+IMPLEMENT_STANDARD_TYPE(AIS_Text);
+
 IMPLEMENT_STANDARD_SUPERTYPE(AIS_InteractiveObject);
 IMPLEMENT_STANDARD_SUPERTYPE(SelectMgr_SelectableObject);
 IMPLEMENT_STANDARD_SUPERTYPE(PrsMgr_PresentableObject);
@@ -71,7 +74,8 @@ IMPLEMENT_STANDARD_SUPERTYPE_ARRAY_ENTRY(PrsMgr_PresentableObject)
 IMPLEMENT_STANDARD_SUPERTYPE_ARRAY_ENTRY(MMgt_TShared)
 //  IMPLEMENT_STANDARD_SUPERTYPE_ARRAY_ENTRY(Standard_Transient)
 IMPLEMENT_STANDARD_SUPERTYPE_ARRAY_END()
-IMPLEMENT_STANDARD_TYPE_END(occ_AIS_Text)
+IMPLEMENT_STANDARD_TYPE_END(AIS_Text)
+} // namespace occ
 
 #include <gp_Pnt.hxx>
 #include <Graphic3d_AspectText3d.hxx>
@@ -79,6 +83,8 @@ IMPLEMENT_STANDARD_TYPE_END(occ_AIS_Text)
 #include <Prs3d_TextAspect.hxx>
 #include <Prs3d_Text.hxx>
 #include <SelectMgr_Selection.hxx>
+
+namespace occ {
 
 // --- Handle/Body Implementation
 
@@ -109,7 +115,7 @@ namespace internal {
 
 } // namespace internal
 
-class occ_AIS_Text::Private
+class AIS_Text::Private
 {
 public:
     Private()
@@ -131,21 +137,21 @@ public:
 };
 
 /*!
- * \class occ_AIS_Text
+ * \class AIS_Text
  * \brief Interactive items specialized in text display
  *
  * \headerfile ais_text.h <occtools/ais_text.h>
  * \ingroup occtools
  */
 
-//! Constructs a default occ_AIS_Text
-occ_AIS_Text::occ_AIS_Text()
+//! Constructs a default AIS_Text
+AIS_Text::AIS_Text()
     : d(new Private)
 {
 }
 
-//! Constructs a fully initialized occ_AIS_Text
-occ_AIS_Text::occ_AIS_Text(
+//! Constructs a fully initialized AIS_Text
+AIS_Text::AIS_Text(
         const TCollection_ExtendedString &text, const gp_Pnt& pos)
     : d(new Private)
 {
@@ -156,19 +162,19 @@ occ_AIS_Text::occ_AIS_Text(
 }
 
 //! Destructs the instance and free any allocated resources
-occ_AIS_Text::~occ_AIS_Text()
+AIS_Text::~AIS_Text()
 {
     delete d;
 }
 
-Handle_Prs3d_TextAspect occ_AIS_Text::presentationTextAspect(unsigned i) const
+Handle_Prs3d_TextAspect AIS_Text::presentationTextAspect(unsigned i) const
 {
     if (this->isValidTextIndex(i))
         return d->m_textProps.at(i).m_aspect;
     return Handle_Prs3d_TextAspect();
 }
 
-Handle_Graphic3d_AspectText3d occ_AIS_Text::graphicTextAspect(unsigned i) const
+Handle_Graphic3d_AspectText3d AIS_Text::graphicTextAspect(unsigned i) const
 {
     if (this->isValidTextIndex(i))
         return d->m_textProps.at(i).m_aspect->Aspect();
@@ -176,27 +182,27 @@ Handle_Graphic3d_AspectText3d occ_AIS_Text::graphicTextAspect(unsigned i) const
 }
 
 //! Returns the position of the \p i-th text displayed
-gp_Pnt occ_AIS_Text::position(unsigned i) const
+gp_Pnt AIS_Text::position(unsigned i) const
 {
     return this->isValidTextIndex(i) ?
                 d->m_textProps.at(i).m_position : gp_Pnt();
 }
 
 //! Returns the \p i-th text displayed
-TCollection_ExtendedString occ_AIS_Text::text(unsigned i) const
+TCollection_ExtendedString AIS_Text::text(unsigned i) const
 {
     return this->isValidTextIndex(i) ?
                 d->m_textProps.at(i).m_text : TCollection_ExtendedString();
 }
 
 //! Is \p i a valid index to query some text ?
-bool occ_AIS_Text::isValidTextIndex(unsigned i) const
+bool AIS_Text::isValidTextIndex(unsigned i) const
 {
     return i < this->textsCount();
 }
 
 //! Returns the count of texts displayed
-unsigned occ_AIS_Text::textsCount() const
+unsigned AIS_Text::textsCount() const
 {
     return static_cast<unsigned>(d->m_textProps.size());
 }
@@ -205,7 +211,7 @@ unsigned occ_AIS_Text::textsCount() const
  *
  *   Other text attributes are defaulted
  */
-void occ_AIS_Text::addText(
+void AIS_Text::addText(
         const TCollection_ExtendedString &text, const gp_Pnt& pos)
 {
     internal::TextProperties newProps;
@@ -223,14 +229,14 @@ void occ_AIS_Text::addText(
 }
 
 //! Sets the position of the \p i-th displayed text to \p pos
-void occ_AIS_Text::setPosition(const gp_Pnt& pos, unsigned i)
+void AIS_Text::setPosition(const gp_Pnt& pos, unsigned i)
 {
     if (this->isValidTextIndex(i))
         d->m_textProps[i].m_position = pos;
 }
 
 //! Sets the \p i-th displayed text to \p v
-void occ_AIS_Text::setText(const TCollection_ExtendedString &v, unsigned i)
+void AIS_Text::setText(const TCollection_ExtendedString &v, unsigned i)
 {
     if (this->isValidTextIndex(i))
         d->m_textProps[i].m_text = v;
@@ -240,45 +246,45 @@ void occ_AIS_Text::setText(const TCollection_ExtendedString &v, unsigned i)
  *
  *  Only works when the \p i-th text display mode is set to Aspect_TODT_SUBTITLE
  */
-void occ_AIS_Text::setTextBackgroundColor(const Quantity_Color& color, unsigned i)
+void AIS_Text::setTextBackgroundColor(const Quantity_Color& color, unsigned i)
 {
     if (this->isValidTextIndex(i))
         this->graphicTextAspect(i)->SetColorSubTitle(color);
 }
 
-void occ_AIS_Text::setTextDisplayMode(Aspect_TypeOfDisplayText mode, unsigned i)
+void AIS_Text::setTextDisplayMode(Aspect_TypeOfDisplayText mode, unsigned i)
 {
     if (this->isValidTextIndex(i))
         this->graphicTextAspect(i)->SetDisplayType(mode);
 }
 
-void occ_AIS_Text::setTextStyle(Aspect_TypeOfStyleText style, unsigned i)
+void AIS_Text::setTextStyle(Aspect_TypeOfStyleText style, unsigned i)
 {
     if (this->isValidTextIndex(i))
         this->graphicTextAspect(i)->SetStyle(style);
 }
 
-void occ_AIS_Text::setDefaultColor(const Quantity_Color &c)
+void AIS_Text::setDefaultColor(const Quantity_Color &c)
 {
     d->m_defaultColor = c;
 }
 
-void occ_AIS_Text::setDefaultFont(const char *fontName)
+void AIS_Text::setDefaultFont(const char *fontName)
 {
     d->m_defaultFont = fontName;
 }
 
-void occ_AIS_Text::setDefaultTextBackgroundColor(const Quantity_Color& c)
+void AIS_Text::setDefaultTextBackgroundColor(const Quantity_Color& c)
 {
     d->m_defaultTextBackgroundColor = c;
 }
 
-void occ_AIS_Text::setDefaultTextDisplayMode(Aspect_TypeOfDisplayText mode)
+void AIS_Text::setDefaultTextDisplayMode(Aspect_TypeOfDisplayText mode)
 {
     d->m_defaultTextDisplayMode = mode;
 }
 
-void occ_AIS_Text::setDefaultTextStyle(Aspect_TypeOfStyleText style)
+void AIS_Text::setDefaultTextStyle(Aspect_TypeOfStyleText style)
 {
     d->m_defaultTextStyle = style;
 }
@@ -286,7 +292,7 @@ void occ_AIS_Text::setDefaultTextStyle(Aspect_TypeOfStyleText style)
 // --- Implementation
 
 //! -- from PrsMgr_PresentableObject
-void occ_AIS_Text::Compute(
+void AIS_Text::Compute(
         const Handle_PrsMgr_PresentationManager3d& /*pm*/,
         const Handle_Prs3d_Presentation& pres,
         const Standard_Integer /*mode*/)
@@ -302,15 +308,17 @@ void occ_AIS_Text::Compute(
 }
 
 //! -- from PrsMgr_PresentableObject
-void occ_AIS_Text::Compute(
+void AIS_Text::Compute(
         const Handle_Prs3d_Projector& /*proj*/,
         const Handle_Prs3d_Presentation& /*pres*/)
 {
 }
 
 //! -- from SelectMgr_SelectableObject
-void occ_AIS_Text::ComputeSelection(
+void AIS_Text::ComputeSelection(
         const Handle_SelectMgr_Selection& /*sel*/,
         const Standard_Integer /*mode*/)
 {
 }
+
+} // namespace occ

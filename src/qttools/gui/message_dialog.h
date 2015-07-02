@@ -57,11 +57,12 @@ public:
         Question
     };
 
-    MessageDialog(Icon icon,
-                  const QString& title,
-                  const QString& text,
-                  QDialogButtonBox::StandardButtons buttons,
-                  QWidget* parent = NULL);
+    MessageDialog(
+            Icon icon,
+            const QString& title,
+            const QString& text,
+            QDialogButtonBox::StandardButtons buttons,
+            QWidget* parent = NULL);
 
     QWidget* detailsWidget() const;
     void setDetailsWidget(QWidget* widget);

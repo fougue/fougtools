@@ -144,8 +144,10 @@ void WaitDialog::updateProgress()
 {
     const int incr = 5;
     const int currValue = d->m_progressBar->value();
-    const int newValue = currValue + incr <= d->m_progressBar->maximum() ? currValue + incr :
-                                                                           d->m_progressBar->minimum();
+    const int newValue =
+            currValue + incr <= d->m_progressBar->maximum() ?
+                currValue + incr :
+                d->m_progressBar->minimum();
     d->m_progressBar->setValue(newValue);
     const int timeSinceStart = (newValue / incr) * d->m_updateTimer->interval();
     if (timeSinceStart >= d->m_minDuration && !this->isVisible())

@@ -90,14 +90,16 @@ void ItemViewUtils::selectRows(QAbstractItemView* view, const QVector<int>& rows
 
 /*! \brief Same as QSortFilterProxyModel::mapFromSource() but more concise
  */
-int ItemViewUtils::mapRowFromSourceModel(const QSortFilterProxyModel* proxyModel, int srcRow)
+int ItemViewUtils::mapRowFromSourceModel(
+        const QSortFilterProxyModel* proxyModel, int srcRow)
 {
     return proxyModel->mapFromSource(proxyModel->sourceModel()->index(srcRow, 0)).row();
 }
 
 /*! \brief Same as QSortFilterProxyModel::mapToSource() but more concise
  */
-int ItemViewUtils::mapRowToSourceModel(const QSortFilterProxyModel* proxyModel, int proxyRow)
+int ItemViewUtils::mapRowToSourceModel(
+        const QSortFilterProxyModel* proxyModel, int proxyRow)
 {
     return proxyModel->mapToSource(proxyModel->index(proxyRow, 0)).row();
 }

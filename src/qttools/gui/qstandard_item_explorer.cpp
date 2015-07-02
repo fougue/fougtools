@@ -44,12 +44,16 @@ namespace qtgui {
 
 /*!
  * \class QStandardItemExplorer
- * \brief Provides a BFS (breadth-first search) exploration of a QStandardItemModel object
+ * \brief Provides a BFS (breadth-first search) exploration of a
+ *        QStandardItemModel object
  *
  * Example of use :
  * \code
  *   QStandardItemModel* model = ...;
- *   for (QStandardItemExplorer explorer(model); !explorer.atEnd(); explorer.goNext()) {
+ *   for (QStandardItemExplorer explorer(model);
+ *        !explorer.atEnd();
+ *        explorer.goNext())
+ *   {
  *     QStandardItem* item = explorer.current();
  *     // Do something with item ...
  *   }
@@ -74,8 +78,8 @@ QStandardItemExplorer::QStandardItemExplorer(QStandardItemModel *model)
     this->begin(model->invisibleRootItem());
 }
 
-bool QStandardItemTreeBfsModel::isDeeper(const QStandardItem *current,
-                                         const QStandardItem *previous)
+bool QStandardItemTreeBfsModel::isDeeper(
+        const QStandardItem *current, const QStandardItem *previous)
 {
     return current->index().parent() != previous->index().parent();
 }

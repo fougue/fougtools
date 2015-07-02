@@ -43,8 +43,8 @@ namespace qtgui {
 
 /*!
  * \class AbstractLengthEditor
- * \brief Abstract base class for all length (\c [L]) editors that are aware of the current
- *        measurement system (metric or imperial)
+ * \brief Abstract base class for all length (\c [L]) editors that are aware of
+ *        the current measurement system (metric or imperial)
  *
  * \headerfile abstract_length_editor.h <qttools/gui/abstract_length_editor.h>
  * \ingroup qttools_gui
@@ -86,14 +86,15 @@ void AbstractLengthEditor::setQtyValue(double v)
  *  \brief Set the length in millimeter (mm) to be edited
  */
 
-/*! \brief Length unit used when the metric measurement system is currently active
+/*! Length unit used when the metric measurement system is currently active
  */
 AbstractLengthEditor::MetricUnit AbstractLengthEditor::preferredMetricUnit() const
 {
     return m_prefMetricUnit;
 }
 
-/*! \brief Set the length unit to be used when the metric measurement system is currently active
+/*! Set the length unit to be used when the metric measurement system is
+ *  currently active
  */
 void AbstractLengthEditor::setPreferredMetricUnit(MetricUnit unit)
 {
@@ -103,14 +104,15 @@ void AbstractLengthEditor::setPreferredMetricUnit(MetricUnit unit)
     this->updateEditor(this->measurementSystem());
 }
 
-/*! \brief Length unit used when the imperial measurement system is currently active
+/*! Length unit used when the imperial measurement system is currently active
  */
 AbstractLengthEditor::ImperialUnit AbstractLengthEditor::preferredImperialUnit() const
 {
     return m_prefImperialUnit;
 }
 
-/*! \brief Set the length unit to be used when the imperial measurement system is currently active
+/*! Set the length unit to be used when the imperial measurement system is
+ *  currently active
  */
 void AbstractLengthEditor::setPreferredImperialUnit(ImperialUnit unit)
 {

@@ -113,8 +113,10 @@ LengthDoubleSpinBox::LengthDoubleSpinBox(QWidget* parent)
       d(new Private)
 {
     this->updateEditor(this->measurementSystem());
-    QObject::connect(this, reinterpret_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
-                     [=](double v) { d->onValueChanged(v); } );
+    QObject::connect(
+                this,
+                static_cast<void (QDoubleSpinBox::*)(double)>(&QDoubleSpinBox::valueChanged),
+                [=](double v) { d->onValueChanged(v); } );
 }
 
 LengthDoubleSpinBox::~LengthDoubleSpinBox()
@@ -129,11 +131,13 @@ double LengthDoubleSpinBox::length() const
 
     const double v = QDoubleSpinBox::value();
     switch (this->measurementSystem()) {
-    case QLocale::MetricSystem:   return internal::toMmValue(v, this->preferredMetricUnit());
+    case QLocale::MetricSystem:
+        return internal::toMmValue(v, this->preferredMetricUnit());
 #if QT_VERSION >= 0x050000
     case QLocale::ImperialUKSystem:
 #endif // QT_VERSION
-    case QLocale::ImperialSystem: return internal::toMmValue(v, this->preferredImperialUnit());
+    case QLocale::ImperialSystem:
+        return internal::toMmValue(v, this->preferredImperialUnit());
     }
     return 0.;
 }
@@ -148,13 +152,15 @@ void LengthDoubleSpinBox::setLength(double v)
 
     switch (this->measurementSystem()) {
     case QLocale::MetricSystem:
-        this->setValue(AbstractLengthEditor::asMetricLength(v, this->preferredMetricUnit()));
+        this->setValue(AbstractLengthEditor::asMetricLength(
+                           v, this->preferredMetricUnit()));
         break;
 #if QT_VERSION >= 0x050000
     case QLocale::ImperialUKSystem:
 #endif // QT_VERSION
     case QLocale::ImperialSystem:
-        this->setValue(AbstractLengthEditor::asImperialLength(v, this->preferredImperialUnit()));
+        this->setValue(AbstractLengthEditor::asImperialLength(
+                           v, this->preferredImperialUnit()));
         break;
     }
 }
@@ -170,7 +176,8 @@ void LengthDoubleSpinBox::updateEditor(QLocale::MeasurementSystem newSys)
     switch (newSys) {
     case QLocale::MetricSystem: {
         unitStr = AbstractLengthEditor::unitText(this->preferredMetricUnit());
-        newLengthUnit = AbstractLengthEditor::asMetricLength(oldLengthMm, this->preferredMetricUnit());
+        newLengthUnit = AbstractLengthEditor::asMetricLength(
+                    oldLengthMm, this->preferredMetricUnit());
         break;
     }
 #if QT_VERSION >= 0x050000
@@ -178,7 +185,8 @@ void LengthDoubleSpinBox::updateEditor(QLocale::MeasurementSystem newSys)
 #endif // QT_VERSION
     case QLocale::ImperialSystem: {
         unitStr = AbstractLengthEditor::unitText(this->preferredImperialUnit());
-        newLengthUnit = AbstractLengthEditor::asImperialLength(oldLengthMm, this->preferredImperialUnit());
+        newLengthUnit = AbstractLengthEditor::asImperialLength(
+                    oldLengthMm, this->preferredImperialUnit());
         break;
     }
     }

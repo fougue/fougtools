@@ -63,14 +63,13 @@ AbstractQuantityEditor::~AbstractQuantityEditor()
     QuantityEditorManager::globalInstance()->detach(this);
 }
 
-/*! \brief Called by QuantityEditorManager when the current measurement system was switched to
- *         another one
+/*! Called by QuantityEditorManager when the current measurement system was
+ *  switched to another one
  *
  *  Does nothing by default
  */
-void AbstractQuantityEditor::updateEditor(QLocale::MeasurementSystem newSys)
+void AbstractQuantityEditor::updateEditor(QLocale::MeasurementSystem /*newSys*/)
 {
-    Q_UNUSED(newSys);
 }
 
 QLocale::MeasurementSystem AbstractQuantityEditor::measurementSystem() const

@@ -46,8 +46,9 @@ class QTTOOLS_GUI_EXPORT MeasurementSystemPreferences
 {
 public:
     MeasurementSystemPreferences();
-    MeasurementSystemPreferences(AbstractLengthEditor::MetricUnit metUnit,
-                                 AbstractLengthEditor::ImperialUnit impUnit);
+    MeasurementSystemPreferences(
+            AbstractLengthEditor::MetricUnit metUnit,
+            AbstractLengthEditor::ImperialUnit impUnit);
 
     AbstractLengthEditor::MetricUnit metricUnit() const;
     void setMetricUnit(AbstractLengthEditor::MetricUnit unit);

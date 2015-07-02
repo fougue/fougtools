@@ -45,8 +45,8 @@ namespace qtgui {
 
 /*!
  * \class QComboBoxCurrentItemKeeper
- * \brief Provides automatic preservation of a QComboBox's current item on reset of a
- *        QAbstractItemModel
+ * \brief Provides automatic preservation of a QComboBox's current item on reset
+ *        of a QAbstractItemModel
  *
  * \headerfile qcombo_box_current_item_keeper.h <qttools/gui/qcombo_box_current_item_keeper.h>
  * \ingroup qttools_gui
@@ -62,10 +62,12 @@ QComboBoxCurrentItemKeeper::QComboBoxCurrentItemKeeper(QComboBox* comboBox)
     if (comboBox == NULL)
         return;
     const QAbstractItemModel* model = comboBox->model();
-    QObject::connect(model, &QAbstractItemModel::modelAboutToBeReset,
-                     this, &QComboBoxCurrentItemKeeper::onModelAboutToBeReset);
-    QObject::connect(model, &QAbstractItemModel::modelReset,
-                     this, &QComboBoxCurrentItemKeeper::onModelReset);
+    QObject::connect(
+                model, &QAbstractItemModel::modelAboutToBeReset,
+                this, &QComboBoxCurrentItemKeeper::onModelAboutToBeReset);
+    QObject::connect(
+                model, &QAbstractItemModel::modelReset,
+                this, &QComboBoxCurrentItemKeeper::onModelReset);
 }
 
 int QComboBoxCurrentItemKeeper::columnForModelRowIdentifier() const

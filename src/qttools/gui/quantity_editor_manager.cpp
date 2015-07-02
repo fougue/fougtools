@@ -57,8 +57,8 @@ public:
 
 /*!
  * \class QuantityEditorManager
- * \brief Manages a set of AbstractQuantityEditor objects that will get notified when the current
- *        measurement system is changed
+ * \brief Manages a set of AbstractQuantityEditor objects that will get notified
+ *        when the current measurement system is changed
  *
  * \headerfile quantity_editor_manager.h <qttools/gui/quantity_editor_manager.h>
  * \ingroup qttools_gui

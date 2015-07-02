@@ -61,13 +61,15 @@ public:
     class ProxyItemDelegate : public ProxyStyledItemDelegate
     {
     public:
-        ProxyItemDelegate(const ItemViewButtons* itemBtns,
-                          QStyledItemDelegate* srcDelegate,
-                          QObject* parent = NULL);
+        ProxyItemDelegate(
+                const ItemViewButtons* itemBtns,
+                QStyledItemDelegate* srcDelegate,
+                QObject* parent = NULL);
 
-        void paint(QPainter *painter,
-                   const QStyleOptionViewItem &option,
-                   const QModelIndex &index) const;
+        void paint(
+                QPainter *painter,
+                const QStyleOptionViewItem &option,
+                const QModelIndex &index) const Q_DECL_OVERRIDE;
 
     private:
         const ItemViewButtons* m_itemBtns;
@@ -93,9 +95,10 @@ public:
     void setAllIsOverButtonState(bool on);
     QModelIndex modelIndexForButtonDisplay(const QModelIndex& index) const;
     void itemViewUpdateAt(const QModelIndex& index);
-    void paintButton(ButtonInfo *btnInfo,
-                     QPainter* painter,
-                     const QStyleOptionViewItem& option);
+    void paintButton(
+            ButtonInfo *btnInfo,
+            QPainter* painter,
+            const QStyleOptionViewItem& option);
     void resetButtonUnderMouseState();
 
     QAbstractItemView* m_view;
@@ -107,17 +110,19 @@ private:
     ItemViewButtons* m_backPtr;
 };
 
-ItemViewButtons::Private::ProxyItemDelegate::ProxyItemDelegate(const ItemViewButtons *itemBtns,
-                                                               QStyledItemDelegate *srcDelegate,
-                                                               QObject* parent)
+ItemViewButtons::Private::ProxyItemDelegate::ProxyItemDelegate(
+        const ItemViewButtons *itemBtns,
+        QStyledItemDelegate *srcDelegate,
+        QObject* parent)
     : ProxyStyledItemDelegate(srcDelegate, parent),
       m_itemBtns(itemBtns)
 {
 }
 
-void ItemViewButtons::Private::ProxyItemDelegate::paint(QPainter *painter,
-                                                        const QStyleOptionViewItem &option,
-                                                        const QModelIndex &index) const
+void ItemViewButtons::Private::ProxyItemDelegate::paint(
+        QPainter *painter,
+        const QStyleOptionViewItem &option,
+        const QModelIndex &index) const
 {
     ProxyStyledItemDelegate::paint(painter, option, index);
     if (m_itemBtns != NULL)
@@ -149,10 +154,11 @@ ItemViewButtons::Private::mutableButtonInfo(int btnId)
     return NULL;
 }
 
-QModelIndex ItemViewButtons::Private::modelIndexForButtonDisplay(const QModelIndex &index) const
+QModelIndex ItemViewButtons::Private::modelIndexForButtonDisplay(
+        const QModelIndex &index) const
 {
     const int btnIndex = m_backPtr->buttonAtModelIndex(index);
-    const ItemViewButtons::Private::ButtonInfo* btnInfo = this->buttonInfo(btnIndex);
+    const auto btnInfo = this->buttonInfo(btnIndex);
     if (btnInfo != NULL && btnInfo->displayColumn != -1)
         return index.sibling(index.row(), btnInfo->displayColumn);
     return index;
@@ -167,19 +173,27 @@ void ItemViewButtons::Private::itemViewUpdateAt(const QModelIndex &index)
         m_view->update(displayIndex);
 }
 
-void ItemViewButtons::Private::paintButton(ButtonInfo *btnInfo,
-                                           QPainter *painter,
-                                           const QStyleOptionViewItem &option)
+void ItemViewButtons::Private::paintButton(
+        ButtonInfo *btnInfo,
+        QPainter *painter,
+        const QStyleOptionViewItem &option)
 {
     if (btnInfo == NULL || painter == NULL)
         return;
 
     const bool isValidBtnIconSize = btnInfo->iconSize.isValid();
-    const int pixWidth = isValidBtnIconSize ? btnInfo->iconSize.width() : option.rect.height();
-    const int pixHeight = isValidBtnIconSize ? btnInfo->iconSize.height() : option.rect.height();
+    const int pixWidth =
+            isValidBtnIconSize ?
+                btnInfo->iconSize.width() :
+                option.rect.height();
+    const int pixHeight =
+            isValidBtnIconSize ?
+                btnInfo->iconSize.height() :
+                option.rect.height();
 
     QRect pixRect;
-    const int yPixPos = option.rect.top() + (option.rect.height() - pixHeight) / 2;
+    const int yPixPos =
+            option.rect.top() + (option.rect.height() - pixHeight) / 2;
     if (btnInfo->itemSide == ItemViewButtons::ItemLeftSide)
         pixRect = QRect(option.rect.left() + 2, yPixPos, pixWidth, pixHeight);
     else
@@ -188,8 +202,11 @@ void ItemViewButtons::Private::paintButton(ButtonInfo *btnInfo,
     const bool isInsideButtonRegion =
             pixRect.contains(m_view->viewport()->mapFromGlobal(QCursor::pos()));
     const QIcon icon = btnInfo->icon;
-    const QPixmap pix = icon.pixmap(pixWidth, pixHeight, isInsideButtonRegion ? QIcon::Active :
-                                                                                QIcon::Normal);
+    const QPixmap pix =
+            icon.pixmap(
+                pixWidth,
+                pixHeight,
+                isInsideButtonRegion ? QIcon::Active : QIcon::Normal);
     painter->drawPixmap(pixRect, pix);
 
     if (isInsideButtonRegion)
@@ -205,12 +222,13 @@ void ItemViewButtons::Private::resetButtonUnderMouseState()
  * \class ItemViewButtons
  * \brief Provides buttons integrated to items displayed by QAbstractItemView
  *
- * qtgui::ItemViewButtons allows to add buttons inside any QAbstractItemView without subclassing
- * the item-view class.
+ * qtgui::ItemViewButtons allows to add buttons inside any QAbstractItemView
+ * without subclassing the item-view class.
  *
- * It only requires that its paint() method is called whenever any view item has to be drawn. If
- * you have a custom delegate (eg. a subclass of QStyledItemDelegate) then just call at some point
- * qtgui::ItemViewButtons::paint() inside the delegate's paint() method :
+ * It only requires that its paint() method is called whenever any view item has
+ * to be drawn. If you have a custom delegate (eg. a subclass of QStyledItemDelegate)
+ * then just call at some point qtgui::ItemViewButtons::paint() inside
+ * the delegate's paint() method :
  * \code
  * void MyCustomDeleagate::paint(QPainter* painter,
  *                               const QStyleOptionViewItem& option,
@@ -223,9 +241,9 @@ void ItemViewButtons::Private::resetButtonUnderMouseState()
  * }
  * \endcode
  *
- * If you do not want to modify your delegate class then createProxyItemDelegate() might be the
- * right option : this will create a new delegate around yours with the paint() method correctly
- * called.
+ * If you do not want to modify your delegate class then createProxyItemDelegate()
+ * might be the right option : this will create a new delegate around yours with
+ * the paint() method correctly called.
  *
  * If the item-view does not use any delegate then just call installDefaultItemDelegate()
  *
@@ -238,10 +256,12 @@ void ItemViewButtons::Private::resetButtonUnderMouseState()
  */
 
 /*! \fn void ItemViewButtons::buttonClicked(int btnId, const QModelIndex& index)
- *  \brief This signal is emitted when a button previously added with addButton() is clicked (i.e.
- *          pressed down then released while the mouse cursor is inside the button)
+ *  \brief This signal is emitted when a button previously added with addButton()
+ *         is clicked (i.e. pressed down then released while the mouse cursor is
+ *         inside the button)
  *
- *  \param btnId Identifier of the button clicked (this is the id that was passed to addButton())
+ *  \param btnId Identifier of the button clicked (this is the id that was
+ *               passed to addButton())
  *  \param index Index of the item model where the button click occured
  */
 
@@ -277,11 +297,15 @@ bool ItemViewButtons::eventFilter(QObject *object, QEvent *event)
     if (object == this->itemView()->viewport()) {
         // If mouse event, retrieve item's model index under mouse
         const QMouseEvent* mouseEvent = NULL;
-        if (event->type() == QEvent::MouseMove || event->type() == QEvent::MouseButtonRelease)
+        if (event->type() == QEvent::MouseMove
+                || event->type() == QEvent::MouseButtonRelease)
+        {
             mouseEvent = static_cast<const QMouseEvent*>(event);
+        }
         const QModelIndex modelIndexUnderMouse =
-                mouseEvent != NULL ? this->itemView()->indexAt(mouseEvent->pos()) :
-                                     QModelIndex();
+                mouseEvent != NULL ?
+                    this->itemView()->indexAt(mouseEvent->pos()) :
+                    QModelIndex();
 
         // Process input event
         switch (event->type()) {
@@ -299,14 +323,17 @@ bool ItemViewButtons::eventFilter(QObject *object, QEvent *event)
                     && mouseEvent->button() == Qt::LeftButton
                     && d->m_buttonUnderMouse != NULL)
             {
-                emit buttonClicked(d->m_buttonUnderMouse->index, modelIndexUnderMouse);
+                emit buttonClicked(
+                            d->m_buttonUnderMouse->index, modelIndexUnderMouse);
                 return true;
             }
             return false;
         }
         case QEvent::ToolTip: {
-            const QString toolTip = d->m_buttonUnderMouse != NULL ? d->m_buttonUnderMouse->toolTip :
-                                                                    QString();
+            const QString toolTip =
+                    d->m_buttonUnderMouse != NULL ?
+                        d->m_buttonUnderMouse->toolTip :
+                        QString();
             if (!toolTip.isEmpty()) {
                 QToolTip::showText(QCursor::pos(), toolTip, this->itemView());
                 return true;
@@ -322,9 +349,10 @@ bool ItemViewButtons::eventFilter(QObject *object, QEvent *event)
     return false;
 }
 
-void ItemViewButtons::paint(QPainter *painter,
-                            const QStyleOptionViewItem &option,
-                            const QModelIndex &index) const
+void ItemViewButtons::paint(
+        QPainter *painter,
+        const QStyleOptionViewItem &option,
+        const QModelIndex &index) const
 {
     bool mouseIsOver = false;
     if (painter != NULL
@@ -343,7 +371,8 @@ void ItemViewButtons::paint(QPainter *painter,
 
     if (this->itemView()->isEnabled()) {
         QStyleOptionViewItemV4 optionForBtn(option);
-        optionForBtn.rect = this->itemView()->visualRect(d->modelIndexForButtonDisplay(index));
+        optionForBtn.rect =
+                this->itemView()->visualRect(d->modelIndexForButtonDisplay(index));
         const int btnIndex = this->buttonAtModelIndex(index);
         Private::ButtonInfo* btnInfo = d->mutableButtonInfo(btnIndex);
         if (btnInfo == NULL)
@@ -376,13 +405,15 @@ void ItemViewButtons::paint(QPainter *painter,
 /*!
  * \brief Add a button to be furthered configured with setButtonXxx() functions
  * \param btnId Index of the button (used later to reference the button)
- * \param icon Icon of the button (ItemViewButtons supports QIcon::Active which can be used
- *             to display an highlighted pixmap when the mouse is hovering the button)
+ * \param icon Icon of the button (ItemViewButtons supports QIcon::Active which
+ *             can be used to display an highlighted pixmap when the mouse is
+ *             hovering the button)
  * \param toolTip Tool-tip to be displayed when the mouse stays over the button
  *
  *  Does nothing if button index \p btnId is already used by some other button.
  */
-void ItemViewButtons::addButton(int btnId, const QIcon &icon, const QString &toolTip)
+void ItemViewButtons::addButton(
+        int btnId, const QIcon &icon, const QString &toolTip)
 {
     if (!d->m_btnInfos.contains(btnId)) {
         Private::ButtonInfo info;
@@ -396,7 +427,8 @@ void ItemViewButtons::addButton(int btnId, const QIcon &icon, const QString &too
         d->m_btnInfos.insert(btnId, info);
     }
     else {
-        qWarning() << QString("%1 : there is already a button of index '%2'").arg(Q_FUNC_INFO).arg(btnId);
+        qWarning() << QString("%1 : there is already a button of index '%2'")
+                      .arg(Q_FUNC_INFO).arg(btnId);
     }
 }
 
@@ -419,11 +451,13 @@ void ItemViewButtons::copyButtonProperties(int srcBtnId, int dstBtnId)
             dstBtnInfo->index = dstBtnId; // Restore destination button index
         }
         else {
-            qWarning() << QString("%1 : no destination button of index '%1'").arg(Q_FUNC_INFO).arg(dstBtnId);
+            qWarning() << QString("%1 : no destination button of index '%1'")
+                          .arg(Q_FUNC_INFO).arg(dstBtnId);
         }
     }
     else {
-        qWarning() << QString("%1 : no source button of index '%1'").arg(Q_FUNC_INFO).arg(srcBtnId);
+        qWarning() << QString("%1 : no source button of index '%1'")
+                      .arg(Q_FUNC_INFO).arg(srcBtnId);
     }
 }
 
@@ -461,8 +495,9 @@ QVariant ItemViewButtons::buttonDetectionMatchData(int btnId) const
  * \brief ItemViewButtons::setButtonDetection
  *
  * \param btnId Index of the button
- * \param matchRole The role used when matching item data for button detection. In case the button
- *                  has to be displayed no matter the item, then set \p matchRole to -1
+ * \param matchRole The role used when matching item data for button detection.
+ *        In case the button has to be displayed no matter the item, then set
+ *        \p matchRole to -1
  * \param matchData The data to be matched for button detection
  *
  * \sa buttonDetectionMatchData()
@@ -470,7 +505,8 @@ QVariant ItemViewButtons::buttonDetectionMatchData(int btnId) const
  * \sa QModelIndex::data()
  * \sa Qt::ItemDataRole
  */
-void ItemViewButtons::setButtonDetection(int btnId, int matchRole, const QVariant &matchData)
+void ItemViewButtons::setButtonDetection(
+        int btnId, int matchRole, const QVariant &matchData)
 {
     Private::ButtonInfo* btnInfo = d->mutableButtonInfo(btnId);
     if (btnInfo != NULL) {
@@ -492,7 +528,10 @@ int ItemViewButtons::buttonDisplayColumn(int btnId) const
 
 void ItemViewButtons::setButtonDisplayColumn(int btnId, int col)
 {
-    cpp::checkedAssign(&Private::ButtonInfo::displayColumn, d->mutableButtonInfo(btnId), col);
+    cpp::checkedAssign(
+                &Private::ButtonInfo::displayColumn,
+                d->mutableButtonInfo(btnId),
+                col);
 }
 
 /*!
@@ -508,7 +547,10 @@ int ItemViewButtons::buttonItemSide(int btnId) const
 
 void ItemViewButtons::setButtonItemSide(int btnId, ItemSide side)
 {
-    cpp::checkedAssign(&Private::ButtonInfo::itemSide, d->mutableButtonInfo(btnId), side);
+    cpp::checkedAssign(
+                &Private::ButtonInfo::itemSide,
+                d->mutableButtonInfo(btnId),
+                side);
 }
 
 /*!
@@ -524,7 +566,10 @@ ItemViewButtons::DisplayModes ItemViewButtons::buttonDisplayModes(int btnId) con
 
 void ItemViewButtons::setButtonDisplayModes(int btnId, DisplayModes modes)
 {
-    cpp::checkedAssign(&Private::ButtonInfo::itemDisplayModes, d->mutableButtonInfo(btnId), modes);
+    cpp::checkedAssign(
+                &Private::ButtonInfo::itemDisplayModes,
+                d->mutableButtonInfo(btnId),
+                modes);
 }
 
 /*!
@@ -540,7 +585,10 @@ QIcon ItemViewButtons::buttonIcon(int btnId) const
 
 void ItemViewButtons::setButtonIcon(int btnId, const QIcon &icon)
 {
-    cpp::checkedAssign(&Private::ButtonInfo::icon, d->mutableButtonInfo(btnId), icon);
+    cpp::checkedAssign(
+                &Private::ButtonInfo::icon,
+                d->mutableButtonInfo(btnId),
+                icon);
 }
 
 /*!
@@ -556,7 +604,10 @@ QSize ItemViewButtons::buttonIconSize(int btnId) const
 
 void ItemViewButtons::setButtonIconSize(int btnId, const QSize &size)
 {
-    cpp::checkedAssign(&Private::ButtonInfo::iconSize, d->mutableButtonInfo(btnId), size);
+    cpp::checkedAssign(
+                &Private::ButtonInfo::iconSize,
+                d->mutableButtonInfo(btnId),
+                size);
 }
 
 /*!
@@ -572,10 +623,13 @@ QString ItemViewButtons::buttonToolTip(int btnId) const
 
 void ItemViewButtons::setButtonToolTip(int btnId, const QString &toolTip)
 {
-    cpp::checkedAssign(&Private::ButtonInfo::toolTip, d->mutableButtonInfo(btnId), toolTip);
+    cpp::checkedAssign(
+                &Private::ButtonInfo::toolTip,
+                d->mutableButtonInfo(btnId),
+                toolTip);
 }
-
-/*! \brief Install a delegate for the attached view item, allowing the button mechanism to work
+/*! Install a delegate for the attached view item, allowing the button mechanism
+ *  to work
  */
 void ItemViewButtons::installDefaultItemDelegate()
 {
@@ -584,15 +638,14 @@ void ItemViewButtons::installDefaultItemDelegate()
 }
 
 /*!
- * \brief Create a proxy delegate around \p sourceDelegate to be further installed with
- *        QAbstractItemView::setItemDelegate()
+ * Create a proxy delegate around \p sourceDelegate to be further installed with
+ * QAbstractItemView::setItemDelegate()
  *
- *  This is useful when you have a delegate for an item view but for some reason don't want to
- *  modify it to integrate with ItemViewButtons
+ *  This is useful when you have a delegate for an item view but for some reason
+ *  don't want to modify it to integrate with ItemViewButtons
  */
-QStyledItemDelegate*
-ItemViewButtons::createProxyItemDelegate(QStyledItemDelegate *sourceDelegate,
-                                         QObject *parent) const
+QStyledItemDelegate* ItemViewButtons::createProxyItemDelegate(
+        QStyledItemDelegate *sourceDelegate, QObject *parent) const
 {
     return new Private::ProxyItemDelegate(this, sourceDelegate, parent);
 }

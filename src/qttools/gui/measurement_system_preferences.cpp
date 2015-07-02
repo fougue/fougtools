@@ -54,8 +54,9 @@ MeasurementSystemPreferences::MeasurementSystemPreferences()
 {
 }
 
-MeasurementSystemPreferences::MeasurementSystemPreferences(AbstractLengthEditor::MetricUnit metUnit,
-                                                           AbstractLengthEditor::ImperialUnit impUnit)
+MeasurementSystemPreferences::MeasurementSystemPreferences(
+        AbstractLengthEditor::MetricUnit metUnit,
+        AbstractLengthEditor::ImperialUnit impUnit)
     : m_metricUnit(metUnit),
       m_imperialUnit(impUnit)
 {

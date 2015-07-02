@@ -59,15 +59,16 @@ public:
     static PARENT_WIDGET* findLastParentWidget(QWidget* widget);
 
     static void wrapWidgetInDialog(QWidget* widget, QDialog* dialog);
-    static void addContentsWidget(QWidget* containerWidget, QWidget* contentsWidget);
+    static void addContentsWidget(
+            QWidget* containerWidget, QWidget* contentsWidget);
 
     static QPoint globalPos(const QWidget* widget, Qt::Corner widgetCorner);
     static void moveWidgetRightTo(QWidget* widget, const QWidget* nextTo);
     static void moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo);
 
     static QPair<int, int> horizAndVertScrollValue(const QAbstractScrollArea* area);
-    static void setHorizAndVertScrollValue(QAbstractScrollArea* area,
-                                           const QPair<int, int>& values);
+    static void setHorizAndVertScrollValue(
+            QAbstractScrollArea* area, const QPair<int, int>& values);
 
     static void asyncDialogExec(QDialog* dialog);
     static void asyncMenuExec(QMenu* menu, const QPoint& pos = QCursor::pos());

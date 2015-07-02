@@ -58,7 +58,8 @@ namespace qtgui {
 /*! \brief Make \p widget the central widget of \p dialog
  *
  *  \p dialog should be empty for this function to work.\n
- *  wrapWidgetInDialog() will try to find if \p widget contains a QDialogButtonBox, if so
+ *  wrapWidgetInDialog() will try to find if \p widget contains a
+ *  QDialogButtonBox, if so
  *  then it connects to \p dialog 's accept()/reject() slots.
  */
 void QWidgetUtils::wrapWidgetInDialog(QWidget *widget, QDialog *dialog)
@@ -70,24 +71,30 @@ void QWidgetUtils::wrapWidgetInDialog(QWidget *widget, QDialog *dialog)
             dialog->layout()->addWidget(widget);
         }
         else {
-            QBoxLayout* layout = new QVBoxLayout;
+            auto layout = new QVBoxLayout;
             layout->addWidget(widget);
             dialog->setLayout(layout);
         }
 
-        QDialogButtonBox* btnBox = widget->findChild<QDialogButtonBox*>();
+        auto btnBox = widget->findChild<QDialogButtonBox*>();
         if (btnBox != NULL) {
-            QObject::connect(btnBox, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
-            QObject::connect(btnBox, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
+            QObject::connect(
+                        btnBox, &QDialogButtonBox::accepted,
+                        dialog, &QDialog::accept);
+            QObject::connect(
+                        btnBox, &QDialogButtonBox::rejected,
+                        dialog, &QDialog::reject);
         }
     }
 }
 
-/*! \brief Add \p contentsWidget to \p containerWidget
+/*! Add \p contentsWidget to \p containerWidget
  *
- *  If \p containerWidget is empty, a QBoxLayout is created to receive \p contentsWidget
+ *  If \p containerWidget is empty, a QBoxLayout is created to receive
+ *  \p contentsWidget
  */
-void QWidgetUtils::addContentsWidget(QWidget *containerWidget, QWidget *contentsWidget)
+void QWidgetUtils::addContentsWidget(
+        QWidget *containerWidget, QWidget *contentsWidget)
 {
     if (containerWidget != NULL && contentsWidget != NULL) {
         if (containerWidget->layout() == NULL) {
@@ -99,7 +106,7 @@ void QWidgetUtils::addContentsWidget(QWidget *containerWidget, QWidget *contents
     }
 }
 
-/*! \brief Returns the global position of a widget corner
+/*! Returns the global position of a widget corner
  *
  *  \returns Null point (ie. with coordinates (0, 0)) if \p widget is null
  */
@@ -108,24 +115,28 @@ QPoint QWidgetUtils::globalPos(const QWidget *widget, Qt::Corner widgetCorner)
     if (widget != NULL) {
         const QRect geom = widget->frameGeometry();
         switch (widgetCorner) {
-        case Qt::TopLeftCorner: return widget->mapToGlobal(QPoint(-geom.width(), 0));
-        case Qt::TopRightCorner: return widget->mapToGlobal(QPoint(geom.width(), 0));
-        case Qt::BottomLeftCorner: return widget->mapToGlobal(QPoint(-geom.width(), geom.height()));
-        case Qt::BottomRightCorner: return widget->mapToGlobal(QPoint(geom.width(), geom.height()));
+        case Qt::TopLeftCorner:
+            return widget->mapToGlobal(QPoint(-geom.width(), 0));
+        case Qt::TopRightCorner:
+            return widget->mapToGlobal(QPoint(geom.width(), 0));
+        case Qt::BottomLeftCorner:
+            return widget->mapToGlobal(QPoint(-geom.width(), geom.height()));
+        case Qt::BottomRightCorner:
+            return widget->mapToGlobal(QPoint(geom.width(), geom.height()));
         }
     }
     return QPoint(0, 0);
 }
 
-/*! \brief Move position of \p widget so it is displayed stuck to the right of \p nextTo
-  */
+/*! Move position of \p widget so it's displayed stuck to the right of \p nextTo
+ */
 void QWidgetUtils::moveWidgetRightTo(QWidget* widget, const QWidget* nextTo)
 {
     const QRect frameGeom = nextTo->frameGeometry();
     widget->move(nextTo->mapToGlobal(QPoint(frameGeom.width(), 0)));
 }
 
-/*! \brief Move position of \p widget so it is displayed stuck to the left of \p nextTo
+/*! Move position of \p widget so it's displayed stuck to the left of \p nextTo
  */
 void QWidgetUtils::moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo)
 {
@@ -134,7 +145,7 @@ void QWidgetUtils::moveWidgetLeftTo(QWidget* widget, const QWidget* nextTo)
     widget->move(nextTo->mapToGlobal(QPoint(-widgetFrameGeom.width(), 0)));
 }
 
-/*! \brief Current slide positions of the horizontal and vertical scroll bars
+/*! Current slide positions of the horizontal and vertical scroll bars
  */
 QPair<int, int> QWidgetUtils::horizAndVertScrollValue(const QAbstractScrollArea* area)
 {
@@ -142,10 +153,11 @@ QPair<int, int> QWidgetUtils::horizAndVertScrollValue(const QAbstractScrollArea*
                      area->verticalScrollBar()->value());
 }
 
-/*! \brief Set the current slide positions of the horizontal and vertical scroll bars to \p values
+/*! Set the current slide positions of the horizontal and vertical scroll bars
+ *  to \p values
  */
-void QWidgetUtils::setHorizAndVertScrollValue(QAbstractScrollArea* area,
-                                              const QPair<int, int>& values)
+void QWidgetUtils::setHorizAndVertScrollValue(
+        QAbstractScrollArea* area, const QPair<int, int>& values)
 {
     area->horizontalScrollBar()->setValue(values.first);
     area->verticalScrollBar()->setValue(values.second);

@@ -81,15 +81,18 @@ QTreeView *TreeComboBox::treeView() const
     return qobject_cast<QTreeView*>(this->view());
 }
 
-/*! \brief Similar to QComboBox::findData() but searches recursively in the tree model (instead of
- *         just root items)
+/*! Similar to QComboBox::findData() but searches recursively in the tree
+ *  model (instead of just root items)
  */
-QModelIndex TreeComboBox::treeFindData(const QVariant &data, int role, Qt::MatchFlags flags) const
+QModelIndex TreeComboBox::treeFindData(
+        const QVariant &data, int role, Qt::MatchFlags flags) const
 {
     if (this->model() == NULL)
         return QModelIndex();
-    const QModelIndex startId = this->model()->index(0, this->modelColumn(), QModelIndex());
-    const QModelIndexList matchIds = this->model()->match(startId, role, data, 1, flags);
+    const QModelIndex startId =
+            this->model()->index(0, this->modelColumn(), QModelIndex());
+    const QModelIndexList matchIds =
+            this->model()->match(startId, role, data, 1, flags);
     return !matchIds.isEmpty() ? matchIds.first() : QModelIndex();
 }
 
@@ -100,8 +103,12 @@ QModelIndex TreeComboBox::currentModelIndex() const
     if (this->model() == NULL)
         return QModelIndex();
     const QModelIndex treeViewCurrentIndex = this->treeView()->currentIndex();
-    if (!treeViewCurrentIndex.isValid())
-        return this->model()->index(this->currentIndex(), this->modelColumn(), this->rootModelIndex());
+    if (!treeViewCurrentIndex.isValid()) {
+        return this->model()->index(
+                    this->currentIndex(),
+                    this->modelColumn(),
+                    this->rootModelIndex());
+    }
     return treeViewCurrentIndex;
 }
 

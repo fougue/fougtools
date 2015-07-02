@@ -63,13 +63,15 @@ private:
 };
 
 /*! \class StrictStackWidget
- *  \brief Provides a stack of widgets similar to QStackedWidget but with "strict" stack semantics
+ *  \brief Provides a stack of widgets similar to QStackedWidget but with
+ *         "strict" stack semantics
  *
- *  QStackedWidget can be seen as a page-based widget rather than a stack widget. StrictStackWidget
- *  provides strict stack semantics applied to widgets : the only widget visible is the top widget.
+ *  QStackedWidget can be seen as a page-based widget rather than a stack
+ *  widget. StrictStackWidget provides strict stack semantics applied to
+ *  widgets : the only widget visible is the top widget.
  *
- *  When popWidget() is called it destroys the top widget and then makes visible the previous
- *  widget (if any), becoming the new top widget.
+ *  When popWidget() is called it destroys the top widget and then makes visible
+ *  the previous widget (if any), becoming the new top widget.
  *
  *  \headerfile strict_stack_widget.h <qttools/gui/strict_stack_widget.h>
  *  \ingroup qttools_gui
@@ -90,7 +92,7 @@ StrictStackWidget::~StrictStackWidget()
     delete d;
 }
 
-/*! \brief Adds \p widget to the top of the stack (and makes it the visible widget)
+/*! Adds \p widget to the top of the stack (and makes it the visible widget)
  */
 void StrictStackWidget::pushWidget(QWidget *widget)
 {
@@ -101,7 +103,7 @@ void StrictStackWidget::pushWidget(QWidget *widget)
     }
 }
 
-/*! \brief Destroys the top widget from the stack
+/*! Destroys the top widget from the stack
  *
  *  Does nothing if stack is empty
  */
@@ -120,14 +122,14 @@ QWidget *StrictStackWidget::popWidget()
     }
 }
 
-/*! \brief Retruns \c true if the stack contains no widget, otherwise returns \c false
+/*! Retruns \c true if the stack contains no widget, otherwise returns \c false
  */
 bool StrictStackWidget::isEmpty() const
 {
     return d->m_stackWidgetId.isEmpty();
 }
 
-/*! \brief Returns a pointer to the stack's top widget
+/*! Returns a pointer to the stack's top widget
  *
  *  If stack is empty, NULL is returned
  */

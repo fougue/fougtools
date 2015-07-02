@@ -81,10 +81,16 @@ public:
     QAbstractItemView* itemView() const;
 
     bool eventFilter(QObject *object, QEvent *event) Q_DECL_OVERRIDE;
-    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    void paint(
+            QPainter* painter,
+            const QStyleOptionViewItem& option,
+            const QModelIndex& index) const;
 
     // Button management
-    void addButton(int btnId, const QIcon& icon = QIcon(), const QString& toolTip = QString());
+    void addButton(
+            int btnId,
+            const QIcon& icon = QIcon(),
+            const QString& toolTip = QString());
     void copyButtonProperties(int srcBtnId, int dstBtnId);
 
     int buttonDetectionMatchRole(int btnId) const;
@@ -111,8 +117,9 @@ public:
 
     // Delegates
     void installDefaultItemDelegate();
-    QStyledItemDelegate* createProxyItemDelegate(QStyledItemDelegate *sourceDelegate,
-                                                 QObject* parent = NULL) const;
+    QStyledItemDelegate* createProxyItemDelegate(
+            QStyledItemDelegate *sourceDelegate,
+            QObject* parent = NULL) const;
 
 signals:
     void buttonClicked(int btnId, const QModelIndex& index);

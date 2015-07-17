@@ -1,0 +1,19 @@
+language: cpp
+
+os:
+  - linux
+
+compiler:
+  - gcc
+
+install:
+  - sudo apt-add-repository -y ppa:beineri/opt-qt55
+  - sudo apt-get -qq update
+  - sudo apt-get -qq install qt55base qt55declarative qt55quick1 qt55script qt55tools
+
+script:
+  - mkdir build && cd build
+  - ruby ../qmake/configure.rb --prefix install --utest --examples
+  - /opt/qt55/bin/qmake -r ../qmake/fougtools.pro
+  - make -j4
+  - make install

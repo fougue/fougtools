@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/fougue/fougtools.svg?branch=master)](https://travis-ci.org/fougue/fougtools) 
+
 FougTools: Handy C++ libraries
 ==============================
 

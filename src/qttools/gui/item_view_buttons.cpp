@@ -117,7 +117,7 @@ ItemViewButtons::Private::Private(ItemViewButtons *backPtr)
 const ItemViewButtons::Private::ButtonInfo*
 ItemViewButtons::Private::buttonInfo(int btnId) const
 {
-    const QHash<int, ButtonInfo>::ConstIterator iBtnInfo = m_btnInfos.find(btnId);
+    const auto iBtnInfo = m_btnInfos.find(btnId);
     if (iBtnInfo != m_btnInfos.constEnd())
         return &(iBtnInfo.value());
     return NULL;
@@ -126,7 +126,7 @@ ItemViewButtons::Private::buttonInfo(int btnId) const
 ItemViewButtons::Private::ButtonInfo*
 ItemViewButtons::Private::mutableButtonInfo(int btnId)
 {
-    QHash<int, ButtonInfo>::Iterator iBtnInfo = m_btnInfos.find(btnId);
+    auto iBtnInfo = m_btnInfos.find(btnId);
     if (iBtnInfo != m_btnInfos.end())
         return &(iBtnInfo.value());
     return NULL;
@@ -606,6 +606,7 @@ void ItemViewButtons::setButtonToolTip(int btnId, const QString &toolTip)
                 d->mutableButtonInfo(btnId),
                 toolTip);
 }
+
 /*! Install a delegate for the attached view item, allowing the button mechanism
  *  to work
  */

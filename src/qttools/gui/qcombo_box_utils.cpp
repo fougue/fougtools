@@ -26,32 +26,32 @@ namespace qtgui {
 
 QComboBoxUtils::SignalActivated_int QComboBoxUtils::signalActivated_int()
 {
-    return (QComboBoxUtils::SignalActivated_int)&QComboBox::activated;
+    return static_cast<QComboBoxUtils::SignalActivated_int>(&QComboBox::activated);
 }
 
 QComboBoxUtils::SignalActivated_QString QComboBoxUtils::signalActivated_QString()
 {
-    return (QComboBoxUtils::SignalActivated_QString)&QComboBox::activated;
+    return static_cast<QComboBoxUtils::SignalActivated_QString>(&QComboBox::activated);
 }
 
 QComboBoxUtils::SignalCurrentIndexChanged_int QComboBoxUtils::signalCurrentIndexChanged_int()
 {
-    return (QComboBoxUtils::SignalCurrentIndexChanged_int)&QComboBox::currentIndexChanged;
+    return static_cast<QComboBoxUtils::SignalCurrentIndexChanged_int>(&QComboBox::currentIndexChanged);
 }
 
 QComboBoxUtils::SignalCurrentIndexChanged_QString QComboBoxUtils::signalCurrentIndexChanged_QString()
 {
-    return (QComboBoxUtils::SignalCurrentIndexChanged_QString)&QComboBox::currentIndexChanged;
+    return static_cast<QComboBoxUtils::SignalCurrentIndexChanged_QString>(&QComboBox::currentIndexChanged);
 }
 
 QComboBoxUtils::SignalHighlighted_int QComboBoxUtils::signalHighlighted_int()
 {
-    return (QComboBoxUtils::SignalHighlighted_int)&QComboBox::highlighted;
+    return static_cast<QComboBoxUtils::SignalHighlighted_int>(&QComboBox::highlighted);
 }
 
 QComboBoxUtils::SignalHighlighted_QString QComboBoxUtils::signalHighlighted_QString()
 {
-    return (QComboBoxUtils::SignalHighlighted_QString)&QComboBox::highlighted;
+    return static_cast<QComboBoxUtils::SignalHighlighted_QString>(&QComboBox::highlighted);
 }
 
 } // namespace qtgui

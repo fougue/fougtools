@@ -47,7 +47,7 @@ namespace qtcore {
  */
 QSignalMapperUtils::SignalMapped_int QSignalMapperUtils::signalMapped_int()
 {
-    return (QSignalMapperUtils::SignalMapped_int)&QSignalMapper::mapped;
+    return static_cast<QSignalMapperUtils::SignalMapped_int>(&QSignalMapper::mapped);
 }
 
 /*! Returns the member function pointer(Qt signal) to
@@ -58,7 +58,7 @@ QSignalMapperUtils::SignalMapped_int QSignalMapperUtils::signalMapped_int()
 QSignalMapperUtils::SignalMapped_QString
 QSignalMapperUtils::signalMapped_QString()
 {
-    return (QSignalMapperUtils::SignalMapped_QString)&QSignalMapper::mapped;
+    return static_cast<QSignalMapperUtils::SignalMapped_QString>(&QSignalMapper::mapped);
 }
 
 /*! Returns the member function pointer(Qt signal) to
@@ -69,7 +69,7 @@ QSignalMapperUtils::signalMapped_QString()
 QSignalMapperUtils::SignalMapped_QWidgetPtr
 QSignalMapperUtils::signalMapped_QWidgetPtr()
 {
-    return (QSignalMapperUtils::SignalMapped_QWidgetPtr)&QSignalMapper::mapped;
+    return static_cast<QSignalMapperUtils::SignalMapped_QWidgetPtr>(&QSignalMapper::mapped);
 }
 
 /*! Returns the member function pointer(Qt signal) to
@@ -80,7 +80,7 @@ QSignalMapperUtils::signalMapped_QWidgetPtr()
 QSignalMapperUtils::SignalMapped_QObjectPtr
 QSignalMapperUtils::signalMapped_QObjectPtr()
 {
-    return (QSignalMapperUtils::SignalMapped_QObjectPtr)&QSignalMapper::mapped;
+    return static_cast<QSignalMapperUtils::SignalMapped_QObjectPtr>(&QSignalMapper::mapped);
 }
 
 /*! \brief Returns the member function pointer(Qt slot) to QSignalMapper::map()
@@ -105,7 +105,7 @@ QSignalMapperUtils::signalMapped_QObjectPtr()
  */
 QSignalMapperUtils::SlotMap QSignalMapperUtils::slotMap()
 {
-    return (QSignalMapperUtils::SlotMap)&QSignalMapper::map;
+    return static_cast<QSignalMapperUtils::SlotMap>(&QSignalMapper::map);
 }
 
 /*! Returns the member function pointer(Qt slot) to QSignalMapper::map(QObject*)
@@ -113,7 +113,7 @@ QSignalMapperUtils::SlotMap QSignalMapperUtils::slotMap()
  */
 QSignalMapperUtils::SlotMap_QObjectPtr QSignalMapperUtils::slotMap_QObjectPtr()
 {
-    return (QSignalMapperUtils::SlotMap_QObjectPtr)&QSignalMapper::map;
+    return static_cast<QSignalMapperUtils::SlotMap_QObjectPtr>(&QSignalMapper::map);
 }
 
 } // namespace qtcore

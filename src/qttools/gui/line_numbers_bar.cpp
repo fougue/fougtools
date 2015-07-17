@@ -96,15 +96,22 @@ void LineNumbersBar::setBugLine(int lineno)
 void LineNumbersBar::setTextEdit(QTextEdit* edit)
 {
     auto docLayout = edit->document()->documentLayout();
-    auto widgetUpdateSlot = reinterpret_cast<void (QWidget::*)()>(&QWidget::update);
     if (d->m_edit != NULL) {
-        QObject::disconnect(docLayout, &QAbstractTextDocumentLayout::update, this, widgetUpdateSlot);
-        QObject::disconnect(edit->verticalScrollBar(), &QScrollBar::valueChanged, this, widgetUpdateSlot);
+        QObject::disconnect(
+                    docLayout, &QAbstractTextDocumentLayout::update,
+                    this, &LineNumbersBar::updateWidget);
+        QObject::disconnect(
+                    edit->verticalScrollBar(), &QScrollBar::valueChanged,
+                    this, &LineNumbersBar::updateWidget);
     }
     d->m_edit = edit;
     if (edit != NULL) {
-        QObject::connect(docLayout, &QAbstractTextDocumentLayout::update, this, widgetUpdateSlot);
-        QObject::connect(edit->verticalScrollBar(), &QScrollBar::valueChanged, this, widgetUpdateSlot);
+        QObject::connect(
+                    docLayout, &QAbstractTextDocumentLayout::update,
+                    this, &LineNumbersBar::updateWidget);
+        QObject::connect(
+                    edit->verticalScrollBar(), &QScrollBar::valueChanged,
+                    this, &LineNumbersBar::updateWidget);
     }
 }
 
@@ -181,6 +188,11 @@ bool LineNumbersBar::event(QEvent* event)
             QToolTip::showText(helpEvent->globalPos(), tr("Error Line" ));
     }
     return QWidget::event(event);
+}
+
+void LineNumbersBar::updateWidget()
+{
+    QWidget::update();
 }
 
 } // namespace qtgui

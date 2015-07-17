@@ -40,6 +40,8 @@ protected:
     bool event(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    void updateWidget();
+
     class Private;
     Private* const d;
 };

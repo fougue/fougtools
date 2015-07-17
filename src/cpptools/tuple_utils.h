@@ -21,11 +21,11 @@ namespace cpp {
 
 /*! Apply function \p f to each element in tuple \p t */
 template<typename TUPLE, typename FUNC>
-void tuple_for_each(TUPLE& t, FUNC f);
+void tuple_for_each(const TUPLE& t, FUNC f);
 
 /*! Apply function \p f to each element in tuple \p t starting from end */
 template<typename TUPLE, typename FUNC>
-void tuple_reversed_for_each(TUPLE& t, FUNC f);
+void tuple_reversed_for_each(const TUPLE& t, FUNC f);
 
 // --
 // -- Implementation
@@ -36,7 +36,7 @@ namespace internal {
 template<std::size_t N, std::size_t I, typename TUPLE, typename FUNC>
 struct impl_tuple_for_each
 {
-    static void call(TUPLE& t, FUNC f)
+    static void call(const TUPLE& t, FUNC f)
     {
         f(std::get<N - I>(t));
         impl_tuple_for_each<N, I - 1, TUPLE, FUNC>::call(t, f);
@@ -46,7 +46,7 @@ struct impl_tuple_for_each
 template<std::size_t N, typename TUPLE, typename FUNC>
 struct impl_tuple_for_each<N, 1, TUPLE, FUNC>
 {
-    static void call(TUPLE& t, FUNC f)
+    static void call(const TUPLE& t, FUNC f)
     {
         f(std::get<N - 1>(t));
     }
@@ -56,14 +56,14 @@ struct impl_tuple_for_each<N, 1, TUPLE, FUNC>
 template<typename TUPLE, typename FUNC>
 struct impl_tuple_for_each<0, 0, TUPLE, FUNC>
 {
-    static void call(TUPLE&, FUNC)
+    static void call(const TUPLE&, FUNC)
     { }
 };
 
 template<std::size_t N, std::size_t I, typename TUPLE, typename FUNC>
 struct impl_tuple_reversed_for_each
 {
-    static void call(TUPLE& t, FUNC f)
+    static void call(const TUPLE& t, FUNC f)
     {
         f(std::get<N - I - 1>(t));
         impl_tuple_reversed_for_each<N, I + 1, TUPLE, FUNC>::call(t, f);
@@ -73,7 +73,7 @@ struct impl_tuple_reversed_for_each
 template<std::size_t N, typename TUPLE, typename FUNC>
 struct impl_tuple_reversed_for_each<N, N, TUPLE, FUNC>
 {
-    static void call(TUPLE&, FUNC)
+    static void call(const TUPLE&, FUNC)
     { }
 };
 
@@ -81,14 +81,14 @@ struct impl_tuple_reversed_for_each<N, N, TUPLE, FUNC>
 template<typename TUPLE, typename FUNC>
 struct impl_tuple_reversed_for_each<0, 0, TUPLE, FUNC>
 {
-    static void call(TUPLE&, FUNC)
+    static void call(const TUPLE&, FUNC)
     { }
 };
 
 } // namespace internal
 
 template<typename TUPLE, typename FUNC>
-void tuple_for_each(TUPLE& t, FUNC f)
+void tuple_for_each(const TUPLE& t, FUNC f)
 {
     internal::impl_tuple_for_each<
             std::tuple_size<TUPLE>::value,
@@ -99,7 +99,7 @@ void tuple_for_each(TUPLE& t, FUNC f)
 }
 
 template<typename TUPLE, typename FUNC>
-void tuple_reversed_for_each(TUPLE& t, FUNC f)
+void tuple_reversed_for_each(const TUPLE& t, FUNC f)
 {
     internal::impl_tuple_reversed_for_each<
             std::tuple_size<TUPLE>::value, 0, TUPLE, FUNC>

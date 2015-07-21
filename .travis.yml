@@ -19,5 +19,5 @@ script:
   - ruby ../qmake/configure.rb --prefix install --utest --examples
   - /opt/qt55/bin/qmake -r "QMAKE_CXX=g++-4.8" ../qmake/fougtools.pro
   - make -j4
-  - cd utest/debug
+  - cd utest
   - ./utest_d

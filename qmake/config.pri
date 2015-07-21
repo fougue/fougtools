@@ -35,10 +35,7 @@ CONFIG(debug, debug|release) {
 CONFIG += build_all
 
 # Build qttools_task only if C++ variadic templates supported and Qt >= v5.4
-config_variadic_templates {
-    isEqual(QT_MAJOR_VERSION, 5) {
-        isEqual(QT_MINOR_VERSION, 4) {
-            CONFIG *= qttools_task
-        }
-    }
+include(func_minqtversion.pri)
+minQtVersion(5, 4, 0) {
+    CONFIG *= qttools_task
 }

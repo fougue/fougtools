@@ -41,10 +41,12 @@ OTHER_FILES += \
 
 # INSTALLS for globals
 globals_qmake.path  = $$PREFIX_DIR/qmake
-globals_qmake.files = compiler_config.pri \
-                      func_cleanpath.pri \
-                      func_systempath.pri \
-                      func_vcs_revnum.pri
+globals_qmake.files = \
+    compiler_config.pri \
+    func_cleanpath.pri \
+    func_minqtversion.pri \
+    func_systempath.pri \
+    func_vcs_revnum.pri
 
 globals_include.path  = $$PREFIX_DIR/include
 globals_include.files = ../src/*.h

@@ -6,6 +6,12 @@ os:
 compiler:
   - gcc
 
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "CKGjmw0p7CBF/Erpg+8PPfBB81TnSXHltKNiW2viZHrTMhS4Eo1hOj8rDMnUb+LtD8+XVQv2b1YUDXUL8fBEp9b5ZyF3D+gAyyLNkyYWEcSm3nx1hKjvbUMEFZTq2XewiPRhmW3e+TLpKQ1If3pzJxYWuXb8qUGa8/BmS/kJLtOPyEJb/iAHesg/cg4HjUUAGohXub3KIxhqTn0cPTz1nLr/SWqjDfp3G3uo7UR8G7S0rMmuMt4Y749AZNgdCGWWiTfo/csLIEK58we5hXTUMQNTHynFY/7d360H4WcKc05So/pxAdwJgBl4vAcJHc417dy9HTLbwEDLeGdwhcvf3y4dGwb/D3y7ighiVRBNigtpotyHlMe8chyp5vXtAxdIZ+R52f/B/BTpaSkfFBXutqkWnWhVbXH4DDJbwPp4JN5fmb0BwdnJubq5vebBd1E/FqHSmEL6asjswKb04mydBQ7lNHamrj2aIewnxnOsESCSkhckqDhbxBCI8IP5YTOFgjwM2C74+JPBy1qESmXFQaCQnm8agZCmX9RYFAprqnnsIGL8BDN9RMWIKyQa98cqbFRP7f3WfvK1uFrzMBPOcKTotv7Fo34Uv6KbxKknKi+d1ytLwiJncqkNCm+miBMCnaIxETtdr6kNvIR/RYtmKe3EhuX93UzT76DNM9SiUiI="
+
 install:
   - sudo apt-add-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-add-repository -y ppa:beineri/opt-qt55
@@ -14,11 +20,16 @@ install:
   - export CXX="g++-4.8"
   - export CC="gcc-4.8"
 
+addons:
+  coverity_scan:
+    project:
+      name: "fougue/fougtools"
+      description: "Build submitted via Travis CI"
+    notification_email: delorme.hugues@fougue.pro
+   b uild_command_prepend: "mkdir scan; cd scan; ruby ../qmake/configure.rb --prefix install --utest --examples; /opt/qt55/bin/qmake -r 'QMAKE_CXX=g++-4.8' ../qmake/fougtools.pro"
+    build_command:   "make -j 4"
+    branch_pattern: coverity_scan
+
 script:
-  - mkdir build && cd build
-  - ruby ../qmake/configure.rb --prefix install --utest --examples
-  - /opt/qt55/bin/qmake -r "QMAKE_CXX=g++-4.8" ../qmake/fougtools.pro
-  - make -j4
-  - cd utest
-  - ./utest_d
-  - ./utest
+   # dummy
+   - pwd

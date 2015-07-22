@@ -26,7 +26,7 @@ addons:
       name: "fougue/fougtools"
       description: "Build submitted via Travis CI"
     notification_email: delorme.hugues@fougue.pro
-   b uild_command_prepend: "mkdir scan; cd scan; ruby ../qmake/configure.rb --prefix install --utest --examples; /opt/qt55/bin/qmake -r 'QMAKE_CXX=g++-4.8' ../qmake/fougtools.pro"
+    build_command_prepend: "mkdir scan; cd scan; ruby ../qmake/configure.rb --prefix install --utest --examples; /opt/qt55/bin/qmake -r 'QMAKE_CXX=g++-4.8' ../qmake/fougtools.pro"
     build_command:   "make -j 4"
     branch_pattern: coverity_scan
 

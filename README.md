@@ -1,4 +1,8 @@
 [![Build Status](https://travis-ci.org/fougue/fougtools.svg?branch=master)](https://travis-ci.org/fougue/fougtools) 
+<a href="https://scan.coverity.com/projects/5826">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/5826/badge.svg"/>
+</a>  
 
 FougTools: Handy C++ libraries
 ==============================

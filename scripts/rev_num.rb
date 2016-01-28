@@ -17,6 +17,8 @@ def revNum(rcsType, workDir)
   supportedRcsHash["bzr"] = RcsSpec.new("bzr revno", /^([0-9]+)/)
   supportedRcsHash["svn"] = RcsSpec.new("svnversion", /^([0-9]+)/)
   supportedRcsHash["git"] = RcsSpec.new("git rev-parse --short HEAD", /^([0-9a-zA-Z]+)/)
+  supportedRcsHash["tf"] = RcsSpec.new(
+      "cmd.exe /C call #{File.dirname(__FILE__)}\\tf_last_changeset.bat", /^([0-9]+)/)
 
   if not supportedRcsHash.has_key?(rcsType) then
     puts "Revision control system not supported '#{rcsType}'"
@@ -24,7 +26,7 @@ def revNum(rcsType, workDir)
   end
 
   if not File.exists?(workDir) then
-    puts "Director '#{workDir}' does not exist"
+    puts "Directory '#{workDir}' does not exist"
     return ""
   end
   Dir.chdir(workDir)
@@ -32,7 +34,7 @@ def revNum(rcsType, workDir)
   # Retrieve the last revision number
   rcsSpec = supportedRcsHash[rcsType]
   log_io = IO.popen(rcsSpec.lastRevLogCmd)
-  matchData =  rcsSpec.lastRevRegExp.match(log_io.readlines.join)
+  matchData = rcsSpec.lastRevRegExp.match(log_io.readlines.join)
   if matchData.size > 0 then
     matchData[1]
   else

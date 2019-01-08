@@ -83,7 +83,7 @@ CONTAINER<T> QVariantTools::toTypedContainer(const CONTAINER<QVariant>& variants
     CONTAINER<T> typeds;
     std::transform(variants.begin(), variants.end(),
                    std::back_inserter(typeds),
-                   std::ptr_fun(&qVariantValue<T>));
+                   std::ptr_fun(&qvariant_cast<T>));
     return typeds;
 }
 

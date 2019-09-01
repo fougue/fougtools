@@ -51,7 +51,7 @@ namespace qttools {
  *
  *
  *  ScopedConnect guarantees that a signal/slot connection will get broken when the current scope
- *  dissapears
+ *  disappears
  */
 
 ScopedConnect::ScopedConnect(const QObject* sender, const char* signal,
@@ -79,7 +79,7 @@ ScopedConnect::~ScopedConnect()
  * \ingroup qttools_core
  *
  *  ScopedDisonnect guarantees that a signal/slot connection will get restored when the current
- *  scope dissapears
+ *  scope disappears
  */
 
 ScopedDisconnect::ScopedDisconnect(const QObject* sender, const char* signal,

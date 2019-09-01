@@ -24,6 +24,6 @@ CONFIG(warn_on) {
 win32-msvc20*:QMAKE_CXXFLAGS *= -wd4996 -wd4290 -wd4503
 win32-msvc*:DEFINES *= BOOST_TYPEOF_SILENT \
                        NOMINMAX \
-# This explicitely defines INTXX_C() and UINTXX_C() macros in <stdint.h> and
+# This explicitly defines INTXX_C() and UINTXX_C() macros in <stdint.h> and
 # also in <boost/cstdint.hpp>
 DEFINES *= __STDC_CONSTANT_MACROS

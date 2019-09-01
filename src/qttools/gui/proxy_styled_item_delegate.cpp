@@ -21,8 +21,8 @@ namespace qtgui {
  * \class ProxyStyledItemDelegate
  * \brief Convenience class that simplifies dynamically overriding QStyledItemDelegate
  *
- * QStyledItemDelegate protected functions cannot be overriden through proxy
- * technique, this is a limitation that applies to :
+ * QStyledItemDelegate protected functions cannot be overridden through proxy technique, this is
+ * a limitation that applies to :
  *   \li QStyledItemDelegate::initStyleOption()
  *   \li QStyledItemDelegate::eventFilter()
  *   \li QStyledItemDelegate::editorEvent()

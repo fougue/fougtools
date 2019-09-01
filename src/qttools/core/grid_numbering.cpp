@@ -26,7 +26,7 @@ namespace qtcore {
  * \ingroup qttools_core
  *
  * GridNumbering stores key information about numbering of grid cells :
- *    \li start corner (grid corner where the numbering starts, i.e. the firt cell)
+ *    \li start corner (grid corner where the numbering starts, i.e. the first cell)
  *    \li orientation (horizontal or vertical numbering)
  *    \li sweep mode (one-way or zig-zag numbering)
  *

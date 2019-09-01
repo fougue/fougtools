@@ -100,7 +100,7 @@ QWidget *StrictStackWidget::popWidget()
     }
 }
 
-/*! Retruns \c true if the stack contains no widget, otherwise returns \c false
+/*! \brief Returns \c true if the stack contains no widget, otherwise returns \c false
  */
 bool StrictStackWidget::isEmpty() const
 {

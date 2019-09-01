@@ -147,8 +147,8 @@ void QtView::Private::initialize()
 /*! \class QtView
  *  \brief Qt wrapper around the V3d_View class
  *
- *  QtView widgets are explicitely bound to a context ie an
- *  AIS_InteractiveContext. The context can be retrieved with context().
+ *  QtView widgets are explicitly bound to a context ie an AIS_InteractiveContext. The context
+ *  can be retrieved with context().
  *
  *  QtView does not handle input devices interaction like keyboard and mouse.
  *

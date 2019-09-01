@@ -15,7 +15,7 @@
 
 #include "item_view_utils.h"
 
-// Those classe are in Qt4/QtGui and Qt5/QtCore
+// Those classes are in Qt4/QtGui and Qt5/QtCore
 #include <QSortFilterProxyModel>
 #include <QItemSelectionModel>
 

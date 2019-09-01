@@ -48,7 +48,7 @@ QSqlError SqlQueryError::sqlError() const
     return m_sqlError;
 }
 
-/*! \brief Execute SQL statements in \p code use databse connection \p db
+/*! \brief Execute SQL statements in \p code use database connection \p db
  *  \note Does nothing if \p sqlCode is empty
  *  \throws SqlQueryError if no connection to database or if SQL exec fails (SQL query has error)
  */
@@ -68,8 +68,8 @@ QSqlQuery execSqlCode(const QString& sqlCode, const QSqlDatabase& db)
     return qry;
 }
 
-/*! \brief Same as qtsql::execSqlCode() but execution performs inside a transaction
- *  \note Any SqlQueryError exceptions thrown by qtsql::execSqlCode() is catched (transaction
+/*! \brief Same as qttools::execSqlCode() but execution performs inside a transaction
+ *  \note Any SqlQueryError exceptions thrown by qttools::execSqlCode() is caught (transaction
  *        is rolled back then)
  */
 QSqlQuery execSqlCodeInTransaction(const QString& sqlCode, QSqlDatabase db)

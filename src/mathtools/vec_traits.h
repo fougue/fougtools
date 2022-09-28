@@ -119,7 +119,7 @@ struct PointerVecAccessTag : public VecAccessTag { };
 /*! \brief Tag dispatch for vector coordinates to be accessed with a temporary std::array<> object
  *
  *  When none of the other tags can be used, then StdArrayVecAccessTag is the fallback access to
- *  vector coordinates. It has the penality of the creation of a temporary std::array<> object that
+ *  vector coordinates. It has the penalty of the creation of a temporary std::array<> object that
  *  will store the vector coordinates.
  *
  *  Example :
